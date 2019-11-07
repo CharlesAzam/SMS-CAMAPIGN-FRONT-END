@@ -2,7 +2,7 @@
 <button mat-button routerLink="dashboard" routerLinkActive="active">DashBoard</button>
 <button mat-button [matMenuTriggerFor]="news">News</button>
 <mat-menu #news="matMenu">
-  <button mat-menu-item>Categories</button>
+  <button mat-menu-item (click)="getCategories($event)">Categories</button>
   <button mat-menu-item>Story Idea</button>
   <button mat-menu-item>Tag</button>
   <button mat-menu-item>Videos</button>

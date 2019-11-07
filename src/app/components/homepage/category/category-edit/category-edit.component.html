@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="header">
+        <h1 class="title">Mobile Categories Detail</h1>
+    </div>
+    <div class="content">
+    
+        <p *ngIf="errors">{{ errors }}</p>
+    
+        <form *ngIf="category">
+                
+            <div class="form-group">
+                <label>id:</label>
+                {{category.id || 'n/a'}} <input [(ngModel)]="category.id" name="id" class="form-control">
+            </div>
+                
+            <div class="form-group">
+                <label>Category Name:</label>
+                <input [(ngModel)]="category.categoryName" name="categoryName" class="form-control">
+            </div>
+                
+            <div class="form-group">
+                <label>Description:</label>
+                <input [(ngModel)]="category.descriptiom" name="descriptiom" class="form-control">
+            </div>
+        
+            <div class="form-group">
+                <button
+                (click)="save()"
+                class="btn btn-default">Save</button>
+            </div>
+
+        </form>
+    
+    </div>
+</div>
