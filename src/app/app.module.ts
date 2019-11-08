@@ -14,12 +14,16 @@ import { MaterialModule } from './modules/app-material.module';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { CategoriesModule } from './components/homepage/categories/categories.module';
+import {CreateCategoryComponent} from './components/create-category/create-category.component'
+import {CardComponentComponent} from './components/card-component/card-component.component'
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomepageComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateCategoryComponent,
+    CardComponentComponent
     ],
   imports: [
     BrowserModule,

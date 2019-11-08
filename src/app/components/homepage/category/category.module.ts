@@ -6,7 +6,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { CategoryService } from './category.service';
 import { CATEGORY_ROUTES } from './category.routes';
-import { CategoryComponent } from './component/category/category.component';
+//import { CategoryComponent } from './component/category/category.component';
 
 @NgModule({
   imports: [
@@ -17,7 +17,6 @@ import { CategoryComponent } from './component/category/category.component';
   declarations: [
     CategoryListComponent,
     CategoryEditComponent,
-    CategoryComponent
   ],
   providers: [
     CategoryService
