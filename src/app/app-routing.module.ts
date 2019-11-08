@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
+import {CreateCategoryComponent} from './components/create-category/create-category.component'
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   {path:"login",component:LoginComponent},
@@ -22,7 +23,12 @@ const routes: Routes = [
       {
         path: "categories",
         loadChildren: "./components/homepage/categories/categories.module#CategoriesModule"
-      }
+      },
+      {
+        path: "category",
+        component: CreateCategoryComponent
+      },
+      
     ]
   }
 ];
