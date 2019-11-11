@@ -17,6 +17,7 @@ import { CategoriesModule } from './components/homepage/categories/categories.mo
 import { VodModule } from '../app/components/vod/vod.module';
 import { PackageModule } from '../app/components/package/package.module';
 import { CouponModule } from '../app/components/coupon/coupon.module';
+import { RadioModule } from '../app/components/radio/radio.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { CouponModule } from '../app/components/coupon/coupon.module';
     VodModule,
     PackageModule,
     CouponModule,
+    RadioModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]
