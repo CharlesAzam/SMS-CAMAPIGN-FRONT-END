@@ -30,6 +30,10 @@ const routes: Routes = [
       {
         path: "package",
         loadChildren: "./components/package/package.module#PackageModule"
+      },
+      {
+        path: "coupon",
+        loadChildren: "./components/coupon/coupon.module#CouponModule"
       }
     ]
   }

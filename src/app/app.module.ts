@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/homepage/dashboard/dashboard.co
 import { CategoriesModule } from './components/homepage/categories/categories.module';
 import { VodModule } from '../app/components/vod/vod.module';
 import { PackageModule } from '../app/components/package/package.module';
+import { CouponModule } from '../app/components/coupon/coupon.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +36,7 @@ import { PackageModule } from '../app/components/package/package.module';
     CategoriesModule,
     VodModule,
     PackageModule,
+    CouponModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]

@@ -10,6 +10,8 @@ import {
   MatSelectModule,
   MatChipsModule,
   MatIconModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 } from '@angular/material';
 
 const modules = [
@@ -21,7 +23,10 @@ const modules = [
   MatSelectModule,
   MatMenuModule,
   MatChipsModule,
-  MatIconModule
+  MatIconModule,
+  MatDatepickerModule,
+  MatNativeDateModule
+
 ];
 
 @NgModule({

@@ -1,0 +1,44 @@
+{
+    "title": "coupon",
+    "entity": "coupon",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "name"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "code",
+            "label": "Code",
+            "type": "string"
+        },
+        {
+            "name": "startDate",
+            "label": "Start Date",
+            "type": "date"
+        },
+        {
+            "name": "endDate",
+            "label": "End Date",
+            "type": "date"
+        },
+        {
+            "name": "percentage",
+            "label": "Percentage",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "label": "Status",
+            "type": "boolean"
+        }
+    ]
+}
