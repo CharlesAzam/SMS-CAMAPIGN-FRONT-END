@@ -5,7 +5,7 @@ import { DashboardComponent } from './components/homepage/dashboard/dashboard.co
 import { LoginComponent } from './components/login/login.component';
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
-  {path:"login",component:LoginComponent},
+  { path: "login", component: LoginComponent },
   {
     path: "home",
     component: HomepageComponent,
@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: "categories",
         loadChildren: "./components/homepage/categories/categories.module#CategoriesModule"
+      },
+      {
+        path: "vod",
+        loadChildren: "./components/vod/vod.module#VodModule"
       }
     ]
   }
@@ -31,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

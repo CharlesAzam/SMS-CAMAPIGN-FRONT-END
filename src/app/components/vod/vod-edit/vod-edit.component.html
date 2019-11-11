@@ -1,0 +1,143 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <div class="header">
+                    <h1 class="title">Video On Demand Detail</h1>
+                </div>
+                <div class="content">
+
+                    <p *ngIf="errors">{{ errors }}</p>
+
+                    <form *ngIf="vod">
+
+
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input [(ngModel)]="vod.title" name="title" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input [(ngModel)]="vod.descriptions" name="descriptions" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <mat-form-field style="width: 100%;">
+                                <mat-chip-list #chipList aria-label="Add Tags">
+                                    <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable"
+                                        (removed)="remove(tag)">
+                                        {{tag}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                    <input placeholder="Enter tag..." [matChipInputFor]="chipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                </mat-chip-list>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Release Date</label>
+                            <input [(ngModel)]="vod.releaseDate" name="releaseDate" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Starring</label>
+                            <input [(ngModel)]="vod.starring" name="starring" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Director</label>
+                            <input [(ngModel)]="vod.director" name="director" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Categories</mat-label>
+                                <mat-select [(ngModel)]="vod.categories" multiple>
+                                    <mat-option *ngFor="let category of categories" [value]="category">{{category}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Country</mat-label>
+                                <mat-select [(ngModel)]="vod.country">
+                                    <mat-option *ngFor="let country of countries" [value]="country">{{country}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Sub Category ID</mat-label>
+                                <mat-select [(ngModel)]="vod.subCategoryID">
+                                    <mat-option *ngFor="let subCategory of categories" [value]="subCategory">
+                                        {{subCategory}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Lagnuage Details</label>
+                            <input [(ngModel)]="vod.languageDetail" name="languageDetail" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+
+                            <mat-slide-toggle>Is Free</mat-slide-toggle>
+
+                        </div>
+                        <div class="form-group">
+                            <mat-slide-toggle>Is Free For Azam</mat-slide-toggle>
+                        </div>
+                        <div class="form-group">
+                            <mat-slide-toggle>Is Series</mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-select [(ngModel)]="vod.status" placeholder="Status">
+                                    <mat-option value="active">Active</mat-option>
+                                    <mat-option value="inactive">Inactive</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Bounding Box:</label>
+                            <input [(ngModel)]="vod.boundingBox" name="boundingBox" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>CDN ID</label>
+                            <input [(ngModel)]="vod.cdnId" name="cdnId" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input [(ngModel)]="vod.duration" name="duration" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Image ThumbNai:</label>
+                            <input [(ngModel)]="vod.imageThumb" name="imageThumb" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <button (click)="save()" class="btn btn-default">Save</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,3 @@
-
 <button mat-button routerLink="dashboard" routerLinkActive="active">DashBoard</button>
 <button mat-button [matMenuTriggerFor]="news">News</button>
 <mat-menu #news="matMenu">
@@ -11,7 +10,7 @@
 
 <button mat-button [matMenuTriggerFor]="mobile">Mobile</button>
 <mat-menu #mobile="matMenu">
-  <button mat-menu-item  routerLink="categories" routerLinkActive="active">Categories</button>
+  <button mat-menu-item routerLink="categories" routerLinkActive="active">Categories</button>
   <button mat-menu-item>Sub Categories</button>
   <button mat-menu-item>Tags</button>
   <button mat-menu-item>Channels</button>
@@ -20,7 +19,7 @@
   <button mat-menu-item>Package</button>
   <button mat-menu-item>Coupons</button>
   <button mat-menu-item>Series</button>
-  <button mat-menu-item>Video on Demand</button>
+  <button mat-menu-item routerLink="vod">Video on Demand</button>
   <button mat-menu-item>Radio</button>
   <button mat-menu-item>In-App Purchase Products</button>
   <button mat-menu-item>Video Library</button>
