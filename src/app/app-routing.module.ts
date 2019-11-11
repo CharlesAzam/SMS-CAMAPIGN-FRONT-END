@@ -26,6 +26,10 @@ const routes: Routes = [
       {
         path: "vod",
         loadChildren: "./components/vod/vod.module#VodModule"
+      },
+      {
+        path: "package",
+        loadChildren: "./components/package/package.module#PackageModule"
       }
     ]
   }

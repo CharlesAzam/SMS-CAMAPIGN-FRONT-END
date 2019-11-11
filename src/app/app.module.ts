@@ -15,6 +15,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { CategoriesModule } from './components/homepage/categories/categories.module';
 import { VodModule } from '../app/components/vod/vod.module';
+import { PackageModule } from '../app/components/package/package.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { VodModule } from '../app/components/vod/vod.module';
     BrowserAnimationsModule,
     CategoriesModule,
     VodModule,
+    PackageModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]
