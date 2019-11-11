@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <div class="header">
+                    <h1 class="title">Package Detail</h1>
+                </div>
+                <div class="content">
+
+                    <p *ngIf="errors">{{ errors }}</p>
+
+                    <form *ngIf="packageDef">
+
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input [(ngModel)]="packageDef.name" name="name" class="form-control">
+                        </div>
+
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                                cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                                [(ngModel)]="packageDef.description"></textarea>
+                        </mat-form-field>
+
+                        <div class="form-group">
+                            <label>Channels:</label>
+                            <input [(ngModel)]="packageDef.channels" name="channels" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="packageDef.free">Free</mat-slide-toggle>
+
+                        </div>
+
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="packageDef.isVodAllowed">Is Vod Allowed</mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="packageDef.isVodContentsUnlimited">Is Vod Contents Unlimited
+                            </mat-slide-toggle>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>No Of Vod Contents:</label>
+                            <input [(ngModel)]="packageDef.noOfVodContents" name="noOfVodContents" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>No Of Days Validity:</label>
+                            <input [(ngModel)]="packageDef.noOfDaysValidity" name="noOfDaysValidity"
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="packageDef.status">Status</mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group">
+                            <button (click)="save()" class="btn btn-default">Save</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
