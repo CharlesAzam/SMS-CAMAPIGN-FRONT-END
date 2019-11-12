@@ -1,1 +1,31 @@
-<p>create-tags works!</p>
+<div>
+        <div class="container3">
+                <div class="container-btn">
+                        <button type="button" (click)="toggleDisplay()" class="btn btn-primary btn-lg">Create Sub Category</button>     
+                </div>
+                <div class="container2" [hidden]="isShow">
+                        <h2>Create Tags-SW</h2>
+                        <form action="/#">
+                          <div class="form-group">
+                                 <label for="Decription">Tag Name</label>
+                            <mat-form-field class="input-layouts">
+                                 <input matInput placeholder=" " value=" ">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="form-group">
+                                <label for="Decription">Priority</label>
+                           <mat-form-field class="input-layouts">
+                                <input matInput placeholder=" " value=" ">
+                           </mat-form-field>
+                         </div>
+
+                           
+                           <div>
+                                <button class="btn-submit"  mat-raised-button type="submit">Create tag</button>      
+                           </div>
+                          
+                        </form> 
+                      </div>          
+        </div>              
+</div>
