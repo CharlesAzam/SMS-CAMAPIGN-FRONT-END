@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <div class="header">
+                    <h1 class="title">Radio Detail</h1>
+                </div>
+                <div class="content">
+
+                    <p *ngIf="errors">{{ errors }}</p>
+
+                    <form *ngIf="radio">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input [(ngModel)]="radio.name" name="name" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <input [(ngModel)]="radio.description" name="description" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Channel URL:</label>
+                            <input [(ngModel)]="radio.channelUrl" name="channelUrl" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload Logo:</label>
+                            <input [(ngModel)]="radio.logo" name="logo" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+
+                            <mat-slide-toggle [(ngModel)]="radio.status">Status</mat-slide-toggle>
+
+                        </div>
+
+                        <div class="form-group">
+                            <button (click)="save()" class="btn btn-default">Save</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

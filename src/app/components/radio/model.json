@@ -1,0 +1,44 @@
+{
+    "title": "Radio",
+    "entity": "radio",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "name"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "label": "Description",
+            "type": "string"
+        },
+        {
+            "name": "channelUrl",
+            "label": "Channel URL",
+            "type": "array"
+        },
+        {
+            "name": "logo",
+            "label": "Upload Logo",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "label": "Status",
+            "type": "boolean"
+        }
+    ]
+}

@@ -13,12 +13,19 @@ import { MaterialModule } from './modules/app-material.module';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { CategoriesModule } from './components/homepage/categories/categories.module';
+import { VodModule } from '../app/components/vod/vod.module';
+import { PackageModule } from '../app/components/package/package.module';
+import { CouponModule } from '../app/components/coupon/coupon.module';
+import { RadioModule } from '../app/components/radio/radio.module';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
 import {CardComponentComponent} from './components/card-component/card-component.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { CreateSubCategoryComponent } from './components/create-sub-category/create-sub-category.component';
 import { CreateTagsComponent } from './components/create-tags/create-tags.component';
 import { CreateChannelsComponent } from './components/create-channels/create-channels.component'
+import { ProductModule } from '../app/components/product/product.module';
+import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
+// import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +38,7 @@ import { CreateChannelsComponent } from './components/create-channels/create-cha
     CreateSubCategoryComponent,
     CreateTagsComponent,
     CreateChannelsComponent
+    // TopnavComponent
     ],
   imports: [
     BrowserModule,
@@ -42,6 +50,12 @@ import { CreateChannelsComponent } from './components/create-channels/create-cha
     MaterialModule,
     BrowserAnimationsModule,
     CategoriesModule,
+    VodModule,
+    PackageModule,
+    CouponModule,
+    RadioModule,
+    ProductModule,
+    VideoLibraryModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]

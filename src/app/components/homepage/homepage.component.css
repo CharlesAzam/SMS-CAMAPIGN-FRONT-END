@@ -1,23 +1,28 @@
-md-nav-bar .md-nav-bar {
-    background: yellow;
-  }
+.example-container {
+  position: absolute;
+  top: 60px;
+  bottom:0;
+  left: 0;
+  right: 0;
+}
 
-  mat-sidenav-container{
-   height: 100%; 
-  }
+.example-sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+}
 
-  mat-sidenav,mat-sidenav-content{
-    padding: 16px;
-  }
+.example-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
-  mat-sidenav{
-    background: rgb(81, 196, 241);
-  }
-
-  mat-sidenav-content{
-    background-color: transparent;
-    opacity: 0 !important;
-  }
-
-
-  
+.example-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

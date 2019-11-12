@@ -1,0 +1,39 @@
+{
+    "title": "Video Library",
+    "entity": "videoLibrary",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "title"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "title",
+            "label": "Name",
+            "type": "string"
+        },
+        {
+            "name": "streamURL",
+            "label": "Stream URL",
+            "type": "string"
+        },
+        {
+            "name": "jwMediaID",
+            "label": "JWP Media ID",
+            "type": "string"
+        },
+        {
+            "name": "duration",
+            "label": "Duration",
+            "type": "string"
+        }
+    ]
+}

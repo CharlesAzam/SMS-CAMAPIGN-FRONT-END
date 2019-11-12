@@ -1,0 +1,104 @@
+{
+    "title": "Video On Demand",
+    "entity": "vod",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "title"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+        },
+        {
+            "name": "descriptions",
+            "label": "Descriptions",
+            "type": "string"
+        },
+        {
+            "name": "tags",
+            "label": "Tags",
+            "type": "array"
+        },
+        {
+            "name": "releaseDate",
+            "label": "Release Date",
+            "type": "date"
+        },
+        {
+            "name": "starring",
+            "label": "Starring",
+            "type": "string"
+        },
+        {
+            "name": "director",
+            "label": "Director",
+            "type": "string"
+        },
+        {
+            "name": "categoryID",
+            "label": "Categories",
+            "type": "array"
+        },
+        {
+            "name": "country",
+            "label": "Country",
+            "type": "string"
+        },
+        {
+            "name": "subCategoryID",
+            "label": "Sub Category ID",
+            "type": "array"
+        },
+        {
+            "name": "languageDetail",
+            "label": "Lagnuage Details",
+            "type": "string"
+        },
+        {
+            "name": "isFree",
+            "label": "Is Free",
+            "type": "boolean"
+        },
+        {
+            "name": "isFreeForAzam",
+            "label": "Is Free For Azam?",
+            "type": "boolean"
+        },
+        {
+            "name": "Status",
+            "label": "Status",
+            "type": "string"
+        },
+        {
+            "name": "boundingBox",
+            "label": "Bounding Box",
+            "type": "string"
+        },
+        {
+            "name": "cdnId",
+            "label": "CDN ID",
+            "type": "string"
+        },
+        {
+            "name": "duration",
+            "label": "Duration",
+            "type": "time"
+        },
+        {
+            "name": "imageThumb",
+            "label": "Image ThumbNail",
+            "type": "string"
+        }
+    ]
+}

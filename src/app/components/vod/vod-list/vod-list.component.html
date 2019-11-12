@@ -1,0 +1,83 @@
+<div class="container">
+  <mat-card>
+    <div class="header">
+      <h2 class="title">Video On Demand</h2>
+    </div>
+    <div class="content">
+
+      <form #f="ngForm">
+
+        <div class="form-group">
+          <label>Title:</label>
+          <input [(ngModel)]="filter.title" name="title" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
+            Search
+          </button>
+          <a [routerLink]="['../vod','new']" class="btn btn-default">
+            New
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+  <mat-card *ngIf="vodList.length > 0">
+
+    <table class="table table-contensed">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Title</th>
+          <th>Descriptions</th>
+          <th>Tags</th>
+          <th>Release Date</th>
+          <th>Starring</th>
+          <th>Director</th>
+          <th>Categories</th>
+          <th>Country</th>
+          <th>Sub Category ID</th>
+          <th>Lagnuage Details</th>
+          <th>Is Free</th>
+          <th>Is Free For Azam?</th>
+          <th>Status</th>
+          <th>Bounding Box</th>
+          <th>CDN ID</th>
+          <th>Duration</th>
+          <th>Image ThumbNail</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of vodList" [class.active]="item === selectedVod">
+        <td>{{item.id}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.descriptions}}</td>
+        <td>{{item.tags}}</td>
+        <td>{{item.releaseDate}}</td>
+        <td>{{item.starring}}</td>
+        <td>{{item.director}}</td>
+        <td>{{item.categoryID}}</td>
+        <td>{{item.country}}</td>
+        <td>{{item.subCategoryID}}</td>
+        <td>{{item.languageDetail}}</td>
+        <td>{{item.isFree}}</td>
+        <td>{{item.isFreeForAzam}}</td>
+        <td>{{item.Status}}</td>
+        <td>{{item.boundingBox}}</td>
+        <td>{{item.cdnId}}</td>
+        <td>{{item.duration}}</td>
+        <td>{{item.imageThumb}}</td>
+        <td>
+
+          <a [routerLink]="['../vod', item.id ]">Details</a> |
+          <a (click)="select(item)">Select</a>
+        </td>
+      </tr>
+    </table>
+
+  </mat-card>
+</div>

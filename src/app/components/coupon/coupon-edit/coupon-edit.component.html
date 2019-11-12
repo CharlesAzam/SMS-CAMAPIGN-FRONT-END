@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <div class="header">
+                    <h1 class="title">coupon Detail</h1>
+                </div>
+                <div class="content">
+
+                    <p *ngIf="errors">{{ errors }}</p>
+
+                    <form *ngIf="coupon">
+
+                        <div class="form-group">
+                            <label>Code:</label>
+                            <input [(ngModel)]="coupon.code" name="code" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <input matInput [matDatepicker]="coupon.startDate" placeholder="Start Date">
+                                <mat-datepicker-toggle matSuffix [for]="coupon.startDate"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <input matInput [matDatepicker]="coupon.endDate" placeholder="End Date">
+                                <mat-datepicker-toggle matSuffix [for]="coupon.endDate"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Percentage:</label>
+                            <input [(ngModel)]="coupon.percentage" name="percentage" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="coupon.status">Status</mat-slide-toggle>
+
+                        </div>
+
+                        <div class="form-group">
+                            <button (click)="save()" class="btn btn-default">Save</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

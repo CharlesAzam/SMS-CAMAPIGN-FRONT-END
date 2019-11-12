@@ -1,0 +1,64 @@
+{
+    "title": "Package",
+    "entity": "package",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "name"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "label": "Description",
+            "type": "string"
+        },
+        {
+            "name": "channels",
+            "label": "Channels",
+            "type": "array"
+        },
+        {
+            "name": "free",
+            "label": "Free",
+            "type": "boolean"
+        },
+        {
+            "name": "isVodAllowed",
+            "label": "Is Vod Allowed",
+            "type": "boolean"
+        },
+        {
+            "name": "isVodContentsUnlimited",
+            "label": "Is Vod Contents Unlimited",
+            "type": "boolean"
+        },
+        {
+            "name": "noOfVodContents",
+            "label": "No Of Vod Contents",
+            "type": "string"
+        },
+        {
+            "name": "noOfDaysValidity",
+            "label": "No Of Days Validity",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "label": "Status",
+            "type": "boolean"
+        }
+    ]
+}

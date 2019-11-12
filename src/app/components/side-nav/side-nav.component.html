@@ -1,5 +1,5 @@
-<mat-sidenav-container>
-        <mat-sidenav #sidenav mode="side">Side item 1
+<mat-sidenav-container style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
+        <mat-sidenav #sidenav mode="over">Side item 1
                 <mat-nav-list>
                         <a mat-list-item>Sub Side item 1</a>
                         <a mat-list-item>Sub Side item 1</a>
@@ -8,8 +8,9 @@
                 </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
-                <button mat-button (click)="sidenav.toggle()"><img style="width: 25px; height: 25px;" src="assets/brMenu.png"></button>
-                <button mat-button [matMenuTriggerFor]="news">News</button>
+                <button mat-button (click)="sidenav.toggle()"><img style="width: 25px; height: 25px;"
+                                src="assets/brMenu.png"></button>
+                <!-- <button mat-button [matMenuTriggerFor]="news">News</button>
                 <mat-menu #news="matMenu">
                         <button mat-menu-item (click)="getCategories($event)">Categories</button>
                         <button mat-menu-item>Story Idea</button>
@@ -32,6 +33,6 @@
                         <button mat-menu-item>Radio</button>
                         <button mat-menu-item>In-App Purchase Products</button>
                         <button mat-menu-item>Video Library</button>
-                </mat-menu>
+                </mat-menu> -->
         </mat-sidenav-content>
 </mat-sidenav-container>

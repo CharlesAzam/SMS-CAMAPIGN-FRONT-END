@@ -1,49 +1,8 @@
+<div class="container">
+  <div class="row ">
+    <div class="col-sm-1 col-md-4" *ngFor="let category of categories">
+      <app-card-component card_title={{category}}></app-card-component>
+    </div>
+  </div>
 
-<div class="main-container">
-  <!--Main Dashboard container start-->
-  <div class="row"><!--row-start-->
-    <div class="col-sm-4">
-      <app-card-component card_title="News"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Movies"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Drama"></app-card-component>
-    </div>
-  </div><!--row-end-->
-  <div class="row"><!--row-start-->
-    <div class="col-sm-4">
-      <app-card-component card_title="Documentary"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Live New"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Steams"></app-card-component>
-    </div>
-  </div><!--row-end-->
-  <div class="row"><!--row-start-->
-    <div class="col-sm-4">
-      <app-card-component card_title="Downloads"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Series"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Settings"></app-card-component>
-    </div>
-  </div><!--row-end-->
-  <div class="row"><!--row-start-->
-    <div class="col-sm-4">
-      <app-card-component card_title="polls"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="Statistic"></app-card-component>
-    </div>
-    <div class="col-sm-4">
-      <app-card-component card_title="HighLights"></app-card-component>
-    </div>
-  </div><!--row-end-->
 </div>
-<!--Main Dashboard container end-->

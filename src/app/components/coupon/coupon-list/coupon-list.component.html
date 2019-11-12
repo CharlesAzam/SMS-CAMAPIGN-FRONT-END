@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-card>
+    <div class="header">
+      <h2 class="title">Coupon</h2>
+    </div>
+    <div class="content">
+
+      <form #f="ngForm">
+
+        <div class="form-group">
+          <label>Code:</label>
+          <input [(ngModel)]="filter.code" name="name" class="form-control">
+          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
+            Search
+          </button>
+          <a [routerLink]="['../coupon','new']" class="btn btn-default">
+            New
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+  <mat-card *ngIf="couponList.length > 0">
+
+    <table class="table table-contensed">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Code</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Percentage</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of couponList" [class.active]="item === selectedCoupon">
+        <td>{{item.id}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.startDate}}</td>
+        <td>{{item.endDate}}</td>
+        <td>{{item.percentage}}</td>
+        <td>{{item.status}}</td>
+        <td>
+
+          <a [routerLink]="['../coupon', item.id ]">Details</a> |
+          <a (click)="select(item)">Select</a>
+        </td>
+      </tr>
+    </table>
+
+  </mat-card>
+</div>

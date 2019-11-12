@@ -1,0 +1,58 @@
+<div class="container">
+  <mat-card>
+
+    <div class="header">
+      <h2 class="title">Video Library</h2>
+    </div>
+    <div class="content">
+
+      <form #f="ngForm">
+
+        <div class="form-group">
+          <label>Name:</label>
+          <input [(ngModel)]="filter.title" name="title" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
+            Search
+          </button>
+          <a [routerLink]="['../video-library','new']" class="btn btn-default">
+            New
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+  <mat-card *ngIf="videoLibraryList.length > 0">
+
+    <table class="table table-contensed">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Name</th>
+          <th>Stream URL</th>
+          <th>JWP Media ID</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of videoLibraryList" [class.active]="item === selectedVideoLibrary">
+        <td>{{item.id}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.streamURL}}</td>
+        <td>{{item.jwMediaID}}</td>
+        <td>{{item.duration}}</td>
+        <td>
+
+          <a [routerLink]="['../videoLibrary', item.id ]">Details</a> |
+          <a (click)="select(item)">Select</a>
+        </td>
+      </tr>
+    </table>
+
+  </mat-card>
+</div>

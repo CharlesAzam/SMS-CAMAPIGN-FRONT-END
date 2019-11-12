@@ -5,17 +5,32 @@ import {
   MatInputModule,
   MatButtonModule,
   MatMenuModule,
-  MatSidenavModule,
-  MatListModule,
+  MatSlideToggleModule,
   MatOptionModule,
   MatSelectModule,
-  MatRadioModule,
+  MatChipsModule,
+  MatIconModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSidenavModule,
+  MatListModule,
+  MatToolbarModule,
+  MatRadioModule
 } from '@angular/material';
 
 const modules = [
   MatCardModule,
   MatInputModule,
   MatButtonModule,
+  MatToolbarModule,
+  MatSlideToggleModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatMenuModule,
+  MatChipsModule,
+  MatIconModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
   MatMenuModule,
   MatSidenavModule,
   MatListModule,
@@ -28,4 +43,4 @@ const modules = [
   imports: modules,
   exports: modules,
 })
-export class MaterialModule {}
+export class MaterialModule { }

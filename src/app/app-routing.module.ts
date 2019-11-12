@@ -8,9 +8,12 @@ import {SideNavComponent} from './components/side-nav/side-nav.component'
 import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
 import {CreateTagsComponent} from './components/create-tags/create-tags.component';
 import {CreateChannelsComponent} from './components/create-channels/create-channels.component'
+
+
+
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
-  {path:"login",component:LoginComponent},
+  { path: "login", component: LoginComponent },
   {
     path: "home",
     component: HomepageComponent,
@@ -29,11 +32,35 @@ const routes: Routes = [
         loadChildren: "./components/homepage/categories/categories.module#CategoriesModule"
       },
       {
+        path: "vod",
+        loadChildren: "./components/vod/vod.module#VodModule"
+      },
+      {
+        path: "package",
+        loadChildren: "./components/package/package.module#PackageModule"
+      },
+      {
+        path: "coupon",
+        loadChildren: "./components/coupon/coupon.module#CouponModule"
+      },
+      {
+        path: "radio",
+        loadChildren: "./components/radio/radio.module#RadioModule"
+      },
+      {
+        path: "product",
+        loadChildren: "./components/product/product.module#ProductModule"
+      },
+      {
+        path: "video-library",
+        loadChildren: "./components/video-library/video-library.module#VideoLibraryModule"
+      },
+      {
         path: "category",
         component: CreateCategoryComponent
       },
       {
-        path:'sideBar',
+        path: 'sideBar',
         component: SideNavComponent
       },
       {
@@ -48,7 +75,7 @@ const routes: Routes = [
         path:'Channels',
         component:CreateChannelsComponent
       }
-      
+
     ]
   }
 ];
@@ -57,4 +84,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

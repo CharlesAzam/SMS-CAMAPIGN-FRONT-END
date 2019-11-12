@@ -1,0 +1,57 @@
+<div class="container">
+  <mat-card>
+    <div class="header">
+      <h2 class="title">In-App Purchase Product</h2>
+    </div>
+    <div class="content">
+
+      <form #f="ngForm">
+
+        <div class="form-group">
+          <label>Title:</label>
+          <input [(ngModel)]="filter.title" name="title" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
+            Search
+          </button>
+          <a [routerLink]="['../product','new']" class="btn btn-default">
+            New
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+  <mat-card *ngIf="productList.length > 0">
+
+    <table class="table table-contensed">
+      <thead>
+        <tr>
+          <th>Product Identifier</th>
+          <th>Title</th>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of productList" [class.active]="item === selectedProduct">
+        <td>{{item.id}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.currency}}</td>
+        <td>{{item.status}}</td>
+        <td>
+
+          <a [routerLink]="['../product', item.id ]">Details</a> |
+          <a (click)="select(item)">Select</a>
+        </td>
+      </tr>
+    </table>
+
+  </mat-card>
+</div>

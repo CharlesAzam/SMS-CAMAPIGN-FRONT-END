@@ -6,24 +6,27 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+  toggle = nav => nav.open = !nav.open;
 
-  constructor(private router:Router,
+  constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
-    ) { }
+  ) {
+
+  }
 
   ngOnInit() {
   }
 
-  opened=false;
+  opened = false;
 
-  getCategories($event){
-    console.log("Button was clicked ",$event);
-       this.router.navigate(['category'], { relativeTo: this.activatedRoute });
+  getCategories($event) {
+    console.log("Button was clicked ", $event);
+    this.router.navigate(['category'], { relativeTo: this.activatedRoute });
   }
 
-  sideBarTrigger($event){
+  sideBarTrigger($event) {
     console.log("Dash board side button clicked");
-//    this.router.navigate(['sideBar'], { relativeTo: this.activatedRoute });
+    //    this.router.navigate(['sideBar'], { relativeTo: this.activatedRoute });
   }
 
   routeToSubCategories($event){
@@ -42,7 +45,7 @@ export class HomepageComponent implements OnInit {
   }
 
   submit() {
-  console.log("as");
-  this.router.navigate(['movies'], { relativeTo: this.activatedRoute });
+    console.log("as");
+    this.router.navigate(['movies'], { relativeTo: this.activatedRoute });
   }
 }
