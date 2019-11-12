@@ -30,22 +30,22 @@ export class HomepageComponent implements OnInit {
   }
 
   routeToSubCategories($event){
-    console.log("Sub Category was clicked ",$event);
+  
       this.router.navigate(['subCategory'], { relativeTo: this.activatedRoute });
   }
 
   routeToTags($event){
-    console.log(" Tags was clicked ",$event);
+    
       this.router.navigate(['Tags'], { relativeTo: this.activatedRoute });
   }
 
   routeToChannels($event){
-    console.log(" Channels was clicked ",$event);
+    
       this.router.navigate(['Channels'], { relativeTo: this.activatedRoute });
   }
 
   submit() {
-    console.log("as");
+  
     this.router.navigate(['movies'], { relativeTo: this.activatedRoute });
   }
 }

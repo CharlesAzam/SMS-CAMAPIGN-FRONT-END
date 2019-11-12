@@ -7,7 +7,9 @@ import {FormControl} from '@angular/forms';
 })
 export class CreateChannelsComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+   // this.isShow=true;
+   }
 
   toppings = new FormControl();
   options =new FormControl();
@@ -15,7 +17,7 @@ export class CreateChannelsComponent implements OnInit {
   toppingList2: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
   toppingList3: string[] = ['Paid','Free'];
 
-  isShow = false;
+  isShow = true;
  
   toggleDisplay() {
     this.isShow = !this.isShow;
