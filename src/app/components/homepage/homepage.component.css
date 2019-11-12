@@ -1,3 +1,23 @@
 md-nav-bar .md-nav-bar {
     background: yellow;
   }
+
+  mat-sidenav-container{
+   height: 100%; 
+  }
+
+  mat-sidenav,mat-sidenav-content{
+    padding: 16px;
+  }
+
+  mat-sidenav{
+    background: rgb(81, 196, 241);
+  }
+
+  mat-sidenav-content{
+    background-color: transparent;
+    opacity: 0 !important;
+  }
+
+
+  

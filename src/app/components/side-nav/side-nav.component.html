@@ -1,0 +1,37 @@
+<mat-sidenav-container>
+        <mat-sidenav #sidenav mode="side">Side item 1
+                <mat-nav-list>
+                        <a mat-list-item>Sub Side item 1</a>
+                        <a mat-list-item>Sub Side item 1</a>
+                        <a mat-list-item>Sub Side item 1</a>
+                        <a mat-list-item>Sub Side item 1</a>
+                </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+                <button mat-button (click)="sidenav.toggle()"><img style="width: 25px; height: 25px;" src="assets/brMenu.png"></button>
+                <button mat-button [matMenuTriggerFor]="news">News</button>
+                <mat-menu #news="matMenu">
+                        <button mat-menu-item (click)="getCategories($event)">Categories</button>
+                        <button mat-menu-item>Story Idea</button>
+                        <button mat-menu-item>Tag</button>
+                        <button mat-menu-item>Videos</button>
+                        <button mat-menu-item>Photos</button>
+                </mat-menu>
+                <button mat-button [matMenuTriggerFor]="mobile">Mobile</button>
+                <mat-menu #mobile="matMenu">
+                        <button mat-menu-item routerLink="categories" routerLinkActive="active">Categories</button>
+                        <button mat-menu-item>Sub Categories</button>
+                        <button mat-menu-item>Tags</button>
+                        <button mat-menu-item>Channels</button>
+                        <button mat-menu-item>Banner</button>
+                        <button mat-menu-item>Banner Mapping</button>
+                        <button mat-menu-item>Package</button>
+                        <button mat-menu-item>Coupons</button>
+                        <button mat-menu-item>Series</button>
+                        <button mat-menu-item>Video on Demand</button>
+                        <button mat-menu-item>Radio</button>
+                        <button mat-menu-item>In-App Purchase Products</button>
+                        <button mat-menu-item>Video Library</button>
+                </mat-menu>
+        </mat-sidenav-content>
+</mat-sidenav-container>
