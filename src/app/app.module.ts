@@ -25,6 +25,10 @@ import { CreateTagsComponent } from './components/create-tags/create-tags.compon
 import { CreateChannelsComponent } from './components/create-channels/create-channels.component'
 import { ProductModule } from '../app/components/product/product.module';
 import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
+import { CreateNewsTagComponent } from './components/create-news-tag/create-news-tag.component';
+import { CreateNewsStoryComponent } from './components/create-news-story/create-news-story.component';
+import { CreateNewsVideosComponent } from './components/create-news-videos/create-news-videos.component';
+import { CreateNewsPhotosComponent } from './components/create-news-photos/create-news-photos.component';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -37,7 +41,11 @@ import { VideoLibraryModule } from '../app/components/video-library/video-librar
     SideNavComponent,
     CreateSubCategoryComponent,
     CreateTagsComponent,
-    CreateChannelsComponent
+    CreateChannelsComponent,
+    CreateNewsTagComponent,
+    CreateNewsStoryComponent,
+    CreateNewsVideosComponent,
+    CreateNewsPhotosComponent
     // TopnavComponent
     ],
   imports: [
