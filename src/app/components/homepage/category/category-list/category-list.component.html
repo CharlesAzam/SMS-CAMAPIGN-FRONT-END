@@ -1,0 +1,51 @@
+<div class="card">
+    
+      <div class="header">
+        <h2 class="title">Mobile Categories</h2>
+      </div>
+      <div class="content">
+    
+        <form #f="ngForm">
+
+          <div class="form-group">
+            <label>Category Name:</label>
+            <input [(ngModel)]="filter.categoryName" name="categoryName" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
+              Search
+            </button>
+            <a [routerLink]="['../category','new']" class="btn btn-default">
+                New
+            </a>
+  
+          </div>
+          
+        </form>
+      </div>
+    </div>
+    
+    <div class="card" *ngIf="categoryList.length > 0">
+    
+      <table class="table table-contensed" >
+        <thead>
+        <tr>            
+            <th>id</th>            
+            <th>Category Name</th>            
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let item of categoryList" [class.active]="item === selectedCategory">
+            <td>{{item.id}}</td>
+            <td>{{item.categoryName}}</td>
+            <td>{{item.descriptiom}}</td>
+            <td>
+                
+                <a [routerLink]="['../category', item.id ]">Details</a> |           
+                <a (click)="select(item)">Select</a>
+            </td>
+        </tr>
+      </table>
+    
+    </div>

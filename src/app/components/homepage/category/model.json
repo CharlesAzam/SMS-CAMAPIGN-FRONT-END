@@ -1,0 +1,29 @@
+{ 
+    "title": "Mobile Categories",
+    "entity": "category",
+    "api": {
+      "url": "http://34.245.129.208:3000/api/categories"
+    },
+    "filter": [
+      "categoryName"
+    ],
+    "fields": [
+      {
+        "name": "id",
+        "label": "id",
+        "isId": true,
+        "readonly": true,
+        "type": "string"
+      },
+      {
+        "name": "categoryName",
+        "label": "Category Name",
+        "type": "string"
+      },
+      {
+        "name": "descriptiom",
+        "type": "string",
+        "label": "Description"
+      }
+    ]
+}
