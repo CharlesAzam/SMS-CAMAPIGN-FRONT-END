@@ -19,7 +19,10 @@ import { CouponModule } from '../app/components/coupon/coupon.module';
 import { RadioModule } from '../app/components/radio/radio.module';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
 import {CardComponentComponent} from './components/card-component/card-component.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component'
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { ProductModule } from '../app/components/product/product.module';
+import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
+// import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +31,8 @@ import { SideNavComponent } from './components/side-nav/side-nav.component'
     DashboardComponent,
     CreateCategoryComponent,
     CardComponentComponent,
-    SideNavComponent
+    SideNavComponent,
+    // TopnavComponent
     ],
   imports: [
     BrowserModule,
@@ -44,6 +48,8 @@ import { SideNavComponent } from './components/side-nav/side-nav.component'
     PackageModule,
     CouponModule,
     RadioModule,
+    ProductModule,
+    VideoLibraryModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]

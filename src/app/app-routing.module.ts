@@ -3,8 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
-import {CreateCategoryComponent} from './components/create-category/create-category.component'
-import {SideNavComponent} from './components/side-nav/side-nav.component'
+import { CreateCategoryComponent } from './components/create-category/create-category.component'
+import { SideNavComponent } from './components/side-nav/side-nav.component'
 
 
 const routes: Routes = [
@@ -42,15 +42,24 @@ const routes: Routes = [
       {
         path: "radio",
         loadChildren: "./components/radio/radio.module#RadioModule"
-      },{
+      },
+      {
+        path: "product",
+        loadChildren: "./components/product/product.module#ProductModule"
+      },
+      {
+        path: "video-library",
+        loadChildren: "./components/video-library/video-library.module#VideoLibraryModule"
+      },
+      {
         path: "category",
         component: CreateCategoryComponent
       },
       {
-        path:'sideBar',
+        path: 'sideBar',
         component: SideNavComponent
       }
-      
+
     ]
   }
 ];

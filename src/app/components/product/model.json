@@ -1,0 +1,39 @@
+{
+    "title": "In-App Purchase Product",
+    "entity": "product",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "title"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "Product Identifier",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+        },
+        {
+            "name": "amount",
+            "label": "Amount",
+            "type": "string"
+        },
+        {
+            "name": "currency",
+            "label": "Currency",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "label": "Status",
+            "type": "boolean"
+        }
+    ]
+}

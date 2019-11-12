@@ -10,6 +10,17 @@ export class DashboardComponent implements OnInit {
   constructor() { }
   title:string = "Dashbord";
 
+  categories: any[] = [
+    "Live TV",
+    "Movies",
+    "Sports",
+    "TV Series",
+    "News",
+    "Radio",
+    "TV Guide"
+  ]
+
+
   ngOnInit() {
   }
 

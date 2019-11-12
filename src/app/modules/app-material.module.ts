@@ -14,12 +14,14 @@ import {
   MatNativeDateModule,
   MatSidenavModule,
   MatListModule,
+  MatToolbarModule,
 } from '@angular/material';
 
 const modules = [
   MatCardModule,
   MatInputModule,
   MatButtonModule,
+  MatToolbarModule,
   MatSlideToggleModule,
   MatOptionModule,
   MatSelectModule,
