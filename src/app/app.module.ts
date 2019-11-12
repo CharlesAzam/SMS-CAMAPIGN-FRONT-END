@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {  HttpClientModule } from '@angular/common/http';
+import {EditorModule} from '@tinymce/tinymce-angular';
 
 import { MoviesService} from './services/movies.service';
 import { MoviesModule } from './components/movie/movies.module';
@@ -64,6 +65,7 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     RadioModule,
     ProductModule,
     VideoLibraryModule,
+    EditorModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]

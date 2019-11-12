@@ -12,9 +12,24 @@
               </div>
               <div class="form-group">
                 <label for="Decription">Description:</label>
-                <mat-form-field class="input-layouts">
-                          <textarea matInput placeholder="Enter Descsption" value=" "></textarea>
-                </mat-form-field>
+                <editor
+                  initialValue=""
+                  [init]="{
+                       height: 300,
+                       menubar: false,
+                       plugins: [
+                         'advlist autolink lists link image charmap print preview anchor',
+                         'searchreplace visualblocks code fullscreen',
+                         'insertdatetime media table paste code help wordcount'
+                       ],
+                       toolbar:
+                         'undo redo | formatselect | bold italic backcolor | \
+                         alignleft aligncenter alignright alignjustify | \
+                         bullist numlist outdent indent | removeformat | help'
+                     }"
+                  >
+                </editor>
+               
               </div>
 
               <div class="form-group">
