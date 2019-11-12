@@ -26,9 +26,14 @@ export class HomepageComponent implements OnInit {
 //    this.router.navigate(['sideBar'], { relativeTo: this.activatedRoute });
   }
 
-  getSubCategories($event){
+  routeToSubCategories($event){
     console.log("Sub Category was clicked ",$event);
       this.router.navigate(['subCategory'], { relativeTo: this.activatedRoute });
+  }
+
+  routeToTags($event){
+    console.log(" Tags was clicked ",$event);
+      this.router.navigate(['Tags'], { relativeTo: this.activatedRoute });
   }
 
   submit() {

@@ -6,7 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
 import {SideNavComponent} from './components/side-nav/side-nav.component'
 import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
-
+import {CreateTagsComponent} from './components/create-tags/create-tags.component';
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   {path:"login",component:LoginComponent},
@@ -38,6 +38,10 @@ const routes: Routes = [
       {
         path:'subCategory',
         component:CreateSubCategoryComponent
+      },
+      {
+        path:'Tags',
+        component:CreateTagsComponent
       }
       
     ]

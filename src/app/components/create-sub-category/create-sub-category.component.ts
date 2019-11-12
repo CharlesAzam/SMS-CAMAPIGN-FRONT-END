@@ -11,11 +11,6 @@ export class CreateSubCategoryComponent implements OnInit {
   constructor(private router:Router,
     private activatedRoute: ActivatedRoute,) { }
 
-  getSubCategories($event){
-    console.log("Button was clicked ",$event);
-       this.router.navigate(['subCategory'], { relativeTo: this.activatedRoute });
-  }
-
   ngOnInit() {
   }
 
