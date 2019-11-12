@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -15,7 +14,8 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { CategoriesModule } from './components/homepage/categories/categories.module';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
-import {CardComponentComponent} from './components/card-component/card-component.component'
+import {CardComponentComponent} from './components/card-component/card-component.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +23,8 @@ import {CardComponentComponent} from './components/card-component/card-component
     HomepageComponent,
     DashboardComponent,
     CreateCategoryComponent,
-    CardComponentComponent
+    CardComponentComponent,
+    SideNavComponent
     ],
   imports: [
     BrowserModule,

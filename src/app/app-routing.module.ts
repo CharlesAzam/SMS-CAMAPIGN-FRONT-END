@@ -4,6 +4,9 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
+import {SideNavComponent} from './components/side-nav/side-nav.component'
+
+
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   {path:"login",component:LoginComponent},
@@ -28,6 +31,10 @@ const routes: Routes = [
         path: "category",
         component: CreateCategoryComponent
       },
+      {
+        path:'sideBar',
+        component: SideNavComponent
+      }
       
     ]
   }
