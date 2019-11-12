@@ -30,3 +30,23 @@
     border-radius: 6px !important;
     margin-right: 40px;
 }
+
+mat-lable{
+    font-family: inherit;
+    font-size: 40px;
+    font-weight: bold;
+    color: black !important;
+}
+
+
+.btn-submit{
+    margin-top: 10px; 
+    width: 375px; 
+    align-content: center;      
+
+
+}
+
+.input-layouts{
+    width: 100%;
+}

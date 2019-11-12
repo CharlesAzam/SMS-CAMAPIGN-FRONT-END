@@ -15,7 +15,10 @@ import { DashboardComponent } from './components/homepage/dashboard/dashboard.co
 import { CategoriesModule } from './components/homepage/categories/categories.module';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
 import {CardComponentComponent} from './components/card-component/card-component.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component'
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { CreateSubCategoryComponent } from './components/create-sub-category/create-sub-category.component';
+import { CreateTagsComponent } from './components/create-tags/create-tags.component';
+import { CreateChannelsComponent } from './components/create-channels/create-channels.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,10 @@ import { SideNavComponent } from './components/side-nav/side-nav.component'
     DashboardComponent,
     CreateCategoryComponent,
     CardComponentComponent,
-    SideNavComponent
+    SideNavComponent,
+    CreateSubCategoryComponent,
+    CreateTagsComponent,
+    CreateChannelsComponent
     ],
   imports: [
     BrowserModule,
