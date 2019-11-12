@@ -2,28 +2,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { RadioListComponent } from './radio-list/radio-list.component';
-import { RadioEditComponent } from './radio-edit/radio-edit.component';
-import { RadioService } from './radio.service';
-import { RADIO_ROUTES } from './radio.routes';
+import { BannerListComponent } from './banner-list/banner-list.component';
+import { BannerEditComponent } from './banner-edit/banner-edit.component';
+import { BannerService } from './banner.service';
+import { BANNER_ROUTES } from './banner.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
-
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
-    RouterModule.forChild(RADIO_ROUTES)
+    RouterModule.forChild(BANNER_ROUTES)
   ],
   declarations: [
-    RadioListComponent,
-    RadioEditComponent
+    BannerListComponent,
+    BannerEditComponent
   ],
   providers: [
-    RadioService
+    BannerService
   ],
   exports: [
   ]
 })
-export class RadioModule { }
+export class BannerModule { }

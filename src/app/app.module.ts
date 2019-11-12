@@ -22,6 +22,7 @@ import {CardComponentComponent} from './components/card-component/card-component
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ProductModule } from '../app/components/product/product.module';
 import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
+import { BannerModule } from '../app/components/banner/banner.module';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { VideoLibraryModule } from '../app/components/video-library/video-librar
     RadioModule,
     ProductModule,
     VideoLibraryModule,
+    BannerModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]

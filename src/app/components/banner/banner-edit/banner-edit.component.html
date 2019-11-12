@@ -3,38 +3,41 @@
         <div class="col">
             <mat-card>
                 <div class="header">
-                    <h1 class="title">Radio Detail</h1>
+                    <h1 class="title">Banner Detail</h1>
                 </div>
                 <div class="content">
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form *ngIf="radio">
+                    <form *ngIf="banner">
+
                         <div class="form-group">
                             <label>Name:</label>
-                            <input [(ngModel)]="radio.name" name="name" class="form-control">
+                            <input [(ngModel)]="banner.name" name="name" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Description:</label>
-                            <input [(ngModel)]="radio.description" name="description" class="form-control">
+                            <input [(ngModel)]="banner.description" name="description" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label>Channel URL:</label>
-                            <input [(ngModel)]="radio.channelUrl" name="channelUrl" class="form-control">
+                            <label>Image:</label>
+                            <input [(ngModel)]="banner.image" name="image" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label>Upload Logo:</label>
-                            <input id="logo" type="file" [(ngModel)]="radio.logo" />
-                            
+                            <label>priority:</label>
+                            <input type='number' [(ngModel)]="banner.priority" name="priority" class="form-control">
                         </div>
 
                         <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="banner.status">Status</mat-slide-toggle>
 
-                            <mat-slide-toggle [(ngModel)]="radio.status">Status</mat-slide-toggle>
+                        </div>
 
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="banner.isDeleted">Is Deleted</mat-slide-toggle>
                         </div>
 
                         <div class="form-group">

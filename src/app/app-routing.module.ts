@@ -52,6 +52,10 @@ const routes: Routes = [
         loadChildren: "./components/video-library/video-library.module#VideoLibraryModule"
       },
       {
+        path: "banner",
+        loadChildren: "./components/banner/banner.module#BannerModule"
+      },
+      {
         path: "category",
         component: CreateCategoryComponent
       },
