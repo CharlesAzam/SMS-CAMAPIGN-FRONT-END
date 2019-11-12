@@ -1,11 +1,11 @@
-import { NgModule } from "@angular/core";
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from "@angular/router";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import {CreateCategoryComponent} from './components/create-category/create-category.component'
 import {SideNavComponent} from './components/side-nav/side-nav.component'
-
+import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -34,6 +34,10 @@ const routes: Routes = [
       {
         path:'sideBar',
         component: SideNavComponent
+      },
+      {
+        path:'subCategory',
+        component:CreateSubCategoryComponent
       }
       
     ]

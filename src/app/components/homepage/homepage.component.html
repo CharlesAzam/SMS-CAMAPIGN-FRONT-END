@@ -12,7 +12,7 @@
 <button mat-button [matMenuTriggerFor]="mobile">Mobile</button>
 <mat-menu #mobile="matMenu">
   <button mat-menu-item  routerLink="categories" routerLinkActive="active">Categories</button>
-  <button mat-menu-item>Sub Categories</button>
+  <button mat-menu-item (click)="getSubCategories($event)">Sub Categories</button>
   <button mat-menu-item>Tags</button>
   <button mat-menu-item>Channels</button>
   <button mat-menu-item>Banner</button>

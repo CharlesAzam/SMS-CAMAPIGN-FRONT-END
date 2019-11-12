@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-sub-category',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateSubCategoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router,
+    private activatedRoute: ActivatedRoute,) { }
+
+  getSubCategories($event){
+    console.log("Button was clicked ",$event);
+       this.router.navigate(['subCategory'], { relativeTo: this.activatedRoute });
+  }
 
   ngOnInit() {
   }
