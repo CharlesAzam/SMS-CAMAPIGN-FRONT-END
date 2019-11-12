@@ -36,6 +36,11 @@ export class HomepageComponent implements OnInit {
       this.router.navigate(['Tags'], { relativeTo: this.activatedRoute });
   }
 
+  routeToChannels($event){
+    console.log(" Channels was clicked ",$event);
+      this.router.navigate(['Channels'], { relativeTo: this.activatedRoute });
+  }
+
   submit() {
   console.log("as");
   this.router.navigate(['movies'], { relativeTo: this.activatedRoute });

@@ -7,6 +7,7 @@ import {CreateCategoryComponent} from './components/create-category/create-categ
 import {SideNavComponent} from './components/side-nav/side-nav.component'
 import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
 import {CreateTagsComponent} from './components/create-tags/create-tags.component';
+import {CreateChannelsComponent} from './components/create-channels/create-channels.component'
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   {path:"login",component:LoginComponent},
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path:'Tags',
         component:CreateTagsComponent
+      },
+      {
+        path:'Channels',
+        component:CreateChannelsComponent
       }
       
     ]
