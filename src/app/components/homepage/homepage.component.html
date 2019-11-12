@@ -2,7 +2,6 @@
 <button mat-button routerLink="dashboard"  routerLinkActive="active"><img style="width: 25px; height: 25px;" src="assets/brMenu.png"></button>
 <button mat-button [matMenuTriggerFor]="news">News</button>
 <mat-menu #news="matMenu">
-  <button mat-menu-item (click)="getCategories($event)">Categories</button>
   <button mat-menu-item>Story Idea</button>
   <button mat-menu-item>Tag</button>
   <button mat-menu-item>Videos</button>
@@ -11,7 +10,7 @@
 
 <button mat-button [matMenuTriggerFor]="mobile">Mobile</button>
 <mat-menu #mobile="matMenu">
-  <button mat-menu-item  routerLink="categories" routerLinkActive="active">Categories</button>
+  <button mat-menu-item (click)="getCategories($event)" routerLink="categories" routerLinkActive="active">Categories</button>
   <button mat-menu-item (click)="routeToSubCategories($event)">Sub Categories</button>
   <button mat-menu-item (click)="routeToTags($event)">Tags</button>
   <button mat-menu-item (click)="routeToChannels($event)">Channels</button>
