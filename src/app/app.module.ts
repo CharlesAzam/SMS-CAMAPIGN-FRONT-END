@@ -27,13 +27,10 @@ import { CreateChannelsComponent } from './components/create-channels/create-cha
 import { ProductModule } from '../app/components/product/product.module';
 import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
 import { BannerModule } from '../app/components/banner/banner.module';
-import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
-import { NavService } from './components/menu-list-item/nav-service';
 import { CreateNewsTagComponent } from './components/create-news-tag/create-news-tag.component';
 import { CreateNewsStoryComponent } from './components/create-news-story/create-news-story.component';
 import { CreateNewsVideosComponent } from './components/create-news-videos/create-news-videos.component';
 import { CreateNewsPhotosComponent } from './components/create-news-photos/create-news-photos.component';
-// import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +40,6 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     CreateCategoryComponent,
     CardComponentComponent,
     SideNavComponent,
-    MenuListItemComponent,
     CreateSubCategoryComponent,
     CreateTagsComponent,
     CreateChannelsComponent,
@@ -51,7 +47,6 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     CreateNewsStoryComponent,
     CreateNewsVideosComponent,
     CreateNewsPhotosComponent
-    // TopnavComponent
     ],
   imports: [
     BrowserModule,
@@ -72,7 +67,7 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     BannerModule,
     EditorModule,
   ],
-  providers: [MoviesService, NavService],
+  providers: [MoviesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
