@@ -1,83 +1,77 @@
 <div class="container">
   <mat-card>
-    <div class="header">
-      <h2 class="title">Video On Demand</h2>
-    </div>
-    <div class="content">
+    <mat-card-title>Video On Demand</mat-card-title>
+    <mat-card-content>
 
       <form #f="ngForm">
-
+        <!-- 
         <div class="form-group">
           <label>Title:</label>
           <input [(ngModel)]="filter.title" name="title" class="form-control">
-        </div>
+        </div> -->
 
         <div class="form-group">
-          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
+          <!-- <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
             Search
-          </button>
-          <a [routerLink]="['../vod','new']" class="btn btn-default">
-            New
-          </a>
+          </button> -->
 
         </div>
 
       </form>
 
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="vodList.length > 0" style="margin-top: 30px;">
+    <div>
+      <mat-form-field style="width: 92%;">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../vod','new']">
+        New
+      </button>
     </div>
-  </mat-card>
+    <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <mat-card *ngIf="vodList.length > 0">
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
 
-    <table class="table table-contensed">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Title</th>
-          <th>Descriptions</th>
-          <th>Tags</th>
-          <th>Release Date</th>
-          <th>Starring</th>
-          <th>Director</th>
-          <th>Categories</th>
-          <th>Country</th>
-          <th>Sub Category ID</th>
-          <th>Lagnuage Details</th>
-          <th>Is Free</th>
-          <th>Is Free For Azam?</th>
-          <th>Status</th>
-          <th>Bounding Box</th>
-          <th>CDN ID</th>
-          <th>Duration</th>
-          <th>Image ThumbNail</th>
-        </tr>
-      </thead>
-      <tr *ngFor="let item of vodList" [class.active]="item === selectedVod">
-        <td>{{item.id}}</td>
-        <td>{{item.title}}</td>
-        <td>{{item.descriptions}}</td>
-        <td>{{item.tags}}</td>
-        <td>{{item.releaseDate}}</td>
-        <td>{{item.starring}}</td>
-        <td>{{item.director}}</td>
-        <td>{{item.categoryID}}</td>
-        <td>{{item.country}}</td>
-        <td>{{item.subCategoryID}}</td>
-        <td>{{item.languageDetail}}</td>
-        <td>{{item.isFree}}</td>
-        <td>{{item.isFreeForAzam}}</td>
-        <td>{{item.Status}}</td>
-        <td>{{item.boundingBox}}</td>
-        <td>{{item.cdnId}}</td>
-        <td>{{item.duration}}</td>
-        <td>{{item.imageThumb}}</td>
-        <td>
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
 
-          <a [routerLink]="['../vod', item.id ]">Details</a> |
-          <a (click)="select(item)">Select</a>
-        </td>
-      </tr>
+      <!-- Name Column -->
+      <ng-container matColumnDef="Title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="Category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Categories </th>
+        <td mat-cell *matCellDef="let element"> {{element.categoryID}} </td>
+      </ng-container> <!-- Sub Categories Column -->
+
+      <!-- Sub Categories Column -->
+      <ng-container matColumnDef="subCategoryID" mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef> Sub Categories </th>
+        <td mat-cell *matCellDef="let element"> {{element.subCategoryID}} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
   </mat-card>
+
 </div>

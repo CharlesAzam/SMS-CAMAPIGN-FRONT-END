@@ -6,20 +6,20 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class VodService {
-    
+
     constructor(private http: HttpClient) {
     }
 
     vodList: Vod[] = [];
-  
+
     findById(id: string): Observable<Vod> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3000/api/vod';
         let params = { "id": id };
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
-        return this.http.get<Vod>(url, {params, headers});
+            .set('Accept', 'application/json');
+        return this.http.get<Vod>(url, { params, headers });
     }
-    
+
     load(filter: VodFilter): void {
         this.find(filter).subscribe(
             result => {
@@ -34,20 +34,20 @@ export class VodService {
     find(filter: VodFilter): Observable<Vod[]> {
         let url = 'http://34.245.129.208:3000/api/vod';
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
+            .set('Accept', 'application/json');
 
         let params = {
             "title": filter.title,
         };
 
-        return this.http.get<Vod[]>(url, {params, headers});
+        return this.http.get<Vod[]>(url, { params, headers });
     }
 
     save(entity: Vod): Observable<Vod> {
         let url = 'http://34.245.129.208:3000/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.post<Vod>(url, entity, {headers});
+        return this.http.post<Vod>(url, entity, { headers });
     }
 }
 

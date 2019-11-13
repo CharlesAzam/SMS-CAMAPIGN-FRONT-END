@@ -2,13 +2,13 @@ export class Vod {
     id: string;
     title: string;
     descriptions: string;
-    tags: [];
+    tags: any[];
     releaseDate: any;
     starring: string;
     director: string;
-    categoryID: [];
+    categoryID: any[];
     country: string;
-    subCategoryID: [];
+    subCategoryID: any[];
     languageDetail: string;
     isFree: boolean;
     isFreeForAzam: boolean;
