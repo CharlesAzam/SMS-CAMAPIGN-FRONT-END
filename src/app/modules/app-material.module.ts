@@ -18,6 +18,8 @@ import {
   MatRadioModule,
   MatBadgeModule,
   MatButtonToggleModule,
+  MatTabsModule,
+  MatTableModule,
 } from '@angular/material';
 
 const modules = [
@@ -41,6 +43,9 @@ const modules = [
   MatRadioModule,
   MatBadgeModule,
   MatButtonToggleModule,
+  MatTabsModule,
+  MatTableModule,
+  
 ];
 
 @NgModule({

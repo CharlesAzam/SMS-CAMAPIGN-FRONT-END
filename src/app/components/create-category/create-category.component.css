@@ -1,11 +1,15 @@
+
 .container2{
     margin-top: 3%;
     float: Right !important;
     width: 450px  !important;
-    height: 700px;
+    height: 650px;
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 30px;
+    border: 1px;
+    box-shadow: 3px 3px 3px 3px #888888;
+    border-radius: 10px;
 }
 
 .container3{
