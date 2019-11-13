@@ -11,25 +11,25 @@
 
                     <form *ngIf="banner">
 
-                        <div class="form-group">
-                            <label>Name:</label>
-                            <input [(ngModel)]="banner.name" name="name" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Name" [(ngModel)]="banner.name">
+                        </mat-form-field>
 
-                        <div class="form-group">
-                            <label>Description:</label>
-                            <input [(ngModel)]="banner.description" name="description" class="form-control">
-                        </div>
 
-                        <div class="form-group">
-                            <label>Image:</label>
-                            <input [(ngModel)]="banner.image" name="image" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Description" [(ngModel)]="banner.description">
+                        </mat-form-field>
 
-                        <div class="form-group">
-                            <label>priority:</label>
-                            <input type='number' [(ngModel)]="banner.priority" name="priority" class="form-control">
-                        </div>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Image" [(ngModel)]="banner.image">
+                        </mat-form-field>
+
+
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Priority" [(ngModel)]="banner.priority">
+                        </mat-form-field>
 
                         <div class="form-group">
                             <mat-slide-toggle [(ngModel)]="banner.status">Status</mat-slide-toggle>
