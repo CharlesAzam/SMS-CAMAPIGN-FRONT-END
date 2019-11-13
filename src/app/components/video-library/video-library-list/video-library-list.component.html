@@ -1,58 +1,76 @@
 <div class="container">
   <mat-card>
-
     <div class="header">
       <h2 class="title">Video Library</h2>
     </div>
     <div class="content">
 
-      <form #f="ngForm">
-
-        <div class="form-group">
-          <label>Name:</label>
-          <input [(ngModel)]="filter.title" name="title" class="form-control">
-        </div>
-
-        <div class="form-group">
-          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
-            Search
-          </button>
-          <a [routerLink]="['../video-library','new']" class="btn btn-default">
-            New
-          </a>
-
-        </div>
-
-      </form>
-
     </div>
   </mat-card>
 
-  <mat-card *ngIf="videoLibraryList.length > 0">
-
-    <table class="table table-contensed">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Name</th>
-          <th>Stream URL</th>
-          <th>JWP Media ID</th>
-          <th>Duration</th>
-        </tr>
-      </thead>
-      <tr *ngFor="let item of videoLibraryList" [class.active]="item === selectedVideoLibrary">
-        <td>{{item.id}}</td>
-        <td>{{item.title}}</td>
-        <td>{{item.streamURL}}</td>
-        <td>{{item.jwMediaID}}</td>
-        <td>{{item.duration}}</td>
-        <td>
-
-          <a [routerLink]="['../videoLibrary', item.id ]">Details</a> |
-          <a (click)="select(item)">Select</a>
-        </td>
-      </tr>
-    </table>
-
-  </mat-card>
+  
+  <mat-card *ngIf="videoLibraryList.length > 0" style="margin-top: 30px;">
+      <div>
+        <mat-form-field style="width: 92%;">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../video-library','new']">
+          New
+        </button>
+      </div>
+  
+      <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
+  
+        <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+  
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+  
+        <!-- Category Column -->
+        <ng-container matColumnDef="streamURL">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> streamURL </th>
+          <td mat-cell *matCellDef="let element"> {{element.streamURL}} </td>
+        </ng-container> <!-- Sub Categories Column -->
+  
+        <!-- Sub Categories Column -->
+        <ng-container matColumnDef="jwMediaID" mat-sort-header>
+          <th mat-header-cell *matHeaderCellDef> jwMediaID </th>
+          <td mat-cell *matCellDef="let element"> {{element.jwMediaID}} </td>
+        </ng-container>
+  
+        <!-- Status Column -->
+        <ng-container matColumnDef="duration">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> duration </th>
+          <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon aria-hidden="false" (click)="delete(row)" aria-label="Example home icon">delete</mat-icon>
+            <span style="margin-left: 20px;"></span>
+            <mat-icon aria-hidden="false" [routerLink]="['../video-library', row.id]" aria-label="Example home icon">edit</mat-icon>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  
+  
+  
+    </mat-card>
+  
 </div>

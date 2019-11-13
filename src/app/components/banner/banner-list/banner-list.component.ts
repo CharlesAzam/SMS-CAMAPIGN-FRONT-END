@@ -19,7 +19,7 @@ export class BannerListComponent {
     selectedBanner: Banner;
     dataSource = new MatTableDataSource<Banner>(this.bannerList);
 
-    displayedColumns: string[] = ['id', 'name', 'description', 'status']
+    displayedColumns: string[] = ['id', 'name', 'description', 'status', 'action']
 
 
     get bannerList(): Banner[] {

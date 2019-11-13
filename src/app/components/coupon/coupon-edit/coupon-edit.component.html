@@ -11,10 +11,9 @@
 
                     <form *ngIf="coupon">
 
-                        <div class="form-group">
-                            <label>Code:</label>
-                            <input [(ngModel)]="coupon.code" name="code" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Code" [(ngModel)]="coupon.code">
+                        </mat-form-field>
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
@@ -33,14 +32,12 @@
 
                         </div>
 
-                        <div class="form-group">
-                            <label>Percentage:</label>
-                            <input [(ngModel)]="coupon.percentage" name="percentage" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Percentage" [(ngModel)]="coupon.percentage">
+                        </mat-form-field>
 
                         <div class="form-group">
                             <mat-slide-toggle [(ngModel)]="coupon.status">Status</mat-slide-toggle>
-
                         </div>
 
                         <div class="form-group">

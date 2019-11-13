@@ -51,6 +51,17 @@
         <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-icon aria-hidden="false" (click)="delete(row)" aria-label="Example home icon">delete</mat-icon>
+          <span style="margin-left: 20px;"></span>
+          <mat-icon aria-hidden="false" [routerLink]="['../vod', row.id]" aria-label="Example home icon">edit
+          </mat-icon>
+        </td>
+      </ng-container>
+
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

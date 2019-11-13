@@ -24,7 +24,7 @@ export class VodListComponent implements OnInit {
     dataSource = new MatTableDataSource<Vod>(this.vodList);
 
 
-    displayedColumns: string[] = ['id', 'Title', 'Category', 'subCategoryID', 'status'];
+    displayedColumns: string[] = ['id', 'Title', 'Category', 'subCategoryID', 'status', 'action'];
 
     get vodList(): Vod[] {
         return [{ id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },

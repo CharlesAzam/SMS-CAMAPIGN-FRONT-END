@@ -10,25 +10,23 @@
                     <p *ngIf="errors">{{ errors }}</p>
 
                     <form *ngIf="radio">
-                        <div class="form-group">
-                            <label>Name:</label>
-                            <input [(ngModel)]="radio.name" name="name" class="form-control">
-                        </div>
 
-                        <div class="form-group">
-                            <label>Description:</label>
-                            <input [(ngModel)]="radio.description" name="description" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Name" [(ngModel)]="radio.name">
+                        </mat-form-field>
 
-                        <div class="form-group">
-                            <label>Channel URL:</label>
-                            <input [(ngModel)]="radio.channelUrl" name="channelUrl" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Description" [(ngModel)]="radio.description">
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Channel URL" [(ngModel)]="radio.channelUrl">
+                        </mat-form-field>
 
                         <div class="form-group">
                             <label>Upload Logo:</label>
                             <input id="logo" type="file" [(ngModel)]="radio.logo" />
-                            
+
                         </div>
 
                         <div class="form-group">

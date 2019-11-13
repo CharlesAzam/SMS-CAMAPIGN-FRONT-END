@@ -1,56 +1,81 @@
 <div class="container">
   <mat-card>
     <div class="header">
-      <h2 class="title">Coupon</h2>
+      <h2 class="title">Coupons</h2>
     </div>
     <div class="content">
-
-      <form #f="ngForm">
-
-        <div class="form-group">
-          <label>Code:</label>
-          <input [(ngModel)]="filter.code" name="name" class="form-control">
-          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
-            Search
-          </button>
-          <a [routerLink]="['../coupon','new']" class="btn btn-default">
-            New
-          </a>
-
-        </div>
-
-      </form>
 
     </div>
   </mat-card>
 
-  <mat-card *ngIf="couponList.length > 0">
+  <mat-card *ngIf="couponList.length > 0" style="margin-top: 30px;">
+    <div>
+      <mat-form-field style="width: 92%;">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
 
-    <table class="table table-contensed">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Code</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Percentage</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tr *ngFor="let item of couponList" [class.active]="item === selectedCoupon">
-        <td>{{item.id}}</td>
-        <td>{{item.code}}</td>
-        <td>{{item.startDate}}</td>
-        <td>{{item.endDate}}</td>
-        <td>{{item.percentage}}</td>
-        <td>{{item.status}}</td>
-        <td>
+      <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../coupon','new']">
+        New
+      </button>
+    </div>
 
-          <a [routerLink]="['../coupon', item.id ]">Details</a> |
-          <a (click)="select(item)">Select</a>
+    <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> code </th>
+        <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> startDate </th>
+        <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+      </ng-container> <!-- Sub Categories Column -->
+
+      <!-- Sub Categories Column -->
+      <ng-container matColumnDef="endDate" mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef> endDate </th>
+        <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="percentage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> percentage </th>
+        <td mat-cell *matCellDef="let element"> {{element.percentage}} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-icon aria-hidden="false" (click)="delete(row)" aria-label="Example home icon">delete</mat-icon>
+          <span style="margin-left: 20px;"></span>
+          <mat-icon aria-hidden="false" [routerLink]="['../coupon', row.id]" aria-label="Example home icon">edit
+          </mat-icon>
         </td>
-      </tr>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
 
   </mat-card>
 </div>

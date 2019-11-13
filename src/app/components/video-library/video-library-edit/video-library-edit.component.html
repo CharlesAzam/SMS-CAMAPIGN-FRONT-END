@@ -11,30 +11,32 @@
 
                     <form *ngIf="videoLibrary">
 
-                        <div class="form-group">
-                            <label>id:</label>
-                            <input [(ngModel)]="videoLibrary.id" name="id" class="form-control">
-                        </div>
 
-                        <div class="form-group">
-                            <label>Name:</label>
-                            <input [(ngModel)]="videoLibrary.title" name="title" class="form-control">
-                        </div>
 
-                        <div class="form-group">
-                            <label>Stream URL:</label>
-                            <input [(ngModel)]="videoLibrary.streamURL" name="streamURL" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Id" [(ngModel)]="videoLibrary.id" name="id">
+                        </mat-form-field>
 
-                        <div class="form-group">
-                            <label>JWP Media ID:</label>
-                            <input [(ngModel)]="videoLibrary.jwMediaID" name="jwMediaID" class="form-control">
-                        </div>
 
-                        <div class="form-group">
-                            <label>Duration:</label>
-                            <input [(ngModel)]="videoLibrary.duration" name="duration" class="form-control">
-                        </div>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Name" [(ngModel)]="videoLibrary.title" name="title">
+                        </mat-form-field>
+
+
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Stream URL" [(ngModel)]="videoLibrary.streamURL"
+                                name="streamURL">
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="JWP Media ID" [(ngModel)]="videoLibrary.jwMediaID"
+                                name="jwMediaID">
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Duration" [(ngModel)]="videoLibrary.duration" name="duration">
+                        </mat-form-field>
 
                         <div class="form-group">
                             <button (click)="save()" class="btn btn-default">Save</button>

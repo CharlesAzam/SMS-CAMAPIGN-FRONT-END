@@ -14,7 +14,7 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
 
-      <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../vod','new']">
+      <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../banner','new']">
         New
       </button>
     </div>
@@ -64,6 +64,15 @@
       <ng-container matColumnDef="isDeleted">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Deleted? </th>
         <td mat-cell *matCellDef="let element"> {{element.isDeleted}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-icon aria-hidden="false" (click)="delete(row)" aria-label="Example home icon">delete</mat-icon>
+          <span style="margin-left: 20px;"></span>
+          <mat-icon aria-hidden="false" [routerLink]="['../banner', row.id]" aria-label="Example home icon">edit</mat-icon>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
