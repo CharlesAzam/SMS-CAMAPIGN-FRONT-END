@@ -20,6 +20,7 @@ import {
   MatButtonToggleModule,
   MatTabsModule,
   MatTableModule,
+  MatPaginatorModule,
 } from '@angular/material';
 
 const modules = [
@@ -45,6 +46,7 @@ const modules = [
   MatButtonToggleModule,
   MatTabsModule,
   MatTableModule,
+  MatPaginatorModule,
   
 ];
 
