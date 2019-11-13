@@ -1,12 +1,17 @@
-import { NgModule } from "@angular/core";
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from "@angular/router";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
-import { CreateCategoryComponent } from './components/create-category/create-category.component'
-import { SideNavComponent } from './components/side-nav/side-nav.component'
-
-
+import {CreateCategoryComponent} from './components/create-category/create-category.component'
+import {SideNavComponent} from './components/side-nav/side-nav.component'
+import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
+import {CreateTagsComponent} from './components/create-tags/create-tags.component';
+import {CreateChannelsComponent} from './components/create-channels/create-channels.component'
+import {CreateNewsTagComponent} from './components/create-news-tag/create-news-tag.component'
+import {CreateNewsStoryComponent} from './components/create-news-story/create-news-story.component'
+import {CreateNewsVideosComponent} from './components/create-news-videos/create-news-videos.component'
+import {CreateNewsPhotosComponent} from './components/create-news-photos/create-news-photos.component'
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -62,6 +67,36 @@ const routes: Routes = [
       {
         path: 'sideBar',
         component: SideNavComponent
+      },
+      {
+        path:'subCategory',
+        component:CreateSubCategoryComponent
+      },
+      {
+        path:'Tags',
+        component:CreateTagsComponent
+      },
+      {
+        path:'Tag',
+        component:CreateNewsTagComponent
+
+      },
+      {
+        path:'Channels',
+        component:CreateChannelsComponent
+      },
+      {
+        path: 'StoriesIdea',
+        component:CreateNewsStoryComponent
+      },
+      {
+        path:'NewsVideos',
+        component:CreateNewsVideosComponent
+      },
+      {
+        path:'NewsPhoto',
+        component:CreateNewsPhotosComponent
+
       }
 
     ]

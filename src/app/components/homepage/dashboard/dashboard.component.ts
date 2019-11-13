@@ -17,9 +17,10 @@ export class DashboardComponent implements OnInit {
     "TV Series",
     "News",
     "Radio",
-    "TV Guide"
+    "TV Guide",
+    "Home",
+    "Stories"
   ]
-
 
   ngOnInit() {
   }

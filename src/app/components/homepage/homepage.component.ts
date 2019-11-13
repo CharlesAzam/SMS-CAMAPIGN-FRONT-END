@@ -108,8 +108,23 @@ export class HomepageComponent implements OnInit {
     //    this.router.navigate(['sideBar'], { relativeTo: this.activatedRoute });
   }
 
+  routeToSubCategories($event){
+  
+      this.router.navigate(['subCategory'], { relativeTo: this.activatedRoute });
+  }
+
+  routeToTags($event){
+    
+      this.router.navigate(['Tags'], { relativeTo: this.activatedRoute });
+  }
+
+  routeToChannels($event){
+    
+      this.router.navigate(['Channels'], { relativeTo: this.activatedRoute });
+  }
+
   submit() {
-    console.log("as");
+  
     this.router.navigate(['movies'], { relativeTo: this.activatedRoute });
   }
 }

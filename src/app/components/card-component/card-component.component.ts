@@ -12,9 +12,8 @@ export class CardComponentComponent implements OnInit {
   }
   
   @Input() public card_title:String;
-  @Input() public Image_src:String;
-
-
+  @Input() public Image_src:String; 
+  @Input() public card_notification: String; 
   ngOnInit() {
   }
 
