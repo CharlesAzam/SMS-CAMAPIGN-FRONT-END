@@ -23,6 +23,8 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ProductModule } from '../app/components/product/product.module';
 import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
 import { BannerModule } from '../app/components/banner/banner.module';
+import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
+import { NavService } from './components/menu-list-item/nav-service';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { BannerModule } from '../app/components/banner/banner.module';
     CreateCategoryComponent,
     CardComponentComponent,
     SideNavComponent,
+    MenuListItemComponent,
     // TopnavComponent
     ],
   imports: [
@@ -53,7 +56,7 @@ import { BannerModule } from '../app/components/banner/banner.module';
     VideoLibraryModule,
     BannerModule,
   ],
-  providers: [MoviesService],
+  providers: [MoviesService, NavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
