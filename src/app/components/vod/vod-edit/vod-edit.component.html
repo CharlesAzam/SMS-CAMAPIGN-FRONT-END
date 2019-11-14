@@ -12,11 +12,11 @@
                     <form *ngIf="vod">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Title" [(ngModel)]="vod.title">
+                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title">
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <textarea matInput placeholder="Description" [(ngModel)]="vod.descriptions"></textarea>
+                            <textarea matInput placeholder="Description" [(ngModel)]="vod.descriptions" name="description"></textarea>
                         </mat-form-field>
 
                         <div class="form-group">
@@ -30,26 +30,26 @@
                                     </mat-chip>
                                     <input placeholder="Enter tag..." [matChipInputFor]="chipList"
                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" name="tags">
                                 </mat-chip-list>
                             </mat-form-field>
                         </div>
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [matDatepicker]="vod.releaseDatee" placeholder="Release Date">
-                                <mat-datepicker-toggle matSuffix [for]="vod.releaseDatee"></mat-datepicker-toggle>
+                                <input matInput [(ngModel)]="releaseDate" [matDatepicker]="picker" placeholder="Release Date" name="releaseDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                         </div>
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Starring" [(ngModel)]="vod.starring">
+                            <input matInput placeholder="Starring" [(ngModel)]="vod.starring" name="starring">
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Director" [(ngModel)]="vod.director">
+                            <input matInput placeholder="Director" [(ngModel)]="vod.director" name="director">
                         </mat-form-field>
 
 
@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
                                 <mat-label>Country</mat-label>
-                                <mat-select [(ngModel)]="vod.country">
+                                <mat-select [(ngModel)]="vod.country" multiple>
                                     <mat-option *ngFor="let country of countries" [value]="country">{{country}}
                                     </mat-option>
                                 </mat-select>
@@ -86,7 +86,7 @@
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Language Details" [(ngModel)]="vod.languageDetail">
+                            <input matInput placeholder="Language Details" [(ngModel)]="vod.languageDetail" name="languageDetail">
                         </mat-form-field>
 
 
@@ -110,20 +110,20 @@
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox">
+                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox" name="boundingBox">
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="CDN ID" [(ngModel)]="vod.cdnId">
+                            <input matInput placeholder="CDN ID" [(ngModel)]="vod.cdnId" name="cdnId">
                         </mat-form-field>
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Duration" [(ngModel)]="vod.duration">
+                            <input matInput placeholder="Duration" [(ngModel)]="vod.duration" name="duration">
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Image Thumbnail" [(ngModel)]="vod.imageThumb">
+                            <input matInput placeholder="Image Thumbnail" [(ngModel)]="vod.imageThumb" name="imageThumb">
                         </mat-form-field>
 
 

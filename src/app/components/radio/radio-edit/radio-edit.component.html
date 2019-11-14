@@ -12,20 +12,20 @@
                     <form *ngIf="radio">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Name" [(ngModel)]="radio.name">
+                            <input matInput placeholder="Name" [(ngModel)]="radio.name" name="name">
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Description" [(ngModel)]="radio.description">
+                            <input matInput placeholder="Description" [(ngModel)]="radio.description" name="description">
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Channel URL" [(ngModel)]="radio.channelUrl">
+                            <input matInput placeholder="Channel URL" [(ngModel)]="radio.channelUrl" name="channelUrl">
                         </mat-form-field>
 
                         <div class="form-group">
                             <label>Upload Logo:</label>
-                            <input id="logo" type="file" [(ngModel)]="radio.logo" />
+                            <input id="logo" type="file" [(ngModel)]="radio.logo"  name="logo"/>
 
                         </div>
 

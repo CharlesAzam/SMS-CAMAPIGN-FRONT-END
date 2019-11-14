@@ -12,28 +12,28 @@
                     <form *ngIf="coupon">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Code" [(ngModel)]="coupon.code">
+                            <input matInput placeholder="Code" [(ngModel)]="coupon.code" name="code">
                         </mat-form-field>
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [matDatepicker]="coupon.startDate" placeholder="Start Date">
-                                <mat-datepicker-toggle matSuffix [for]="coupon.startDate"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
+                                <input matInput [(ngModel)]="coupon.startDate" [matDatepicker]="pickerStartDate" placeholder="Start Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerStartDate></mat-datepicker>
                             </mat-form-field>
                         </div>
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [matDatepicker]="coupon.endDate" placeholder="End Date">
-                                <mat-datepicker-toggle matSuffix [for]="coupon.endDate"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
+                                <input matInput [(ngModel)]="coupon.endDate" [matDatepicker]="pickerEndDate" placeholder="End Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerEndDate></mat-datepicker>
                             </mat-form-field>
 
                         </div>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Percentage" [(ngModel)]="coupon.percentage">
+                            <input matInput placeholder="Percentage" [(ngModel)]="coupon.percentage" name="percentage">
                         </mat-form-field>
 
                         <div class="form-group">
