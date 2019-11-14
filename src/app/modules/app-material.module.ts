@@ -46,7 +46,12 @@ const modules = [
   MatButtonToggleModule,
   MatTabsModule,
   MatTableModule,
+<<<<<<< HEAD
   MatPaginatorModule
+=======
+  MatPaginatorModule,
+  
+>>>>>>> feature/TableList
 ];
 
 @NgModule({

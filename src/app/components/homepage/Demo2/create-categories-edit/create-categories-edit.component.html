@@ -1,26 +1,31 @@
 <div class="card">
     <div class="header">
-        <h1 class="title">Mobile Categories Detail 2</h1>
+        <h1 class="title">create-categories Detailzzz</h1>
     </div>
     <div class="content">
     
         <p *ngIf="errors">{{ errors }}</p>
     
-        <form *ngIf="categories">
+        <form *ngIf="createCategories">
                 
             <div class="form-group">
                 <label>id:</label>
-                {{categories.id || 'n/a'}} <input [(ngModel)]="categories.id" name="id" class="form-control">
+                <input [(ngModel)]="createCategories.id" name="id" class="form-control">
             </div>
                 
             <div class="form-group">
                 <label>Category Name:</label>
-                <input [(ngModel)]="categories.categoryName" name="categoryName" class="form-control">
+                <input [(ngModel)]="createCategories.categoryName" name="categoryName" class="form-control">
             </div>
                 
             <div class="form-group">
-                <label>Description:</label>
-                <input [(ngModel)]="categories.descriptiom" name="descriptiom" class="form-control">
+                <label>Status:</label>
+                <input [(ngModel)]="createCategories.status" name="status" class="form-control">
+            </div>
+                
+            <div class="form-group">
+                <label>Action:</label>
+                <input [(ngModel)]="createCategories.action" name="action" class="form-control">
             </div>
         
             <div class="form-group">

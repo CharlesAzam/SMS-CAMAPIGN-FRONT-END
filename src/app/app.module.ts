@@ -31,6 +31,11 @@ import { CreateNewsTagComponent } from './components/create-news-tag/create-news
 import { CreateNewsStoryComponent } from './components/create-news-story/create-news-story.component';
 import { CreateNewsVideosComponent } from './components/create-news-videos/create-news-videos.component';
 import { CreateNewsPhotosComponent } from './components/create-news-photos/create-news-photos.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { CreateCategoriesModule } from './components/homepage/Demo2/create-categories.module';
+
+// import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +51,9 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     CreateNewsTagComponent,
     CreateNewsStoryComponent,
     CreateNewsVideosComponent,
-    CreateNewsPhotosComponent
+    CreateNewsPhotosComponent,
+    CategoryFormComponent,
+    // TopnavComponent
     ],
   imports: [
     BrowserModule,
@@ -66,6 +73,7 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     VideoLibraryModule,
     BannerModule,
     EditorModule,
+    CreateCategoriesModule,
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]
