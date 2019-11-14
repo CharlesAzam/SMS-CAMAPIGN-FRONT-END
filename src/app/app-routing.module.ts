@@ -13,7 +13,7 @@ import {CreateNewsStoryComponent} from './components/create-news-story/create-ne
 import {CreateNewsVideosComponent} from './components/create-news-videos/create-news-videos.component'
 import {CreateNewsPhotosComponent} from './components/create-news-photos/create-news-photos.component'
 import {CategoryFormComponent} from './components/category-form/category-form.component'
-
+import {CreateCategoriesModule} from './components/homepage/Demo2/create-categories.module'
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -100,6 +100,10 @@ const routes: Routes = [
       {
         path:'CategoryForm',
         component:CategoryFormComponent
+      },
+      {
+        path:'Demo2',
+        loadChildren:'./components/homepage/Demo2/create-categories.module#CreateCategoriesModule'
       }
 
     ]
