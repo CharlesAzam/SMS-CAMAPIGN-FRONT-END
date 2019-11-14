@@ -1,0 +1,34 @@
+{
+    "title": "create-categories",
+    "entity": "create-categories",
+    "api": {
+        "url": "http://34.245.129.208:3000/api/vod"
+    },
+    "filter": [
+        "name"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "categoryName",
+            "label": "Category Name",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "label": "Status",
+            "type": "string"
+        },
+        {
+            "name": "action",
+            "label": "Action",
+            "type": "string"
+        }
+    ]
+}

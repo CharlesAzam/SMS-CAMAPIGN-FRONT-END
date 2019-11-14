@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="header">
+        <h1 class="title">Demo Detail</h1>
+    </div>
+    <div class="content">
+    
+        <p *ngIf="errors">{{ errors }}</p>
+    
+        <form *ngIf="demo">
+                
+            <div class="form-group">
+                <label>id:</label>
+                <input [(ngModel)]="demo.id" name="id" class="form-control">
+            </div>
+                
+            <div class="form-group">
+                <label>Name:</label>
+                <input [(ngModel)]="demo.name" name="name" class="form-control">
+            </div>
+        
+            <div class="form-group">
+                <button
+                (click)="save()"
+                class="btn btn-default">Save</button>
+            </div>
+
+        </form>
+    
+    </div>
+</div>
