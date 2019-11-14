@@ -30,6 +30,8 @@ import { CreateNewsTagComponent } from './components/create-news-tag/create-news
 import { CreateNewsStoryComponent } from './components/create-news-story/create-news-story.component';
 import { CreateNewsVideosComponent } from './components/create-news-videos/create-news-videos.component';
 import { CreateNewsPhotosComponent } from './components/create-news-photos/create-news-photos.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     CreateNewsTagComponent,
     CreateNewsStoryComponent,
     CreateNewsVideosComponent,
-    CreateNewsPhotosComponent
+    CreateNewsPhotosComponent,
+    CategoryFormComponent,
     // TopnavComponent
     ],
   imports: [
@@ -66,6 +69,7 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
     ProductModule,
     VideoLibraryModule,
     EditorModule,
+
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]
