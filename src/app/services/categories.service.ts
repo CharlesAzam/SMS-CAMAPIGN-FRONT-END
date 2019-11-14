@@ -18,20 +18,20 @@ export class CategoriesService {
         return this.http.get<Categories>(url, { params, headers });
     }
     load(filter: CategoriesFilter): void {
-        this.find(filter).subscribe(result => {
-            this.categoriesList = result;
+        this.find(filter).subscribe((result: any) => {
+            this.categoriesList = result.data;
         }, err => {
             console.error('error loading', err);
         });
     }
     find(filter: CategoriesFilter): Observable<Categories[]> {
-        let url = 'http://34.245.129.208:3000/api/categories';
+        let url = 'http://34.245.129.208:3000/cms/category-list';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        let params = {
-            "categoryName": filter.categoryName,
-        };
-        return this.http.get<Categories[]>(url, { params, headers });
+        // let params = {
+        //     "categoryName": filter.categoryName,
+        // };
+        return this.http.get<Categories[]>(url);
     }
     save(entity: Categories): Observable<Categories> {
         let url = 'http://34.245.129.208:3000/api/categories';
