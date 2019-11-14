@@ -1,156 +1,119 @@
 <mat-tab-group>
-     <mat-tab label="Swahili">
-               <h2>Categories</h2>
-               <div class="main-content">
-                         <div class="container3">
-                                   <div class="container-btn">
-                                           <button type="button" mat-raised-button (click)="showForm()" class="btn btn-primary btn-lg">Create Category</button>     
-                                   </div>
-                                   <div class="container2" [hidden]="isShow">
-                                           <h2>Category</h2>
-                                           <form action="#">
-                                             <div class="form-group">
-                                                    <label for="Decription">Title</label>
-                                               <mat-form-field class="input-layouts">
-                                                    <input matInput placeholder="Enter title" value=" ">
-                                               </mat-form-field>
-                                             </div>
-                                             <div class="form-group">
-                                               <label for="Decription">Description:</label>
-                                               <mat-form-field class="input-layouts">
-                                                         <textarea matInput placeholder="Enter Descsption" value=" "></textarea>
-                                               </mat-form-field>
-                                             </div>
-                           
-                                             <div class="form-group">
-                                                   <label for="Decription">Image Thumb:</label>
-                                                   <input type="file" class="form-control" id="img_thumb" placeholder="Upload image thumb" name="img_thumb">
-                                              </div>
-                           
-                                              <div class="form-group">
-                                                   <label for="Decription" >Images:</label>
-                                                   <input type="file" class="form-control" id="pwd" placeholder="Enter Upload image thumb" name="pwd">
-                                              </div>
-                                              <div class="form-group">          
-                                                   <mat-form-field style="width: 100%;">
-                                                         <mat-label>Tags</mat-label>
-                                                         <mat-select [formControl]="toppings" multiple>
-                                                           <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                                                         </mat-select>
-                                                    </mat-form-field>   
-                                              </div>
-                                              <div class="form-group">
-                                                   <mat-form-field style="width: 100%;">
-                                                         <mat-label>Category</mat-label>
-                                                         <mat-select [formControl]="toppings">
-                                                              <mat-option *ngFor="let topping of toppingList2" [value]="topping">{{topping}}</mat-option>
-                                                         </mat-select>
-                                                   </mat-form-field>
-                                              </div>
-                                             
-                                              <div style="float: left !important;">
-                                                   <button class="btn-submit"  mat-raised-button type="submit">Submit</button>      
-                                              </div>
-                                             
-                                           </form> 
-                                         </div>          
-                           </div>
-                           <div class="table-contaniner">
-                                   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <mat-tab label="Swahili">
+                    <h2 class="content-header">Categories SW</h2>
+                    <div   class="container-btn1">
+                              <button type="button" mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create Category</button>     
+                    </div>
+                    <div class="main-content">
+                     
+                                <div class="table-contaniner">
 
-                                             <!--- Note that these columns can be defined in any order.
-                                                   The actual rendered columns are set as a property on the row definition" -->
-                                           
-                                             <!-- Position Column -->
-                                             <ng-container matColumnDef="position">
-                                               <th mat-header-cell *matHeaderCellDef> No. </th>
-                                               <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                                             </ng-container>
-                                           
-                                             <!-- Name Column -->
-                                             <ng-container matColumnDef="name">
-                                               <th mat-header-cell *matHeaderCellDef> Category Name </th>
-                                               <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                             </ng-container>
-                                           
-                                             <!-- Weight Column -->
-                                             <ng-container matColumnDef="weight">
-                                               <th mat-header-cell *matHeaderCellDef> Status </th>
-                                               <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
-                                             </ng-container>
-                                           
-                                             <!-- Symbol Column -->
-                                             <ng-container matColumnDef="symbol">
-                                               <th mat-header-cell *matHeaderCellDef> Action </th>
-                                               <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                                             </ng-container>
-                                           
-                                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                           </table>
-                                           
-                                           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                           </div>                  
-                                           
-               </div>      
-              
-     </mat-tab>
-     <mat-tab label="English">
-               <div class="container3">
-                         <div class="container-btn">
-                                 <button type="button" mat-raised-button (click)="showForm()" class="btn btn-primary btn-lg">Create Category</button>     
-                         </div>
-                         <div class="container2" [hidden]="isShow">
-                                 <h2>Category</h2>
-                                 <form action="#">
-                                   <div class="form-group">
-                                          <label for="Decription">Title</label>
-                                     <mat-form-field class="input-layouts">
-                                          <input matInput placeholder="Enter title" value=" ">
-                                     </mat-form-field>
-                                   </div>
-                                   <div class="form-group">
-                                     <label for="Decription">Description:</label>
-                                     <mat-form-field class="input-layouts">
-                                               <textarea matInput placeholder="Enter Descsption" value=" "></textarea>
-                                     </mat-form-field>
-                                   </div>
-                 
-                                   <div class="form-group">
-                                         <label for="Decription">Image Thumb:</label>
-                                         <input type="file" class="form-control" id="img_thumb" placeholder="Upload image thumb" name="img_thumb">
-                                    </div>
-                 
-                                    <div class="form-group">
-                                         <label for="Decription" >Images:</label>
-                                         <input type="file" class="form-control" id="pwd" placeholder="Enter Upload image thumb" name="pwd">
-                                    </div>
-                                    <div class="form-group">          
-                                         <mat-form-field style="width: 100%;">
-                                               <mat-label>Tags</mat-label>
-                                               <mat-select [formControl]="toppings" multiple>
-                                                 <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                                               </mat-select>
-                                          </mat-form-field>   
-                                    </div>
-                                    <div class="form-group">
-                                         <mat-form-field style="width: 100%;">
-                                               <mat-label>Category</mat-label>
-                                               <mat-select [formControl]="toppings">
-                                                    <mat-option *ngFor="let topping of toppingList2" [value]="topping">{{topping}}</mat-option>
-                                               </mat-select>
-                                         </mat-form-field>
-                                    </div>
-                                   
-                                    <div style="float: left !important;">
-                                         <button class="btn-submit"  mat-raised-button type="submit">Submit</button>      
-                                    </div>
-                                   
-                                 </form> 
-                               </div>          
-                 </div>             
-     </mat-tab>
-</mat-tab-group>
+                                        <mat-form-field style="width:90%;">
+                                                  <input matInput style="margin-top: 15px !important;" (keyup)="applyFilter($event.target.value)" placeholder="Filter Category">
+                                                  
+                                        </mat-form-field>
+                                        
+                                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+     
+                                                  <!--- Note that these columns can be defined in any order.
+                                                        The actual rendered columns are set as a property on the row definition" -->
+                                                
+                                                  <!-- Position Column -->
+                                                  <ng-container matColumnDef="position">
+                                                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                                                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                                  </ng-container>
+                                                
+                                                  <!-- Category Column -->
+                                                  <ng-container matColumnDef="name">
+                                                    <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                                  </ng-container>
+                                                
+                                                  <!-- Status Column -->
+                                                  <ng-container matColumnDef="Status">
+                                                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                                                    <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+                                                  </ng-container>
+                                                
+                                                  <!-- Action Column -->
+                                                  <ng-container matColumnDef="symbol">
+                                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                    <td mat-cell *matCellDef="let row"> 
+                                                      <mat-icon aria-hidden="false" (click)="DeleteCategory(row)" aria-label="Example home icon">delete</mat-icon>
+                                                      <span style=" margin-right: 20px;margin-left: 20px;"></span>
+                                                      <mat-icon aria-hidden="false" (click)="EditCategory(row)" aria-label="Example home icon">edit</mat-icon>
+                                                    </td>
+                                                  </ng-container>
+                                                
+                                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                  <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+                                                </table>
+                                                
+                                                <div style="float: left; margin-top: 40px;">
+                                                       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                                </div>     
+                                </div>                  
+                                                
+                    </div>      
+                   
+          </mat-tab>
+          <mat-tab label="English">
+                    
+                    <h2 class="content-header">Categories EN</h2>
+                    <div   class="container-btn1">
+                              <button type="button" mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create Category</button>     
+                    </div>
+                    <div class="main-content">
+                              <div class="table-contaniner" [hidden]="isTableShowFull">
+                                      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
    
-               
-                            
+                                                <!--- Note that these columns can be defined in any order.
+                                                      The actual rendered columns are set as a property on the row definition" -->
+                                              
+                                                <!-- Position Column -->
+                                                <ng-container matColumnDef="position">
+                                                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                                                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                                </ng-container>
+                                              
+                                                <!-- Category Column -->
+                                                <ng-container matColumnDef="name">
+                                                  <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                                                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                                </ng-container>
+                                              
+                                                <!-- Status Column -->
+                                                <ng-container matColumnDef="Status">
+                                                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                                                  <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+                                                </ng-container>
+                                              
+                                                <!-- Action Column -->
+                                                <ng-container matColumnDef="symbol">
+                                                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                  <td mat-cell *matCellDef="let row"> 
+                                                    <mat-icon aria-hidden="false" (click)="DeleteCategory(row)" aria-label="Example home icon">delete</mat-icon>
+                                                    <span style=" margin-right: 20px;margin-left: 20px;"></span>
+                                                    <mat-icon aria-hidden="false" (click)="EditCategory(row)" aria-label="Example home icon">edit</mat-icon>
+                                                  </td>
+                                                </ng-container>
+                                              
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+                                              </table>
+                                              
+                                              <div style="float: left; margin-top: 40px;">
+                                                     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                              </div>     
+                              </div>                  
+                                              
+                  </div> 
+                                    
+                                  
+          </mat-tab>
+     </mat-tab-group>
+        
+                    
+                                 
+     

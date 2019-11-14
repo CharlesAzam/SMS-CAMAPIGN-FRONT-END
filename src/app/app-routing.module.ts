@@ -12,6 +12,9 @@ import {CreateNewsTagComponent} from './components/create-news-tag/create-news-t
 import {CreateNewsStoryComponent} from './components/create-news-story/create-news-story.component'
 import {CreateNewsVideosComponent} from './components/create-news-videos/create-news-videos.component'
 import {CreateNewsPhotosComponent} from './components/create-news-photos/create-news-photos.component'
+import {CategoryFormComponent} from './components/category-form/category-form.component'
+
+
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -93,6 +96,10 @@ const routes: Routes = [
         path:'NewsPhoto',
         component:CreateNewsPhotosComponent
 
+      },
+      {
+        path:'CategoryForm',
+        component:CategoryFormComponent
       }
 
     ]

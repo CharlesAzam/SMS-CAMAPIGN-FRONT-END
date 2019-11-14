@@ -11,6 +11,11 @@ export class CardComponentComponent implements OnInit {
     console.log(this.card_title)
   }
   
+
+  viewItem(){
+    console.log("Viewing item of "+this.card_title);
+  }
+
   @Input() public card_title:String;
   @Input() public Image_src:String; 
   @Input() public card_notification: String; 
