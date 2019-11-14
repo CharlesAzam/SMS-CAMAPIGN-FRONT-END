@@ -26,8 +26,8 @@ export class CreateCategoryComponent implements OnInit {
     private activatedRoute: ActivatedRoute,) { }
   
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
-  dataSource = ELEMENT_DATA;
-  dataSource2 = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  //dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   
   toppings = new FormControl();
   options =new FormControl();
@@ -62,7 +62,7 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource2.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
   ngOnInit() {
