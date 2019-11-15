@@ -21,7 +21,7 @@
       </mat-list-item>
       <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
         <a mat-list-item routerLink="StoriesIdea">Story Idea</a>
-        <a mat-list-item routerLink="Tag">Tags</a>
+        <a mat-list-item routerLink="NewsTags">Tags</a>
         <a mat-list-item routerLink="NewsVideos">Videos</a>
         <a mat-list-item routerLink="NewsPhoto">Photos</a>
       </div>
@@ -34,7 +34,7 @@
       <div class="submenu" [ngClass]="{'expanded' : showMobile}" *ngIf="isShowing || isExpanded">
         <a mat-list-item (click)="getCategories($event)">Categories</a>
         <a mat-list-item (click)="routeToSubCategories($event)">Sub Categories</a>
-        <a mat-list-item (click)="routeToTags($event)">Tags</a>
+        <a mat-list-item routerLink="MobileTags">Tags</a>
         <a mat-list-item (click)="routeToChannels($event)">Channels</a>
         <a mat-list-item routerLink="banner">Banner</a>
         <a mat-list-item routerLink="package">Package</a>

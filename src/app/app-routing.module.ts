@@ -14,7 +14,7 @@ import {CreateNewsVideosComponent} from './components/create-news-videos/create-
 import {CreateNewsPhotosComponent} from './components/create-news-photos/create-news-photos.component'
 import {CategoryFormComponent} from './components/mobileCategory/mobile category form/category-form.component'
 import {CreateCategoriesModule} from './components/homepage/Demo2/create-categories.module'
-
+import { MobileTagsComponent } from './components/mobileTags/mobile-tags.component';
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -76,13 +76,17 @@ const routes: Routes = [
         component:CreateSubCategoryComponent
       },
       {
-        path:'Tags',
+        path:'NewsTags',
         component:CreateTagsComponent
       },
       {
         path:'Tag',
         component:CreateNewsTagComponent
 
+      },
+      {
+         path:'MobileTags',
+         component:MobileTagsComponent
       },
       {
         path:'Channels',
