@@ -18,7 +18,7 @@ import { VodModule } from '../app/components/vod/vod.module';
 import { PackageModule } from '../app/components/package/package.module';
 import { CouponModule } from '../app/components/coupon/coupon.module';
 import { RadioModule } from '../app/components/radio/radio.module';
-import {CreateCategoryComponent} from './components/mobile category/create-category.component'
+import {CreateCategoryComponent} from './components/mobileCategory/mobileCategory.component'
 import {CardComponentComponent} from './components/card-component/card-component.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { CreateSubCategoryComponent } from './components/create-sub-category/create-sub-category.component';
@@ -27,14 +27,14 @@ import { CreateChannelsComponent } from './components/channels/create-channels.c
 import { ProductModule } from '../app/components/product/product.module';
 import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
 import { BannerModule } from '../app/components/banner/banner.module';
-import { CreateNewsTagComponent } from './components/create-news-tag/create-news-tag.component';
+import { CreateNewsTagComponent } from './components/mobileTags/mobileTagsForm/create-news-tag.component';
 import { CreateNewsStoryComponent } from './components/create-news-story/create-news-story.component';
 import { CreateNewsVideosComponent } from './components/create-news-videos/create-news-videos.component';
 import { CreateNewsPhotosComponent } from './components/create-news-photos/create-news-photos.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { CategoryFormComponent } from './components/mobileCategory/mobile category form/category-form.component';
 import { CreateCategoriesModule } from './components/homepage/Demo2/create-categories.module';
-import { CategoriesService } from './services/categories.service';
+import { MobileTagsComponent } from './components/mobileTags/mobile-tags.component';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -54,6 +54,7 @@ import { CategoriesService } from './services/categories.service';
     CreateNewsVideosComponent,
     CreateNewsPhotosComponent,
     CategoryFormComponent,
+    MobileTagsComponent,
     // TopnavComponent
     ],
   imports: [
@@ -76,7 +77,7 @@ import { CategoriesService } from './services/categories.service';
     EditorModule,
     CreateCategoriesModule,
   ],
-  providers: [MoviesService, CategoriesService],
+  providers: [MoviesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

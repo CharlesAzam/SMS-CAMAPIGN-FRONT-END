@@ -3,16 +3,16 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from './components/homepage/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
-import {CreateCategoryComponent} from './components/mobile category/create-category.component'
+import {CreateCategoryComponent} from './components/mobileCategory/mobileCategory.component'
 import {SideNavComponent} from './components/side-nav/side-nav.component'
 import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
 import {CreateTagsComponent} from './components/create-tags/create-tags.component';
 import {CreateChannelsComponent} from './components/channels/create-channels.component'
-import {CreateNewsTagComponent} from './components/create-news-tag/create-news-tag.component'
+import {CreateNewsTagComponent} from './components/mobileTags/mobileTagsForm/create-news-tag.component'
 import {CreateNewsStoryComponent} from './components/create-news-story/create-news-story.component'
 import {CreateNewsVideosComponent} from './components/create-news-videos/create-news-videos.component'
 import {CreateNewsPhotosComponent} from './components/create-news-photos/create-news-photos.component'
-import {CategoryFormComponent} from './components/category-form/category-form.component'
+import {CategoryFormComponent} from './components/mobileCategory/mobile category form/category-form.component'
 import {CreateCategoriesModule} from './components/homepage/Demo2/create-categories.module'
 
 const routes: Routes = [

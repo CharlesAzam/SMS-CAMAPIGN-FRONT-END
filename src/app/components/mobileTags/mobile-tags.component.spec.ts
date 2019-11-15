@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateCategoryComponent } from './create-category.component';
+import { MobileTagsComponent } from './mobile-tags.component';
 
-describe('CreateCategoryComponent', () => {
-  let component: CreateCategoryComponent;
-  let fixture: ComponentFixture<CreateCategoryComponent>;
+describe('MobileTagsComponent', () => {
+  let component: MobileTagsComponent;
+  let fixture: ComponentFixture<MobileTagsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateCategoryComponent ]
+      declarations: [ MobileTagsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateCategoryComponent);
+    fixture = TestBed.createComponent(MobileTagsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
