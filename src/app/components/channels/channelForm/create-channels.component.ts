@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-create-channels',
   templateUrl: './create-channels.component.html',
   styleUrls: ['./create-channels.component.css']
 })
-export class CreateChannelsComponent implements OnInit {
+export class CreateChannelsComponentForm implements OnInit {
 
-  constructor() {
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,) {
    // this.isShow=true;
    }
 
@@ -17,11 +19,14 @@ export class CreateChannelsComponent implements OnInit {
   toppingList2: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
   toppingList3: string[] = ['Paid','Free'];
 
-  isShow = true;
- 
-  toggleDisplay() {
-    this.isShow = !this.isShow;
+
+  back(){
+    console.log("To category list");
+    this.router.navigate(['home/Channels']);
+    
   }
+
+  
 
   ngOnInit() {
   }
