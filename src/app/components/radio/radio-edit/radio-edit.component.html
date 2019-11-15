@@ -9,23 +9,29 @@
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form *ngIf="radio">
+                    <form *ngIf="radio" #radioForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Name" [(ngModel)]="radio.name" name="name">
+                            <input matInput placeholder="Name" [(ngModel)]="radio.name" name="name" #name="ngModel"
+                                required>
+                            <mat-error *ngIf="name.invalid">Name can not be empty</mat-error>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Description" [(ngModel)]="radio.description" name="description">
+                            <input matInput placeholder="Description" [(ngModel)]="radio.description" name="description"
+                                #description="ngModel" required>
+                            <mat-error *ngIf="description.invalid">Description can not be empty</mat-error>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Channel URL" [(ngModel)]="radio.channelUrl" name="channelUrl">
+                            <input matInput placeholder="Channel URL" [(ngModel)]="radio.channelUrl" name="channelUrl"
+                                #channelUrl="ngModel" required>
+                            <mat-error *ngIf="channelUrl.invalid">Channel Url can not be empty</mat-error>
                         </mat-form-field>
 
                         <div class="form-group">
                             <label>Upload Logo:</label>
-                            <input id="logo" type="file" [(ngModel)]="radio.logo"  name="logo"/>
+                            <input id="logo" type="file" [(ngModel)]="radio.logo" name="logo" />
 
                         </div>
 
@@ -36,7 +42,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button (click)="save()" class="btn btn-default">Save</button>
+                            <button mat-raised-button [disabled]="radioForm.form.invalid" (click)="save()" class="btn btn-default">Save</button>
                         </div>
 
                     </form>

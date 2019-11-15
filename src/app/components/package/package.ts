@@ -3,10 +3,10 @@ export class Package {
     name: string;
     description: string;
     channels: any[];
-    free: boolean;
-    isVodAllowed: boolean;
-    isVodContentsUnlimited: boolean;
+    free: boolean = false;
+    isVodAllowed: boolean = false;
+    isVodContentsUnlimited: boolean = false;
     noOfVodContents: string;
     noOfDaysValidity: string;
-    status: boolean;    
+    status: boolean = false;
 }

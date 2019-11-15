@@ -3,5 +3,5 @@ export class Product {
     title: string;
     amount: string;
     currency: string;
-    status: boolean;    
+    status: boolean = false;
 }

@@ -14,6 +14,15 @@ export class PackageEditComponent implements OnInit {
     id: string;
     packageDef: Package;
     errors: string;
+    currencies: any[] = [
+        'TZS',
+        'USD'
+    ]
+    channels: any[] = [
+        "TBC",
+        "ITV",
+        "Channel 10"
+    ]
 
     constructor(
         private route: ActivatedRoute,

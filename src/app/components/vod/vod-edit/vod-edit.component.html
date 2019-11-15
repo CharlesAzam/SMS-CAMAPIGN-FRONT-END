@@ -9,16 +9,20 @@
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form *ngIf="vod">
+                    <form *ngIf="vod" #vodForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title">
+                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title" #title="ngModel"
+                                required>
+                            <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <textarea matInput placeholder="Description" [(ngModel)]="vod.descriptions" name="description"></textarea>
+                            <textarea matInput placeholder="Description" [(ngModel)]="vod.descriptions"
+                                name="description" #description="ngModel" required></textarea>
+                            <mat-error *ngIf="description.invalid">Description can not be empty</mat-error>
                         </mat-form-field>
-
+                        <!-- 
                         <div class="form-group">
                             <label>Tags</label>
                             <mat-form-field style="width: 100%;">
@@ -30,26 +34,35 @@
                                     </mat-chip>
                                     <input placeholder="Enter tag..." [matChipInputFor]="chipList"
                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" name="tags">
+                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                                        name="tags" required>
+                                    <mat-error *ngIf="tagsModel.invalid">Tags can not be empty</mat-error>
+
                                 </mat-chip-list>
                             </mat-form-field>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [(ngModel)]="releaseDate" [matDatepicker]="picker" placeholder="Release Date" name="releaseDate">
+                                <input matInput [(ngModel)]="releaseDate" [matDatepicker]="picker"
+                                    placeholder="Release Date" name="releaseDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
+                                <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
                             </mat-form-field>
                         </div>
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Starring" [(ngModel)]="vod.starring" name="starring">
+                            <input matInput placeholder="Starring" [(ngModel)]="vod.starring" name="starring"
+                                #starring="ngModel" required>
+                            <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Director" [(ngModel)]="vod.director" name="director">
+                            <input matInput placeholder="Director" [(ngModel)]="vod.director" name="director"
+                                #director="ngModel" required>
+                            <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error>
                         </mat-form-field>
 
 
@@ -86,20 +99,23 @@
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Language Details" [(ngModel)]="vod.languageDetail" name="languageDetail">
+                            <input matInput placeholder="Language Details" [(ngModel)]="vod.languageDetail"
+                                name="languageDetail" #languageDetail="ngModel" required>
+                            <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error>
+
                         </mat-form-field>
 
 
                         <div class="form-group">
 
-                            <mat-slide-toggle [(ngModel)]="vod.isFree">Is Free</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="vod.isFree" name="isFree" (change)="vod.isFree = !vod.isFree">Is Free</mat-slide-toggle>
 
                         </div>
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="vod.isFreeAzam">Is Free For Azam</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="vod.isFreeAzam" (change)="vod.isFreeAzam = !vod.isFreeAzam">Is Free For Azam</mat-slide-toggle>
                         </div>
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="vod.isSeries">Is Series</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="vod.isSeries" (change)="vod.isSeries = !vod.isSeries">Is Series</mat-slide-toggle>
                         </div>
 
                         <mat-form-field style="width: 100%;">
@@ -110,25 +126,33 @@
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox" name="boundingBox">
+                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox" name="boundingBox" #boundingBox="ngModel" required>
+                            <mat-error *ngIf="boundingBox.invalid">Bouding Box can not be empty</mat-error>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="CDN ID" [(ngModel)]="vod.cdnId" name="cdnId">
+                            <input matInput placeholder="CDN ID" [(ngModel)]="vod.cdnId" name="cdnId" #cdnID="ngModel"
+                                required>
+                            <mat-error *ngIf="cdnID.invalid">CDN ID can not be empty</mat-error>
                         </mat-form-field>
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Duration" [(ngModel)]="vod.duration" name="duration">
+                            <input matInput placeholder="Duration" [(ngModel)]="vod.duration" name="duration"
+                                #duration="ngModel" required>
+                            <mat-error *ngIf="duration.invalid">Duration can not be empty</mat-error>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Image Thumbnail" [(ngModel)]="vod.imageThumb" name="imageThumb">
+                            <input matInput placeholder="Image Thumbnail" [(ngModel)]="vod.imageThumb" name="imageThumb"
+                                #imageThumb="ngModel" required>
+                            <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error>
+
                         </mat-form-field>
 
 
                         <div class="form-group">
-                            <button (click)="save()" class="btn btn-default">Save</button>
+                            <button [disabled]="vodForm.form.invalid" (click)="save()" class="btn btn-default">Save</button>
                         </div>
 
                     </form>

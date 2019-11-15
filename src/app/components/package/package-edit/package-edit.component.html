@@ -9,7 +9,7 @@
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form *ngIf="packageDef" #packageDef="ngForm">
+                    <form *ngIf="packageDef" #packageForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
                             <input matInput placeholder="Name" [(ngModel)]="packageDef.name" name="name" #name="ngModel"
@@ -17,61 +17,105 @@
                             <mat-error *ngIf="name.invalid">Name can not be empty</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field style="width: 100%;">
-                            <mat-label>Description</mat-label>
-                            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-                                cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [(ngModel)]="packageDef.description"
-                                #description="ngModel" name="description"></textarea>
-                            <mat-error *ngIf="description.invalid">Description can not be empty</mat-error>
-
-                        </mat-form-field>
-                        <editor initialValue="<p>This is the initial content of the editor</p>" [init]="{
-                             height: 500,
-                             menubar: false,
-                             plugins: [
-                               'advlist autolink lists link image charmap print preview anchor',
-                               'searchreplace visualblocks code fullscreen',
-                               'insertdatetime media table paste code help wordcount'
-                             ],
-                             toolbar:
-                               'undo redo | formatselect | bold italic backcolor | \
-                               alignleft aligncenter alignright alignjustify | \
-                               bullist numlist outdent indent | removeformat | help'
-                           }">
-                        </editor>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Channels" [(ngModel)]="packageDef.channels">
-                        </mat-form-field>
-
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="packageDef.free">Free</mat-slide-toggle>
+                            <label>Description</label>
+
+                            <editor [(ngModel)]="packageDef.description" [init]="{
+                                height: 500,
+                                menubar: true,
+                                plugins: [
+                                  'advlist autolink lists link image charmap print preview anchor',
+                                  'searchreplace visualblocks code fullscreen',
+                                  'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar:
+                                  'undo redo | formatselect | bold italic backcolor | \
+                                  alignleft aligncenter alignright alignjustify | \
+                                  bullist numlist outdent indent | removeformat | help'
+                              }">
+                            </editor>
+
                         </div>
 
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="packageDef.isVodAllowed">Is Vod Allowed</mat-slide-toggle>
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Channels</mat-label>
+                                <mat-select [(ngModel)]="packageDef.channels" multiple required>
+                                    <mat-option *ngFor="let channel of channels" [value]="packageDef.channels">
+                                        {{channel}}
+                                    </mat-option>
+                                </mat-select>
+                                <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose some channels</mat-error> -->
+                            </mat-form-field>
                         </div>
 
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="packageDef.isVodContentsUnlimited">Is Vod Contents Unlimited
+                            <mat-slide-toggle [checked]="packageDef.free" (change)="packageDef.free = !packageDef.free">
+                                Free</mat-slide-toggle>
+                        </div>
+
+                        <div *ngIf="packageDef.free">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Currency</mat-label>
+                                <mat-select [(ngModel)]="packageDef.currency" required>
+                                    <mat-option *ngFor="let currency of currencies" [value]="packageDef.currency">
+                                        {{currency}}
+                                    </mat-option>
+                                </mat-select>
+                                <!-- <mat-error *ngIf="packageDef.curreny">Please choose some channels</mat-error> -->
+                            </mat-form-field>
+
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Price" [(ngModel)]="packageDef.price" name="price"
+                                    type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-slide-toggle [(ngModel)]="packageDef.isVodAllowed"
+                                (change)="packageDef.isVodAllowed = !packageDef.isVodAllowed">Is Vod Allowed
                             </mat-slide-toggle>
-
                         </div>
 
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="No Of Vod Contents:" [(ngModel)]="packageDef.noOfVodContents">
-                        </mat-form-field>
+                        <div *ngIf="packageDef.isVodAllowed">
+                            <div class="form-group">
+                                <mat-slide-toggle [(ngModel)]="packageDef.isVodContentsUnlimited"
+                                    (change)="packageDef.isVodContentsUnlimited = !packageDef.isVodContentsUnlimited">Is
+                                    Vod Contents
+                                    Unlimited
+                                </mat-slide-toggle>
+
+                            </div>
+
+                            <div *ngIf="packageDef.isVodContentsUnlimited">
+                                <mat-form-field style="width: 100%;">
+                                    <input matInput placeholder="No Of Vod Contents:"
+                                        [(ngModel)]="packageDef.noOfVodContents" name="noOfVodContents"
+                                        #noOfVodContents="ngModel">
+                                    <mat-error *ngIf="noOfVodContents.invalid">No Of Vod Contents must not be empty
+                                    </mat-error>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="NoOf Days Validity" [(ngModel)]="packageDef.noOfDaysValidity">
+                            <input matInput placeholder="No Of Days Validity" [(ngModel)]="packageDef.noOfDaysValidity"
+                                name="noOfDaysValidity" #noOfDaysValidity="ngModel" required>
+                            <mat-error *ngIf="noOfDaysValidity.invalid">No Of Days Validity must not be empty
+                            </mat-error>
                         </mat-form-field>
 
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="packageDef.status">Status</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="packageDef.status"
+                                (change)="packageDef.status = !packageDef.status">Status</mat-slide-toggle>
                         </div>
 
                         <div class="form-group">
-                            <button (click)="save()" class="btn btn-default">Save</button>
+                            <button (click)="save()" [disabled]="packageForm.form.invalid"
+                                class="btn btn-default">Save</button>
                         </div>
 
                     </form>

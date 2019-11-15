@@ -10,11 +10,11 @@ export class Vod {
     country: string;
     subCategoryID: any[];
     languageDetail: string;
-    isFree: boolean;
-    isFreeForAzam: boolean;
+    isFree: boolean = false;
+    isFreeForAzam: boolean = false;
     Status: string;
     boundingBox: string;
     cdnId: string;
     duration: any;
-    imageThumb: string;    
+    imageThumb: string;
 }

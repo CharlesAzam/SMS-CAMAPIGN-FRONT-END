@@ -14,6 +14,10 @@ export class ProductEditComponent implements OnInit {
     id: string;
     product: Product;
     errors: string;
+    currencies: any[] = [
+        'TZS',
+        'USD'
+    ]
 
     constructor(
         private route: ActivatedRoute,
