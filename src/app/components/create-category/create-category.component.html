@@ -42,10 +42,10 @@
           <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let row">
-              <mat-icon aria-hidden="false" (click)="DeleteCategory(row)" aria-label="Example home icon">delete
+              <mat-icon aria-hidden="false" (click)="deleteCategory(row)" aria-label="Example home icon">delete
               </mat-icon>
               <span style=" margin-right: 20px;margin-left: 20px;"></span>
-              <mat-icon aria-hidden="false" (click)="EditCategory(row)" aria-label="Example home icon">edit</mat-icon>
+              <mat-icon aria-hidden="false" (click)="editCategory(row)" aria-label="Example home icon">edit</mat-icon>
             </td>
           </ng-container>
 
