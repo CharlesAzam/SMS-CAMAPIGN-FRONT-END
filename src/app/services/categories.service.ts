@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiDetails } from '../../environments/environment'
+import { CategoryFilter } from '../components/homepage/category/category-filter';
 
 @Injectable()
 export class CategoriesService {
@@ -30,7 +31,7 @@ export class CategoriesService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         let params = {
-            "categoryName": filter.categoryName,
+            "categoryName": CategoryFilter.name,
         };
         return this.http.get<Categories[]>(url, { params, headers });
     }
