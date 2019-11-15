@@ -8,13 +8,13 @@ import {SideNavComponent} from './components/side-nav/side-nav.component'
 import {CreateSubCategoryComponent} from './components/create-sub-category/create-sub-category.component'
 import {CreateTagsComponent} from './components/create-tags/create-tags.component';
 import {CreateChannelsComponent} from './components/channels/create-channels.component'
-import {CreateNewsTagComponent} from './components/mobileTags/mobileTagsForm/create-news-tag.component'
 import {CreateNewsStoryComponent} from './components/create-news-story/create-news-story.component'
 import {CreateNewsVideosComponent} from './components/create-news-videos/create-news-videos.component'
 import {CreateNewsPhotosComponent} from './components/create-news-photos/create-news-photos.component'
 import {CategoryFormComponent} from './components/mobileCategory/mobile category form/category-form.component'
 import {CreateCategoriesModule} from './components/homepage/Demo2/create-categories.module'
 import { MobileTagsComponent } from './components/mobileTags/mobile-tags.component';
+import {MobileTagFormComponent} from './components/mobileTags/mobileTagsForm/mobileTagsFormComponent'
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -80,13 +80,13 @@ const routes: Routes = [
         component:CreateTagsComponent
       },
       {
-        path:'Tag',
-        component:CreateNewsTagComponent
-
-      },
-      {
          path:'MobileTags',
          component:MobileTagsComponent
+      },
+      {
+        path:'MobileTagForm',
+        component:MobileTagFormComponent
+
       },
       {
         path:'Channels',

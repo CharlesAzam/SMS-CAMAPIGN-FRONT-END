@@ -27,7 +27,6 @@ import { CreateChannelsComponent } from './components/channels/create-channels.c
 import { ProductModule } from '../app/components/product/product.module';
 import { VideoLibraryModule } from '../app/components/video-library/video-library.module';
 import { BannerModule } from '../app/components/banner/banner.module';
-import { CreateNewsTagComponent } from './components/mobileTags/mobileTagsForm/create-news-tag.component';
 import { CreateNewsStoryComponent } from './components/create-news-story/create-news-story.component';
 import { CreateNewsVideosComponent } from './components/create-news-videos/create-news-videos.component';
 import { CreateNewsPhotosComponent } from './components/create-news-photos/create-news-photos.component';
@@ -35,7 +34,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CategoryFormComponent } from './components/mobileCategory/mobile category form/category-form.component';
 import { CreateCategoriesModule } from './components/homepage/Demo2/create-categories.module';
 import { MobileTagsComponent } from './components/mobileTags/mobile-tags.component';
-
+import {MobileTagFormComponent} from './components/mobileTags/mobileTagsForm/mobileTagsFormComponent'
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -49,12 +48,12 @@ import { MobileTagsComponent } from './components/mobileTags/mobile-tags.compone
     CreateSubCategoryComponent,
     CreateTagsComponent,
     CreateChannelsComponent,
-    CreateNewsTagComponent,
     CreateNewsStoryComponent,
     CreateNewsVideosComponent,
     CreateNewsPhotosComponent,
     CategoryFormComponent,
     MobileTagsComponent,
+    MobileTagFormComponent
     // TopnavComponent
     ],
   imports: [

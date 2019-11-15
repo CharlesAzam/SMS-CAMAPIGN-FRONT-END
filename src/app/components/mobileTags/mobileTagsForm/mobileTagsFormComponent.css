@@ -1,9 +1,8 @@
-
 .container2{
     margin-top: 3%;
     float: Right !important;
-    width: 450px  !important;
-    height: 650px;
+    width: 550px  !important;
+    height: 450px;
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
@@ -13,12 +12,13 @@
 }
 
 .container3{
+    margin-top: 100px;
     margin-bottom: 800px;
     float: Right !important;
-    width: 450px  !important;
-    height: 700px;
+    width: 550px  !important;
+    height: 900px;
     padding-left: 40px;
-    padding-right: 15px;
+    padding-right: 600px;
     padding-bottom: 30px;
     
 }
@@ -31,9 +31,15 @@
 
 .container-btn1{
     float: right !important;
-    margin-bottom: 30px !important;
+    margin-bottom: 10px !important;
 }
 
+.container-btn2{
+    float: left !important;
+    margin-top: 20px;
+    margin-left: 20px;
+    
+}
 .btn{
     float: right !important;
     border-radius: 6px !important;
@@ -47,17 +53,16 @@ mat-lable{
     color: black !important;
 }
 
-
 .btn-submit{
     margin-top: 10px; 
-    width: 375px; 
+    width: 468px; 
     align-content: center;      
 
 
 }
 
 .input-layouts{
-    width: 90%;
+    width: 100%;
 }
 
 table {
@@ -65,13 +70,10 @@ table {
   }
 
   .table-contaniner{
-      margin-top: 150px;
+      margin-top: 50px;
       padding-left: 100px;
   }
 
-  mat-tab-group{
-      margin-bottom: 500px !important;
-  }
   
   .main-content{
       margin-top: 0px;

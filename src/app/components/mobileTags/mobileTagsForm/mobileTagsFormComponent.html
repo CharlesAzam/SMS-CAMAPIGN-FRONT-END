@@ -1,0 +1,41 @@
+<div class="container-btn2">
+        <button type="button" (click)="back()" class="btn btn-primary btn-lg">Create tags</button>     
+</div>
+<div>
+        <div class="container3">
+                
+                <div class="container2" >
+                        <h2>Create Tags</h2>
+                        <form action="/#">
+                          <div class="form-group">
+                                 <label for="Decription">Tag Name</label>
+                            <mat-form-field class="input-layouts">
+                                 <input matInput placeholder=" " value=" ">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="form-group">
+                                <label for="Decription">Priority</label>
+                           <mat-form-field class="input-layouts">
+                                <input matInput placeholder=" " value=" ">
+                           </mat-form-field>
+                         </div>
+
+                         <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Category Language</mat-label>
+                                    <mat-select [formControl]="toppings">
+                                        <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                           
+                           <div>
+                                <button class="btn-submit"  mat-raised-button type="submit">Create tag</button>      
+                           </div>
+                          
+                        </form> 
+                      </div>          
+        </div>              
+</div>

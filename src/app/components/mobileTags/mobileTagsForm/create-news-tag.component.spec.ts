@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateNewsTagComponent } from './create-news-tag.component';
+import { CreateNewsTagComponent } from './mobileTagsFormComponent';
 
 describe('CreateNewsTagComponent', () => {
   let component: CreateNewsTagComponent;
