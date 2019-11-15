@@ -1,11 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-<<<<<<< HEAD:src/app/components/mobile category/create-category.component.ts
-=======
-import { FormControl } from '@angular/forms';
-import { PeriodicElement } from './mobileCategoryInterphace'
->>>>>>> feature/MobileCategory:src/app/components/mobileCategory/mobileCategory.component.ts
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { CategoryFilter } from '../homepage/category/category-filter';
@@ -22,28 +17,7 @@ export class CreateCategoryComponent implements OnInit {
     private activatedRoute: ActivatedRoute, private categoryService: CategoriesService) { }
 
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
-<<<<<<< HEAD:src/app/components/mobile category/create-category.component.ts
   dataSource = new MatTableDataSource<any>([]);
-=======
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  toppings = new FormControl();
-  options = new FormControl();
-  toppingList: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4', 'tag 5', 'tag 6'];
-  toppingList2: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
-
-  isShow = true;
-  isTableShowFull = false;
-
-  toggleDisplay() {
-    this.isShow = !this.isShow;
-    this.toggleDisplayTable();
-  }
-
-  toggleDisplayTable() {
-    this.isTableShowFull = !this.isTableShowFull;
-  }
->>>>>>> feature/MobileCategory:src/app/components/mobileCategory/mobileCategory.component.ts
 
   deleteCategory(row) {
   }
@@ -65,12 +39,7 @@ export class CreateCategoryComponent implements OnInit {
     categoryFilter.categoryName = "";
     this.categoryService.find().subscribe((result: any) => {
       if(result.status == 200){
-<<<<<<< HEAD:src/app/components/mobile category/create-category.component.ts
         this.dataSource = new MatTableDataSource<any>(result.data);
-=======
-        console.log(result.data)
-        this.dataSource = new MatTableDataSource(result.data);
->>>>>>> feature/MobileCategory:src/app/components/mobileCategory/mobileCategory.component.ts
       }
     })
   }
