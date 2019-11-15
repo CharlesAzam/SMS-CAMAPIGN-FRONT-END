@@ -1,0 +1,118 @@
+<mat-tab-group>
+     <mat-tab label="Swahili">
+          <div class="form-group">
+               <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                    <mat-button-toggle value="bold">Video</mat-button-toggle>
+                    <mat-button-toggle value="italic">Categories</mat-button-toggle>
+                    <mat-button-toggle value="italic">Add Video</mat-button-toggle>
+               </mat-button-toggle-group>
+          </div>
+
+
+          
+    
+          <div class="main-content">
+               <div class="table-contaniner">
+                    <mat-form-field style="width:90%;">
+                         <input matInput style="margin-top: 15px !important;" (keyup)="applyFilter($event.target.value)"
+                              placeholder="Filter News video">
+                    </mat-form-field>
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                         <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
+                         <!-- Position Column -->
+                         <ng-container matColumnDef="position">
+                              <th mat-header-cell *matHeaderCellDef> No. </th>
+                              <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                         </ng-container>
+                         <!-- Category Column -->
+                         <ng-container matColumnDef="name">
+                              <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                         </ng-container>
+                         <!-- Status Column -->
+                         <ng-container matColumnDef="Status">
+                              <th mat-header-cell *matHeaderCellDef> Status </th>
+                              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                         </ng-container>
+                         <!-- Action Column -->
+                         <ng-container matColumnDef="symbol">
+                              <th mat-header-cell *matHeaderCellDef> Action </th>
+                              <td mat-cell *matCellDef="let row">
+                                   <mat-icon aria-hidden="false" (click)="DeleteCategory(row)"
+                                        aria-label="Example home icon">delete
+                                   </mat-icon>
+                                   <span style=" margin-right: 20px;margin-left: 20px;"></span>
+                                   <mat-icon aria-hidden="false" (click)="EditCategory(row)"
+                                        aria-label="Example home icon">edit</mat-icon>
+                              </td>
+                         </ng-container>
+                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div style="float: left; margin-top: 40px;">
+                         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    </div>
+               </div>
+          </div>
+
+     </mat-tab>
+
+     <mat-tab label="English">
+               <div class="form-group">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                         <mat-button-toggle value="bold">Video</mat-button-toggle>
+                         <mat-button-toggle value="italic">Categories</mat-button-toggle>
+                         <mat-button-toggle value="italic">Add Video</mat-button-toggle>
+                    </mat-button-toggle-group>
+               </div>
+     
+     
+               
+         
+               <div class="main-content">
+                    <div class="table-contaniner">
+                         <mat-form-field style="width:90%;">
+                              <input matInput style="margin-top: 15px !important;" (keyup)="applyFilter($event.target.value)"
+                                   placeholder="Filter News video">
+                         </mat-form-field>
+                         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                              <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
+                              <!-- Position Column -->
+                              <ng-container matColumnDef="position">
+                                   <th mat-header-cell *matHeaderCellDef> No. </th>
+                                   <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                              </ng-container>
+                              <!-- Category Column -->
+                              <ng-container matColumnDef="name">
+                                   <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                                   <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                              </ng-container>
+                              <!-- Status Column -->
+                              <ng-container matColumnDef="Status">
+                                   <th mat-header-cell *matHeaderCellDef> Status </th>
+                                   <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                              </ng-container>
+                              <!-- Action Column -->
+                              <ng-container matColumnDef="symbol">
+                                   <th mat-header-cell *matHeaderCellDef> Action </th>
+                                   <td mat-cell *matCellDef="let row">
+                                        <mat-icon aria-hidden="false" (click)="DeleteCategory(row)"
+                                             aria-label="Example home icon">delete
+                                        </mat-icon>
+                                        <span style=" margin-right: 20px;margin-left: 20px;"></span>
+                                        <mat-icon aria-hidden="false" (click)="EditCategory(row)"
+                                             aria-label="Example home icon">edit</mat-icon>
+                                   </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                         </table>
+                         <div style="float: left; margin-top: 40px;">
+                              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                         </div>
+                    </div>
+               </div>
+     
+          </mat-tab>
+    
+</mat-tab-group>
