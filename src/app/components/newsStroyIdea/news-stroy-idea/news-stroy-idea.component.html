@@ -1,0 +1,104 @@
+
+<mat-tab-group>
+        <mat-tab label="Swahili">
+          <h2 class="content-header">Story Idea SW</h2>
+          <div class="container-btn1">
+            <button type="button" mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create
+              Story Idea</button>
+          </div>
+          <div class="main-content">
+            <div class="table-contaniner">
+              <mat-form-field style="width:90%;">
+                <input matInput style="margin-top: 15px !important;" (keyup)="applyFilter($event.target.value)"
+                  placeholder="Filter Category Sub Category">
+              </mat-form-field>
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                </ng-container>
+                <!-- Category Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                <!-- Status Column -->
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                </ng-container>
+                <!-- Action Column -->
+                <ng-container matColumnDef="symbol">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-icon aria-hidden="false" (click)="DeleteCategory(row)" aria-label="Example home icon">delete
+                    </mat-icon>
+                    <span style=" margin-right: 20px;margin-left: 20px;"></span>
+                    <mat-icon aria-hidden="false" (click)="EditCategory(row)" aria-label="Example home icon">edit</mat-icon>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <div style="float: left; margin-top: 40px;">
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+              </div>
+            </div>
+          </div>
+      
+        </mat-tab>
+        <mat-tab label="English">
+          <h2 class="content-header">Story Idea EN</h2>
+          <div class="container-btn1">
+            <button type="button" mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create
+                    Story Idea</button>
+          </div>
+          <div class="main-content">
+            <div class="table-contaniner">
+                <mat-form-field style="width:90%;">
+                    <input matInput style="margin-top: 15px !important;" (keyup)="applyFilter($event.target.value)"
+                      placeholder="Filter Category Sub Category">
+                  </mat-form-field>
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+                <!--- Note that these columns can be defined in any order The actual rendered columns are set as a property on the row definition" -->
+      
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+      
+                <!-- Category Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+      
+                <!-- Status Column -->
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+                </ng-container>
+                <!-- Action Column -->
+                <ng-container matColumnDef="symbol">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-icon aria-hidden="false" (click)="DeleteCategory(row)" aria-label="Example home icon">delete
+                    </mat-icon>
+                    <span style=" margin-right: 20px;margin-left: 20px;"></span>
+                    <mat-icon aria-hidden="false" (click)="EditCategory(row)" aria-label="Example home icon">edit</mat-icon>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <div style="float: left; margin-top: 40px;">
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
