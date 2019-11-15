@@ -7,13 +7,15 @@ import { PackageEditComponent } from './package-edit/package-edit.component';
 import { PackageService } from './package.service';
 import { PACKAGE_ROUTES } from './package.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
-    RouterModule.forChild(PACKAGE_ROUTES)
+    RouterModule.forChild(PACKAGE_ROUTES),
+    EditorModule
   ],
   declarations: [
     PackageListComponent,

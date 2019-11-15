@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { PeriodicElement } from './InterphacePeriodicElement'
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { CategoryFilter } from '../homepage/category/category-filter';
@@ -18,20 +16,7 @@ export class CreateCategoryComponent implements OnInit {
     private activatedRoute: ActivatedRoute, private categoryService: CategoriesService) { }
 
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
-  dataSource = new MatTableDataSource<any>();
-
-
-  isShow = true;
-  isTableShowFull = false;
-
-  toggleDisplay() {
-    this.isShow = !this.isShow;
-    this.toggleDisplayTable();
-  }
-
-  toggleDisplayTable() {
-    this.isTableShowFull = !this.isTableShowFull;
-  }
+  dataSource = new MatTableDataSource<any>([]);
 
   deleteCategory(row) {
   }
@@ -44,7 +29,6 @@ export class CreateCategoryComponent implements OnInit {
 
   }
 
-  //
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

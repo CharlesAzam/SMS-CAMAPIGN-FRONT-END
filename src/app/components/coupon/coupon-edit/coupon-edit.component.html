@@ -9,15 +9,18 @@
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form *ngIf="coupon">
+                    <form *ngIf="coupon" #couponForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Code" [(ngModel)]="coupon.code" name="code">
+                            <input matInput placeholder="Code" [(ngModel)]="coupon.code" name="code" #code="ngModel" required>
+                            <mat-error *ngIf="code.invalid">Code can not be empty</mat-error>
+
                         </mat-form-field>
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [(ngModel)]="coupon.startDate" [matDatepicker]="pickerStartDate" placeholder="Start Date">
+                                <input matInput [(ngModel)]="coupon.startDate" [matDatepicker]="pickerStartDate" placeholder="Start Date" name="startDate" #startDate="ngModel" required>
+                                <mat-error *ngIf="startDate.invalid">Start date can not be empty</mat-error>
                                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerStartDate></mat-datepicker>
                             </mat-form-field>
@@ -25,7 +28,8 @@
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [(ngModel)]="coupon.endDate" [matDatepicker]="pickerEndDate" placeholder="End Date">
+                                <input matInput [(ngModel)]="coupon.endDate" [matDatepicker]="pickerEndDate" placeholder="End Date" name="endDate" #endDate="ngModel" required>
+                                <mat-error *ngIf="endDate.invalid">End date can not be empty</mat-error>
                                 <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerEndDate></mat-datepicker>
                             </mat-form-field>
@@ -33,7 +37,8 @@
                         </div>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Percentage" [(ngModel)]="coupon.percentage" name="percentage">
+                            <input matInput placeholder="Percentage (%)" [(ngModel)]="coupon.percentage" name="percentage" #percentage="ngModel" type="number" required>
+                            <mat-error *ngIf="percentage.invalid">Percentage can not be empty</mat-error>
                         </mat-form-field>
 
                         <div class="form-group">
@@ -41,7 +46,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button (click)="save()" class="btn btn-default">Save</button>
+                            <button (click)="save()" [disabled]="couponForm.form.invalid" class="btn btn-default">Save</button>
                         </div>
 
                     </form>

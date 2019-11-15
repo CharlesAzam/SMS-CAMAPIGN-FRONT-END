@@ -20,6 +20,7 @@ export class CategoriesService {
     load(filter: CategoriesFilter): void {
         this.find(filter).subscribe((result: any) => {
             this.categoriesList = result.data;
+            console.log(this.categoriesList);
         }, err => {
             console.error('error loading', err);
         });
