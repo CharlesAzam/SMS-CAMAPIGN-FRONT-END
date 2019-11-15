@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 
+//Dont for get to add additional column for image display 
 @Component({
   selector: 'app-news-photos',
   templateUrl: './news-photos.component.html',
