@@ -1,0 +1,84 @@
+.container2{
+    margin-top: 3%;
+    float: Right !important;
+    width: 550px  !important;
+    height: 650px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    border: 1px;
+    box-shadow: 3px 3px 3px 3px #888888;
+    border-radius: 10px;
+}
+
+.container3{
+    margin-top: 100px;
+    margin-bottom: 800px;
+    float: Right !important;
+    width: 550px  !important;
+    height: 900px;
+    padding-left: 40px;
+    padding-right: 600px;
+    padding-bottom: 30px;
+    
+}
+
+.contaner-btn{
+    float: right !important;
+    background-color: rgb(219, 218, 218) !important;
+    margin-block-start: 20px;
+}
+
+.container-btn1{
+    float: right !important;
+    margin-bottom: 10px !important;
+}
+
+.container-btn2{
+    float: left !important;
+    margin-top: 20px;
+    margin-left: 20px;
+    
+}
+.btn{
+    float: right !important;
+    border-radius: 6px !important;
+    margin-right: 40px;
+}
+
+mat-lable{
+    font-family: inherit;
+    font-size: 40px;
+    font-weight: bold;
+    color: black !important;
+}
+
+.btn-submit{
+    margin-top: 10px; 
+    width: 468px; 
+    align-content: center;      
+
+
+}
+
+.input-layouts{
+    width: 100%;
+}
+
+table {
+    width: 90%;
+  }
+
+  .table-contaniner{
+      margin-top: 50px;
+      padding-left: 100px;
+  }
+
+  
+  .main-content{
+      margin-top: 0px;
+  }
+
+  .content-header{
+    margin-left: 100px;
+  }

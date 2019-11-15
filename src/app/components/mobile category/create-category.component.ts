@@ -21,8 +21,7 @@ export class CreateCategoryComponent implements OnInit {
     private activatedRoute: ActivatedRoute, private categoryService: CategoriesService) { }
 
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
-  dataSource = ELEMENT_DATA;
-  // dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   toppings = new FormControl();
   options = new FormControl();
@@ -64,10 +63,10 @@ export class CreateCategoryComponent implements OnInit {
   ngOnInit() {
     let categoryFilter = new CategoryFilter();
     categoryFilter.categoryName = "";
-    this.categoryService.find(categoryFilter).subscribe((result: any) => {
+    this.categoryService.find().subscribe((result: any) => {
       if(result.status == 200){
         console.log(result.data)
-        this.dataSource = result.data
+        this.dataSource = new MatTableDataSource(result.data);
       }
     })
   }
