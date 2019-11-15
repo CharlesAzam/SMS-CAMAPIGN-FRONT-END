@@ -34,6 +34,7 @@ import { CreateNewsPhotosComponent } from './components/create-news-photos/creat
 import { SelectionModel } from '@angular/cdk/collections';
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { CreateCategoriesModule } from './components/homepage/Demo2/create-categories.module';
+import { CategoriesService } from './services/categories.service';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -75,7 +76,7 @@ import { CreateCategoriesModule } from './components/homepage/Demo2/create-categ
     EditorModule,
     CreateCategoriesModule,
   ],
-  providers: [MoviesService],
+  providers: [MoviesService, CategoriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
