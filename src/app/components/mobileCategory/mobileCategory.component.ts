@@ -19,6 +19,13 @@ export class CreateCategoryComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
   dataSource = new MatTableDataSource<any>([]);
 
+
+
+ 
+
+
+
+  /*Table logic*/
   deleteCategory(row) {
   }
 
@@ -33,6 +40,8 @@ export class CreateCategoryComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  /*Table logic*/
 
   ngOnInit() {
     let categoryFilter = new CategoryFilter();

@@ -18,7 +18,6 @@ export class CategoryFormComponent implements OnInit {
   languages: string[]=["English",'Swahili'];
 
   //Route To category List
-
   routeToCategoryList(){
     console.log("To category list");
     this.router.navigate(['home/category']);
