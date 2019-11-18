@@ -39,6 +39,10 @@ export class CategoryFormComponent implements OnInit {
    
   //Validation logic end
 
+  onSubmit(){
+    console.log("Submiting form")
+  }
+
   
   ngOnInit() {
     this.mobileCategoryForm=this.fb.group({
@@ -53,4 +57,5 @@ export class CategoryFormComponent implements OnInit {
     });
   }
 
-}
+}  
+ 
