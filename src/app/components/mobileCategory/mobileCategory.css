@@ -42,12 +42,17 @@
 }
 
 .container-btn1{
-    float: right !important;
-    margin-right: 145px !important;
+    /* float: right !important; */
+    margin-right: 130px !important;
 }
 
 .filter-input-btn{
     margin-top: 100px;
+    
+}
+
+.filter-input{
+    width: 85% !important;
 }
 
 mat-lable{

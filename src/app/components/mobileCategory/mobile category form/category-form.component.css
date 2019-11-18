@@ -2,7 +2,7 @@
     margin-top: 3%;
     float: Right !important;
     width: 550px  !important;
-    height: 750px;
+    height: 850px;
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
@@ -81,4 +81,9 @@ table {
 
   .content-header{
     margin-left: 100px;
+  }
+
+  .error{
+      color: red !important;
+      font-weight: bolder!important;
   }

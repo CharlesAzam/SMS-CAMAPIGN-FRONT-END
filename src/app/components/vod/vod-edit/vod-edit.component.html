@@ -12,8 +12,7 @@
                     <form *ngIf="vod" #vodForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title" #title="ngModel"
-                                required>
+                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title" #title="ngModel" required>
                             <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error>
                         </mat-form-field>
 
@@ -108,14 +107,17 @@
 
                         <div class="form-group">
 
-                            <mat-slide-toggle [(ngModel)]="vod.isFree" name="isFree" (change)="vod.isFree = !vod.isFree">Is Free</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="vod.isFree" name="isFree"
+                                (change)="vod.isFree = !vod.isFree">Is Free</mat-slide-toggle>
 
                         </div>
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="vod.isFreeAzam" (change)="vod.isFreeAzam = !vod.isFreeAzam">Is Free For Azam</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="vod.isFreeAzam" (change)="vod.isFreeAzam = !vod.isFreeAzam">
+                                Is Free For Azam</mat-slide-toggle>
                         </div>
                         <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="vod.isSeries" (change)="vod.isSeries = !vod.isSeries">Is Series</mat-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="vod.isSeries" (change)="vod.isSeries = !vod.isSeries">Is
+                                Series</mat-slide-toggle>
                         </div>
 
                         <mat-form-field style="width: 100%;">
@@ -126,7 +128,8 @@
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox" name="boundingBox" #boundingBox="ngModel" required>
+                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox" name="boundingBox"
+                                #boundingBox="ngModel" required>
                             <mat-error *ngIf="boundingBox.invalid">Bouding Box can not be empty</mat-error>
                         </mat-form-field>
 
@@ -152,7 +155,8 @@
 
 
                         <div class="form-group">
-                            <button [disabled]="vodForm.form.invalid" (click)="save()" class="btn btn-default">Save</button>
+                            <button [disabled]="vodForm.form.invalid" (click)="save()"
+                                class="btn btn-default">Save</button>
                         </div>
 
                     </form>

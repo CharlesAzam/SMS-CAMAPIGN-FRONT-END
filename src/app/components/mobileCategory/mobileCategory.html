@@ -13,12 +13,14 @@
         <!--Filter input button container start name  -->
         <div class="filter-input-btn">
         <div class="container-btn1">
-        <button type="button" mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create Category</button>
+        <button type="button"  mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create Category</button>
         </div>
-        <mat-form-field>
-          <input matInput style="margin-top: 0px !important;" (keyup)="applyFilter($event.target.value)"
-            placeholder="Filter Category">
-        </mat-form-field>
+        <div class="filter-input">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)"
+                  placeholder="Filter Category">
+              </mat-form-field>
+        </div>  
         </div>
          <!--Filter input button container end -->
 
@@ -72,14 +74,16 @@
           <div class="table-contaniner">
     
             <!--Filter input button container start name  -->
-            <div class="filter-input-btn">
+        <div class="filter-input-btn">
             <div class="container-btn1">
-            <button type="button" mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create Category</button>
+            <button type="button"  mat-raised-button (click)="routeToCategoryForm()" class="btn btn-primary btn-lg">Create Category</button>
             </div>
-            <mat-form-field>
-              <input matInput style="margin-top: 0px !important;" (keyup)="applyFilter($event.target.value)"
-                placeholder="Filter Category">
-            </mat-form-field>
+            <div class="filter-input">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)"
+                      placeholder="Filter Category">
+                  </mat-form-field>
+            </div>  
             </div>
              <!--Filter input button container end -->
     
