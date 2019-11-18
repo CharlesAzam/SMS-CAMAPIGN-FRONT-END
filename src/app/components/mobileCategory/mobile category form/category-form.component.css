@@ -1,7 +1,7 @@
 .container2{
     margin-top: 3%;
     float: Right !important;
-    width: 550px  !important;
+    width: 750px  !important;
     height: 850px;
     padding-left: 40px;
     padding-right: 40px;
@@ -12,10 +12,11 @@
 }
 
 .container3{
+    position: relative !important;
     margin-top: 100px;
     margin-bottom: 800px;
     float: Right !important;
-    width: 550px  !important;
+    width: 800px  !important;
     height: 900px;
     padding-left: 40px;
     padding-right: 600px;
@@ -55,8 +56,10 @@ mat-lable{
 
 .btn-submit{
     margin-top: 10px; 
-    width: 468px; 
-    align-content: center;      
+    width: 668px; 
+    align-content: center;
+    /* background-color: #337ab7 !important; */
+    /* color: white;       */
 
 
 }
