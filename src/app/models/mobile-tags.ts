@@ -1,8 +1,9 @@
 export class MobileTags {
+    public id: string
     public name: string
-    public type: string
-    //public Language: string
-    //public Category: string
+    public status:string
+    public action: string
+    // public Category: string
     constructor(
 
 

@@ -1,11 +1,8 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { CategoryFilter } from '../homepage/category/category-filter';
-
-
 @Component({
   selector: 'app-create-category',
   templateUrl: './mobileCategory.html',
@@ -18,12 +15,6 @@ export class CreateCategoryComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
   dataSource = new MatTableDataSource<any>([]);
-
-
-
- 
-
-
 
   /*Table logic*/
   deleteCategory(row) {
@@ -44,8 +35,6 @@ export class CreateCategoryComponent implements OnInit {
   /*Table logic*/
 
   ngOnInit() {
-    let categoryFilter = new CategoryFilter();
-    categoryFilter.categoryName = "";
     this.categoryService.find().subscribe((result: any) => {
       if(result.status == 200){
         this.dataSource = new MatTableDataSource<any>(result.data);

@@ -23,7 +23,7 @@ export class MobileTagFormComponent implements OnInit {
 
   onSubmit() {
    // console.log("Submiting form" + JSON.stringify(this.TagModel))
-   this.createMobileTagService.cresteMobileTag(this.TagModel)
+   this.createMobileTagService.save(this.TagModel)
      .subscribe(
        data => console.log("success! ",data),
        error=>console.log("Error! ",error));

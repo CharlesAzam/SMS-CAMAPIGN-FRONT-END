@@ -6,15 +6,39 @@ import {MobileTags} from '../../app/models/mobile-tags'
   providedIn: 'root'
 })
 export class MobileTagsService {
- _url="http://localhost:3000/cms/tag/create";
+ url="http://localhost:3000/cms/";
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  cresteMobileTag(Mobiletags: MobileTags){
-    let params = { "name": "mimi","type":"low" };
+  find(){
+    let url = 'http://34.245.129.208:3000/cms/category-list';
+    //let params = { "name": "mimi","type":"low" };
     let headers = new HttpHeaders()
     .set('Accept', 'application/json');
-    return this._http.post<any>(this._url,Mobiletags,{headers,params})
+    return this.http.get<any>(url,{headers})
 
   }
+findById(id: string){
+    let url = 'http://34.245.129.208:3000/cms/tag-list';
+    let params = { "id": id };
+    let headers = new HttpHeaders()
+        .set('Accept', 'application/json');
+    return this.http.get<any>(url, { params, headers });
+}
+
+save(Mobiletags: MobileTags){
+  let url = 'http://34.245.129.208:3000/cms/tag/create';
+  let headers = new HttpHeaders()
+      .set('Accept', 'application/json');
+  return this.http.post<any>(url, MobileTags, { headers });
+}
+
+// load(filter: CategoriesFilter): void {
+//     this.find().subscribe((result: any) => {
+//         this.categoriesList = result.data;
+//         console.log(this.categoriesList);
+//     }, err => {
+//         console.error('error loading', err);
+//     });
+// }
 }
