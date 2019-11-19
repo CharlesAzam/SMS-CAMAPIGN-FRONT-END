@@ -4,7 +4,16 @@
   <button mat-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  Azam CMS
+  <img style="height: 30px !important;" src="/assets/azam-logo.png">
+      
+      <mat-select style="width: 200px !important; margin-left: 80%;">
+        <mat-option value="Admin" >Admin</mat-option>
+        <mat-option > Country</mat-option>
+        <mat-option > CMS USERS</mat-option>
+        <mat-option > Assign ROles</mat-option>
+        <mat-option > Providers</mat-option>
+      </mat-select>
+  <button mat-button style="margin-left: 0% !important;" >Log Out</button>
 </mat-toolbar>
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" opened="false" class="example-sidenav" [fixedInViewport]=false [fixedTopGap]=0

@@ -1,4 +1,16 @@
+.btn{
+    float: right !important;
+    border-radius: 6px !important;
+    margin-right: 40px;
+}
 
+.btn-submit{
+    margin-top: 10px; 
+    width: 375px; 
+    align-content: center;      
+
+
+}
 .container2{
     margin-top: 3%;
     float: Right !important;
@@ -30,14 +42,17 @@
 }
 
 .container-btn1{
-    float: right !important;
-    margin-bottom: 30px !important;
+    /* float: right !important; */
+    margin-right: 90px !important;
 }
 
-.btn{
-    float: right !important;
-    border-radius: 6px !important;
-    margin-right: 40px;
+.filter-input-btn{
+    margin-top: 100px;
+    
+}
+
+.filter-input{
+    width: 85% !important;
 }
 
 mat-lable{
@@ -47,36 +62,57 @@ mat-lable{
     color: black !important;
 }
 
-
-.btn-submit{
-    margin-top: 10px; 
-    width: 375px; 
-    align-content: center;      
+mat-tab-group{
+    margin-bottom: 500px !important;
+}
 
 
+
+mat-form-field{
+    width:90% !important; 
+}
+.mat-card-header{
+    margin-top: 30px !important; 
+    height: 120px !important;
 }
 
 .input-layouts{
     width: 90%;
 }
 
+
+.tabs-header-container{
+    margin-left: 100px !important; 
+    margin-right: 180px !important;
+
+}
+
+.card-table-container{
+    margin-top: 50px !important;
+    margin-left: 100px !important; 
+    margin-right: 180px !important;
+    padding: 5px !important;
+}
 table {
     width: 90%;
   }
 
   .table-contaniner{
-      margin-top: 150px;
+      margin-top: 15px;
       padding-left: 100px;
   }
 
-  mat-tab-group{
-      margin-bottom: 500px !important;
+  .table-paginator-style{
+    /* float: right !important;  */
+    /* margin-top: 40px !important; */
+    padding-right: 10% !important;
   }
+  
   
   .main-content{
       margin-top: 0px;
   }
 
   .content-header{
-    margin-left: 100px;
+    margin-left: 0px;
   }

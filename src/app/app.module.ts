@@ -86,6 +86,7 @@ import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-ph
     BannerModule,
     EditorModule,
     CreateCategoriesModule,
+    ReactiveFormsModule
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]

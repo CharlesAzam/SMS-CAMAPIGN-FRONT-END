@@ -12,8 +12,7 @@
                     <form *ngIf="vod" #vodForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title" #title="ngModel"
-                                required>
+                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title" #title="ngModel" required>
                             <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error>
                         </mat-form-field>
 
