@@ -1,26 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { VodListComponent } from './vod-list/vod-list.component';
-import { VodEditComponent } from './vod-edit/vod-edit.component';
+import { VodListComponent, ContentDialog } from './vod-list/vod-list.component';
+import { VodEditComponent, AddSeasonsDialog } from './vod-edit/vod-edit.component';
 import { VodService } from './vod.service';
 import { VOD_ROUTES } from './vod.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
+import { NZorroModules } from 'src/app/modules/app-nzorro.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
+    ReactiveFormsModule,
     RouterModule.forChild(VOD_ROUTES),
   ],
   declarations: [
     VodListComponent,
-    VodEditComponent
+    VodEditComponent,
+    AddSeasonsDialog,
+    ContentDialog 
   ],
   providers: [
     VodService
+  ],
+  entryComponents: [
+    ContentDialog,
+    AddSeasonsDialog
   ],
   exports: [
   ]

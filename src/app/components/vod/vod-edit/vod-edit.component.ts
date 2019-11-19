@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VodService } from '../vod.service';
 import { Vod } from '../vod';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 
@@ -13,6 +13,12 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
     templateUrl: './vod-edit.component.html'
 })
 export class VodEditComponent implements OnInit {
+
+    isNewForm: boolean = false;
+    isRadioForm: boolean = false;
+    isVideoForm: boolean = false;
+    isLiveTvForm: boolean = false;
+    isSeriesForm: boolean = false;
 
     id: string;
     vod: Vod;
@@ -59,9 +65,12 @@ export class VodEditComponent implements OnInit {
         }
     }
 
+
     constructor(
         private route: ActivatedRoute,
-        private vodService: VodService) {
+        private vodService: VodService,
+        private dialog: MatDialog
+    ) {
     }
 
     ngOnInit() {
@@ -71,7 +80,19 @@ export class VodEditComponent implements OnInit {
             .pipe(
                 map(p => p['id']),
                 switchMap(id => {
-                    if (id === 'new') return of(new Vod());
+                    // if (id === 'new') return of(new Vod());
+                    // else
+
+                    switch (id) {
+                        case "SERIES":
+                            this.isSeriesForm = !this.isSeriesForm;
+                            return of(new Vod());
+                        case "NEWS":
+                            this.isNewForm = !this.isNewForm;
+                            return of(new Vod());
+                        default:
+                            break;
+                    }
                     return this.vodService.findById(id)
                 })
             )
@@ -97,4 +118,26 @@ export class VodEditComponent implements OnInit {
             }
         );
     }
+
+    openDialog() {
+        const dialogRef = this.dialog.open(AddSeasonsDialog);
+    }
+
+
+}
+
+@Component({
+    selector: 'dialog-content-type',
+    templateUrl: '../dialog-content-add-season.html',
+})
+export class AddSeasonsDialog {
+
+
+    constructor(
+        public dialogRef: MatDialogRef<AddSeasonsDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private router: Router
+    ) { }
+
+
 }

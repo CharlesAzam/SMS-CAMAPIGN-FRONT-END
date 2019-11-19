@@ -41,7 +41,7 @@ const routes: Routes = [
         loadChildren: "./components/homepage/categories/categories.module#CategoriesModule"
       },
       {
-        path: "vod",
+        path: "content",
         loadChildren: "./components/vod/vod.module#VodModule"
       },
       {
