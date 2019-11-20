@@ -44,7 +44,7 @@ export class MobileTagFormComponent implements OnInit {
           },
           error => {
             console.log("Error! ", error)
-          });     
+          });
     } else {
       this.tagService.save(this.tagForm.value)
         .subscribe(
@@ -63,9 +63,7 @@ export class MobileTagFormComponent implements OnInit {
   ngOnInit() {
     this.getLanguages();
     this.activatedRoute.params.subscribe(params => {
-      if (params.id === 'new') {
-
-      } else {
+      if (params.id !== 'new') {
         this.tagService.findById(params.id).subscribe((response) => {
           if (response.status === 200) {
             this.tagModel = response.data[0];

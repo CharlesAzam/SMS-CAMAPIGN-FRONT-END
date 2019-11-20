@@ -1,7 +1,6 @@
 .btn{
     float: right !important;
     border-radius: 6px !important;
-    margin-right: 40px;
 }
 
 .btn-submit{
@@ -51,10 +50,6 @@
     
 }
 
-.filter-input{
-    width: 85% !important;
-}
-
 mat-lable{
     font-family: inherit;
     font-size: 40px;
@@ -68,9 +63,6 @@ mat-tab-group{
 
 
 
-mat-form-field{
-    width:90% !important; 
-}
 .mat-card-header{
     margin-top: 30px !important; 
     height: 120px !important;

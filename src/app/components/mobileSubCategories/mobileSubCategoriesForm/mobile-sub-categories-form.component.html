@@ -1,41 +1,78 @@
-<div   class="container-btn2">
-    <button type="button" mat-raised-button (click)="back()" class="btn btn-primary btn-lg">Back to Category List</button>     
-</div>
-<div class="container3">
-<div class="container2">
-    <h2>Sub Category</h2>
-    <form action="#">
-        <label for="Title">Sub Category Name</label> 
-        <div class="form-group">   
-            <mat-form-field class="input-layouts">
-                <input matInput placeholder="Enter title" value=" ">
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-            <label for="Decription">Upload Image:</label>
-            <input  type="file" class="form-control" id="pwd" placeholder="Enter Upload image thumb" name="pwd">
-        </div>
-        <div class="form-group">
-            <mat-form-field style="width: 100%;">
-                <mat-label>Category</mat-label>
-                <mat-select [formControl]="toppings" multiple>
-                    <mat-option *ngFor="let Category of Categories" [value]="Category">{{Category}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-            <mat-form-field style="width: 100%;">
-                <mat-label>Sub Category Language</mat-label>
-                <mat-select [formControl]="toppings">
-                    <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+<div class="container">
+    <mat-card style="margin-top: 30px;">
+        <h2>Sub Category</h2>
+        <form [formGroup]="subCategoryForm" (ngSubmit)="submit()">
+            <hr>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput placeholder="Enter Name" formControlName="name" required>
+                </mat-form-field>
+            </div>
 
-        <div style="float: left !important;">
-            <button class="btn-submit" mat-raised-button type="submit">Create Sub Category</button>
-        </div>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput placeholder="Priority" type="number" formControlName="priority" required>
+                </mat-form-field>
+            </div>
 
-    </form>
-</div>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput placeholder="Type" formControlName="type" required>
+                </mat-form-field>
+            </div>
+
+
+            <div class="form-group" *ngIf='subCategoryModel == null'>
+                <label for="Decription">Upload Image:</label>
+                <input type="file" class="form-control" formControlName="image" placeholder="Enter Upload image thumb"
+                    name="pwd">
+
+            </div>
+
+            <div class="form-group" *ngIf='subCategoryModel'>
+                <img src={{subCategoryModel.image}} width="100" height="100" />
+
+            </div>
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="parentCatID">
+                        <mat-option *ngFor="let category of categories" [value]="category._id">{{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Language</mat-label>
+                    <mat-select formControlName="language">
+                        <mat-option *ngFor="let lang of languages" [value]="lang">{{lang}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Bounding Box</mat-label>
+                    <mat-select formControlName="boundingBox">
+                        <mat-option *ngFor="let box of boxes" [value]="box">{{box}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Status</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="status" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>ACTIVE</mat-button-toggle>
+                    <mat-button-toggle value=false>INACTIVE</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+            <div>
+                <button mat-raised-button type="submit">Create Sub Category</button>
+            </div>
+
+        </form>
+    </mat-card>
 </div>

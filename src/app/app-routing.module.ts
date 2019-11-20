@@ -81,7 +81,7 @@ const routes: Routes = [
         component:MobileSubCategoriesComponent
       },
       {
-        path:'subCategoryForm',
+        path:'subCategoryForm/:id',
         component:MobileSubCategoriesFormComponent
       },
       {
@@ -131,7 +131,7 @@ const routes: Routes = [
 
       },
       {
-        path:'CategoryForm',
+        path:'CategoryForm/:id',
         component:CategoryFormComponent
       },
       {

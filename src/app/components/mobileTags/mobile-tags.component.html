@@ -12,8 +12,8 @@
           <!--Filter input button container start name  -->
           <div class="filter-input-btn">
             <div class="container-btn1">
-              <button type="button" mat-raised-button [routerLink]="['../MobileTagForm/new']"
-                class="btn btn-primary btn-lg">Create Tags</button>
+              <button type="button" mat-raised-button [routerLink]="['../MobileTagForm/new']" class="btn">Create
+                Tags</button>
             </div>
             <div class="filter-input">
               <mat-form-field>
@@ -122,7 +122,8 @@
           </table>
 
           <!-- <div class="table-paginator-style"> -->
-          <mat-paginator class="table-paginator-style" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+          <mat-paginator class="table-paginator-style" [length]="30" [pageSize]="5" [pageSizeOptions]="[5, 10]"
+            showFirstLastButtons>
           </mat-paginator>
           <!-- </div> -->
         </div>

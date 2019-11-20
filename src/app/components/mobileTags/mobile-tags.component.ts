@@ -4,15 +4,6 @@ import { MobileTags } from '../../models/mobile-tags';
 import { MatTableDataSource } from '@angular/material/table';
 import { MobileTagsService } from '../../../app/services/mobile-tags.service';
 
-
-// export class MobileTags{
-//      id: string;type
-//      name: string;
-//      status:string;
-//      action: string
-
-// }
-
 export class mobileTagFilter {
   name: string = '';
 }
@@ -35,7 +26,7 @@ export class MobileTagsComponent implements OnInit {
   deleteCategory(row) {
     this.tagService.delete(row._id).subscribe((result: any) => {
       if (result.status == 200) {
-        this.dataSource = new MatTableDataSource<any>(result.data);
+        this.getTags();
         // this.dataSource.data
       }
 
@@ -50,6 +41,15 @@ export class MobileTagsComponent implements OnInit {
     this.router.navigate(['home/MobileTagForm'], row._id);
   }
 
+  getTags() {
+    this.tagService.find().subscribe((result: any) => {
+      if (result.status == 200) {
+        this.dataSource = new MatTableDataSource<any>(result.data);
+      }
+
+    })
+  }
+
   // applyFilter(filterValue: string) {
   //   this.dataSource.filter = filterValue.trim().toLowerCase();
   // }
@@ -57,13 +57,7 @@ export class MobileTagsComponent implements OnInit {
   /*Table logic*/
 
   ngOnInit() {
-    this.tagService.find().subscribe((result: any) => {
-      if (result.status == 200) {
-        console.log(result)
-        this.dataSource = new MatTableDataSource<any>(result.data);
-      }
-
-    })
+    this.getTags();
   }
 
 }

@@ -6,22 +6,22 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class BannerService {
-    
+
     constructor(private http: HttpClient) {
     }
 
     bannerList: Banner[] = [];
-  
+
     findById(id: string): Observable<Banner> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3000/api/vod';
         let params = { "id": id };
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
-        return this.http.get<Banner>(url, {params, headers});
+            .set('Accept', 'application/json');
+        return this.http.get<Banner>(url, { params, headers });
     }
-    
+
     load(filter: BannerFilter): void {
-        this.find(filter).subscribe(
+        this.find().subscribe(
             result => {
                 this.bannerList = result;
             },
@@ -31,23 +31,19 @@ export class BannerService {
         )
     }
 
-    find(filter: BannerFilter): Observable<Banner[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+    find(): Observable<Banner[]> {
+        let url = 'http://34.245.129.208:3000/cms/banner-list';
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
+            .set('Accept', 'application/json');
 
-        let params = {
-            "name": filter.name,
-        };
-
-        return this.http.get<Banner[]>(url, {params, headers});
+        return this.http.get<Banner[]>(url, { headers });
     }
 
     save(entity: Banner): Observable<Banner> {
         let url = 'http://34.245.129.208:3000/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.post<Banner>(url, entity, {headers});
+        return this.http.post<Banner>(url, entity, { headers });
     }
 }
 

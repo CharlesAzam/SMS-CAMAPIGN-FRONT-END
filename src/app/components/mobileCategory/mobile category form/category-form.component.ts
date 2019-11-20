@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MobileCategories} from '../../../models/mobile-categories';
+import { MobileCategories } from '../../../models/mobile-categories';
+import { SubCategoriesService } from 'src/app/services/sub.categories.service';
+import { BannerService } from '../../banner/banner.service';
+import { CategoriesService } from 'src/app/services/categories.service';
+import { Categories } from 'src/app/models/categories';
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
@@ -9,53 +13,103 @@ import {MobileCategories} from '../../../models/mobile-categories';
 })
 export class CategoryFormComponent implements OnInit {
 
+
+  categoryForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    banner: new FormControl('', [Validators.required]),
+    language: new FormControl('', [Validators.required]),
+    icon: new FormControl('', [Validators.required]),
+    type: new FormControl('', [Validators.required]),
+    subCategories: new FormControl('', [Validators.required]),
+    priority: new FormControl('', [Validators.required]),
+    isHome: new FormControl(true, [Validators.required]),
+    status: new FormControl(true, [Validators.required])
+  })
+
+  languages: string[] = ["en", 'sw'];
+  subCategories: any[] = []
+  banners: any[] = []
+  categoryModel: Categories
+
+
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,private fb:FormBuilder) { }
+    private activatedRoute: ActivatedRoute,
+    private subCategoryService: SubCategoriesService,
+    private bannerService: BannerService,
+    private categoryService: CategoriesService) { }
 
+  ngOnInit() {
+    this.getSubCategories();
+    this.getBanners();
+    this.activatedRoute.params.subscribe(params => {
+      if (params.id !== 'new') {
+        this.categoryService.findById(params.id).subscribe((response: any) => {
+          if (response.status === 200) {
+            console.log(response.data)
+            this.categoryModel = response.data[0];
+            this.categoryForm.setValue({
+              name: this.categoryModel.name ? this.categoryModel.name : '',
+              banner: this.categoryModel.banner ? this.categoryModel.banner : '',
+              language: this.categoryModel.language ? this.categoryModel.language : '',
+              type: this.categoryModel.type ? this.categoryModel.type : '',
+              icon: this.categoryModel.icon ? this.categoryModel.icon : '',
+              subCategories: this.categoryModel.subCategories ? this.categoryModel.subCategories : [],
+              priority: this.categoryModel.priority ? this.categoryModel.priority : '',
+              isHome: this.categoryModel.isHome ? this.categoryModel.isHome : true,
+              status: this.categoryModel.status ? this.categoryModel.status : true
+            })
+          }
+        }, error => console.error(error));
+      }
+    });
 
-    mobileCategoryForm: FormGroup;
+  }
 
-  // toppings = new FormControl();
-  // options =new FormControl();
-  Tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4', 'tag 5', 'tag 6'];
-  Categories: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
-  languages: string[]=["English",'Swahili'];
+  getBanners() {
+    this.bannerService.find().subscribe((response: any) => {
+      if (response.status === 200) {
+        this.banners = response.data
+      }
+    },
+      error => console.error(error))
+  }
+
+  getSubCategories() {
+    this.subCategoryService.find().subscribe((response: any) => {
+      if (response.status === 200) {
+        this.subCategories = response.data
+      }
+    },
+      error => console.error(error))
+  }
 
   //Route To category List
-  routeToCategoryList(){
-    console.log("To category list");
+  routeToCategoryList() {
     this.router.navigate(['home/category']);
-    
-    
-  } 
-
-  //Validation logic start
-  ALPHA_REGEX = "/^[a-zA-Z0-8]*$/"; 
- 
-
-  
-  titleFormControll = new FormControl('',[Validators.required,Validators.pattern(this.ALPHA_REGEX)]);
-  //mobileCategoryModel=new MobileCategories("Wasafi","Tv Channe","wasafi_thumb.png","wasafi.png",["BongoHits,Radio,Tv,"],"Entertainment","Swahili");
-   
-  //Validation logic end
-
-  onSubmit(){
-    console.log("Submiting form")
   }
 
-  
-  ngOnInit() {
-    this.mobileCategoryForm=this.fb.group({
-      //Populate with data via service
-      Title: ["",[Validators.required,Validators.pattern(this.ALPHA_REGEX)]],
-      Description: ["",[Validators.required,Validators.pattern(this.ALPHA_REGEX)]],
-      ImageThumb: ["Lamp.png"],
-      Images: ["Wamp.png"],
-      Tags: [this.Tags],
-      Category: [this.Categories],
-      Language: [this.languages],
-    });
-  }
+  onSubmit() {
+    console.log(this.categoryForm.value)
+    if (this.categoryModel) {
+      Object.assign(this.categoryModel, this.categoryForm.value)
 
-}  
- 
+      this.categoryService.update(this.categoryModel).subscribe((response: any) => {
+        if (response.status === 200)
+          this.routeToCategoryList()
+        else
+          console.log(response)
+      },
+        error => console.error(error))
+    } else {
+      this.categoryService.save(this.categoryForm.value).subscribe((response: any) => {
+        if (response.status === 200)
+          this.routeToCategoryList()
+        else
+          console.log(response)
+      },
+        error => console.error(error))
+    }
+
+
+  }
+}

@@ -14,8 +14,8 @@ export class MobileSubCategoriesComponent implements OnInit {
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute, private subCategoryService: SubCategoriesService) { }
 
-    displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
-    dataSource = new MatTableDataSource<any>([]);
+  displayedColumns: string[] = ['position', 'name', 'category', 'Status', 'symbol'];
+  dataSource = new MatTableDataSource<any>([]);
 
   routeToCategoryForm() {
     console.log("Route to sub category");
@@ -27,8 +27,21 @@ export class MobileSubCategoriesComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getSubCategories();
+  }
+
+  deleteCategory(id) {
+    this.subCategoryService.delete(id).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.getSubCategories();
+      }
+    },
+      error => console.error(error))
+  }
+
+  getSubCategories() {
     this.subCategoryService.find().subscribe((response: any) => {
-      if(response.status === 200){
+      if (response.status === 200) {
         this.dataSource = new MatTableDataSource<any>(response.data)
       }
     }, error => console.log(error))

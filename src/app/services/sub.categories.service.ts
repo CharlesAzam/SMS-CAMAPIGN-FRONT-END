@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MobileTags } from '../../app/models/mobile-tags'
+import { SubCategory } from '../models/sub.categories';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,6 @@ export class SubCategoriesService {
 
   find() {
     let url = 'http://34.245.129.208:3000/cms/sub-category-list';
-    //let params = { "name": "mimi","type":"low" };
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.get<any>(url, { headers })
@@ -25,14 +24,14 @@ export class SubCategoriesService {
     return this.http.get<any>(url, { headers });
   }
 
-  save(data: MobileTags) {
+  save(data: SubCategory) {
     let url = 'http://34.245.129.208:3000/cms/sub-category/create';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.post<any>(url, data, { headers });
   }
 
-  update(data: MobileTags) {
+  update(data: SubCategory) {
     let url = `http://34.245.129.208:3000/cms/sub-category/${data._id}/update`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
@@ -43,7 +42,7 @@ export class SubCategoriesService {
     let url = `http://34.245.129.208:3000/cms/sub-category/${id}/`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.put<any>(url, { headers });
+    return this.http.delete<any>(url, { headers });
   }
 
   // load(filter: CategoriesFilter): void {
