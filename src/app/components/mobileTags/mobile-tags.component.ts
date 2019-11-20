@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MobileTags } from '../../models/mobile-tags';
 import { MatTableDataSource } from '@angular/material/table';
-import {MobileTagsService} from '../../../app/services/mobile-tags.service';
+import { MobileTagsService } from '../../../app/services/mobile-tags.service';
 
 
 // export class MobileTags{
@@ -10,7 +10,7 @@ import {MobileTagsService} from '../../../app/services/mobile-tags.service';
 //      name: string;
 //      status:string;
 //      action: string
-    
+
 // }
 
 export class mobileTagFilter {
@@ -26,22 +26,28 @@ export class mobileTagFilter {
 export class MobileTagsComponent implements OnInit {
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,private createMobileTagService: MobileTagsService) { }
-    TagModel: MobileTags = new MobileTags();
-    displayedColumns: string[] = ['id', 'name', 'status', 'action'];
-    dataSource = new MatTableDataSource<any>([]);
-
-  
+    private activatedRoute: ActivatedRoute, private tagService: MobileTagsService) { }
+  TagModel: MobileTags = new MobileTags();
+  displayedColumns: string[] = ['id', 'name', 'type', 'action'];
+  dataSource = new MatTableDataSource<any>([]);
 
   /*Table logic*/
   deleteCategory(row) {
+    this.tagService.delete(row._id).subscribe((result: any) => {
+      if (result.status == 200) {
+        this.dataSource = new MatTableDataSource<any>(result.data);
+        // this.dataSource.data
+      }
+
+    })
   }
 
-  editCategory(row) {
+  routeToTagForm() {
+    this.router.navigate(['MobileTagForm'], { queryParams: { id: 'new' } });
   }
 
-  routeToTagForm(){
-    this.router.navigate(['home/MobileTagForm']);
+  editTag(row) {
+    this.router.navigate(['home/MobileTagForm'], row._id);
   }
 
   // applyFilter(filterValue: string) {
@@ -51,10 +57,10 @@ export class MobileTagsComponent implements OnInit {
   /*Table logic*/
 
   ngOnInit() {
-    this.createMobileTagService.find().subscribe((result:any)=>{
-      if(result.status == 200){
+    this.tagService.find().subscribe((result: any) => {
+      if (result.status == 200) {
+        console.log(result)
         this.dataSource = new MatTableDataSource<any>(result.data);
-        console.log("This is the Table Data \n"+JSON.stringify(this.dataSource));
       }
 
     })

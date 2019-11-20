@@ -6,6 +6,8 @@ import { Vod } from '../vod';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'vod',
@@ -13,17 +15,40 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class VodListComponent implements OnInit {
 
+    typeControl = new FormControl();
+
+    types: string[] = [
+        "vod",
+        "series",
+        "radio",
+        "news"
+    ]
+
+    selectedType: string;
+
+
     @ViewChild(MatSort, { static: true }) sort: MatSort;
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     ngOnInit(): void {
+        this.selectedType = this.types[0];
+        this.getData(this.selectedType)
+
         this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.dataSource.sort = this.sort
+
+
     }
     filter = new VodFilter();
     selectedVod: Vod;
-    dataSource = new MatTableDataSource<Vod>(this.vodList);
+    dataSource = new MatTableDataSource<any>([]);
+
+    getContentType(event) {
+        this.selectedType = event.value;
+        this.getData(event.value)
+
+    }
 
 
     openDialog() {
@@ -33,29 +58,21 @@ export class VodListComponent implements OnInit {
         })
     }
 
-
-    displayedColumns: string[] = ['id', 'Title', 'Category', 'subCategoryID', 'status', 'action'];
-
-    get vodList(): Vod[] {
-        return [{ id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' },
-        { id: "1", Status: 'ACTIVE', subCategoryID: ['Movies', 'Categories'], boundingBox: 'rectangle', categoryID: ['Movies', 'Categories'], cdnId: '1234', country: 'Tanzania', descriptions: 'demo', director: 'Mussa Banzi', duration: '12hrs', imageThumb: 'http://google.com/', isFree: true, isFreeForAzam: false, languageDetail: 'tz', releaseDate: '12/12/1212', starring: 'james bond', tags: ['action'], title: 'The end' }]
-
+    getData(type) {
+        this.vodService.find(type, new VodFilter()).subscribe((response: any) => {
+            if (response.status === 200) {
+                this.dataSource = new MatTableDataSource<any>(response.data)
+            }
+        })
     }
 
+
+    displayedColumns: string[] = ['id', 'title', 'type', 'vodType', 'status', 'action'];
     constructor(private vodService: VodService, private dialog: MatDialog) {
     }
 
     search(): void {
-        this.vodService.load(this.filter);
+        // this.vodService.load(this.filter);
     }
 
     select(selected: Vod): void {
@@ -68,6 +85,7 @@ export class VodListComponent implements OnInit {
 
 }
 
+//Dialog
 @Component({
     selector: 'dialog-content-type',
     templateUrl: '../dialog-content-type.html',

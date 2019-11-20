@@ -20,8 +20,8 @@ export class VodService {
         return this.http.get<Vod>(url, { params, headers });
     }
 
-    load(filter: VodFilter): void {
-        this.find(filter).subscribe(
+    load(filter: VodFilter, route: String): void {
+        this.find(route, filter).subscribe(
             result => {
                 this.vodList = result;
             },
@@ -31,16 +31,13 @@ export class VodService {
         )
     }
 
-    find(filter: VodFilter): Observable<Vod[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+    find(route: String, filter: VodFilter): Observable<Vod[]> {
+        console.log(route)
+        let url = 'http://34.245.129.208:3000/cms/content/' + route;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
-        let params = {
-            "title": filter.title,
-        };
-
-        return this.http.get<Vod[]>(url, { params, headers });
+        return this.http.get<Vod[]>(url, { headers });
     }
 
     save(entity: Vod): Observable<Vod> {

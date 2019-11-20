@@ -21,6 +21,7 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   editCategory(row) {
+    this.router.navigate(['home/CategoryForm', row._id]);
   }
 
   routeToCategoryForm() {

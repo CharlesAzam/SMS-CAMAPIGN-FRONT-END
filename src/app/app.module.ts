@@ -40,6 +40,7 @@ import { ChannelComponent } from './components/channels/channel.component';
 import { NewsTagComponent } from './components/newsTags/news-tag/news-tag.component';
 import { NewsStroyIdeaComponent } from './components/newsStroyIdea/news-stroy-idea/news-stroy-idea.component';
 import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-photos.component';
+import { LanguageService } from './services/language.service';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -88,7 +89,7 @@ import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-ph
     CreateCategoriesModule,
     ReactiveFormsModule
   ],
-  providers: [MoviesService],
+  providers: [MoviesService, LanguageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

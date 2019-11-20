@@ -6,7 +6,14 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="vodList.length > 0" style="margin-top: 30px;">
+  <mat-card style="margin-top: 30px;">
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select (selectionChange)="getContentType($event)" [(ngModel)]="selectedType">
+        <mat-option *ngFor="let type of types" [value]="type">{{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div>
       <mat-form-field style="width: 86%;">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -24,31 +31,31 @@
       <!-- Position Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element"> {{element._id}} </td>
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="Title">
+      <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
       <!-- Category Column -->
-      <ng-container matColumnDef="Category">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Categories </th>
-        <td mat-cell *matCellDef="let element"> {{element.categoryID}} </td>
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <td mat-cell *matCellDef="let element"> {{selectedType}} </td>
       </ng-container> <!-- Sub Categories Column -->
 
       <!-- Sub Categories Column -->
-      <ng-container matColumnDef="subCategoryID" mat-sort-header>
-        <th mat-header-cell *matHeaderCellDef> Sub Categories </th>
-        <td mat-cell *matCellDef="let element"> {{element.subCategoryID}} </td>
+      <ng-container matColumnDef="vodType" mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef> VOD Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.vodType}} </td>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.status? 'ACTIVE':'INACTIVE'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">

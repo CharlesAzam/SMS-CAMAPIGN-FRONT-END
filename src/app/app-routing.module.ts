@@ -97,7 +97,7 @@ const routes: Routes = [
          component:MobileTagsComponent
       },
       {
-        path:'MobileTagForm',
+        path:'MobileTagForm/:id',
         component:MobileTagFormComponent
 
       },

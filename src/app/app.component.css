@@ -7,5 +7,3 @@
     width: 100%;
   }
   
-@import "~ng-zorro-antd/style/index.min.css"; /* Import basic styles */
-@import "~ng-zorro-antd/button/style/index.min.css"; /* Import styles of the component */

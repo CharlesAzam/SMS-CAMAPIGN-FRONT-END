@@ -1,12 +1,10 @@
 export class MobileTags {
-    public id: string
+    public _id: string
     public name: string
-    public status:string
+    public type: string
+    public language: Object | string
+    public status: string
     public action: string
-    // public Category: string
-    constructor(
-
-
-    ) { }
+    constructor() { }
 
 }

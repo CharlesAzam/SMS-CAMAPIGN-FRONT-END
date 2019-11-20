@@ -1,54 +1,36 @@
-<div class="container-btn2">
-     <button type="button" (click)="back()" class="btn btn-primary btn-lg">Create tags</button>
-</div>
 <div>
-     <div class="container3">
+     <div class="container d-flex justify-content-center" style="margin-top:30px;">
 
-          <div class="container2">
+          <mat-card>
                <h2>Create Tags</h2>
-               <form #mobileTagForm="ngForm"  (ngSubmit)="onSubmit"  novalidate> 
-                    {{TagModel | json}}
-                    <hr>
-                    <div class="form-group">
-                         <label for="Decription">Tag Name</label>
-                         <mat-form-field class="input-layouts">
-                              <input matInput placeholder=" " name="name" [(ngModel)]="TagModel.name">
-                         </mat-form-field>
-                    </div>
+               <form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field class="input-layouts">
+                         <input matInput placeholder="Name" formControlName="name">
+                    </mat-form-field>
 
-                    <div class="form-group">
-                         <label for="Decription">Priority</label>
-                         <mat-form-field class="input-layouts">
-                              <input matInput placeholder=" " name="type" [(ngModel)]="TagModel.type">
-                         </mat-form-field>
-                    </div>
 
-                     <div class="form-group">
-                         <mat-form-field style="width: 100%;">
-                              <mat-label>Tags Language</mat-label>
-                              <mat-select name="TagLanguage" [(ngModel)]="TagModel.TagLanguage">
-                                   <mat-option *ngFor="let language of languages" [value]="language">{{language}}
-                                   </mat-option>
-                              </mat-select>
-                         </mat-form-field>
-                    </div>
+                    <mat-form-field style="width: 100%;">
+                         <mat-label>Language</mat-label>
+                         <mat-select formControlName="language">
+                              <mat-option *ngFor="let lang of languages" [value]="lang._id">{{lang.name}}
+                              </mat-option>
+                         </mat-select>
+                    </mat-form-field>
 
-                    <div class="form-group">
-                         <mat-form-field style="width: 100%;">
-                              <mat-label>Tag Category</mat-label>
-                              <mat-select  name="TagCategory" [(ngModel)]="TagModel.TagCategory">
-                                   <mat-option *ngFor="let Category of Categories" [value]="Category">{{Category}}
-                                   </mat-option>
-                              </mat-select>
-                         </mat-form-field>
-                    </div>
+                    <mat-form-field style="width: 100%;">
+                         <mat-label>Type</mat-label>
+                         <mat-select formControlName="type">
+                              <mat-option *ngFor="let typ of types" [value]="typ">{{typ}}
+                              </mat-option>
+                         </mat-select>
+                    </mat-form-field>
 
 
                     <div>
-                         <button class="btn-submit" mat-raised-button type="submit" (click)="onSubmit()">Create tag</button>
+                         <button class="btn-submit" mat-raised-button type="submit" (click)="onSubmit()">{{tagModel?'UPDATE':'SAVE'}}</button>
                     </div>
 
                </form>
-          </div>
+          </mat-card>
      </div>
 </div>

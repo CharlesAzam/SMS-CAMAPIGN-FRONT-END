@@ -6,14 +6,14 @@ export const VOD_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'vod'
+    redirectTo: 'content'
   },
   {
-    path: 'vod',
+    path: 'content',
     component: VodListComponent
   },
   {
-    path: 'vod/:id',
+    path: 'content/:id',
     component: VodEditComponent
   }
 ]
