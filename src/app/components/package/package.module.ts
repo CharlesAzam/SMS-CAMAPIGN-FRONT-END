@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PackageListComponent } from './package-list/package-list.component';
 import { PackageEditComponent } from './package-edit/package-edit.component';
@@ -15,7 +15,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     FormsModule,
     MaterialModule,
     RouterModule.forChild(PACKAGE_ROUTES),
-    EditorModule
+    EditorModule,
+    ReactiveFormsModule
   ],
   declarations: [
     PackageListComponent,
