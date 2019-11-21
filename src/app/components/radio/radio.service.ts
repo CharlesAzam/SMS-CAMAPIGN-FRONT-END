@@ -13,7 +13,7 @@ export class RadioService {
     radioList: Radio[] = [];
   
     findById(id: string): Observable<Radio> {
-        let url = 'http://34.245.129.208:3001/api/vod'; 
+        let url = 'http://34.245.129.208:3000/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class RadioService {
     }
 
     find(filter: RadioFilter): Observable<Radio[]> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = 'http://34.245.129.208:3000/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +44,7 @@ export class RadioService {
     }
 
     save(entity: Radio): Observable<Radio> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = 'http://34.245.129.208:3000/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Radio>(url, entity, {headers});
