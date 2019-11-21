@@ -3,6 +3,7 @@ import { VodFilter } from './vod-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { API } from 'src/environments/environment';
 
 @Injectable()
 export class VodService {
@@ -13,7 +14,7 @@ export class VodService {
     vodList: Vod[] = [];
 
     findById(id: string): Observable<Vod> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API.BASE_URL+'/api/vod';
         let params = { "id": id };
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -33,7 +34,7 @@ export class VodService {
 
     find(route: String, filter: VodFilter): Observable<Vod[]> {
         console.log(route)
-        let url = 'http://34.245.129.208:3001/cms/content/' + route;
+        let url = API.BASE_URL+'/cms/content/' + route;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
@@ -41,7 +42,7 @@ export class VodService {
     }
 
     save(entity: Vod): Observable<Vod> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Vod>(url, entity, { headers });

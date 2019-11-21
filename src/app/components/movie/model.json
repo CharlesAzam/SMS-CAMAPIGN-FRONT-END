@@ -2,7 +2,7 @@
     "title": "Movies",
     "entity": "movies",
     "api": {
-      "url": "http://34.245.129.208:3001/api/Movies"
+      "url": "API.BASE_URLapi/Movies"
     },
     "filter": [
       "movieName"

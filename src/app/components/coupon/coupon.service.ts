@@ -3,6 +3,7 @@ import { CouponFilter } from './coupon-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { API } from 'src/environments/environment';
 
 @Injectable()
 export class CouponService {
@@ -13,7 +14,7 @@ export class CouponService {
     couponList: Coupon[] = [];
   
     findById(id: string): Observable<Coupon> {
-        let url = 'http://34.245.129.208:3001/api/vod'; 
+        let url = API.BASE_URL+'/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +33,7 @@ export class CouponService {
     }
 
     find(filter: CouponFilter): Observable<Coupon[]> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -43,7 +44,7 @@ export class CouponService {
     }
 
     save(entity: Coupon): Observable<Coupon> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Coupon>(url, entity, {headers});

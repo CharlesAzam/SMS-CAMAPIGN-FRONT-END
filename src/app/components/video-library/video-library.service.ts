@@ -3,6 +3,7 @@ import { VideoLibraryFilter } from './video-library-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { API } from 'src/environments/environment';
 
 @Injectable()
 export class VideoLibraryService {
@@ -13,7 +14,7 @@ export class VideoLibraryService {
     videoLibraryList: VideoLibrary[] = [];
   
     findById(id: string): Observable<VideoLibrary> {
-        let url = 'http://34.245.129.208:3001/api/vod'; 
+        let url = API.BASE_URL+'/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +33,7 @@ export class VideoLibraryService {
     }
 
     find(filter: VideoLibraryFilter): Observable<VideoLibrary[]> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +45,7 @@ export class VideoLibraryService {
     }
 
     save(entity: VideoLibrary): Observable<VideoLibrary> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<VideoLibrary>(url, entity, {headers});

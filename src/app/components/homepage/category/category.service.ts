@@ -2,24 +2,26 @@ import { Category } from './category';
 import { CategoryFilter } from './category-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'; 
+import { API } from 'src/environments/environment';
+
 
 @Injectable()
 export class CategoryService {
-    
+
     constructor(private http: HttpClient) {
     }
 
     categoryList: Category[] = [];
-  
+
     findById(id: string): Observable<Category> {
-        let url = 'http://34.245.129.208:3001/api/categories'; 
+        let url = API.BASE_URL+'/api/categories';
         let params = { "id": id };
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
-        return this.http.get<Category>(url, {params, headers});
+            .set('Accept', 'application/json');
+        return this.http.get<Category>(url, { params, headers });
     }
-    
+
     load(filter: CategoryFilter): void {
         this.find(filter).subscribe(
             result => {
@@ -32,22 +34,22 @@ export class CategoryService {
     }
 
     find(filter: CategoryFilter): Observable<Category[]> {
-        let url = 'http://34.245.129.208:3001/api/categories';
+        let url = API.BASE_URL+'/api/categories';
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
+            .set('Accept', 'application/json');
 
         let params = {
             "categoryName": filter.categoryName,
         };
 
-        return this.http.get<Category[]>(url, {params, headers});
+        return this.http.get<Category[]>(url, { params, headers });
     }
 
     save(entity: Category): Observable<Category> {
-        let url = 'http://34.245.129.208:3001/api/categories';
+        let url = API.BASE_URL+'/api/categories';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.post<Category>(url, entity, {headers});
+        return this.http.post<Category>(url, entity, { headers });
     }
 }
 

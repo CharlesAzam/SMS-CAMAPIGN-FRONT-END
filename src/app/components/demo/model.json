@@ -2,7 +2,7 @@
     "title": "Demo",
     "entity": "demo",
     "api": {
-        "url": "http://34.245.129.208:3001/api/vod"
+        "url": "API.BASE_URLapi/vod"
     },
     "filter": [
         "name"
