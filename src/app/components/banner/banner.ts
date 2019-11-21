@@ -4,6 +4,7 @@ export class Banner {
     subtitle: string;
     description: string;
     image: string;
+    content: any;
     priority: number;
     categories: any;
     subCategories: any;

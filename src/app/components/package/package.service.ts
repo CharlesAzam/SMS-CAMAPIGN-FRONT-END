@@ -4,6 +4,7 @@ import { PackageFilter } from './package-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { API } from 'src/environments/environment';
 
 const API_URL = 'http://localhost:3000/cms'
 @Injectable()
@@ -39,7 +40,7 @@ export class PackageService {
 
   
     findById(id: string): Observable<Package> {
-        let url = API_URL; 
+        let url = API.BASE_URL+'/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -58,7 +59,7 @@ export class PackageService {
     }
 
     find(filter: PackageFilter): Observable<Package[]> {
-        let url = API_URL;
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -70,7 +71,7 @@ export class PackageService {
     }
 
     save(entity: Package): Observable<Package> {
-        let url = API_URL;
+        let url = API.BASE_URL+'/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Package>(url, entity, {headers});

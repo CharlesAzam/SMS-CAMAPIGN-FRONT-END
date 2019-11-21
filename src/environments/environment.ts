@@ -5,8 +5,8 @@
 export const environment = {
   production: false
 };
-export const apiDetails={
-  baseURL:'http://34.245.129.208:3001/api/'
+export const API={
+  BASE_URL:'http://34.245.129.208:3001'
 }
 /*
  * For easier debugging in development mode, you can import the following file
