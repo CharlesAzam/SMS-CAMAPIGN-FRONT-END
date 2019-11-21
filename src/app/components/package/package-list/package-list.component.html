@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin-top: 30px;">
   <mat-card>
     <div class="header">
       <h2 class="title">Package</h2>
@@ -10,12 +10,12 @@
 
   <mat-card *ngIf="packageList.length > 0" style="margin-top: 30px;">
     <div>
-      <mat-form-field style="width: 92%;">
+      <mat-form-field style="width: 85.5%;">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
 
       <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../package','new']">
-        New
+        Create Package
       </button>
     </div>
 

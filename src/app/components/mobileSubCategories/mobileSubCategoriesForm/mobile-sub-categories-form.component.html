@@ -70,7 +70,7 @@
             </div>
 
             <div>
-                <button mat-raised-button type="submit">Create Sub Category</button>
+                <button color='primary' [disabled]="subCategoryForm.invalid" mat-raised-button type="submit">{{subCategoryModel?'Update':'Save'}}</button>
             </div>
 
         </form>
