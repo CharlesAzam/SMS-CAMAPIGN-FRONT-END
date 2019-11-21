@@ -27,7 +27,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+        <td mat-cell *matCellDef="let element; let i = index"> {{(paginator.pageIndex*paginator.pageSize)+i+1}} </td>
       </ng-container>
 
       <!-- Name Column -->
@@ -69,16 +69,20 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
-          <mat-icon aria-hidden="false" (click)="delete(row)" style="cursor: pointer;" aria-label="Example home icon">delete</mat-icon>
+          <mat-icon aria-hidden="false" (click)="delete(row)" style="cursor: pointer;" aria-label="Example home icon">
+            delete</mat-icon>
           <span style="margin-left: 20px;"></span>
-          <mat-icon aria-hidden="false" [routerLink]="['../banner', row._id]" style="cursor: pointer;" aria-label="Example home icon">edit</mat-icon>
+          <mat-icon aria-hidden="false" [routerLink]="['../banner', row._id]" style="cursor: pointer;"
+            aria-label="Example home icon">edit</mat-icon>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="count" [pageSize]="5" class="table-paginator-style" [pageSizeOptions]="[5, 10]"
+      showFirstLastButtons>
+    </mat-paginator>
 
 
 

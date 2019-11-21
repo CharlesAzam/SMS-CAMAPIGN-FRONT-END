@@ -32,12 +32,20 @@ export class BannerService {
         )
     }
 
-    find(): Observable<Banner[]> {
+    find(pageIndex?, pageSize?): Observable<Banner[]> {
         let url = API.BASE_URL + '/cms/banner-list';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
+        if (pageIndex !== null || pageSize !== null) {
+            let params = {
+                "pageNumber": pageIndex,
+                "size": pageSize
+            };
+            return this.http.get<Banner[]>(url, { params, headers });
+        }
         return this.http.get<Banner[]>(url, { headers });
+
     }
 
     delete(id: string) {
@@ -60,6 +68,11 @@ export class BannerService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Banner>(url, entity, { headers });
+    }
+
+    getCount() {
+        let url = API.BASE_URL + `/cms/count/banners`;
+        return this.http.get(url);
     }
 }
 

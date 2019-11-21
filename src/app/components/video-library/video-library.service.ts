@@ -33,7 +33,7 @@ export class VideoLibraryService {
   // }
 
 
-  find(filter: VideoLibraryFilter): Observable<VideoLibrary[]> {
+  find(filter?: VideoLibraryFilter): Observable<VideoLibrary[]> {
     let url = API.BASE_URL + '/api/vod';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');

@@ -54,6 +54,7 @@ export class BannerEditComponent implements OnInit {
     ngOnInit() {
         this.getCategories();
         this.getSubCategories()
+        this.getContent();
 
         this.route.params.subscribe(params => {
             if (params.id !== 'new') {
@@ -68,6 +69,7 @@ export class BannerEditComponent implements OnInit {
                             description: this.bannerModel.description ? this.bannerModel.description : '',
                             status: this.bannerModel.status ? this.bannerModel.status : '',
                             image: this.bannerModel.image ? this.bannerModel.image : '',
+                            content: this.bannerModel.content ? this.bannerModel.content : '',
                             subtitle: this.bannerModel.subtitle ? this.bannerModel.subtitle : '',
                             priority: this.bannerModel.priority ? this.bannerModel.priority : '',
                             categories: this.bannerModel.categories ? this.bannerModel.categories['_id'] : '',

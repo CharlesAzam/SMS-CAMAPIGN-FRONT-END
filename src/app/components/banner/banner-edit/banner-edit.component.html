@@ -33,7 +33,7 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Content</mat-label>
                             <mat-select formControlName="content" required>
-                                <mat-option *ngFor="let cont of content" [value]="cont._id">{{cont.name}}
+                                <mat-option *ngFor="let cont of content" [value]="cont._id">{{cont.title}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

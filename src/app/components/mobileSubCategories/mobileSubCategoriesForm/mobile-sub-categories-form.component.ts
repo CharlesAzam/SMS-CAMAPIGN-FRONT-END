@@ -109,14 +109,16 @@ export class MobileSubCategoriesFormComponent implements OnInit {
         if (response.status === 200)
           this.back();
       });
+    } else {
+      this.subCategoryForm.value['image'] = "https://www.washingtonpost.com/graphics/2019/entertainment/oscar-nominees-movie-poster-design/img/black-panther-web.jpg"
+      this.subCategoryService.save(this.checkIfValueIsEmpty(this.subCategoryForm.value)).subscribe((response: any) => {
+        if (response.status === 200) {
+          this.back();
+        }
+      },
+        error => console.log(error))
     }
-    this.subCategoryForm.value['image'] = "https://www.washingtonpost.com/graphics/2019/entertainment/oscar-nominees-movie-poster-design/img/black-panther-web.jpg"
-    this.subCategoryService.save(this.subCategoryForm.value).subscribe((response: any) => {
-      if (response.status === 200) {
-        this.back();
-      }
-    },
-      error => console.log(error))
+
   }
 
   getContents() {
