@@ -14,7 +14,7 @@ export class VideoLibraryService {
   videoLibraryList: VideoLibrary[] = [];
 
   findById(id: string): Observable<VideoLibrary> {
-    let url = API.BASE_URL + '/cms/cdn/'+id;
+    let url = API.BASE_URL + '/cms/cdn/' + id;
     // let params = { "id": id };
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
@@ -33,10 +33,18 @@ export class VideoLibraryService {
   // }
 
 
-  find(filter?: VideoLibraryFilter): Observable<VideoLibrary[]> {
+  find(index?, size?): Observable<VideoLibrary[]> {
     let url = API.BASE_URL + '/cms/cdn-list';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
+
+    if (index !== null || size !== null) {
+      let params = {
+        "pageNumber": index,
+        "size": size
+      };
+      return this.http.get<any>(url, { params, headers })
+    }
     return this.http.get<any>(url, { headers })
   }
 
@@ -68,5 +76,11 @@ export class VideoLibraryService {
       .set('Accept', 'application/json');
     return this.http.put<any>(url, data, { headers });
   }
+
+  getCount() {
+    let url = API.BASE_URL + `/cms/count/content`;
+    return this.http.get(url);
+  }
+
 }
 
