@@ -14,7 +14,7 @@ export class PackageService {
     packageList: Package[] = [];
   
     findById(id: string): Observable<Package> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3001/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -33,7 +33,7 @@ export class PackageService {
     }
 
     find(filter: PackageFilter): Observable<Package[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -45,7 +45,7 @@ export class PackageService {
     }
 
     save(entity: Package): Observable<Package> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Package>(url, entity, {headers});

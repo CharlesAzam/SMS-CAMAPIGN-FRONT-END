@@ -13,7 +13,7 @@ export class CreateCategoriesService {
     createCategoriesList: CreateCategories[] = [];
   
     findById(id: string): Observable<CreateCategories> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3001/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class CreateCategoriesService {
     }
 
     find(filter: CreateCategoriesFilter): Observable<CreateCategories[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -43,7 +43,7 @@ export class CreateCategoriesService {
     }
 
     save(entity: CreateCategories): Observable<CreateCategories> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<CreateCategories>(url, entity, {headers});

@@ -13,7 +13,7 @@ export class CouponService {
     couponList: Coupon[] = [];
   
     findById(id: string): Observable<Coupon> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3001/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class CouponService {
     }
 
     find(filter: CouponFilter): Observable<Coupon[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -43,7 +43,7 @@ export class CouponService {
     }
 
     save(entity: Coupon): Observable<Coupon> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Coupon>(url, entity, {headers});

@@ -13,7 +13,7 @@ export class VideoLibraryService {
     videoLibraryList: VideoLibrary[] = [];
   
     findById(id: string): Observable<VideoLibrary> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3001/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class VideoLibraryService {
     }
 
     find(filter: VideoLibraryFilter): Observable<VideoLibrary[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +44,7 @@ export class VideoLibraryService {
     }
 
     save(entity: VideoLibrary): Observable<VideoLibrary> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<VideoLibrary>(url, entity, {headers});

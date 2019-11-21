@@ -13,7 +13,7 @@ export class DemoService {
     demoList: Demo[] = [];
   
     findById(id: string): Observable<Demo> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3001/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class DemoService {
     }
 
     find(filter: DemoFilter): Observable<Demo[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +44,7 @@ export class DemoService {
     }
 
     save(entity: Demo): Observable<Demo> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Demo>(url, entity, {headers});

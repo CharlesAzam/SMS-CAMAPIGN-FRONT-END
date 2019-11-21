@@ -6,7 +6,7 @@ export const environment = {
   production: false
 };
 export const apiDetails={
-  baseURL:'http://34.245.129.208:3000/api/'
+  baseURL:'http://34.245.129.208:3001/api/'
 }
 /*
  * For easier debugging in development mode, you can import the following file
