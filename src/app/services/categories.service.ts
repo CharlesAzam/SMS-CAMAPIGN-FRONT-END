@@ -12,46 +12,56 @@ export class CategoriesService {
     }
     categoriesList: Categories[] = [];
     findById(id: string): Observable<Categories> {
-        let url = API.BASE_URL+'/cms/category/' + id;
+        let url = API.BASE_URL + '/cms/category/' + id;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<Categories>(url, { headers });
     }
-    load(filter: CategoriesFilter): void {
-        this.find().subscribe((result: any) => {
-            this.categoriesList = result.data;
-            console.log(this.categoriesList);
-        }, err => {
-            console.error('error loading', err);
-        });
-    }
-    find(): Observable<Categories[]> {
-        let url = API.BASE_URL+'/cms/category-list';
+    // load(filter: CategoriesFilter): void {
+    //     this.find().subscribe((result: any) => {
+    //         this.categoriesList = result.data;
+    //         console.log(this.categoriesList);
+    //     }, err => {
+    //         console.error('error loading', err);
+    //     });
+    // }
+    find(pageNumber?, size?): Observable<Categories[]> {
+        let url = API.BASE_URL + '/cms/category-list';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        let params = {
-            "categoryName": CategoryFilter.name,
-        };
-        return this.http.get<Categories[]>(url, { params, headers });
+        if (pageNumber !== null || size !== null) {
+            let params = {
+                "pageNumber": pageNumber,
+                "size": size
+            };
+            return this.http.get<Categories[]>(url, { params, headers });
+        }
+        return this.http.get<Categories[]>(url, { headers });
+
     }
     save(entity: Categories): Observable<Categories> {
-        let url = API.BASE_URL+'/cms/category/create';
+        let url = API.BASE_URL + '/cms/category/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Categories>(url, entity, { headers });
     }
 
     update(entity: Categories): Observable<Categories> {
-        let url = API.BASE_URL+`/cms/category/${entity._id}/update`;
+        let url = API.BASE_URL + `/cms/category/${entity._id}/update`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<Categories>(url, entity, { headers });
     }
 
     delete(id: string): Observable<Categories> {
-        let url = API.BASE_URL+`/cms/category/${id}/`;
+        let url = API.BASE_URL + `/cms/category/${id}/`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.delete<Categories>(url, { headers });
+    }
+
+    getCount() {
+        let url = API.BASE_URL + `/cms/count/category`;
+        return this.http.get(url);
     }
 }

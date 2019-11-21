@@ -56,6 +56,7 @@ export class BannerService {
 
     save(entity: Banner): Observable<Banner> {
         let url = API.BASE_URL + '/cms/banner/create';
+        // let url = 'http://192.168.0.208:3000/cms/banner/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Banner>(url, entity, { headers });

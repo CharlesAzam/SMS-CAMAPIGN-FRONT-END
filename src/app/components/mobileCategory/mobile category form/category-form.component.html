@@ -22,8 +22,11 @@
             </div>
 
             <div class="form-group">
-                <mat-form-field class="input-layouts">
-                    <input matInput formControlName="type" placeholder="Type" required>
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
 
@@ -31,7 +34,7 @@
             <div class="form-group">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Sub Categories</mat-label>
-                    <mat-select formControlName="subCategories" multiple required>
+                    <mat-select formControlName="subCategories" multiple>
                         <mat-option *ngFor="let subs of subCategories" [value]="subs._id">{{subs.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -40,20 +43,19 @@
             <div class="form-group">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Banners</mat-label>
-                    <mat-select formControlName="banner" multiple required>
+                    <mat-select formControlName="banner" multiple>
                         <mat-option *ngFor="let bann of banners" [value]="bann._id">{{bann.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
-            <div class="form-group">
-                <mat-form-field style="width: 100%;">
-                    <mat-label>Language</mat-label>
-                    <mat-select formControlName="language" required>
-                        <mat-option *ngFor="let lang of languages" [value]="lang">{{lang}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field style="width: 100%;">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="language">
+                    <mat-option *ngFor="let lang of languages" [value]="lang._id">{{lang.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
             <div class="form-group">
                 <mat-label>Status</mat-label>

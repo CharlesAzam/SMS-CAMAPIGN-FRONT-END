@@ -32,7 +32,7 @@ export class VodService {
         )
     }
 
-    find(route: String, filter: VodFilter): Observable<Vod[]> {
+    find(route: String, filter?: VodFilter): Observable<Vod[]> {
         console.log(route)
         let url = API.BASE_URL+'/cms/content/' + route;
         let headers = new HttpHeaders()

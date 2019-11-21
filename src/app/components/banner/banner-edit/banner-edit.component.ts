@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { SubCategoriesService } from 'src/app/services/sub.categories.service';
+import { VodService } from '../../vod/vod.service';
 
 @Component({
     selector: 'banner-edit',
@@ -20,6 +21,11 @@ export class BannerEditComponent implements OnInit {
 
     categorys: any[]
     subs: any[]
+    types: string[] = [
+        'package',
+        'vod'
+    ]
+    content: any[] = []
 
 
     bannerForm = new FormGroup({
@@ -27,6 +33,7 @@ export class BannerEditComponent implements OnInit {
         description: new FormControl('', [Validators.required]),
         subtitle: new FormControl('', [Validators.required]),
         type: new FormControl('', [Validators.required]),
+        content: new FormControl('', [Validators.required]),
         priority: new FormControl('', [Validators.required]),
         categories: new FormControl('', [Validators.required]),
         subCategories: new FormControl('', [Validators.required]),
@@ -40,6 +47,7 @@ export class BannerEditComponent implements OnInit {
         private bannerService: BannerService,
         private categoryService: CategoriesService,
         private subCategoryService: SubCategoriesService,
+        private contentService: VodService,
         private router: Router) {
     }
 
@@ -85,6 +93,7 @@ export class BannerEditComponent implements OnInit {
 
 
         } else {
+            this.bannerForm.value['image'] = 'https://korbanglafoodsolution.files.wordpress.com/2017/03/background-indomie-header4.png';
             this.bannerService.save(this.bannerForm.value).subscribe(
                 banner => {
                     this.bannerModel = banner;
@@ -115,6 +124,15 @@ export class BannerEditComponent implements OnInit {
             console.log(response)
             if (response.status === 200) {
                 this.subs = response.data;
+            }
+        },
+            error => console.error(error))
+    }
+
+    getContent() {
+        this.contentService.find('vod').subscribe((response: any) => {
+            if (response.status === 200) {
+                this.content = response.data;
             }
         },
             error => console.error(error))

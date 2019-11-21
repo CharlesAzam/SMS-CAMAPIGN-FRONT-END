@@ -16,40 +16,44 @@
             </div>
 
             <div class="form-group">
-                <mat-form-field class="input-layouts">
-                    <input matInput placeholder="Type" formControlName="type" required>
-                </mat-form-field>
-            </div>
-
-
-            <div class="form-group" *ngIf='subCategoryModel == null'>
-                <label for="Decription">Upload Image:</label>
-                <input type="file" class="form-control" formControlName="image" placeholder="Enter Upload image thumb"
-                    name="pwd">
-
-            </div>
-
-            <div class="form-group" *ngIf='subCategoryModel'>
-                <img src={{subCategoryModel.image}} width="100" height="100" />
-
-            </div>
-            <div class="form-group">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Category</mat-label>
                     <mat-select formControlName="parentCatID">
-                        <mat-option *ngFor="let category of categories" [value]="category._id">{{category.name}}
+                        <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="form-group">
+
+
+            <div class="form-group" *ngIf="isTypeVisible()">
                 <mat-form-field style="width: 100%;">
-                    <mat-label>Language</mat-label>
-                    <mat-select formControlName="language">
-                        <mat-option *ngFor="let lang of languages" [value]="lang">{{lang}}</mat-option>
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option *ngFor="let type of types" [value]="type">{{type}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
+            <div class="form-group" >
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Content</mat-label>
+                    <mat-select formControlName="content" multiple>
+                        <mat-option *ngFor="let cont of contents" [value]="cont._id">{{cont.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <mat-form-field style="width: 100%;">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="language">
+                    <mat-option *ngFor="let lang of languages" [value]="lang._id">{{lang.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
             <div class="form-group">
                 <mat-form-field style="width: 100%;">
@@ -70,7 +74,8 @@
             </div>
 
             <div>
-                <button color='primary' [disabled]="subCategoryForm.invalid" mat-raised-button type="submit">{{subCategoryModel?'Update':'Save'}}</button>
+                <button color='primary' [disabled]="subCategoryForm.invalid" mat-raised-button
+                    type="submit">{{subCategoryModel?'Update':'Save'}}</button>
             </div>
 
         </form>

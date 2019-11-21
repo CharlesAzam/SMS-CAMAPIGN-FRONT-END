@@ -31,9 +31,20 @@
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Type" formControlName="type" required>
-                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+                            <mat-label>Content</mat-label>
+                            <mat-select formControlName="content" required>
+                                <mat-option *ngFor="let cont of content" [value]="cont._id">{{cont.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
+
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Type</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option *ngFor="let typ of types" [value]="typ">{{typ}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">

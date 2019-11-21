@@ -24,7 +24,7 @@ export class CategoriesListComponent {
     }
 
     search(): void {
-        this.categoriesService.load(this.filter);
+        // this.categoriesService.load(this.filter);
     }
 
     select(selected: Categories): void {

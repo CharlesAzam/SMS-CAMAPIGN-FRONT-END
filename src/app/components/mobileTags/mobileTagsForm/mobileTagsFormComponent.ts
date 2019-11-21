@@ -15,7 +15,7 @@ export class MobileTagFormComponent implements OnInit {
     private router: Router,
     private languageService: LanguageService,
     private tagService: MobileTagsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   tagModel: MobileTags
@@ -46,7 +46,7 @@ export class MobileTagFormComponent implements OnInit {
             console.log("Error! ", error)
           });
     } else {
-      this.tagService.save(this.tagForm.value)
+      this.tagService.save(this.checkIfValueIsEmpty(this.tagForm.value))
         .subscribe(
           data => {
             if (data.status === 200)
@@ -90,4 +90,14 @@ export class MobileTagFormComponent implements OnInit {
       });
   }
 
+  checkIfValueIsEmpty(data) {
+    for (var key in data) {
+      console.log(key)
+      if (data[key] === "" || data[key] === null) {
+        console.log(key)
+        delete data[key];
+      }
+    }
+    return data;
+  }
 }
