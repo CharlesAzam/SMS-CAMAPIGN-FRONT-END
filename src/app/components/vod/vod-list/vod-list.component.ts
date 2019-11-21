@@ -18,10 +18,10 @@ export class VodListComponent implements OnInit {
     typeControl = new FormControl();
 
     types: string[] = [
-        "vod",
-        "series",
-        "radio",
-        "news"
+        "VOD",
+        "NEWS",
+        "RADIO",
+        "TV GUIDE"
     ]
 
     selectedType: string;
@@ -96,13 +96,14 @@ export class ContentDialog {
     vodControl = new FormControl('', [Validators.required]);
 
     categories: any[] = [
-        "NEWS",
         "VOD",
+        "NEWS",
         "RADIO",
+        "TV GUIDE"
     ];
 
     vodTypes: any[] = [
-        'VIDEO',
+        'VIDEO ON DEMAND',
         'LIVETV',
         'SERIES'
     ];
@@ -114,7 +115,8 @@ export class ContentDialog {
     ) { }
 
     onSelectedCategoryForm(formType) {
-        this.router.navigate(['home/content/vod', formType]);
+        console.log(formType);
+        this.router.navigate(['home/content/content', formType]);
         this.dialogRef.close();
     }
 

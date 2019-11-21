@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API } from 'src/environments/environment';
 
+const API_URL = 'http://localhost:3000/cms'
 @Injectable()
 export class PackageService {
     
@@ -13,6 +14,15 @@ export class PackageService {
     }
 
     packageList: Package[] = [];
+
+    // Azam packages list 
+    findAzamPackageMappingList() {
+        let url = API_URL+'/azam-plans';
+        let headers = new HttpHeaders()
+          .set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers })
+      }
+
   
     findById(id: string): Observable<Package> {
         let url = API.BASE_URL+'/api/vod'; 

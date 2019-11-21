@@ -52,10 +52,10 @@ const routes: Routes = [
         path: "coupon",
         loadChildren: "./components/coupon/coupon.module#CouponModule"
       },
-      {
-        path: "radio",
-        loadChildren: "./components/radio/radio.module#RadioModule"
-      },
+      // {
+      //   path: "radio",
+      //   loadChildren: "./components/radio/radio.module#RadioModule"
+      // },  
       {
         path: "product",
         loadChildren: "./components/product/product.module#ProductModule"
