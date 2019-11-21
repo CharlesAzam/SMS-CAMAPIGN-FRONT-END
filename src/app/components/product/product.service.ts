@@ -13,7 +13,7 @@ export class ProductService {
     productList: Product[] = [];
   
     findById(id: string): Observable<Product> {
-        let url = 'http://34.245.129.208:3000/api/vod'; 
+        let url = 'http://34.245.129.208:3001/api/vod'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class ProductService {
     }
 
     find(filter: ProductFilter): Observable<Product[]> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +44,7 @@ export class ProductService {
     }
 
     save(entity: Product): Observable<Product> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Product>(url, entity, {headers});

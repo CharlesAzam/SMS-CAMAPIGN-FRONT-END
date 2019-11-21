@@ -32,7 +32,7 @@ export class MoviesService {
     }
 
     find(filter: MoviesFilter): Observable<Movies[]> {
-        let url = 'http://34.245.129.208:3000/api/Movies';
+        let url = 'http://34.245.129.208:3001/api/Movies';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +44,7 @@ export class MoviesService {
     }
 
     save(entity: Movies): Observable<Movies> {
-        let url = 'http://34.245.129.208:3000/api/Movies';
+        let url = 'http://34.245.129.208:3001/api/Movies';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Movies>(url, entity, {headers});

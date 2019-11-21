@@ -6,17 +6,10 @@
                     <h1 class="title">Video Library Detail</h1>
                 </div>
                 <div class="content">
-
+                    {{videoLibrary}}
                     <p *ngIf="errors">{{ errors }}</p>
-
-                    <form *ngIf="videoLibrary" #videoLibraryForm="ngForm">
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Id" [(ngModel)]="videoLibrary.id" name="id" #id="ngModel"
-                                required>
-                            <mat-error *ngIf="id.invalid">Video library id can not be empty</mat-error>
-                        </mat-form-field>
-
+                   
+                    <form  #videoLibraryForm="ngForm">
 
                         <mat-form-field style="width: 100%;">
                             <input matInput placeholder="Name" [(ngModel)]="videoLibrary.title" name="title"
@@ -24,25 +17,10 @@
                             <mat-error *ngIf="title.invalid">Video library id can not be empty</mat-error>
                         </mat-form-field>
 
-
-
                         <mat-form-field style="width: 100%;">
                             <input matInput placeholder="Stream URL" [(ngModel)]="videoLibrary.streamURL"
                                 name="streamURL" #streamURL="ngModel" required>
                             <mat-error *ngIf="streamURL.invalid">Video library streamURL can not be empty</mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="JWP Media ID" [(ngModel)]="videoLibrary.jwMediaID"
-                                name="jwMediaID" #jwMediaID="ngModel" required>
-                            <mat-error *ngIf="jwMediaID.invalid">Video library jwMediaID can not be empty</mat-error>
-
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Duration" [(ngModel)]="videoLibrary.duration" name="duration"
-                                #duration="ngModel" required>
-                            <mat-error *ngIf="duration.invalid">Video library duration can not be empty</mat-error>
                         </mat-form-field>
 
                         <div class="form-group">
