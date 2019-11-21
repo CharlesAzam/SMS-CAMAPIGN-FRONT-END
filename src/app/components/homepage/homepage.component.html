@@ -23,7 +23,8 @@
         <span class="full-width">Dashboard</span>
       </mat-list-item>
 
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
+      <!-- hiding for some times -->
+      <!-- <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
         <span class="full-width" *ngIf="isExpanded || isShowing">News</span>
         <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" *ngIf="isExpanded || isShowing">expand_more
         </mat-icon>
@@ -33,7 +34,7 @@
         <a mat-list-item routerLink="NewsTags">Tags</a>
         <a mat-list-item routerLink="NewsVideos">Videos</a>
         <a mat-list-item routerLink="NewsPhoto">Photos</a>
-      </div>
+      </div> -->
 
       <mat-list-item (click)="showMobile = !showMobile" class="parent">
         <span class="full-width" *ngIf="isExpanded || isShowing">Mobile</span>
@@ -44,13 +45,13 @@
         <a mat-list-item (click)="getCategories($event)">Categories</a>
         <a mat-list-item (click)="routeToSubCategories($event)">Sub Categories</a>
         <a mat-list-item routerLink="MobileTags">Tags</a>
-        <a mat-list-item (click)="routeToChannels($event)">Channels</a>
+        <!-- <a mat-list-item (click)="routeToChannels($event)">Channels</a> -->
         <a mat-list-item routerLink="banner">Banner</a>
         <a mat-list-item routerLink="package">Package</a>
         <a mat-list-item routerLink="coupon">Coupons</a>
         <a mat-list-item routerLink="content">Content</a>
         <a mat-list-item routerLink="radio">Radio</a>
-        <a mat-list-item routerLink="product">In-App Purchase Products</a>
+        <!-- <a mat-list-item routerLink="product">In-App Purchase Products</a> -->
         <a mat-list-item routerLink="video-library">Video Library</a>
       </div>
 
