@@ -17,6 +17,8 @@ export class PackageEditComponent implements OnInit {
     packageDef: Package;
     errors: string;
     planInfo: any[];
+    country: any[];
+    content: any[];
     currency: any [] = [
         'TZS',
         'USD'
@@ -46,8 +48,8 @@ export class PackageEditComponent implements OnInit {
     
 
         PackageEditForm= new FormGroup({
-        name: new FormControl('Platinum News'),
-        description:  new FormControl('New Premiun pafjejng g fgeorigjoejrge rge rgrggergno'),
+        name: new FormControl(''),
+        description:  new FormControl(''),
         channels:  new FormControl(this.channels),
         currency: new FormControl(this.currency),
         free:  new FormControl("true"),
@@ -89,6 +91,8 @@ export class PackageEditComponent implements OnInit {
 
     ngOnInit() {
         this.getPlanInfo();
+        this.getCountryCode();
+        this.getContents();
         this
             .route
             .params
@@ -121,6 +125,26 @@ export class PackageEditComponent implements OnInit {
                 console.log(err)
                 // this.router.navigate([''])
 
+            }
+        )
+    }
+
+    getContents(){
+        this,this.packageService.findContent().subscribe(
+            result =>{
+                this.content = result;
+            },err =>{
+                console.log("------->",err)
+            }
+        )
+    }
+    getCountryCode(){
+        this.packageService.findCountryCodes().subscribe(
+            country =>{
+                this.country = country.data
+                console.log("country------>",this.country);
+            },err =>{
+                console.log("err----->",err);
             }
         )
     }
