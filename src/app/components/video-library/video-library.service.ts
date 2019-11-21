@@ -14,11 +14,11 @@ export class VideoLibraryService {
   videoLibraryList: VideoLibrary[] = [];
 
   findById(id: string): Observable<VideoLibrary> {
-    let url = API.BASE_URL + '/api/vod';
-    let params = { "id": id };
+    let url = API.BASE_URL + '/cms/cdn/'+id;
+    // let params = { "id": id };
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.get<VideoLibrary>(url, { params, headers });
+    return this.http.get<VideoLibrary>(url, { headers });
   }
 
   // load(): void {
@@ -34,7 +34,7 @@ export class VideoLibraryService {
 
 
   find(filter?: VideoLibraryFilter): Observable<VideoLibrary[]> {
-    let url = API.BASE_URL + '/api/vod';
+    let url = API.BASE_URL + '/cms/cdn-list';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.get<any>(url, { headers })
@@ -49,21 +49,21 @@ export class VideoLibraryService {
   // }
 
   save(entity: VideoLibrary): Observable<VideoLibrary> {
-    let url = API.BASE_URL + '/api/vod';
+    let url = API.BASE_URL + '/cms/cdn/create';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.post<VideoLibrary>(url, entity, { headers });
   }
 
   delete(id: string) {
-    let url = API.BASE_URL + `/cdn/${id}/`;
+    let url = API.BASE_URL + `/cms/cdn/${id}/`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.delete<any>(url, { headers });
   }
 
   update(data: any) {
-    let url = API.BASE_URL + `/cdn/${data._id}/update`;
+    let url = API.BASE_URL + `/cms/cdn/${data._id}/update`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.put<any>(url, data, { headers });

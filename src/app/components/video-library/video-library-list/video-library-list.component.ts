@@ -59,8 +59,8 @@ export class VideoLibraryListComponent {
 
     getVideoLibrary() {
         this.videoLibraryService.find().subscribe((response: any) => {
+            console.log(response)
           if (response.status === 200) {
-              console.log("-------------", response);
             this.dataSource = new MatTableDataSource<any>(response.data)
           }
         }, error => console.log(error))
