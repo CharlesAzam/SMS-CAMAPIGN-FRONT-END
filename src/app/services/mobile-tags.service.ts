@@ -10,7 +10,7 @@ export class MobileTagsService {
 
   constructor(private http: HttpClient) { }
 
-  find(){
+find(){
     let url = 'http://34.245.129.208:3000/cms/category-list';
     //let params = { "name": "mimi","type":"low" };
     let headers = new HttpHeaders()
