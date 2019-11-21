@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+const API_URL = 'http://localhost:3000/cms'
 @Injectable()
 export class PackageService {
     
@@ -12,9 +13,18 @@ export class PackageService {
     }
 
     packageList: Package[] = [];
+
+    // Azam packages list 
+    findAzamPackageMappingList() {
+        let url = API_URL+'/azam-plans';
+        let headers = new HttpHeaders()
+          .set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers })
+      }
+
   
     findById(id: string): Observable<Package> {
-        let url = 'http://34.245.129.208:3001/api/vod'; 
+        let url = API_URL; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -33,7 +43,7 @@ export class PackageService {
     }
 
     find(filter: PackageFilter): Observable<Package[]> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API_URL;
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -45,7 +55,7 @@ export class PackageService {
     }
 
     save(entity: Package): Observable<Package> {
-        let url = 'http://34.245.129.208:3001/api/vod';
+        let url = API_URL;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Package>(url, entity, {headers});

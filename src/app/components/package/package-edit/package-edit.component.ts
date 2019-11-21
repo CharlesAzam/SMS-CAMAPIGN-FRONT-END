@@ -14,6 +14,7 @@ export class PackageEditComponent implements OnInit {
     id: string;
     packageDef: Package;
     errors: string;
+    planInfo: any[];
     currencies: any[] = [
         'TZS',
         'USD'
@@ -30,6 +31,8 @@ export class PackageEditComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getPlanInfo();
+
         this
             .route
             .params
@@ -49,6 +52,21 @@ export class PackageEditComponent implements OnInit {
                     this.errors = 'Error loading'; 
                 }
             );
+    }
+
+    getPlanInfo() {
+        this.packageService.findAzamPackageMappingList()
+        .subscribe(
+            planInfo => {
+                console.log("planInfo---->",planInfo.data)
+                this.planInfo = planInfo.data
+            },
+            err => {
+                console.log(err)
+                // this.router.navigate([''])
+
+            }
+        )
     }
 
     save() {

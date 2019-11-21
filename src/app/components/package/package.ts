@@ -2,7 +2,7 @@ export class Package {
     id: string;
     name: string;
     description: string;
-    channels: any[];
+    content: any[];
     free: boolean = false;
     isVodAllowed: boolean = false;
     isVodContentsUnlimited: boolean = false;

@@ -17,6 +17,16 @@
                             <mat-error *ngIf="name.invalid">Name can not be empty</mat-error>
                         </mat-form-field>
 
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Plan Mapping for Azam DTH to AzamTV</mat-label>
+                            <mat-select placeholder="Azam plan Info" [(ngModel)]="packageDef.azamPackageMappingName" name="azamPackageMappingName" #azamPackageMappingName="ngModel"
+                            required>
+                                 <mat-option *ngFor="let plan of planInfo" [value]="plan.planCode">{{plan.planName}}
+                                 </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="azamPackageMappingName.invalid">Plan info mapping cant be left blank</mat-error>
+                       </mat-form-field>
+
                         <div class="form-group">
                             <label>Description</label>
 
@@ -39,10 +49,10 @@
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <mat-label>Channels</mat-label>
-                                <mat-select [(ngModel)]="packageDef.channels" multiple required>
-                                    <mat-option *ngFor="let channel of channels" [value]="packageDef.channels">
-                                        {{channel}}
+                                <mat-label>Content</mat-label>
+                                <mat-select [(ngModel)]="packageDef.content" multiple required>
+                                    <mat-option *ngFor="let content of content" [value]="packageDef.content">
+                                        {{content}}
                                     </mat-option>
                                 </mat-select>
                                 <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose some channels</mat-error> -->

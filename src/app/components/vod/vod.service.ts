@@ -3,7 +3,7 @@ import { VodFilter } from './vod-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
+const API_URL  = 'http://localhost:3000/cms'
 @Injectable()
 export class VodService {
 

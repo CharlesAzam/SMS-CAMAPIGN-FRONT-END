@@ -4,6 +4,7 @@ import { PackageFilter } from '../package-filter';
 import { PackageService } from '../package.service';
 import { Package } from '../package';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'package',
@@ -18,6 +19,7 @@ export class PackageListComponent {
 
     filter = new PackageFilter();
     selectedPackage: Package;
+    planInfo = null;
 
     dataSource = new MatTableDataSource<Package>(this.packageList);
 
@@ -26,21 +28,37 @@ export class PackageListComponent {
     get packageList(): Package[] {
         // return this.packageService.packageList;
         return [
-            { id: "1", name: "Silver Package", description: "Silver package description", channels: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
-            { id: "1", name: "Silver Package", description: "Silver package description", channels: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
-            { id: "1", name: "Silver Package", description: "Silver package description", channels: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
-            { id: "1", name: "Silver Package", description: "Silver package description", channels: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
-            { id: "1", name: "Silver Package", description: "Silver package description", channels: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
 
         ]
     }
 
-    constructor(private packageService: PackageService) {
+    constructor(private packageService: PackageService, private router: Router) {
     }
 
     ngOnInit() {
+        this.getPlanInfo();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+
+    getPlanInfo() {
+        this.packageService.findAzamPackageMappingList()
+        .subscribe(
+            planInfo => {
+                console.log("planInfo---->",planInfo.data)
+                this.planInfo = planInfo.data
+            },
+            err => {
+                console.log(err)
+                // this.router.navigate([''])
+
+            }
+        )
     }
 
     search(): void {
