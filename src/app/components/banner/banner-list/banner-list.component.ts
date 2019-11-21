@@ -17,27 +17,24 @@ export class BannerListComponent {
 
     filter = new BannerFilter();
     selectedBanner: Banner;
-    dataSource = new MatTableDataSource<Banner>(this.bannerList);
+    dataSource = new MatTableDataSource<Banner>([]);
 
     displayedColumns: string[] = ['id', 'name', 'description', 'status', 'action']
-
-
-    get bannerList(): Banner[] {
-        // return this.bannerService.bannerList;
-        return [
-            { id: "1", name: "Silver Package", description: "Silver package description", image: 'http://google.com', isDeleted: false, priority: 1, status: true },
-            { id: "1", name: "Silver Package", description: "Silver package description", image: 'http://google.com', isDeleted: false, priority: 1, status: true },
-            { id: "1", name: "Silver Package", description: "Silver package description", image: 'http://google.com', isDeleted: false, priority: 1, status: true },
-            { id: "1", name: "Silver Package", description: "Silver package description", image: 'http://google.com', isDeleted: false, priority: 1, status: true },
-            { id: "1", name: "Silver Package", description: "Silver package description", image: 'http://google.com', isDeleted: false, priority: 1, status: true },
-            { id: "1", name: "Silver Package", description: "Silver package description", image: 'http://google.com', isDeleted: false, priority: 1, status: true },
-        ]
-    }
 
     constructor(private bannerService: BannerService) {
     }
 
+    delete(row) {
+        this.bannerService.delete(row._id).subscribe((response: any) => {
+            if (response.status === 200) {
+                this.getBanners();
+            }
+        },
+            error => console.error(error))
+    }
+
     ngOnInit() {
+        this.getBanners();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
@@ -52,6 +49,15 @@ export class BannerListComponent {
 
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    getBanners() {
+        this.bannerService.find().subscribe((response: any) => {
+            if (response.status === 200) {
+                this.dataSource = new MatTableDataSource(response.data)
+            }
+        },
+            error => console.error(error))
     }
 
 }

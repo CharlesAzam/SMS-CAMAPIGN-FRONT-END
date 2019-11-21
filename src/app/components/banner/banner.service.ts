@@ -13,11 +13,11 @@ export class BannerService {
     bannerList: Banner[] = [];
 
     findById(id: string): Observable<Banner> {
-        let url = 'http://34.245.129.208:3000/api/vod';
-        let params = { "id": id };
+        let url = `http://34.245.129.208:3000/cms/banner/${id}`;
+
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.get<Banner>(url, { params, headers });
+        return this.http.get<Banner>(url, { headers });
     }
 
     load(filter: BannerFilter): void {
@@ -39,8 +39,22 @@ export class BannerService {
         return this.http.get<Banner[]>(url, { headers });
     }
 
+    delete(id: string) {
+        let url = `http://34.245.129.208:3000/cms/banner/${id}/`;
+        let headers = new HttpHeaders()
+            .set('Accept', 'application/json');
+        return this.http.delete<any>(url, { headers });
+    }
+
+    update(data: Banner) {
+        let url = `http://34.245.129.208:3000/cms/banner/${data._id}/update`;
+        let headers = new HttpHeaders()
+            .set('Accept', 'application/json');
+        return this.http.put<any>(url, data, { headers });
+    }
+
     save(entity: Banner): Observable<Banner> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3000/cms/banner/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Banner>(url, entity, { headers });

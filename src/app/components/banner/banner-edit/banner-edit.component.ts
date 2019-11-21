@@ -1,56 +1,122 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService } from '../banner.service';
 import { Banner } from '../banner';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CategoriesService } from 'src/app/services/categories.service';
+import { SubCategoriesService } from 'src/app/services/sub.categories.service';
 
 @Component({
-  selector: 'banner-edit',
-  templateUrl: './banner-edit.component.html'
+    selector: 'banner-edit',
+    templateUrl: './banner-edit.component.html'
 })
 export class BannerEditComponent implements OnInit {
 
     id: string;
-    banner: Banner;
+    bannerModel: Banner;
     errors: string;
+
+    categorys: any[]
+    subs: any[]
+
+
+    bannerForm = new FormGroup({
+        name: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+        subtitle: new FormControl('', [Validators.required]),
+        type: new FormControl('', [Validators.required]),
+        priority: new FormControl('', [Validators.required]),
+        categories: new FormControl('', [Validators.required]),
+        subCategories: new FormControl('', [Validators.required]),
+        image: new FormControl('', [Validators.required]),
+        status: new FormControl('', [Validators.required])
+    })
+
 
     constructor(
         private route: ActivatedRoute,
-        private bannerService: BannerService) { 
+        private bannerService: BannerService,
+        private categoryService: CategoriesService,
+        private subCategoryService: SubCategoriesService,
+        private router: Router) {
     }
 
     ngOnInit() {
-        this
-            .route
-            .params
-            .pipe(
-                map(p => p['id']),
-                switchMap(id => {
-                    if (id === 'new') return of(new Banner());
-                    return this.bannerService.findById(id)
-                })
-            )
-            .subscribe(
-                banner => { 
-                    this.banner = banner; 
-                    this.errors = ''; 
-                },
-                err => { 
-                    this.errors = 'Error loading'; 
-                }
-            );
+        this.getCategories();
+        this.getSubCategories()
+
+        this.route.params.subscribe(params => {
+            if (params.id !== 'new') {
+                this.bannerService.findById(params.id).subscribe((response: any) => {
+                    if (response.status === 200) {
+                        // console.log(response.data)
+                        this.bannerModel = response.data[0];
+                        console.log(this.bannerModel)
+                        this.bannerForm.setValue({
+                            name: this.bannerModel.name ? this.bannerModel.name : '',
+                            type: this.bannerModel.type ? this.bannerModel.type : '',
+                            description: this.bannerModel.description ? this.bannerModel.description : '',
+                            status: this.bannerModel.status ? this.bannerModel.status : '',
+                            image: this.bannerModel.image ? this.bannerModel.image : '',
+                            subtitle: this.bannerModel.subtitle ? this.bannerModel.subtitle : '',
+                            priority: this.bannerModel.priority ? this.bannerModel.priority : '',
+                            categories: this.bannerModel.categories ? this.bannerModel.categories['_id'] : '',
+                            subCategories: this.bannerModel.subCategories ? this.bannerModel.subCategories['_id'] : ''
+                        })
+                    }
+                }, error => console.error(error));
+            }
+        });
     }
 
+    back() {
+        this.router.navigate(['home/banner']);
+    }
     save() {
-        this.bannerService.save(this.banner).subscribe(
-            banner => { 
-                this.banner = banner; 
-                this.errors = 'Save was successful!'; 
+        if (this.bannerModel) {
+            Object.assign(this.bannerModel, this.bannerForm.value);
+            this.bannerService.update(this.bannerModel).subscribe((response: any) => {
+                if (response.status === 200)
+                    this.back();
             },
-            err => { 
-                this.errors = 'Error saving'; 
+                error => console.error(error));
+
+
+        } else {
+            this.bannerService.save(this.bannerForm.value).subscribe(
+                banner => {
+                    this.bannerModel = banner;
+
+                    this.errors = 'Save was successful!';
+                    this.back()
+                },
+                err => {
+                    this.errors = 'Error saving';
+                }
+            );
+        }
+
+    }
+
+    getCategories() {
+        this.categoryService.find().subscribe((response: any) => {
+            console.log(response)
+            if (response.status === 200) {
+                this.categorys = response.data;
             }
-        );
+        },
+            error => console.error(error))
+    }
+
+    getSubCategories() {
+        this.subCategoryService.find().subscribe((response: any) => {
+            console.log(response)
+            if (response.status === 200) {
+                this.subs = response.data;
+            }
+        },
+            error => console.error(error))
     }
 }
