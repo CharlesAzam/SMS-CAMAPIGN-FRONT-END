@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card>
+  <mat-card style="margin-top: 30px;">
     <div class="header">
       <h2 class="title">Banner</h2>
     </div>
@@ -8,14 +8,14 @@
     </div>
   </mat-card>
 
-  <mat-card *ngIf="bannerList.length > 0" style="margin-top: 30px;">
+  <mat-card style="margin-top: 30px;">
     <div>
-      <mat-form-field style="width: 92%;">
+      <mat-form-field style="width: 86%;">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
 
-      <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../banner','new']">
-        New
+      <button mat-raised-button style="margin-left: 23px;" [routerLink]="['../banner','new']">
+        Create Banner
       </button>
     </div>
 
@@ -27,7 +27,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element"> {{element._id}} </td>
       </ng-container>
 
       <!-- Name Column -->
@@ -69,9 +69,9 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
-          <mat-icon aria-hidden="false" (click)="delete(row)" aria-label="Example home icon">delete</mat-icon>
+          <mat-icon aria-hidden="false" (click)="delete(row)" style="cursor: pointer;" aria-label="Example home icon">delete</mat-icon>
           <span style="margin-left: 20px;"></span>
-          <mat-icon aria-hidden="false" [routerLink]="['../banner', row.id]" aria-label="Example home icon">edit</mat-icon>
+          <mat-icon aria-hidden="false" [routerLink]="['../banner', row._id]" style="cursor: pointer;" aria-label="Example home icon">edit</mat-icon>
         </td>
       </ng-container>
 
