@@ -1,26 +1,27 @@
 <mat-tab-group>
   <mat-tab label="Swahili">
-    <div class="tabs-header-container">
-      <mat-card class="mat-card-header">
-        <h2 class="content-header">Categories SW</h2>
-      </mat-card>
-    </div>
-    <div class="main-content">
-      <mat-card class="card-table-container">
-        <div class="table-contaniner">
+    <div class="container">
+      <mat-card style="margin-top: 30px;">
+        <div class="header">
+          <h2 class="title">Category SW</h2>
+        </div>
+        <div class="content">
 
-          <!--Filter input button container start name  -->
-          <div class="filter-input-btn">
-            <div class="container-btn1">
-              <button type="button" mat-raised-button [routerLink]="['../CategoryForm/new']" class="btn ">Create
-                Category</button>
-            </div>
-            <div class="filter-input">
-              <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Category">
-              </mat-form-field>
-            </div>
+        </div>
+      </mat-card>
+      <div>
+
+        <mat-card style="margin-top: 30px;">
+          <div>
+            <mat-form-field style="width: 85.5%;">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../CategoryForm/new']">
+              Create Category
+            </button>
           </div>
+
           <!--Filter input button container end -->
 
 
@@ -59,33 +60,33 @@
           <mat-paginator class="table-paginator-style" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
           </mat-paginator>
           <!-- </div> -->
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
     </div>
-
   </mat-tab>
   <mat-tab label="English">
-    <div class="tabs-header-container">
-      <mat-card class="mat-card-header">
-        <h2 class="content-header">Categories EN</h2>
-      </mat-card>
-    </div>
-    <div class="main-content">
-      <mat-card class="card-table-container">
-        <div class="table-contaniner">
+    <div class="container">
+      <mat-card style="margin-top: 30px;">
+        <div class="header">
+          <h2 class="title">Category EN</h2>
+        </div>
+        <div class="content">
 
-          <!--Filter input button container start name  -->
-          <div class="filter-input-btn">
-            <div class="container-btn1">
-              <button type="button" mat-raised-button (click)="routeToCategoryForm()"
-                class="btn btn-primary btn-lg">Create Category</button>
-            </div>
-            <div class="filter-input">
-              <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Category">
-              </mat-form-field>
-            </div>
+        </div>
+      </mat-card>
+      <div>
+
+        <mat-card style="margin-top: 30px;">
+          <div>
+            <mat-form-field style="width: 85.5%;">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../CategoryForm/new']">
+              Create Category
+            </button>
           </div>
+
           <!--Filter input button container end -->
 
 
@@ -124,9 +125,8 @@
           <mat-paginator class="table-paginator-style" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
           </mat-paginator>
           <!-- </div> -->
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
     </div>
-
   </mat-tab>
 </mat-tab-group>

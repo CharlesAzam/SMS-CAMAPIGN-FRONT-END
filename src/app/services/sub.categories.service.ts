@@ -6,7 +6,7 @@ import { SubCategory } from '../models/sub.categories';
   providedIn: 'root'
 })
 export class SubCategoriesService {
-  url = "http://localhost:3000/cms/";
+  url = "http://localhost:3001/cms/";
 
   constructor(private http: HttpClient) { }
 
