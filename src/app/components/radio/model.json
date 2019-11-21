@@ -2,7 +2,7 @@
     "title": "Radio",
     "entity": "radio",
     "api": {
-        "url": "http://34.245.129.208:3000/api/vod"
+        "url": "http://34.245.129.208:3001/api/vod"
     },
     "filter": [
         "name"

@@ -8,6 +8,6 @@ export class LanguageService {
     }
 
     list() {
-        return this.http.get<any>('http://34.245.129.208:3000/cms/language-list').pipe(map((response: any) => response));
+        return this.http.get<any>('http://34.245.129.208:3001/cms/language-list').pipe(map((response: any) => response));
     }
 }

@@ -2,7 +2,7 @@
     "title": "Mobile Categories",
     "entity": "categories",
     "api": {
-      "url": "http://34.245.129.208:3000/api/categories"
+      "url": "http://34.245.129.208:3001/api/categories"
     },
     "filter": [
       "categoryName"

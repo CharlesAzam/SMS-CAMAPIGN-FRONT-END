@@ -13,7 +13,7 @@ export class CategoryService {
     categoryList: Category[] = [];
   
     findById(id: string): Observable<Category> {
-        let url = 'http://34.245.129.208:3000/api/categories'; 
+        let url = 'http://34.245.129.208:3001/api/categories'; 
         let params = { "id": id };
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
@@ -32,7 +32,7 @@ export class CategoryService {
     }
 
     find(filter: CategoryFilter): Observable<Category[]> {
-        let url = 'http://34.245.129.208:3000/api/categories';
+        let url = 'http://34.245.129.208:3001/api/categories';
         let headers = new HttpHeaders()
                             .set('Accept', 'application/json');
 
@@ -44,7 +44,7 @@ export class CategoryService {
     }
 
     save(entity: Category): Observable<Category> {
-        let url = 'http://34.245.129.208:3000/api/categories';
+        let url = 'http://34.245.129.208:3001/api/categories';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Category>(url, entity, {headers});

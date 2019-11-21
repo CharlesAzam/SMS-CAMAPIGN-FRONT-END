@@ -13,7 +13,7 @@ export class VodService {
     vodList: Vod[] = [];
 
     findById(id: string): Observable<Vod> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let params = { "id": id };
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -33,7 +33,7 @@ export class VodService {
 
     find(route: String, filter: VodFilter): Observable<Vod[]> {
         console.log(route)
-        let url = 'http://34.245.129.208:3000/cms/content/' + route;
+        let url = 'http://34.245.129.208:3001/cms/content/' + route;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
@@ -41,7 +41,7 @@ export class VodService {
     }
 
     save(entity: Vod): Observable<Vod> {
-        let url = 'http://34.245.129.208:3000/api/vod';
+        let url = 'http://34.245.129.208:3001/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Vod>(url, entity, { headers });
