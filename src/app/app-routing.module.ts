@@ -41,7 +41,7 @@ const routes: Routes = [
         loadChildren: "./components/homepage/categories/categories.module#CategoriesModule"
       },
       {
-        path: "vod",
+        path: "content",
         loadChildren: "./components/vod/vod.module#VodModule"
       },
       {
@@ -81,7 +81,7 @@ const routes: Routes = [
         component:MobileSubCategoriesComponent
       },
       {
-        path:'subCategoryForm',
+        path:'subCategoryForm/:id',
         component:MobileSubCategoriesFormComponent
       },
       {
@@ -97,7 +97,7 @@ const routes: Routes = [
          component:MobileTagsComponent
       },
       {
-        path:'MobileTagForm',
+        path:'MobileTagForm/:id',
         component:MobileTagFormComponent
 
       },
@@ -131,7 +131,7 @@ const routes: Routes = [
 
       },
       {
-        path:'CategoryForm',
+        path:'CategoryForm/:id',
         component:CategoryFormComponent
       },
       {

@@ -43,7 +43,7 @@
 
 .container-btn1{
     /* float: right !important; */
-    margin-right: 90px !important;
+    margin-right: 110px !important;
 }
 
 .filter-input-btn{
@@ -52,7 +52,7 @@
 }
 
 .filter-input{
-    width: 85% !important;
+    width: 80% !important;
 }
 
 mat-lable{
@@ -67,10 +67,10 @@ mat-tab-group{
 }
 
 
-
+/* 
 mat-form-field{
     width:90% !important; 
-}
+} */
 .mat-card-header{
     margin-top: 30px !important; 
     height: 120px !important;
@@ -94,25 +94,7 @@ mat-form-field{
     padding: 5px !important;
 }
 table {
-    width: 90%;
+    width: 100%;
   }
 
-  .table-contaniner{
-      margin-top: 15px;
-      padding-left: 100px;
-  }
-
-  .table-paginator-style{
-    /* float: right !important;  */
-    /* margin-top: 40px !important; */
-    padding-right: 10% !important;
-  }
-  
-  
-  .main-content{
-      margin-top: 0px;
-  }
-
-  .content-header{
-    margin-left: 0px;
-  }
+ 

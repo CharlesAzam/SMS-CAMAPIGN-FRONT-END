@@ -5,14 +5,15 @@ import { VodEditComponent } from './vod-edit/vod-edit.component';
 export const VOD_ROUTES: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'content'
+  },
+  {
+    path: 'content',
     component: VodListComponent
   },
   {
-    path: 'vod',
-    component: VodListComponent
-  },
-  {
-    path: 'vod/:id',
+    path: 'content/:id',
     component: VodEditComponent
   }
 ]

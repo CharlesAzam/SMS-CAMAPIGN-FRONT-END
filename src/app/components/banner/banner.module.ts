@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BannerListComponent } from './banner-list/banner-list.component';
 import { BannerEditComponent } from './banner-edit/banner-edit.component';
@@ -13,11 +13,12 @@ import { MaterialModule } from 'src/app/modules/app-material.module';
     CommonModule,
     FormsModule,
     MaterialModule,
+    ReactiveFormsModule,
     RouterModule.forChild(BANNER_ROUTES)
   ],
   declarations: [
     BannerListComponent,
-    BannerEditComponent
+    BannerEditComponent,
   ],
   providers: [
     BannerService

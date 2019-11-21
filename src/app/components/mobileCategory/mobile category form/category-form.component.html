@@ -1,75 +1,83 @@
-<div   class="container-btn2">
-        <button type="button" mat-raised-button (click)="routeToCategoryList()" class="btn btn-primary btn-lg">Back to Category List</button>     
-</div>
-<div class="container3">
-    <div class="container2">
+<div class="container">
+    <mat-card style="margin-top: 30px;">
         <h2>Category</h2>
-        <form [formGroup]="mobileCategoryForm">
-                <!-- {{mobileCategoryForm.value|json}} -->
-                <hr>             
-            <label for="Title">Title</label> 
-            <div class="form-group">   
-                <mat-form-field class="input-layouts">
-                    <input  matInput [formControl]="titleFormControll" placeholder="Enter title"  required>
-                </mat-form-field>
-                
-                <!-- <mat-error *ngIf="mobileCategoryForm.get('Title').touched && mobileCategoryForm.invalid"> -->
-                        <mat-error *ngIf="titleFormControll.errors?.required">Content title can not be empty</mat-error>
-                        <mat-error *ngIf="titleFormControll.errors?.pattern">Enter a valid Title name</mat-error>
-                <!-- </mat-error>  -->
-                
-            </div>
+        <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+            <hr>
             <div class="form-group">
-                <label for="Decription">Description:</label>
                 <mat-form-field class="input-layouts">
-                    <textarea formControlName="Description" matInput placeholder="Enter Descsption" required></textarea>
+                    <input matInput formControlName="name" placeholder="Enter name" required>
                 </mat-form-field>
-            </div>
-            <mat-error *ngIf="mobileCategoryForm.get('Description').touched && mobileCategoryForm.invalid">
-                    <mat-error *ngIf="mobileCategoryForm.get('Description').errors?.required">Content title can not be empty</mat-error>
-                    <mat-error *ngIf="mobileCategoryForm.get('Description').errors?.pattern">Enter a valid Title name</mat-error>
-            </mat-error> 
-
-            <div class="form-group">
-                <label for="Image Thumb">Image Thumb:</label>
-                <input formControlName="ImageThumb"  type="file" class="form-control"   placeholder="Upload image thumb">
             </div>
 
             <div class="form-group">
-                <label for="Decription">Images:</label>
-                <input formControlName="Images" type="file" class="form-control" placeholder="Enter Upload image thumb" >
+                <mat-form-field class="input-layouts">
+                    <input matInput formControlName="priority" type="number" placeholder="Priority" required>
+                </mat-form-field>
             </div>
+
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput formControlName="icon" placeholder="Icon" required>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput formControlName="type" placeholder="Type" required>
+                </mat-form-field>
+            </div>
+
 
             <div class="form-group">
                 <mat-form-field style="width: 100%;">
-                    <mat-label>Tags</mat-label>
-                    <mat-select formControlName="Tags"   multiple>
-                        <mat-option *ngFor="let Tag of Tags" [value]="Tag">{{Tag}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="form-group">
-                <mat-form-field style="width: 100%;">
-                    <mat-label>Category</mat-label>
-                    <mat-select formControlName="Category" name="MobileCategoryType" >
-                        <mat-option *ngFor="let Categorie of Categories" [value]="Categorie">{{Categorie}}</mat-option>
+                    <mat-label>Sub Categories</mat-label>
+                    <mat-select formControlName="subCategories" multiple required>
+                        <mat-option *ngFor="let subs of subCategories" [value]="subs._id">{{subs.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <div class="form-group">
-                    <mat-form-field style="width: 100%;">
-                        <mat-label>Category Language</mat-label>
-                        <mat-select formControlName="Language" name="MobileTagsLanguage" >
-                            <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Banners</mat-label>
+                    <mat-select formControlName="banner" multiple required>
+                        <mat-option *ngFor="let bann of banners" [value]="bann._id">{{bann.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
-            <div style="float: left !important;">
-                <button class="btn-submit" mat-raised-button type="submit">Submit</button>
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Language</mat-label>
+                    <mat-select formControlName="language" required>
+                        <mat-option *ngFor="let lang of languages" [value]="lang">{{lang}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Status</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="status" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>ACTIVE</mat-button-toggle>
+                    <mat-button-toggle value=false>INACTIVE</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Located Home?</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="isHome" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+            <div>
+                <button align="center" [disabled]="categoryForm.invalid" mat-raised-button
+                    type="submit">{{categoryModel?'Update':'Save'}}</button>
             </div>
 
         </form>
-    </div>
+    </mat-card>
 </div>
