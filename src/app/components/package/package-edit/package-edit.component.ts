@@ -16,11 +16,11 @@ export class PackageEditComponent implements OnInit {
     id: string;
     packageDef: Package;
     errors: string;
-    currencies: string [] = [
+    currency: any [] = [
         'TZS',
         'USD'
     ]
-    channels: string[] = [
+    channels: any[] = [
         "TBC",
         "ITV",
         "Channel 10"
@@ -31,8 +31,16 @@ export class PackageEditComponent implements OnInit {
         private packageService: PackageService) { 
     }
 
-
+    
     //pacakge Form  Logic
+    packagepriceForm=false;
+    toggleShow(){
+        this.packagepriceForm=true;
+    }
+
+    toggleHidde(){
+        this.packagepriceForm=false;
+    }
 
     
 
@@ -40,8 +48,24 @@ export class PackageEditComponent implements OnInit {
         name: new FormControl('Platinum News'),
         description:  new FormControl('New Premiun pafjejng g fgeorigjoejrge rge rgrggergno'),
         channels:  new FormControl(this.channels),
-        currency: new FormControl(this.currencies),
+        currency: new FormControl(this.currency),
         free:  new FormControl("true"),
+        azamPacakgeMappingName:new FormControl("fgerge"),
+        //
+        countrydetail: new FormGroup({
+            code :new FormControl('2345'),
+            name: new FormControl('Ethiopia'),
+            currency: new FormControl('BIRR'),
+        }),
+         
+        //
+        packageprice: new FormGroup({
+            price: new FormControl("34000"),
+            currency: new FormControl("BIRR")
+        }),
+
+
+        //
         isVodAllowed:  new FormControl("true"),
         isVodContentsUnlimited:  new FormControl('true'),
         noOfVodContents:  new FormControl('10'),
@@ -49,6 +73,18 @@ export class PackageEditComponent implements OnInit {
         status:  new FormControl("true"),
 
     })
+
+
+    IsFreeToggleFormHide(){
+        console.log("hide");
+        // this.PackageEditForm.get('free').value
+    }
+
+    IsFreeToggleFormShow(){
+        console.log("show");
+    }
+
+    hidden=false;
 
     ngOnInit() {
         this
