@@ -27,7 +27,7 @@
 
 
                     <div>
-                         <button class="btn-submit" mat-raised-button type="submit" (click)="onSubmit()">{{tagModel?'UPDATE':'SAVE'}}</button>
+                         <button [disabled]="tagForm.invalid" color='primary' mat-raised-button type="submit" (click)="onSubmit()">{{tagModel?'Update':'Save'}}</button>
                     </div>
 
                </form>
