@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
                                 <mat-label>Vod Type</mat-label>
-                                <mat-select formControlName="vodType"  required>
+                                <mat-select formControlName="vodType" required>
                                     <mat-option *ngFor="let vodTyp of vodTypes" [value]="vodTyp">
                                         {{vodTyp}}
                                     </mat-option>
@@ -213,12 +213,18 @@
                             <!-- <mat-error *ngIf="duration.invalid">Duration can not be empty</mat-error> -->
                         </mat-form-field>
 
-                        <mat-form-field style="width: 100%;">
+                        <!-- <mat-form-field style="width: 100%;">
                             <input matInput placeholder="Image Thumbnail" formControlName="imageThumb" name="imageThumb"
                                 required>
-                            <!-- <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error> -->
+                            <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error>
 
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="form-group">
+                            <label for="Decription">Upload Image Thumb:</label>
+                            <input type="file" class="form-control" id="pwd" formControlName="imageThu" placeholder="Enter Upload image thumb"
+                                name="pwd">
+                        </div>
+
 
 
                         <div class="form-group">
