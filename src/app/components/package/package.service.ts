@@ -38,6 +38,13 @@ export class PackageService {
          return this.http.get<any>(url, { headers })
       }
 
+      findPackageList(){
+        let url=  API_URL+'/package-list'
+        let headers = new HttpHeaders()
+           .set('Accept', 'application/json');
+         return this.http.get<any>(url, { headers })
+      }
+
   
     findById(id: string): Observable<Package> {
         let url = API.BASE_URL+'/api/vod'; 

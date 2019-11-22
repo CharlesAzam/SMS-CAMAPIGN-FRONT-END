@@ -43,10 +43,24 @@ export class PackageListComponent {
 
     ngOnInit() {
         this.getPlanInfo();
+        this.getPackageList();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
 
+
+    getPackageList(){
+        this.packageService.findPackageList().subscribe(
+            response => {
+                console.log('=========>',response)
+                this.packageList.push(response)
+                console.log("------------->",this.packageList);
+            },err =>{
+                console.log('=========>',err)
+
+            }
+        )
+    }
     getPlanInfo() {
         this.packageService.findAzamPackageMappingList()
         .subscribe(

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API } from 'src/environments/environment';
+const API_URL = 'http://localhost:3000/cms'
 
 @Injectable()
 export class BannerService {
@@ -19,6 +20,17 @@ export class BannerService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<Banner>(url, { headers });
+    }
+
+
+    uploadUrl(fileToUpload: File): Observable<Object> {
+        let headers = new HttpHeaders()
+        const endpoint = API_URL+'/upload/file';
+        const formData: FormData = new FormData();
+        console.log("fileToUpload", fileToUpload)
+        formData.append('file', fileToUpload, fileToUpload.name);
+        console.log("=====>",formData);
+        return this.http.post(endpoint, formData, {headers})
     }
 
     load(filter: BannerFilter): void {

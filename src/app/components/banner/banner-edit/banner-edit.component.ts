@@ -18,6 +18,7 @@ export class BannerEditComponent implements OnInit {
     id: string;
     bannerModel: Banner;
     errors: string;
+    fileToUpload: any = null;
 
     categorys: any[]
     subs: any[]
@@ -84,6 +85,21 @@ export class BannerEditComponent implements OnInit {
     back() {
         this.router.navigate(['home/banner']);
     }
+
+    handelImageChange(files: FileList){
+        console.log("files--->",files)
+;        this.fileToUpload = files.item(0);
+        this.fileToUpload.mimeType = this.fileToUpload.type;
+        this.uploadFileToActivity();
+    }
+
+    uploadFileToActivity() {
+        this.bannerService.uploadUrl(this.fileToUpload).subscribe(data => {
+          console.log("=======>",data);
+          }, error => {
+            console.log("=======>",error);
+          });
+      }
     save() {
         if (this.bannerModel) {
             Object.assign(this.bannerModel, this.bannerForm.value);

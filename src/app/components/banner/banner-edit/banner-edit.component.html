@@ -72,7 +72,7 @@
 
                         <div class="form-group" *ngIf='bannerModel == null'>
                             <label for="Decription">Upload Image:</label>
-                            <input type="file" class="form-control" formControlName="image"
+                            <input (change)="handelImageChange($event.target.files)" type="file" class="form-control" formControlName="image"
                                 placeholder="Enter Upload image thumb">
 
                         </div>
