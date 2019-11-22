@@ -1,20 +1,27 @@
 export class Vod {
-    id: string;
+    _id: string;
     title: string;
-    descriptions: string;
+    description: string;
     tags: any[];
     releaseDate: any;
     starring: string;
     director: string;
-    categoryID: any[];
+    categories: any[];
     country: string;
-    subCategoryID: any[];
-    languageDetail: string;
+    subCategories: any[];
+    language: string;
     isFree: boolean = false;
     isFreeForAzam: boolean = false;
-    Status: string;
+    isSeries: boolean;
+    status: string;
     boundingBox: string;
-    cdnId: string;
+    cdnID: string;
     duration: any;
+    priceDetail: any;
     imageThumb: string;
+    vodType: string
+    series: any[]
+    images: any[]
+    packageID: any[]
+    createdBy: string
 }

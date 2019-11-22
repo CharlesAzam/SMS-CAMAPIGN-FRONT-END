@@ -22,7 +22,7 @@ import { NZorroModules } from 'src/app/modules/app-nzorro.module';
     VodListComponent,
     VodEditComponent,
     AddSeasonsDialog,
-    ContentDialog 
+    ContentDialog
   ],
   providers: [
     VodService

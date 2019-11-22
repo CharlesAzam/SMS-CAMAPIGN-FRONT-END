@@ -103,7 +103,7 @@ export class ContentDialog {
     ];
 
     vodTypes: any[] = [
-        'VIDEO ON DEMAND',
+        'VIDEOONDEMAND',
         'LIVETV',
         'SERIES'
     ];

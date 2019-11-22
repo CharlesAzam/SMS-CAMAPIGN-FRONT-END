@@ -9,7 +9,7 @@ import { API } from 'src/environments/environment';
 const API_URL = 'http://localhost:3000/cms'
 @Injectable()
 export class PackageService {
-    
+
     constructor(private http: HttpClient) {
     }
 
@@ -17,11 +17,12 @@ export class PackageService {
 
     // Azam packages list 
     findAzamPackageMappingList() {
-        let url = API_URL+'/azam-plans';
+        let url = API_URL + '/azam-plans';
         let headers = new HttpHeaders()
-          .set('Accept', 'application/json');
+            .set('Accept', 'application/json');
         return this.http.get<any>(url, { headers })
-      }
+    }
+
 
       findCountryCodes(){
        let url=  'http://localhost:3000/api'+'/country-currency-codes'
@@ -47,13 +48,13 @@ export class PackageService {
 
   
     findById(id: string): Observable<Package> {
-        let url = API.BASE_URL+'/api/vod'; 
+        let url = API.BASE_URL + '/api/vod';
         let params = { "id": id };
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
-        return this.http.get<Package>(url, {params, headers});
+            .set('Accept', 'application/json');
+        return this.http.get<Package>(url, { params, headers });
     }
-    
+
     load(filter: PackageFilter): void {
         this.find(filter).subscribe(
             result => {
@@ -65,23 +66,19 @@ export class PackageService {
         )
     }
 
-    find(filter: PackageFilter): Observable<Package[]> {
-        let url = API.BASE_URL+'/api/vod';
+    find(filter?: PackageFilter): Observable<Package[]> {
+        let url = API.BASE_URL + '/cms/package-list';
         let headers = new HttpHeaders()
-                            .set('Accept', 'application/json');
+            .set('Accept', 'application/json');
 
-        let params = {
-            "name": filter.name,
-        };
-
-        return this.http.get<Package[]>(url, {params, headers});
+        return this.http.get<Package[]>(url, { headers });
     }
 
     save(entity: Package): Observable<Package> {
-        let url = API.BASE_URL+'/api/vod';
+        let url = API.BASE_URL + '/api/vod';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.post<Package>(url, entity, {headers});
+        return this.http.post<Package>(url, entity, { headers });
     }
 }
 
