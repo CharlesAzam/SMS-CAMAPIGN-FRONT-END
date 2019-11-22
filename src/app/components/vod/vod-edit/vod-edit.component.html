@@ -9,41 +9,33 @@
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form *ngIf="vod" #vodForm="ngForm">
+                    <form [formGroup]="contentForm">
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Title" [(ngModel)]="vod.title" name="title" #title="ngModel" required>
-                            <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error>
+                            <input matInput placeholder="Title" formControlName="title" required>
+                            <!-- <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <textarea matInput placeholder="Description" [(ngModel)]="vod.descriptions"
-                                name="description" #description="ngModel" required></textarea>
-                            <mat-error *ngIf="description.invalid">Description can not be empty</mat-error>
+                            <textarea matInput placeholder="Description" formControlName="description"
+                                name="description" required></textarea>
+                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
                         </mat-form-field>
-                        <!-- 
+
                         <div class="form-group">
-                            <label>Tags</label>
                             <mat-form-field style="width: 100%;">
-                                <mat-chip-list #chipList aria-label="Add Tags">
-                                    <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable"
-                                        (removed)="remove(tag)">
-                                        {{tag}}
-                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                    </mat-chip>
-                                    <input placeholder="Enter tag..." [matChipInputFor]="chipList"
-                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
-                                        name="tags" required>
-                                    <mat-error *ngIf="tagsModel.invalid">Tags can not be empty</mat-error>
-
-                                </mat-chip-list>
+                                <mat-label>Tags</mat-label>
+                                <mat-select formControlName="tags" multiple required>
+                                    <mat-option *ngFor="let ta of tags" [value]="ta._id">{{ta.name}}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
-                        </div> -->
+                        </div>
 
-                        <div class="form-group">
+
+                        <div class="form-group" *ngIf="!isRadioForm">
                             <mat-form-field style="width: 100%;">
-                                <input matInput [(ngModel)]="releaseDate" [matDatepicker]="picker"
+                                <input matInput formControlName="releaseDate" [matDatepicker]="picker"
                                     placeholder="Release Date" name="releaseDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
@@ -53,23 +45,33 @@
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Starring" [(ngModel)]="vod.starring" name="starring"
-                                #starring="ngModel" required>
-                            <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error>
+                            <input matInput placeholder="Starring" formControlName="starring" name="starring" required>
+                            <!-- <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Director" [(ngModel)]="vod.director" name="director"
-                                #director="ngModel" required>
-                            <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error>
+                            <input matInput placeholder="Director" formControlName="director" name="director" required>
+                            <!-- <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error> -->
                         </mat-form-field>
 
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
                                 <mat-label>Categories</mat-label>
-                                <mat-select [(ngModel)]="vod.categories" multiple>
-                                    <mat-option *ngFor="let category of categories" [value]="category">{{category}}
+                                <mat-select formControlName="categories" multiple required>
+                                    <mat-option *ngFor="let category of categories" [value]="category._id">
+                                        {{category.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Vod Type</mat-label>
+                                <mat-select formControlName="vodType"  required>
+                                    <mat-option *ngFor="let vodTyp of vodTypes" [value]="vodTyp">
+                                        {{vodTyp}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -78,8 +80,8 @@
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
                                 <mat-label>Country</mat-label>
-                                <mat-select [(ngModel)]="vod.country" multiple>
-                                    <mat-option *ngFor="let country of countries" [value]="country">{{country}}
+                                <mat-select formControlName="country">
+                                    <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -87,10 +89,119 @@
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <mat-label>Sub Category ID</mat-label>
-                                <mat-select [(ngModel)]="vod.subCategoryID">
-                                    <mat-option *ngFor="let subCategory of categories" [value]="subCategory">
-                                        {{subCategory}}
+                                <mat-label>Sub Category</mat-label>
+                                <mat-select formControlName="subCategories" multiple>
+                                    <mat-option *ngFor="let subCategory of categories" [value]="subCategory._id">
+                                        {{subCategory.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Lanugage</mat-label>
+                                <mat-select formControlName="language">
+                                    <mat-option *ngFor="let lang of languages" [value]="lang._id">
+                                        {{lang.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div *ngIf="isSeriesForm">
+                            <div class="form-group">
+                                <button mat-raised-button (click)="openDialog()">Add Seasons</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Seasons</th>
+                                        <th scope="col">Number of Episodes</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>1</td>
+                                        <td>20</td>
+                                        <td>Edit</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>2</td>
+                                        <td>20</td>
+                                        <td>Edit</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>3</td>
+                                        <td>20</td>
+                                        <td>Edit</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-label>Is Free?</mat-label>
+                            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                formControlName="isFree" style="margin-left: 10px;" required>
+                                <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-label>Is Free Azam?</mat-label>
+                            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                formControlName="isFreeAzam" style="margin-left: 10px;" required>
+                                <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+
+                        <div formGroupName="priceDetail">
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Price" formControlName="price" required>
+                                <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
+
+                            </mat-form-field>
+
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Currency" formControlName="currency" required>
+                                <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
+
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field style="width: 100%;">
+                            <mat-select formControlName="status" placeholder="Status">
+                                <mat-option value="active">Active</mat-option>
+                                <mat-option value="inactive">Inactive</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Bonding Box</mat-label>
+                                <mat-select formControlName="boundingBox" required>
+                                    <mat-option *ngFor="let box of boxes" [value]="box">{{box}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>CDNS</mat-label>
+                                <mat-select formControlName="cdnID" required>
+                                    <mat-option *ngFor="let cdn of cdns" [value]="cdn._id">{{cdn.name}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -98,97 +209,20 @@
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Language Details" [(ngModel)]="vod.languageDetail"
-                                name="languageDetail" #languageDetail="ngModel" required>
-                            <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error>
-
-                        </mat-form-field>
-
-                        <div class="form-group">
-                            <button mat-raised-button (click)="openDialog()">Add Seasons</button>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Seasons</th>
-                                    <th scope="col">Number of Episodes</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>1</td>
-                                    <td>20</td>
-                                    <td>Edit</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>2</td>
-                                    <td>20</td>
-                                    <td>Edit</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>3</td>
-                                    <td>20</td>
-                                    <td>Edit</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                        <div class="form-group">
-
-                            <mat-slide-toggle [(ngModel)]="vod.isFree" name="isFree"
-                                (change)="vod.isFree = !vod.isFree">Is Free</mat-slide-toggle>
-
-                        </div>
-                        <div class="form-group">
-                            <mat-slide-toggle [(ngModel)]="vod.isFreeAzam" (change)="vod.isFreeAzam = !vod.isFreeAzam">
-                                Is Free For Azam</mat-slide-toggle>
-                        </div>
-
-
-
-                        <mat-form-field style="width: 100%;">
-                            <mat-select [(ngModel)]="vod.status" placeholder="Status">
-                                <mat-option value="active">Active</mat-option>
-                                <mat-option value="inactive">Inactive</mat-option>
-                            </mat-select>
+                            <input matInput placeholder="Duration" formControlName="duration" name="duration" required>
+                            <!-- <mat-error *ngIf="duration.invalid">Duration can not be empty</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Bounding Box" [(ngModel)]="vod.boundingBox" name="boundingBox"
-                                #boundingBox="ngModel" required>
-                            <mat-error *ngIf="boundingBox.invalid">Bouding Box can not be empty</mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="CDN ID" [(ngModel)]="vod.cdnId" name="cdnId" #cdnID="ngModel"
+                            <input matInput placeholder="Image Thumbnail" formControlName="imageThumb" name="imageThumb"
                                 required>
-                            <mat-error *ngIf="cdnID.invalid">CDN ID can not be empty</mat-error>
-                        </mat-form-field>
-
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Duration" [(ngModel)]="vod.duration" name="duration"
-                                #duration="ngModel" required>
-                            <mat-error *ngIf="duration.invalid">Duration can not be empty</mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Image Thumbnail" [(ngModel)]="vod.imageThumb" name="imageThumb"
-                                #imageThumb="ngModel" required>
-                            <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error>
+                            <!-- <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error> -->
 
                         </mat-form-field>
 
 
                         <div class="form-group">
-                            <button [disabled]="vodForm.form.invalid" (click)="save()"
-                                class="btn btn-default">Save</button>
+                            <button (click)="save()" class="btn btn-default">Save</button>
                         </div>
 
                     </form>

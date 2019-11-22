@@ -41,11 +41,11 @@ export class VodService {
         return this.http.get<Vod[]>(url, { headers });
     }
 
-    save(entity: Vod): Observable<Vod> {
-        let url = API.BASE_URL+'/api/vod';
+    save(entity: Vod): Observable<any> {
+        let url = API.BASE_URL+'/cms/content/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.post<Vod>(url, entity, { headers });
+        return this.http.post<any>(url, entity, { headers });
     }
 }
 

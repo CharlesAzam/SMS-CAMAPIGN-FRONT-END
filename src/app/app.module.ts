@@ -41,6 +41,7 @@ import { NewsTagComponent } from './components/newsTags/news-tag/news-tag.compon
 import { NewsStroyIdeaComponent } from './components/newsStroyIdea/news-stroy-idea/news-stroy-idea.component';
 import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-photos.component';
 import { LanguageService } from './services/language.service';
+import { CountryService } from './services/coutry.service';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -89,7 +90,7 @@ import { LanguageService } from './services/language.service';
     CreateCategoriesModule,
     ReactiveFormsModule
   ],
-  providers: [MoviesService, LanguageService],
+  providers: [MoviesService, LanguageService, CountryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
