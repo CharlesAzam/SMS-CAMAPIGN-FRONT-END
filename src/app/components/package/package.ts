@@ -3,8 +3,7 @@ export class Package {
     id: string;
     name: string;
     description: string;
-    content: any[];
-    currency: string[];
+    content: string[];
     free: boolean = false;
     azamPacakgeMappingName: string;
     isVodAllowed: boolean = false;

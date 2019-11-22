@@ -24,6 +24,22 @@ export class PackageService {
     }
 
 
+      findCountryCodes(){
+       let url=  'http://localhost:3000/api'+'/country-currency-codes'
+       let headers = new HttpHeaders()
+          .set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers })
+      }
+
+
+      findContent(){
+        let url=  API_URL+'/content'
+        let headers = new HttpHeaders()
+           .set('Accept', 'application/json');
+         return this.http.get<any>(url, { headers })
+      }
+
+  
     findById(id: string): Observable<Package> {
         let url = API.BASE_URL + '/api/vod';
         let params = { "id": id };

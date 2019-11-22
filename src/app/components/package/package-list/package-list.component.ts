@@ -29,6 +29,12 @@ export class PackageListComponent {
         // return this.packageService.packageList;
         return [
 
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, azamPacakgeMappingName:"TAC",isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, azamPacakgeMappingName:"TAC",isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, azamPacakgeMappingName:"TAC",isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, azamPacakgeMappingName:"TAC",isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+            { id: "1", name: "Silver Package", description: "Silver package description", content: ['ITV', 'TBC'], free: false, azamPacakgeMappingName:"TAC",isVodAllowed: true, status: true, isVodContentsUnlimited: true, noOfDaysValidity: "20 days", noOfVodContents: "9" },
+
         ]
     }
 
