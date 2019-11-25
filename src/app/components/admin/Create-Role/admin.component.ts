@@ -19,29 +19,21 @@ export class AdminComponent implements OnInit {
 
   
 
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,) 
-  {
-
-   }
+  constructor(private router: Router,private activatedRoute: ActivatedRoute,) {}
 
   ngOnInit() {
     
 
   }
 
-
-
-
-  
-  
   //Route To category List
   routeToCategoryList() {
     console.log("Something ..");
   }
 
   onSubmit() {
-    console.log("Submit clicked"); 
+    console.log("Submit clicked \n"); 
+    console.log(this.createUserModel); 
   }
 
 

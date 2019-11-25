@@ -1,9 +1,8 @@
-{{createUserModel|json}}
-        <hr>
+
 <div class="container">
     <mat-card style="margin-top: 30px;">
-        <h2>Create new user role</h2>
-        <form #createUserForm="ngForm" (ngSubmit)="onSubmit()">
+        <h2>Add user</h2>
+        <form #createUserForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
             <hr>
             <div class="form-group">
                 <mat-form-field class="input-layouts">
