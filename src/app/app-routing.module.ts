@@ -20,6 +20,7 @@ import { MobileSubCategoriesFormComponent } from './components/mobileSubCategori
 import { NewsTagComponent } from './components/newsTags/news-tag/news-tag.component';
 import { NewsStroyIdeaComponent } from './components/newsStroyIdea/news-stroy-idea/news-stroy-idea.component';
 import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-photos.component';
+import { AdminComponent } from './components/admin/Create-Role/admin.component';
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -137,6 +138,10 @@ const routes: Routes = [
       {
         path:'Demo2',
         loadChildren:'./components/homepage/Demo2/create-categories.module#CreateCategoriesModule'
+      },
+      {
+         path:'Admin',
+         component:AdminComponent,
       }
 
     ]
