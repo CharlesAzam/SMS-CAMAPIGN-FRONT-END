@@ -43,6 +43,7 @@ import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-ph
 import { LanguageService } from './services/language.service';
 import { CountryService } from './services/coutry.service';
 import { AdminComponent } from './components/admin/Create-Role/admin.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -69,6 +70,7 @@ import { AdminComponent } from './components/admin/Create-Role/admin.component';
     NewsStroyIdeaComponent,
     NewsPhotosComponent,
     AdminComponent,
+    UserListComponent,
     // TopnavComponent
     ],
   imports: [

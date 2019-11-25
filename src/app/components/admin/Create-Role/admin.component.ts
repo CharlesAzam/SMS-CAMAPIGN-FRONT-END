@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Users} from '../../../models/'
+import {UserRoles} from '../../../models/user-roles'
 
 @Component({
   selector: 'app-admin',
@@ -10,20 +10,17 @@ import {Users} from '../../../models/'
 })
 export class AdminComponent implements OnInit {
 
-  createUserForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    role: new FormControl('', [Validators.required]),  
-  })
-
- 
-  roles: any[]=[
+  createUserModel=new UserRoles('','',[]);
+  //roles: UserRoles
+  roles=[
     'SUPER ADMIN',
     'ADMIN',
   ]
 
+  
 
-  constructor() 
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,) 
   {
 
    }
@@ -33,6 +30,9 @@ export class AdminComponent implements OnInit {
 
   }
 
+
+
+
   
   
   //Route To category List
@@ -41,9 +41,7 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmit() {
-   
-
-
+    console.log("Submit clicked"); 
   }
 
 

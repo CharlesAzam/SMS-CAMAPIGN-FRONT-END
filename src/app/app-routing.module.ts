@@ -21,6 +21,7 @@ import { NewsTagComponent } from './components/newsTags/news-tag/news-tag.compon
 import { NewsStroyIdeaComponent } from './components/newsStroyIdea/news-stroy-idea/news-stroy-idea.component';
 import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-photos.component';
 import { AdminComponent } from './components/admin/Create-Role/admin.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -142,6 +143,10 @@ const routes: Routes = [
       {
          path:'Admin',
          component:AdminComponent,
+      },
+      {
+        path:'UserList',
+        component:UserListComponent,
       }
 
     ]
