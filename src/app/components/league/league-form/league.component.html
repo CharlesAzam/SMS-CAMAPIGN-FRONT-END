@@ -1,0 +1,85 @@
+<div class="container">
+    <mat-card style="margin-top: 30px;">
+        <h2>League</h2>
+        <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+            <hr>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput formControlName="name" placeholder="Enter name" required>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput formControlName="priority" type="number" placeholder="Priority" required>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput formControlName="icon" placeholder="Icon" required>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Sub Categories</mat-label>
+                    <mat-select formControlName="subCategories" multiple>
+                        <mat-option *ngFor="let subs of subCategories" [value]="subs._id">{{subs.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Banners</mat-label>
+                    <mat-select formControlName="banner" multiple>
+                        <mat-option *ngFor="let bann of banners" [value]="bann._id">{{bann.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field style="width: 100%;">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="language">
+                    <mat-option *ngFor="let lang of languages" [value]="lang._id">{{lang.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="form-group">
+                <mat-label>Status</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="status" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>ACTIVE</mat-button-toggle>
+                    <mat-button-toggle value=false>INACTIVE</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Located Home?</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="isHome" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+            <div>
+                <button align="center" [disabled]="categoryForm.invalid" mat-raised-button
+                    type="submit">{{categoryModel?'Update':'Save'}}</button>
+            </div>
+
+        </form>
+    </mat-card>
+</div>
