@@ -15,7 +15,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
 
     this.paginator.page.pipe(
       startWith(null),
-      tap(() => this.getCategories(this.paginator.pageIndex+1, this.paginator.pageSize))).subscribe();
+      tap(() => this.getCategories(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator
@@ -26,7 +26,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
   count: number
   dataSource = new MatTableDataSource<any>([]);
-  
+
 
   /*Table logic*/
   deleteCategory(row) {
@@ -73,7 +73,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
       }
     })
   }
-  
+
 
 
 }

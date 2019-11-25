@@ -26,12 +26,8 @@ export class AdminComponent implements OnInit {
 
   }
 
-  //Route To category List
-  routeToCategoryList() {
-    console.log("Something ..");
-  }
-
-  onSubmit() {
+  
+ onSubmit() {
     console.log("Submit clicked \n"); 
     console.log(this.createUserModel); 
   }
