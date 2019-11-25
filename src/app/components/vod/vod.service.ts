@@ -14,7 +14,7 @@ export class VodService {
     vodList: Vod[] = [];
 
     findById(id: string): Observable<Vod> {
-        let url = API.BASE_URL+'/api/vod';
+        let url = API.BASE_URL + '/api/vod';
         let params = { "id": id };
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -22,7 +22,7 @@ export class VodService {
     }
 
     load(filter: VodFilter, route: String): void {
-        this.find(route, filter).subscribe(
+        this.find(route).subscribe(
             result => {
                 this.vodList = result;
             },
@@ -32,20 +32,33 @@ export class VodService {
         )
     }
 
-    find(route: String, filter?: VodFilter): Observable<Vod[]> {
+    find(route: String, pageNumber?: string, size?: string, filter?: VodFilter): Observable<Vod[]> {
         console.log(route)
-        let url = API.BASE_URL+'/cms/content/' + route;
+        let url = API.BASE_URL + '/cms/content/' + route;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
+
+        if (pageNumber !== null || size !== null) {
+            let params = {
+                "pageNumber": pageNumber,
+                "size": size
+            };
+            return this.http.get<any[]>(url, { params, headers });
+        }
 
         return this.http.get<Vod[]>(url, { headers });
     }
 
     save(entity: Vod): Observable<any> {
-        let url = API.BASE_URL+'/cms/content/create';
+        let url = API.BASE_URL + '/cms/content/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<any>(url, entity, { headers });
+    }
+
+    getCount() {
+        let url = API.BASE_URL + `/cms/count/content`;
+        return this.http.get(url);
     }
 }
 

@@ -7,7 +7,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DAT
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'vod',
@@ -16,6 +16,7 @@ import { map } from 'rxjs/operators';
 export class VodListComponent implements OnInit {
 
     typeControl = new FormControl();
+    count: number;
 
     types: string[] = [
         "VOD",
@@ -29,11 +30,19 @@ export class VodListComponent implements OnInit {
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    ngAfterViewInit(): void {
+        // let pageIndex = this.paginator.pageIndex + 1
+
+        this.paginator.page.pipe(
+            startWith(null),
+            tap(() => this.getData(this.types[0], this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+    }
+    @ViewChild(MatPaginator, { static: false })
+    paginator: MatPaginator
 
     ngOnInit(): void {
+        this.getContentCount();
         this.selectedType = this.types[0];
-        this.getData(this.selectedType)
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
@@ -45,8 +54,9 @@ export class VodListComponent implements OnInit {
     dataSource = new MatTableDataSource<any>([]);
 
     getContentType(event) {
+        //Get count for particular vod type
         this.selectedType = event.value;
-        this.getData(event.value)
+        this.getData(event.value, 1, this.paginator.pageSize)
 
     }
 
@@ -58,8 +68,8 @@ export class VodListComponent implements OnInit {
         })
     }
 
-    getData(type) {
-        this.vodService.find(type, new VodFilter()).subscribe((response: any) => {
+    getData(type, page, size) {
+        this.vodService.find(type, page, size).subscribe((response: any) => {
             if (response.status === 200) {
                 this.dataSource = new MatTableDataSource<any>(response.data)
             }
@@ -81,6 +91,14 @@ export class VodListComponent implements OnInit {
 
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    getContentCount() {
+        this.vodService.getCount().subscribe((result: any) => {
+            if (result.success) {
+                this.count = result.count;
+            }
+        })
     }
 
 }

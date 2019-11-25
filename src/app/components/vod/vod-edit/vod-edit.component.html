@@ -3,7 +3,7 @@
         <div class="col">
             <mat-card style="margin-top: 30px; margin-bottom: 30px; margin-left: 150px; margin-right: 150px;">
                 <div class="header">
-                    <h1 class="title">Create Content</h1>
+                    <h1 class="title">Create {{formType}} Content</h1>
                 </div>
                 <div class="content">
 
@@ -123,24 +123,12 @@
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody *ngFor="let season of seasons; let i = index">
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>1</td>
-                                        <td>20</td>
-                                        <td>Edit</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>2</td>
-                                        <td>20</td>
-                                        <td>Edit</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>3</td>
-                                        <td>20</td>
-                                        <td>Edit</td>
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{season.title}}</td>
+                                        <td>{{season.episodes.length}}</td>
+                                        <td>Edit, Delete</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -221,8 +209,8 @@
                         </mat-form-field> -->
                         <div class="form-group">
                             <label for="Decription">Upload Image Thumb:</label>
-                            <input type="file" class="form-control" id="pwd" formControlName="imageThu" placeholder="Enter Upload image thumb"
-                                name="pwd">
+                            <input type="file" class="form-control" id="pwd" formControlName="imageThumb"
+                                placeholder="Enter Upload image thumb" name="pwd">
                         </div>
 
 
