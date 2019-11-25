@@ -4,10 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {  HttpClientModule } from '@angular/common/http';
-import {EditorModule} from '@tinymce/tinymce-angular';
+import { HttpClientModule } from '@angular/common/http';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
-import { MoviesService} from './services/movies.service';
+import { MoviesService } from './services/movies.service';
 import { MoviesModule } from './components/movie/movies.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from './modules/app-material.module';
@@ -18,8 +18,8 @@ import { VodModule } from '../app/components/vod/vod.module';
 import { PackageModule } from '../app/components/package/package.module';
 import { CouponModule } from '../app/components/coupon/coupon.module';
 import { RadioModule } from '../app/components/radio/radio.module';
-import {CreateCategoryComponent} from './components/mobileCategory/mobileCategory.component'
-import {CardComponentComponent} from './components/card-component/card-component.component';
+import { CreateCategoryComponent } from './components/mobileCategory/mobileCategory.component'
+import { CardComponentComponent } from './components/card-component/card-component.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { CreateTagsComponent } from './components/newsTags/newsTagForm/newsTagForm.component';
 import { CreateChannelsComponentForm } from './components/channels/channelForm/create-channels.component'
@@ -33,7 +33,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CategoryFormComponent } from './components/mobileCategory/mobile category form/category-form.component';
 import { CreateCategoriesModule } from './components/homepage/Demo2/create-categories.module';
 import { MobileTagsComponent } from './components/mobileTags/mobile-tags.component';
-import {MobileTagFormComponent} from './components/mobileTags/mobileTagsForm/mobileTagsFormComponent';
+import { MobileTagFormComponent } from './components/mobileTags/mobileTagsForm/mobileTagsFormComponent';
 import { MobileSubCategoriesComponent } from './components/mobileSubCategories/MobileSubCategoriesComponent';
 import { MobileSubCategoriesFormComponent } from './components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component';
 import { ChannelComponent } from './components/channels/channel.component';
@@ -42,6 +42,7 @@ import { NewsStroyIdeaComponent } from './components/newsStroyIdea/news-stroy-id
 import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-photos.component';
 import { LanguageService } from './services/language.service';
 import { CountryService } from './services/coutry.service';
+import { ProgramModule } from './components/programs/program.module';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -68,7 +69,7 @@ import { CountryService } from './services/coutry.service';
     NewsStroyIdeaComponent,
     NewsPhotosComponent
     // TopnavComponent
-    ],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -87,6 +88,7 @@ import { CountryService } from './services/coutry.service';
     VideoLibraryModule,
     BannerModule,
     EditorModule,
+    ProgramModule,
     CreateCategoriesModule,
     ReactiveFormsModule
   ],

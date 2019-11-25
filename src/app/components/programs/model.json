@@ -1,0 +1,74 @@
+{
+    "title": "Program",
+    "entity": "program",
+    "api": {
+        "url": "API.BASE_URL/cms/"
+    },
+    "filter": [
+        "name"
+    ],
+    "fields": [
+        {
+            "name": "_id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "content",
+            "label": "Content",
+            "type": "string"
+        },
+        {
+            "name": "date",
+            "label": "Date",
+            "type": "string"
+        },
+        {
+            "name": "time",
+            "label": "Time",
+            "type": "string"
+        },
+        {
+            "name": "dateTimeInGmt",
+            "label": "Date Time in GMT",
+            "type": "string"
+        },
+        {
+            "name": "duration",
+            "label": "Duration",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "label": "Description",
+            "type": "string"
+        },
+        {
+            "name": "laligalive",
+            "label": "laligalive",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "label": "Type",
+            "type": "string"
+        },
+        {
+            "name":"image",
+            "label":"Image",
+            "type":"string"
+        },
+        {
+            "name": "laligalive",
+            "label": "laligalive",
+            "type": "string"
+        },
+        {
+            "name": "programType",
+            "label": "Program Type",
+            "type": "string"
+        }
+    ]
+}
