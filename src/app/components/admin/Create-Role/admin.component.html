@@ -1,0 +1,32 @@
+
+<div class="container">
+    <mat-card style="margin-top: 30px;">
+        <h2>Add user</h2>
+        <form #createUserForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+            <hr>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput name="name" placeholder="Enter name"  [(ngModel)]="createUserModel.name">
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput name="password"  placeholder="User password" [(ngModel)]="createUserModel.password">
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Role</mat-label>
+                    <mat-select name="role" [(ngModel)]="createUserModel.role">
+                        <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> 
+            <div>
+                 <button  [disabled]="createUserForm.invalid" mat-raised-button
+                    type="submit">Create User</button> 
+            </div>
+
+        </form>
+    </mat-card>
+</div>

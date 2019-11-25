@@ -43,6 +43,10 @@ import { NewsPhotosComponent } from './components/newsPhotos/news-photos/news-ph
 import { LanguageService } from './services/language.service';
 import { CountryService } from './services/coutry.service';
 import { ProgramModule } from './components/programs/program.module';
+import { AdminComponent } from './components/admin/Create-Role/admin.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
+import { LeagueComponent } from './components/league/league-form/league.component';
+import { LeaguelistComponent } from './components/league/league-list/leaguelist.component';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -67,7 +71,11 @@ import { ProgramModule } from './components/programs/program.module';
     ChannelComponent,
     NewsTagComponent,
     NewsStroyIdeaComponent,
-    NewsPhotosComponent
+    NewsPhotosComponent,
+    AdminComponent,
+    UserListComponent,
+    LeagueComponent,
+    LeaguelistComponent,
     // TopnavComponent
   ],
   imports: [
