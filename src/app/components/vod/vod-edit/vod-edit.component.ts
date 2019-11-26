@@ -96,7 +96,7 @@ export class VodEditComponent implements OnInit {
     seasons: any[] = [];
 
     vodTypes: string[] = [
-        "VIDEOS",
+        "VIDEO",
         "LIVETV",
         "SERIES"
     ]
@@ -111,6 +111,7 @@ export class VodEditComponent implements OnInit {
         this.getCDNLibrary();
 
         this.route.params.subscribe((params: any) => {
+            console.log("params.id",params.id)
             switch (params.id) {
                 case "RADIO":
                     this.formType = 'Radio'
@@ -129,7 +130,8 @@ export class VodEditComponent implements OnInit {
                         isFree: new FormControl('', [Validators.required]),
                         priceDetail: new FormGroup({
                             price: new FormControl('', [Validators.required]),
-                            currency: new FormControl('', [Validators.required])
+                            currency: new FormControl('', [Validators.required]),
+                            noOfDays: new FormControl('',[Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -162,7 +164,8 @@ export class VodEditComponent implements OnInit {
                         isFree: new FormControl('', [Validators.required]),
                         priceDetail: new FormGroup({
                             price: new FormControl('', [Validators.required]),
-                            currency: new FormControl('', [Validators.required])
+                            currency: new FormControl('', [Validators.required]),
+                            noOfDays: new FormControl('',[Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -194,7 +197,8 @@ export class VodEditComponent implements OnInit {
                         isFree: new FormControl('', [Validators.required]),
                         priceDetail: new FormGroup({
                             price: new FormControl('', [Validators.required]),
-                            currency: new FormControl('', [Validators.required])
+                            currency: new FormControl('', [Validators.required]),
+                            noOfDays: new FormControl('',[Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -227,7 +231,8 @@ export class VodEditComponent implements OnInit {
                         isFree: new FormControl('', [Validators.required]),
                         priceDetail: new FormGroup({
                             price: new FormControl('', [Validators.required]),
-                            currency: new FormControl('', [Validators.required])
+                            currency: new FormControl('', [Validators.required]),
+                            noOfDays: new FormControl('',[Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -236,12 +241,46 @@ export class VodEditComponent implements OnInit {
                         cdnID: new FormControl('', [Validators.required]),
                         series: new FormControl('', [Validators.required]),
                         images: new FormControl(''),
-                        imageThumb: new FormControl('', [Validators.required]),
+                        imageThumb: new FormControl('http://google.com', [Validators.required]),
                         packageID: new FormControl(''),
                         createdBy: new FormControl(''),
                         vodType: new FormControl('', [Validators.required])
                     })
                     break;
+
+                    case "LIVETV":
+                        this.formType = "Live TV"
+                        this.contentForm = new FormGroup({
+                            title: new FormControl('', [Validators.required]),
+                            description: new FormControl('', [Validators.required]),
+                            tags: new FormControl('', [Validators.required]),
+                            releaseDate: new FormControl('', Validators.required),
+                            duration: new FormControl(),
+                            starring: new FormControl('', [Validators.required]),
+                            director: new FormControl('', [Validators.required]),
+                            categories: new FormControl('', [Validators.required]),
+                            country: new FormControl('', [Validators.required]),
+                            subCategories: new FormControl('', [Validators.required]),
+                            language: new FormControl('', [Validators.required]),
+                            isFree: new FormControl('', [Validators.required]),
+                            priceDetail: new FormGroup({
+                                price: new FormControl('', [Validators.required]),
+                                currency: new FormControl('', [Validators.required]),
+                                noOfDays: new FormControl('',[Validators.required])
+                            }),
+                            isFreeAzam: new FormControl('', [Validators.required]),
+                            isSeries: new FormControl('', [Validators.required]),
+                            status: new FormControl('', [Validators.required]),
+                            boundingBox: new FormControl('', [Validators.required]),
+                            cdnID: new FormControl('', [Validators.required]),
+                            series: new FormControl('', [Validators.required]),
+                            images: new FormControl(''),
+                            imageThumb: new FormControl('', [Validators.required]),
+                            packageID: new FormControl(''),
+                            createdBy: new FormControl(''),
+                            vodType: new FormControl('', [Validators.required])
+                        })
+                        break;
 
 
                 default:
