@@ -14,11 +14,11 @@ export class VodService {
     vodList: Vod[] = [];
 
     findById(id: string): Observable<Vod> {
-        let url = API.BASE_URL + '/api/vod';
-        let params = { "id": id };
+        let url = API.BASE_URL + '/api/content/'+id;
+        
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
-        return this.http.get<Vod>(url, { params, headers });
+        return this.http.get<Vod>(url, { headers });
     }
 
     load(filter: VodFilter, route: String): void {
