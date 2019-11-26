@@ -117,7 +117,6 @@ export class ContentDialog {
         "VOD",
         "NEWS",
         "RADIO",
-        "TV GUIDE"
     ];
 
     vodTypes: any[] = [
