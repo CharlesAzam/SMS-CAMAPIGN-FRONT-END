@@ -62,8 +62,7 @@ export class LeaguelistComponent implements OnInit {
   /*Table logic*/
 
   ngOnInit() {
-    this.getCategoryCount();
-    // this.getCategories(1, 5);
+    this.getLeagueCount();
   }
 
   getLeagues(pageNumber, size) {
@@ -75,13 +74,13 @@ export class LeaguelistComponent implements OnInit {
     });
   }
 
-  getCategoryCount() {
+  getLeagueCount() {
     //Add get category service here
-    // this.categoryService.getCount().subscribe((result: any) => {
-    //   if (result.success) {
-    //     this.count = result.count;
-    //   }
-    // })
+    this.leagueService.getCount().subscribe((result: any) => {
+      if (result.success) {
+        this.count = result.count;
+      }
+    });
   }
 
   routeToCreateLeague() {
