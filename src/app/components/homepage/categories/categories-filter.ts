@@ -1,3 +1,3 @@
 export class CategoriesFilter {
-    categoryName: string = '';
+  categoryName: string = "";
 }

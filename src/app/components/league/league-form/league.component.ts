@@ -1,139 +1,121 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LeagueModel } from '../../../models/leagu-model';
-import { SubCategoriesService } from 'src/app/services/sub.categories.service';
-import { BannerService } from '../../banner/banner.service';
-import { CategoriesService } from 'src/app/services/categories.service';
-import { Categories } from 'src/app/models/categories';
-import { LanguageService } from 'src/app/services/language.service';
+import { Component, OnInit } from "@angular/core";
+import {
+  FormControl,
+  Validators,
+  FormBuilder,
+  FormGroup
+} from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { League } from "../../../models/league-model";
+import { SubCategoriesService } from "src/app/services/sub.categories.service";
+import { BannerService } from "../../banner/banner.service";
+import { CategoriesService } from "src/app/services/categories.service";
+import { LeagueService } from "src/app/services/league.service";
+import { Categories } from "src/app/models/categories";
+import { LanguageService } from "src/app/services/language.service";
 
 @Component({
-  selector: 'app-league',
-  templateUrl: './league.component.html',
-  styleUrls: ['./league.component.css']
+  selector: "app-league",
+  templateUrl: "./league.component.html",
+  styleUrls: ["./league.component.css"]
 })
 export class LeagueComponent implements OnInit {
-
-  categoryForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    banner: new FormControl(''),
-    language: new FormControl('', [Validators.required]),
-    imageThumb: new FormControl('', [Validators.required]),
-    type: new FormControl('', [Validators.required]),
-    subCategories: new FormControl(''),
-    priority: new FormControl('', [Validators.required]),
-    isHome: new FormControl(true, [Validators.required]),
-    status: new FormControl(true, [Validators.required])
-  })
+  leagueForm: FormGroup = new FormGroup({
+    name: new FormControl("", [Validators.required]),
+    language: new FormControl("", [Validators.required]),
+    imageThumb: new FormControl("", [Validators.required]),
+    type: new FormControl("", [Validators.required]),
+    priority: new FormControl("", [Validators.required]),
+    isHome: new FormControl("", [Validators.required]),
+    status: new FormControl("", [Validators.required])
+  });
 
   languages: any[] = [];
-  subCategories: any[] = []
-  banners: any[] = []
-  categoryModel: LeagueModel
-  types: string[]=[
-    'RADIO',
-    'NEWS',
-    'TVGUIDE',
-    'VOD'
-  ]
+  leagueModel: League;
+  types: string[] = ["RADIO", "NEWS", "TVGUIDE", "VOD"];
 
-
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private subCategoryService: SubCategoriesService,
-    private bannerService: BannerService,
-    private categoryService: CategoriesService,
-    private languageService: LanguageService) { }
+    private leagueService: LeagueService,
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit() {
-    this.getSubCategories();
-    this.getBanners();
-    this.getLanguages()
+    this.getLanguages();
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== 'new') {
-        this.categoryService.findById(params.id).subscribe((response: any) => {
-          if (response.status === 200) {
-            console.log(response.data)
-            this.categoryModel = response.data[0];
-            this.categoryForm.setValue({
-              name: this.categoryModel.name ? this.categoryModel.name : '',
-              banner: this.categoryModel.banner ? this.categoryModel.banner : '',
-              language: this.categoryModel.language ? this.categoryModel.language : '',
-              type: this.categoryModel.type ? this.categoryModel.type : '',
-              imageThumb: this.categoryModel.imageThumb ? this.categoryModel.imageThumb : '',
-              subCategories: this.categoryModel.subCategories ? this.categoryModel.subCategories : [],
-              priority: this.categoryModel.priority ? this.categoryModel.priority : '',
-              isHome: this.categoryModel.isHome ? this.categoryModel.isHome : true,
-              status: this.categoryModel.status ? this.categoryModel.status : true
-            })
-          }
-        }, error => console.error(error));
+      if (params.id !== "new") {
+        this.leagueService.findById(params.id).subscribe(
+          (response: any) => {
+            if (response.status === 200) {
+              this.leagueModel = response.data[0];
+              this.leagueForm.setValue({
+                name: this.leagueModel.name ? this.leagueModel.name : "",
+
+                language: this.leagueModel.language
+                  ? this.leagueModel.language
+                  : "",
+                type: this.leagueModel.type ? this.leagueModel.type : "",
+                imageThumb: this.leagueModel.imageThumb
+                  ? this.leagueModel.imageThumb
+                  : "",
+
+                priority: this.leagueModel.priority
+                  ? this.leagueModel.priority
+                  : "",
+                isHome: !!this.leagueModel.isHome,
+                status: !!this.leagueModel.status
+              });
+            }
+          },
+          error => console.error(error)
+        );
       }
     });
-
-  }
-
-  getBanners() {
-    this.bannerService.find().subscribe((response: any) => {
-      if (response.status === 200) {
-        this.banners = response.data
-      }
-    },
-      error => console.error(error))
-  }
-
-  getSubCategories() {
-    this.subCategoryService.find().subscribe((response: any) => {
-      if (response.status === 200) {
-        this.subCategories = response.data
-      }
-    },
-      error => console.error(error))
   }
 
   //Route To category List
   routeToCategoryList() {
-    this.router.navigate(['home/category']);
+    this.router.navigate(["home/category"]);
   }
 
   onSubmit() {
-    console.log(this.categoryForm.value)
-    if (this.categoryModel) {
-      Object.assign(this.categoryModel, this.categoryForm.value)
-
-      this.categoryService.update(this.categoryModel).subscribe((response: any) => {
-        if (response.status === 200)
-          this.routeToCategoryList()
-        else
-          console.log(response)
-      },
-        error => console.error(error))
+    if (this.leagueModel) {
+      Object.assign(this.leagueModel, this.leagueForm.value);
+      this.leagueService.update(this.leagueModel).subscribe(
+        (response: any) => {
+          if (response.status === 200)
+            this.router.navigate(["home/LeagueList"]);
+          else console.log(response);
+        },
+        error => console.error(error)
+      );
     } else {
-      this.categoryService.save(this.checkIfValueIsEmpty(this.categoryForm.value)).subscribe((response: any) => {
-        if (response.status === 200)
-          this.routeToCategoryList()
-        else
-          console.log(response)
-      },
-        error => console.error(error))
+      this.leagueService
+        .save(this.checkIfValueIsEmpty(this.leagueForm.value))
+        .subscribe(
+          (response: any) => {
+            if (response.status === 200)
+              this.router.navigate(["home/LeagueList"]);
+            else console.log(response);
+          },
+          error => console.error(error)
+        );
     }
-
-
   }
-
 
   getLanguages() {
-    this.languageService.list().subscribe((response) => {
-      if (response.status === 200) {
-        this.languages = response.data;
-      }
-    },
+    this.languageService.list().subscribe(
+      response => {
+        if (response.status === 200) {
+          this.languages = response.data;
+        }
+      },
       error => {
-        console.log("Error! ", error)
-      });
+        console.log("Error! ", error);
+      }
+    );
   }
-
 
   checkIfValueIsEmpty(data) {
     for (let key in data) {
@@ -143,5 +125,4 @@ export class LeagueComponent implements OnInit {
     }
     return data;
   }
-
 }
