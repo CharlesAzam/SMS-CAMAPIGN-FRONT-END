@@ -56,7 +56,7 @@ export class VodService {
         return this.http.post<any>(url, entity, { headers });
     }
 
-    getCount() {
+    getCount(type?: string) {
         let url = API.BASE_URL + `/cms/count/content`;
         return this.http.get(url);
     }
