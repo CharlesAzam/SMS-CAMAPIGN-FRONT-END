@@ -36,7 +36,7 @@ export class ProgramListComponent {
     delete(row) {
         this.programService.delete(row._id).subscribe((response: any) => {
             if (response.status === 200) {
-                this.getPrograms(this.paginator.pageIndex, this.paginator.pageSize);
+                this.getPrograms(this.paginator.pageIndex+1, this.paginator.pageSize);
             }
         },
             error => console.error(error))
