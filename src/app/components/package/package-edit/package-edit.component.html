@@ -6,186 +6,87 @@
                     <h1 class="title">Package Detail</h1>
                 </div>
 
-                {{PackageEditForm.value | json}}
+                <!-- {{packageForm.value | json}} -->
                 <div class="content">
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form [formGroup]="PackageEditForm">
+                    <form [formGroup]="packageForm">
 
                         <mat-form-field style="width: 100%;">
                             <input matInput placeholder="Name" formControlName="name" required>
-                            <!-- <mat-error *ngIf="name.invalid">Name can not be empty</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <mat-label>Plan Mapping for Azam DTH to AzamTV</mat-label>
-                            <mat-select placeholder="Azam plan Info" [(ngModel)]="packageDef.azamPackageMappingName" name="azamPackageMappingName" #azamPackageMappingName="ngModel"
-                            required>
-                                 <mat-option *ngFor="let plan of planInfo" [value]="plan.planCode">{{plan.planName}}
-                                 </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="azamPackageMappingName.invalid">Plan info mapping cant be left blank</mat-error>
-                       </mat-form-field>
+                            <input matInput placeholder="Description" formControlName="description" required>
+                        </mat-form-field>
 
-                        <div class="form-group">
-                            <label>Description</label>
-                            <editor formControlName="description" [init]="{
-                                height: 500,
-                                menubar: true,
-                                plugins: [
-                                  'advlist autolink lists link image charmap print preview anchor',
-                                  'searchreplace visualblocks code fullscreen',
-                                  'insertdatetime media table paste code help wordcount'
-                                ],
-                                toolbar:
-                                  'undo redo | formatselect | bold italic backcolor | \
-                                  alignleft aligncenter alignright alignjustify | \
-                                  bullist numlist outdent indent | removeformat | help'
-                              }">
-                            </editor>
-
-                        </div>
-
-                        <div class="form-group">
-                            <mat-form-field style="width: 100%;">
-                                <mat-label>Content</mat-label>
-                                <mat-select [(ngModel)]="packageDef.content" multiple required>
-                                    <mat-option *ngFor="let content of content" [value]="packageDef.content">
-                                        {{content}}
-                                    </mat-option>
-                                </mat-select>
-
-                            </mat-form-field>
-                        </div>
-
-                        <div class="form-group">
-                            <mat-label>Is Free</mat-label>
-                            <mat-button-toggle-group appearance="legacy" falsename="fontStyle" aria-label="Font Style"
-                                formControlName="free" style="margin-left: 10px;" required>
-                                <mat-button-toggle (click)="toggleShow()" value=true>Yes</mat-button-toggle>
-                                <mat-button-toggle (click)="toggleHidde()" value=false>No</mat-button-toggle>
-                            </mat-button-toggle-group>
-                        </div>
-
-                        <!--Nested countrydetail form 2 start-->
-                        <div formGroupName="packageprice" [hidden]="packagepriceForm">
-                            <mat-form-field style="width: 100%;">
-                                <!-- <mat-label>Azam Pacakge Mapping Name</mat-label> -->
-                                <input matInput placeholder="Package price" formControlName="price" required>
-                                <!-- <mat-error *ngIf="name.invalid">Name can not be empty</mat-error> -->
-                            </mat-form-field>
-
-                            <mat-form-field style="width: 100%;">
-                                <!-- <mat-label>Azam Pacakge Mapping Name</mat-label> -->
-                                <input matInput placeholder="Currency" formControlName="currency" required>
-                                <!-- <mat-error *ngIf="name.invalid">Name can not be empty</mat-error> -->
-                            </mat-form-field>
-                        </div>
-                        <!--Nested countrydetail from 2 end-->
                         <mat-form-field style="width: 100%;">
-                            <mat-label>Country Details</mat-label>
-                            <mat-select placeholder="Country Details" [(ngModel)]="packageDef.country" name="country" #country="ngModel"
-                            required>
-                                 <mat-option *ngFor="let co of country" [value]="co.code">{{co.code}}
-                                 </mat-option>
+                            <mat-label>Contents</mat-label>
+                            <mat-select formControlName="content" required multiple>
+                                <mat-option *ngFor="let cont of contents" [value]="cont._id">{{cont.title}}
+                                </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="country.invalid">Country Details should not be left blank</mat-error>
-                       </mat-form-field>
-                        <!--Nested countrydetail form 1 start-->
-                        <div formGroupName="countrydetail">
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Country</mat-label>
+                            <mat-select formControlName="countryDetail" required>
+                                <mat-option *ngFor="let country of countries" [value]="country._id">{{country.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
 
-
-
-                            <mat-form-field style="width: 100%;">
-                                <!-- <mat-label>Azam Pacakge Mapping Name</mat-label> -->
-                                <input matInput placeholder="Country Code" formControlName="code" required>
-                                <!-- <mat-error *ngIf="name.invalid">Name can not be empty</mat-error> -->
-                            </mat-form-field>
-
-                            <mat-form-field style="width: 100%;">
-                                <!-- <mat-label>Azam Pacakge Mapping Name</mat-label> -->
-                                <input matInput placeholder="Country Name" formControlName="name" required>
-                                <!-- <mat-error *ngIf="name.invalid">Name can not be empty</mat-error> -->
-                            </mat-form-field>
-
-                            <mat-form-field style="width: 100%;">
-                                <!-- <mat-label>Azam Pacakge Mapping Name</mat-label> -->
-                                <input matInput placeholder="Country Currency" formControlName="currency" required>
-                                <!-- <mat-error *ngIf="name.invalid">Name can not be empty</mat-error> -->
-                            </mat-form-field>
-
-                        </div>
-                        <!--Nested countrydetail from 1 end-->
-
-                        <div>
-                           
-
-                            <mat-form-field style="width: 100%;">
-                                <input matInput placeholder="Price" name="price" type="number">
-                            </mat-form-field>
-                        </div>
-
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Azam Package Mapping Name</mat-label>
+                            <mat-select formControlName="azamPackageMappingName">
+                                <mat-option *ngFor="let package of azamPackages" [value]="package.planCode">
+                                    {{package.packageName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
                         <div class="form-group">
-                            <mat-label>Is Vod Allowed</mat-label>
-                            <mat-button-toggle-group appearance="legacy" falsename="fontStyle" aria-label="Font Style"
+                            <mat-label>Is VOD Allowed?</mat-label>
+                            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
                                 formControlName="isVodAllowed" style="margin-left: 10px;" required>
                                 <mat-button-toggle value=true>TRUE</mat-button-toggle>
                                 <mat-button-toggle value=false>FALSE</mat-button-toggle>
                             </mat-button-toggle-group>
                         </div>
 
-
-                        <div>
-                            <!-- <div class="form-group">
-                                <button
-                                   
-                                    formControlName="isVodContentsUnlimited">Is
-                                    Vod Contents
-                                    Unlimited
-                            </button>
-
-                            </div> -->
-
-                            <div class="form-group">
-                                <mat-label>is Vod Contents Unlimited</mat-label>
-                                <mat-button-toggle-group appearance="legacy" falsename="fontStyle"
-                                    aria-label="Font Style" formControlName="isVodContentsUnlimited"
-                                    style="margin-left: 10px;" required>
-                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
-                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
-                                </mat-button-toggle-group>
-                            </div>
-
-                            <div *ngIf="packageDef.isVodContentsUnlimited">
-                                <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="No Of Vod Contents:" name="noOfVodContents"
-                                        formControlName="noOfVodContents">
-
-
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-
-
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="No Of Days Validity" required
-                                formControlName="noOfDaysValidity">
-
+                            <input matInput placeholder="Price" type="number" formControlName="price" required>
                         </mat-form-field>
 
-                        <!-- <div class="form-group">
-                            <mat-button-toggle 
-                                formControlName="status">Status</mat-button-toggle>
-                        </div> -->
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Currency</mat-label>
+                            <mat-select formControlName="currency">
+                                <mat-option *ngFor="let currenc of currencies" [value]="currenc">{{currenc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Validity In Days" type="number"
+                                formControlName="validityInDays" required>
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Number Of Days" type="number" formControlName="noOfDays"
+                                required>
+                        </mat-form-field>
+
+
+                        <!-- <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Link" formControlName="link">
+                        </mat-form-field> -->
 
 
                         <div class="form-group">
-                            <mat-label>Package Status</mat-label>
-                            <mat-button-toggle-group appearance="legacy" falsename="fontStyle" aria-label="Font Style"
+                            <mat-label>Status</mat-label>
+                            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
                                 formControlName="status" style="margin-left: 10px;" required>
                                 <mat-button-toggle value=true>TRUE</mat-button-toggle>
                                 <mat-button-toggle value=false>FALSE</mat-button-toggle>
@@ -193,8 +94,18 @@
                         </div>
 
                         <div class="form-group">
-                            <button color="primary" (click)="save()" [disabled]="PackageEditForm.invalid"
-                                class="btn btn-default">Save</button>
+                            <mat-label>Is Free?</mat-label>
+                            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                formControlName="isFree" style="margin-left: 10px;" required>
+                                <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+
+
+                        <div class="form-group">
+                            <button color="primary" (click)="save()" [disabled]="packageForm.invalid"
+                                class="btn btn-default">{{packageDef?'Upate':'Save'}}</button>
                         </div>
 
                     </form>

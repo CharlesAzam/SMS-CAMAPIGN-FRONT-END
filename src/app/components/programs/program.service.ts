@@ -83,7 +83,7 @@ export class ProgramService {
     }
 
     getCount() {
-        let url = API.BASE_URL + `/cms/count/programs`;
+        let url = API.BASE_URL + `/cms/count/program`;
         return this.http.get(url);
     }
 }

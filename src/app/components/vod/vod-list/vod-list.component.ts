@@ -22,10 +22,10 @@ export class VodListComponent implements OnInit {
         "VOD",
         "NEWS",
         "RADIO",
-        "TV GUIDE"
+        "TVGUIDE"
     ]
 
-    selectedType: string =  "VOD";
+    selectedType: string = this.types[0];
 
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -35,7 +35,7 @@ export class VodListComponent implements OnInit {
 
         this.paginator.page.pipe(
             startWith(null),
-            tap(() => this.getData(this.types[0], this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+            tap(() => { this.getData(this.selectedType, this.paginator.pageIndex + 1, this.paginator.pageSize) })).subscribe();
     }
     @ViewChild(MatPaginator, { static: false })
     paginator: MatPaginator
