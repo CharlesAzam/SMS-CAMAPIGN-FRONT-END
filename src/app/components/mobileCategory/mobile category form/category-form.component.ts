@@ -31,18 +31,18 @@ export class CategoryFormComponent implements OnInit {
   subCategories: any[] = []
   banners: any[] = []
   categoryModel: Categories
-  types: string[]=[
+  types: string[] = [
     'RADIO',
     'NEWS',
     'TVGUIDE',
     'VOD'
   ]
-  icons: any[]=[
-    {key:'ic_home', value: 'HOME' },
-    {key:'ic_movie', value: 'MOVIES' },
-    {key:'ic_sports', value: 'SPORTS' },
-    {key:'ic_livetv', value: 'LIVETV' },
-    {key:'ic_more', value: 'MORE' },
+  icons: any[] = [
+    { key: 'ic_home', value: 'HOME' },
+    { key: 'ic_movie', value: 'MOVIES' },
+    { key: 'ic_sports', value: 'SPORTS' },
+    { key: 'ic_livetv', value: 'LIVETV' },
+    { key: 'ic_more', value: 'MORE' },
   ]
 
 
@@ -69,10 +69,10 @@ export class CategoryFormComponent implements OnInit {
               language: this.categoryModel.language ? this.categoryModel.language : '',
               type: this.categoryModel.type ? this.categoryModel.type : '',
               icon: this.categoryModel.icon ? this.categoryModel.icon : '',
-              subCategories: this.categoryModel.subCategories ? this.categoryModel.subCategories : [],
+              subCategories: this.categoryModel.subCategories.map((subs) => { return subs.subCatID }) ? this.categoryModel.subCategories.map((subs) => { return subs.subCatID }) : [],
               priority: this.categoryModel.priority ? this.categoryModel.priority : '',
-              isHome: this.categoryModel.isHome ? this.categoryModel.isHome : true,
-              status: this.categoryModel.status ? this.categoryModel.status : true
+              isHome: String(this.categoryModel.isHome) ? String(this.categoryModel.isHome) : '',
+              status: String(this.categoryModel.status) ? String(this.categoryModel.status) : ''
             })
           }
         }, error => console.error(error));
@@ -93,8 +93,8 @@ export class CategoryFormComponent implements OnInit {
   getSubCategories() {
     this.subCategoryService.find().subscribe((response: any) => {
       if (response.status === 200) {
-        console.log("responseresponseresponse",response)
-;        this.subCategories = response.data
+        console.log("responseresponseresponse", response)
+          ; this.subCategories = response.data
       }
     },
       error => console.error(error))
