@@ -78,7 +78,7 @@ export class VideoLibraryService {
   }
 
   getCount() {
-    let url = API.BASE_URL + `/cms/count/content`;
+    let url = API.BASE_URL + `/cms/count/cdn`;
     return this.http.get(url);
   }
 

@@ -47,11 +47,11 @@
 
     </div>
 
-    <mat-card *ngFor="let episode of episodes" style="margin: 10px">
+    <mat-card *ngFor="let episode of episodes; let i = index" style="margin: 10px">
       <mat-card-title>{{episode.title}}</mat-card-title>
       <mat-card-subtitle>{{episode.description}}</mat-card-subtitle>
       <mat-card-actions>
-        <button mat-button (click)="removeEpisode()">DELETE</button>
+        <button mat-button (click)="removeEpisode(i)">DELETE</button>
       </mat-card-actions>
     </mat-card>
 
@@ -66,5 +66,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="getData()" cdkFocusInitial>Submit</button>
+  <button mat-button [disabled]="seasonForm.invalid || episodes.length === 0" [mat-dialog-close]="getData()"
+    cdkFocusInitial>Submit</button>
 </mat-dialog-actions>

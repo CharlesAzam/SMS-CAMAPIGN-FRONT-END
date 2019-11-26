@@ -22,10 +22,10 @@ export class VodListComponent implements OnInit {
         "VOD",
         "NEWS",
         "RADIO",
-        "TV GUIDE"
+        "TVGUIDE"
     ]
 
-    selectedType: string;
+    selectedType: string = this.types[0];
 
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -35,14 +35,15 @@ export class VodListComponent implements OnInit {
 
         this.paginator.page.pipe(
             startWith(null),
-            tap(() => this.getData(this.types[0], this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+            tap(() => { this.getData(this.selectedType, this.paginator.pageIndex + 1, this.paginator.pageSize) })).subscribe();
     }
     @ViewChild(MatPaginator, { static: false })
     paginator: MatPaginator
 
     ngOnInit(): void {
-        this.getContentCount();
+        
         this.selectedType = this.types[0];
+        this.getContentCount(this.selectedType);
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
@@ -56,6 +57,7 @@ export class VodListComponent implements OnInit {
     getContentType(event) {
         //Get count for particular vod type
         this.selectedType = event.value;
+        this.getContentCount(this.selectedType);
         this.getData(event.value, 1, this.paginator.pageSize)
 
     }
@@ -93,8 +95,8 @@ export class VodListComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    getContentCount() {
-        this.vodService.getCount().subscribe((result: any) => {
+    getContentCount(contentType) {
+        this.vodService.getCount(contentType).subscribe((result: any) => {
             if (result.success) {
                 this.count = result.count;
             }
@@ -117,7 +119,6 @@ export class ContentDialog {
         "VOD",
         "NEWS",
         "RADIO",
-        "TV GUIDE"
     ];
 
     vodTypes: any[] = [

@@ -6,6 +6,9 @@ import { Package } from '../package';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import { LanguageService } from 'src/app/services/language.service';
+import { VodService } from '../../vod/vod.service';
+import { CountryService } from 'src/app/services/coutry.service';
 
 @Component({
     selector: 'package-edit',
@@ -16,148 +19,181 @@ export class PackageEditComponent implements OnInit {
     id: string;
     packageDef: Package;
     errors: string;
-    planInfo: any[];
-    country: any[];
-    content: any[];
-    currency: any [] = [
+    azamPackages: any[];
+    countries: any[];
+    currencies: any[] = [
         'TZS',
         'USD'
     ]
-    channels: any[] = [
-        "TBC",
-        "ITV",
-        "Channel 10"
-    ]
+    // languages: any[] = []
+    contents: any[] = []
 
     constructor(
         private route: ActivatedRoute,
-        private packageService: PackageService) { 
+        private packageService: PackageService,
+        private contentService: VodService,
+        private languageService: LanguageService,
+        private countryService: CountryService) {
     }
 
-    
-    //pacakge Form  Logic
-    packagepriceForm=false;
-    toggleShow(){
-        this.packagepriceForm=true;
-    }
-
-    toggleHidde(){
-        this.packagepriceForm=false;
-    }
-
-    
-
-        PackageEditForm= new FormGroup({
+    packageForm = new FormGroup({
         name: new FormControl(''),
-        description:  new FormControl(''),
-        channels:  new FormControl(this.channels),
-        currency: new FormControl(this.currency),
-        free:  new FormControl("true"),
-        azamPacakgeMappingName:new FormControl("fgerge"),
-        //
-        countrydetail: new FormGroup({
-            code :new FormControl('2345'),
-            name: new FormControl('Ethiopia'),
-            currency: new FormControl('BIRR'),
-        }),
-         
-        //
-        packageprice: new FormGroup({
-            price: new FormControl("34000"),
-            currency: new FormControl("BIRR")
-        }),
-
-
-        //
-        isVodAllowed:  new FormControl("true"),
-        isVodContentsUnlimited:  new FormControl('true'),
-        noOfVodContents:  new FormControl('10'),
-        noOfDaysValidity:  new FormControl('20'),
-        status:  new FormControl("true"),
-
+        description: new FormControl(''),
+        price: new FormControl(''),
+        currency: new FormControl(''),
+        isFree: new FormControl(''),
+        azamPackageMappingName: new FormControl(''),
+        isVodAllowed: new FormControl(''),
+        noOfDays: new FormControl(''),
+        countryDetail: new FormControl(''),
+        // link: new FormControl(''),
+        validityInDays: new FormControl(''),
+        status: new FormControl(""),
+        content: new FormControl('')
     })
 
 
-    IsFreeToggleFormHide(){
+    IsFreeToggleFormHide() {
         console.log("hide");
         // this.PackageEditForm.get('free').value
     }
 
-    IsFreeToggleFormShow(){
+    IsFreeToggleFormShow() {
         console.log("show");
     }
 
-    hidden=false;
+    hidden = false;
 
     ngOnInit() {
         this.getPlanInfo();
-        this.getCountryCode();
+        // this.getCountryCode();
         this.getContents();
+        this.getCountries();
+        // this.getLanguages();
         this
             .route
             .params
-            .pipe(
-                map(p => p['id']),
-                switchMap(id => {
-                    if (id === 'new') return of(new Package());
-                    return this.packageService.findById(id)
-                })
-            )
-            .subscribe(
-                packageDef => {
-                    this.packageDef = packageDef;
-                    this.errors = '';
-                },
-                err => {
-                    this.errors = 'Error loading';
+            .subscribe((params: any) => {
+                if (params.id !== 'new') {
+                    this.getSelectedPage(params.id);
                 }
-            );
+            })
+    }
+
+    getSelectedPage(id) {
+        this.packageService.findById(id).subscribe((response: any) => {
+            if (response.status === 200) {
+                this.packageDef = response.data[0];
+                this.packageForm.setValue({
+                    name: this.packageDef.name ? this.packageDef.name : '',
+                    description: this.packageDef.description ? this.packageDef.description : '',
+                    isFree: String(this.packageDef.isFree) ? String(this.packageDef.isFree) : '',
+                    content: this.packageDef.content ? this.packageDef.content : '',
+                    azamPackageMappingName: this.packageDef.azamPackageMappingName ? this.packageDef.azamPackageMappingName : '',
+                    isVodAllowed: String(this.packageDef.isVodAllowed) ? String(this.packageDef.isVodAllowed) : '',
+                    // link: this.packageDef.link ? this.packageDef.link : '',
+                    noOfDays: this.packageDef.price[0].noOfDays ? this.packageDef.price[0].noOfDays : '',
+                    countryDetail: this.packageDef.countryDetail ? this.packageDef.countryDetail : '',
+                    validityInDays: String(this.packageDef.validityInDays) ? String(this.packageDef.validityInDays) : '',
+                    status: this.packageDef.status ? this.packageDef.status : '',
+                    price: this.packageDef.price[0].price ? this.packageDef.price[0].price : '',
+                    currency: this.packageDef.price[0].currency ? this.packageDef.price[0].currency : '',
+                });
+            }
+        }, error => console.error(error))
     }
 
     getPlanInfo() {
         this.packageService.findAzamPackageMappingList()
-        .subscribe(
-            planInfo => {
-                console.log("planInfo---->",planInfo.data)
-                this.planInfo = planInfo.data
-            },
-            err => {
-                console.log(err)
-                // this.router.navigate([''])
+            .subscribe(
+                planInfo => {
+                    this.azamPackages = planInfo.data
+                },
+                err => {
+                    console.log(err)
+                    // this.router.navigate([''])
 
+                }
+            )
+    }
+
+    getContents() {
+        this.contentService.find('vod').subscribe(
+            (result: any) => {
+                this.contents = result.data;
+            }, err => {
+                console.log("------->", err)
             }
         )
     }
-
-    getContents(){
-        this,this.packageService.findContent().subscribe(
-            result =>{
-                this.content = result;
-            },err =>{
-                console.log("------->",err)
-            }
-        )
-    }
-    getCountryCode(){
+    getCountryCode() {
         this.packageService.findCountryCodes().subscribe(
-            country =>{
-                this.country = country.data
-                console.log("country------>",this.country);
-            },err =>{
-                console.log("err----->",err);
+            country => {
+                console.log(country)
+                this.currencies = country.data
+            }, err => {
+                console.log("err----->", err);
+            }
+        )
+    }
+
+    getCountries() {
+        this.countryService.list().subscribe(
+            country => {
+                console.log(country)
+                this.countries = country.data
+            }, err => {
+                console.log("err----->", err);
             }
         )
     }
 
     save() {
-        this.packageService.save(this.packageDef).subscribe(
-            packageDef => {
-                this.packageDef = packageDef;
-                this.errors = 'Save was successful!';
-            },
-            err => {
-                this.errors = 'Error saving';
-            }
-        );
+        if (this.packageDef) {
+            let price = this.packageForm.value.price;
+
+            let priceArray = []
+            priceArray.push({
+                price: price,
+                currency: this.packageForm.value.currency,
+                noOfDays: this.packageForm.value.noOfDays
+            })
+
+            this.packageForm.value.price = priceArray;
+            Object.assign(this.packageDef, this.packageForm.value);
+            this.packageService.update(this.packageDef).subscribe(
+                (response: any) => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        this.errors = 'Updarte was successful!';
+                    }
+                },
+                err => {
+                    this.errors = 'Error saving';
+                }
+            );
+        } else {
+            let price = this.packageForm.value.price;
+
+            let priceArray = []
+            priceArray.push({
+                price: price,
+                currency: this.packageForm.value.currency,
+                noOfDays: this.packageForm.value.noOfDays
+            })
+
+            this.packageForm.value.price = priceArray;
+            this.packageService.save(this.packageForm.value).subscribe(
+                (response: any) => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        this.errors = 'Save was successful!';
+                    }
+                },
+                err => {
+                    this.errors = 'Error saving';
+                }
+            );
+        }
     }
 }

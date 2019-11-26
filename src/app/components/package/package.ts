@@ -1,14 +1,17 @@
 
 export class Package {
-    id: string;
+    _id: string;
     name: string;
     description: string;
-    content: string[];
-    free: boolean = false;
-    azamPacakgeMappingName: string;
+    content: any[];
+    isFree: boolean = false;
+    azamPackageMappingName: string;
     isVodAllowed: boolean = false;
-    isVodContentsUnlimited: boolean = false;
-    noOfVodContents: string;
-    noOfDaysValidity: string;
+    link: string;
+    validityInDays: string;
+    countryDetail: string
+    noOfDays: string;
     status: boolean = false;
+    price: string | Object;
+    currency: string;
 }
