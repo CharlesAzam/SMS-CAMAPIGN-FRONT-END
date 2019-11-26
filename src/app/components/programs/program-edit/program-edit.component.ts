@@ -8,6 +8,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { SubCategoriesService } from 'src/app/services/sub.categories.service';
 import { VodService } from '../../vod/vod.service';
+import { MobileTagsService } from 'src/app/services/mobile-tags.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'program-edit',
@@ -20,11 +22,16 @@ export class ProgramEditComponent implements OnInit {
     errors: string;
     fileToUpload: any = null;
 
-    categorys: any[]
+    tagss: any[]
+
     subs: any[]
     types: string[] = [
         'package',
         'vod'
+    ]
+    programTypes: string[] = [
+        "Video",
+        "TV Show"
     ]
     content: any[] = []
 
@@ -32,8 +39,8 @@ export class ProgramEditComponent implements OnInit {
     programForm = new FormGroup({
         title: new FormControl('', [Validators.required]),
         description: new FormControl('', [Validators.required]),
-        date: new FormControl('', [Validators.required]),
-        dateTimeInGMT: new FormControl('', [Validators.required]),
+        date: new FormControl(moment(), [Validators.required]),
+        dateTimeInGmt: new FormControl(''),
         type: new FormControl('', [Validators.required]),
         contents: new FormControl('', [Validators.required]),
         laligalive: new FormControl('', [Validators.required]),
@@ -48,7 +55,7 @@ export class ProgramEditComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private programService: ProgramService,
-        private categoryService: CategoriesService,
+        private tagService: MobileTagsService,
         private subCategoryService: SubCategoriesService,
         private contentService: VodService,
         private router: Router) {
@@ -73,11 +80,11 @@ export class ProgramEditComponent implements OnInit {
                             time: this.programModel.time ? this.programModel.time : '',
                             image: this.programModel.image ? this.programModel.image : '',
                             contents: this.programModel.contents ? this.programModel.contents : '',
-                            date: this.programModel.date ? this.programModel.date : '',
-                            dateTimeInGMT: this.programModel.dateTimeInGMT ? this.programModel.dateTimeInGMT : '',
-                            laligalive: this.programModel.laligalive ? this.programModel.laligalive : '',
-                            categories: this.programModel.tags ? this.programModel.tags : '',
-                            subCategories: this.programModel.programType ? this.programModel.programType : '',
+                            date: moment(this.programModel.date) ? moment(this.programModel.date) : '',
+                            dateTimeInGmt: this.programModel.dateTimeInGmt ? this.programModel.dateTimeInGmt : '',
+                            laligalive: String(this.programModel.laligalive) ? String(this.programModel.laligalive) : '',
+                            tags: this.programModel.tags ? this.programModel.tags : '',
+                            programType: this.programModel.programType ? this.programModel.programType : '',
                             duration: this.programModel.duration ? this.programModel.duration : ''
                         })
                     }
@@ -87,7 +94,7 @@ export class ProgramEditComponent implements OnInit {
     }
 
     back() {
-        this.router.navigate(['home/banner']);
+        this.router.navigate(['home/program']);
     }
 
     handelImageChange(files: FileList) {
@@ -106,6 +113,8 @@ export class ProgramEditComponent implements OnInit {
     }
     save() {
         if (this.programModel) {
+            this.programForm.value['image'] = 'https://korbanglafoodsolution.files.wordpress.com/2017/03/background-indomie-header4.png';
+            this.programForm.value['dateTimeInGmt'] = moment(this.programForm.value.date).format('YYYY-MM-DD') + " " + this.programForm.value.time;
             Object.assign(this.programModel, this.programForm.value);
             this.programService.update(this.programModel).subscribe((response: any) => {
                 if (response.status === 200)
@@ -116,6 +125,7 @@ export class ProgramEditComponent implements OnInit {
 
         } else {
             this.programForm.value['image'] = 'https://korbanglafoodsolution.files.wordpress.com/2017/03/background-indomie-header4.png';
+            this.programForm.value['dateTimeInGmt'] = moment(this.programForm.value.date).format('YYYY-MM-DD') + " " + this.programForm.value.time;
             this.programService.save(this.programForm.value).subscribe(
                 banner => {
                     this.programModel = banner;
@@ -132,10 +142,9 @@ export class ProgramEditComponent implements OnInit {
     }
 
     getCategories() {
-        this.categoryService.find().subscribe((response: any) => {
-            console.log(response)
+        this.tagService.find().subscribe((response: any) => {
             if (response.status === 200) {
-                this.categorys = response.data;
+                this.tagss = response.data;
             }
         },
             error => console.error(error))
@@ -143,7 +152,6 @@ export class ProgramEditComponent implements OnInit {
 
     getSubCategories() {
         this.subCategoryService.find().subscribe((response: any) => {
-            console.log(response)
             if (response.status === 200) {
                 this.subs = response.data;
             }

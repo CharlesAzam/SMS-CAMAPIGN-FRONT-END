@@ -7,6 +7,8 @@ import { ProgramEditComponent } from './program-edit/program-edit.component';
 import { ProgramService } from './program.service';
 import { PRGORAM_ROUTES } from './program.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 
 @NgModule({
   imports: [
@@ -14,6 +16,7 @@ import { MaterialModule } from 'src/app/modules/app-material.module';
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
+    NgxMaterialTimepickerModule,
     RouterModule.forChild(PRGORAM_ROUTES)
   ],
   declarations: [

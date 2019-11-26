@@ -41,53 +41,65 @@
 
                         <mat-form-field style="width: 100%;">
                             <mat-label>Type</mat-label>
-                            <mat-select formControlName="type">
+                            <mat-select formControlName="type" required>
                                 <mat-option *ngFor="let typ of types" [value]="typ">{{typ}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
+                            <mat-label>Program Type</mat-label>
+                            <mat-select formControlName="programType" required>
+                                <mat-option *ngFor="let pType of programTypes" [value]="pType">{{pType}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
                             <mat-label>Tags</mat-label>
-                            <mat-select formControlName="tags">
-                                <mat-option *ngFor="let tags of tagss" [value]="tags">{{tags}}
+                            <mat-select formControlName="tags" required>
+                                <mat-option *ngFor="let tags of tagss" [value]="tags.name">{{tags.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
 
 
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="laligalive" type="number" formControlName="laligalive"
-                                required>
-                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
 
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="dateTimeInGMT" type="number" formControlName="dateTimeInGMT"
-                                required>
-                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-
-                        </mat-form-field>
+                        <div class="form-group">
+                            <mat-form-field style="width: 100%;">
+                                <input matInput formControlName="date" [matDatepicker]="picker" placeholder="Date"
+                                    name="date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
+                            </mat-form-field>
+                        </div>
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="date" type="number" formControlName="date" required>
-                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+                            <input matInput placeholder="Choose Time" [ngxTimepicker]="time" [format]="24"
+                                formControlName="time">
+                            <!-- <mat-datepicker-toggle matSuffix [for]="time"></mat-datepicker-toggle> -->
+                            <ngx-material-timepicker #time></ngx-material-timepicker>
 
                         </mat-form-field>
 
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="time" type="number" formControlName="time" required>
-                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
 
-                        </mat-form-field>
 
                         <div class="form-group" *ngIf='programModel == null'>
                             <label for="Decription">Upload Image:</label>
                             <input (change)="handelImageChange($event.target.files)" type="file" class="form-control"
                                 formControlName="image" placeholder="Enter Upload image thumb">
 
+                        </div>
+
+                        <div class="form-group">
+                            <mat-label>laliga live?</mat-label>
+                            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                formControlName="laligalive" style="margin-left: 10px;" required>
+                                <mat-button-toggle value=true>YES</mat-button-toggle>
+                                <mat-button-toggle value=false>NO</mat-button-toggle>
+                            </mat-button-toggle-group>
                         </div>
 
                         <div class="form-group" *ngIf='programModel'>

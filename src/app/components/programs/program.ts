@@ -3,14 +3,14 @@ export class Program {
     contents: string;
     date: string;
     time: string;
-    dateTimeInGMT: string;
+    dateTimeInGmt: string;
     duration: any;
     title: any;
     description: any;
     tags: any;
     type: string;
     image: string;
-    laligalive: string;
+    laligalive: boolean;
     programType: string;  
 
 }

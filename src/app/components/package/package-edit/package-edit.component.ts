@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PackageService } from '../package.service';
 import { Package } from '../package';
 import { map, switchMap } from 'rxjs/operators';
@@ -33,7 +33,8 @@ export class PackageEditComponent implements OnInit {
         private packageService: PackageService,
         private contentService: VodService,
         private languageService: LanguageService,
-        private countryService: CountryService) {
+        private countryService: CountryService,
+        private router: Router) {
     }
 
     packageForm = new FormGroup({
@@ -148,6 +149,10 @@ export class PackageEditComponent implements OnInit {
         )
     }
 
+    back() {
+        this.router.navigate(['home/package']);
+    }
+
     save() {
         if (this.packageDef) {
             let price = this.packageForm.value.price;
@@ -166,6 +171,7 @@ export class PackageEditComponent implements OnInit {
                     console.log(response)
                     if (response.status === 200) {
                         this.errors = 'Updarte was successful!';
+                        this.back();
                     }
                 },
                 err => {
@@ -188,6 +194,7 @@ export class PackageEditComponent implements OnInit {
                     console.log(response)
                     if (response.status === 200) {
                         this.errors = 'Save was successful!';
+                        this.back();
                     }
                 },
                 err => {
