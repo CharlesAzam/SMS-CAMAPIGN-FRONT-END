@@ -61,11 +61,11 @@ export class MobileSubCategoriesFormComponent implements OnInit {
               name: this.subCategoryModel.name ? this.subCategoryModel.name : '',
               type: this.subCategoryModel.type ? this.subCategoryModel.type : '',
               content: this.subCategoryModel.content ? this.subCategoryModel.content : '',
-              status: this.subCategoryModel.status ? this.subCategoryModel.status : '',
+              status: String(this.subCategoryModel.status) ? String(this.subCategoryModel.status) : '',
               boundingBox: this.subCategoryModel.boundingBox ? this.subCategoryModel.boundingBox : '',
               priority: this.subCategoryModel.priority ? this.subCategoryModel.priority : '',
               language: this.subCategoryModel.language ? this.subCategoryModel.language : '',
-              parentCatID: this.subCategoryModel.parentCatID ? this.subCategoryModel.parentCatID : ''
+              parentCatID: this.subCategoryModel.parentCatID._id ? this.subCategoryModel.parentCatID._id : ''
             })
           }
         }, error => console.error(error));
@@ -75,14 +75,15 @@ export class MobileSubCategoriesFormComponent implements OnInit {
   }
 
   isTypeVisible() {
-    if (this.subCategoryForm.get('parentCatID').value !== '' && this.subCategoryForm.get('parentCatID').value !== undefined)
-      if (this.subCategoryForm.get('parentCatID').value.name.toLowerCase() === 'news') {
+    if (this.subCategoryForm.get('parentCatID').value !== '' && this.subCategoryForm.get('parentCatID').value !== undefined) {
+
+      if (this.categories.filter((category) => category._id === this.subCategoryForm.get('parentCatID').value ? category.name : '')[0] === 'news') {
         return true;
       } else {
         return false
       }
 
-    else
+    } else
       return false
   }
 

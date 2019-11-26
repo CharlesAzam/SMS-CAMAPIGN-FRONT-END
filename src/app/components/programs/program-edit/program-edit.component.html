@@ -86,8 +86,8 @@
 
 
 
-                        <div class="form-group" *ngIf='programModel == null'>
-                            <label for="Decription">Upload Image:</label>
+                        <div class="form-group" >
+                            <label for="Decription">{{programModel?'Change':'Upload'}} Image:</label>
                             <input (change)="handelImageChange($event.target.files)" type="file" class="form-control"
                                 formControlName="image" placeholder="Enter Upload image thumb">
 

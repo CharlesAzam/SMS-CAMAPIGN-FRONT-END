@@ -23,7 +23,7 @@ export class LeagueComponent implements OnInit {
   leagueForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required]),
     language: new FormControl("", [Validators.required]),
-    imageThumb: new FormControl("", [Validators.required]),
+    imageThumb: new FormControl([Validators.required]),
     type: new FormControl("", [Validators.required]),
     priority: new FormControl("", [Validators.required]),
     isHome: new FormControl("", [Validators.required]),
@@ -39,7 +39,7 @@ export class LeagueComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private leagueService: LeagueService,
     private languageService: LanguageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getLanguages();
@@ -49,6 +49,7 @@ export class LeagueComponent implements OnInit {
           (response: any) => {
             if (response.status === 200) {
               this.leagueModel = response.data[0];
+              console.log(this.leagueModel.isHome)
               this.leagueForm.setValue({
                 name: this.leagueModel.name ? this.leagueModel.name : "",
 
@@ -63,8 +64,8 @@ export class LeagueComponent implements OnInit {
                 priority: this.leagueModel.priority
                   ? this.leagueModel.priority
                   : "",
-                isHome: !!this.leagueModel.isHome,
-                status: !!this.leagueModel.status
+                isHome: String(this.leagueModel.isHome) ? String(this.leagueModel.isHome) : '',
+                status: String(this.leagueModel.status) ? String(this.leagueModel.status) : ''
               });
             }
           },

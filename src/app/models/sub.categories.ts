@@ -6,7 +6,7 @@ export class SubCategory {
     public content: any[]
     public name: string
     public boundingBox: string
-    public parentCatID: string
+    public parentCatID: any
     public priority: number
     public language: string
     constructor() { }

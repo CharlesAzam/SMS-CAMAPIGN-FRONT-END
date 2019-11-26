@@ -22,6 +22,7 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatDialogModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
 const modules = [
@@ -31,6 +32,7 @@ const modules = [
   MatToolbarModule,
   MatSlideToggleModule,
   MatOptionModule,
+  MatProgressSpinnerModule,
   MatSelectModule,
   MatMenuModule,
   MatChipsModule,

@@ -85,6 +85,6 @@ export class LeaguelistComponent implements OnInit {
 
   routeToCreateLeague() {
     console.log("Route clicked");
-    this.router.navigate(["home/CreateLeague"]);
+    this.router.navigate(["home/CreateLeague/new"]);
   }
 }

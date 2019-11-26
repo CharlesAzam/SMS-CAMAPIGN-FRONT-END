@@ -74,9 +74,9 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
-          <mat-icon aria-hidden="false" (click)="removePackage(row)" aria-label="Example home icon">delete</mat-icon>
+          <mat-icon aria-hidden="false" style="cursor: pointer;" (click)="removePackage(row)" aria-label="Example home icon">delete</mat-icon>
           <span style="margin-left: 20px;"></span>
-          <mat-icon aria-hidden="false" [routerLink]="['../package', row._id]" aria-label="Example home icon">edit
+          <mat-icon aria-hidden="false" style="cursor: pointer;" [routerLink]="['../package', row._id]" aria-label="Example home icon">edit
           </mat-icon>
         </td>
       </ng-container>

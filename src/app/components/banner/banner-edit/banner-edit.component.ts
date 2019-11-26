@@ -19,6 +19,7 @@ export class BannerEditComponent implements OnInit {
     bannerModel: Banner;
     errors: string;
     fileToUpload: any = null;
+    isUploading: boolean = false;
 
     categorys: any[]
     subs: any[]
@@ -38,7 +39,7 @@ export class BannerEditComponent implements OnInit {
         priority: new FormControl('', [Validators.required]),
         categories: new FormControl('', [Validators.required]),
         subCategories: new FormControl('', [Validators.required]),
-        image: new FormControl('', [Validators.required]),
+        image: new FormControl([Validators.required]),
         status: new FormControl('', [Validators.required])
     })
 
@@ -68,13 +69,13 @@ export class BannerEditComponent implements OnInit {
                             name: this.bannerModel.name ? this.bannerModel.name : '',
                             type: this.bannerModel.type ? this.bannerModel.type : '',
                             description: this.bannerModel.description ? this.bannerModel.description : '',
-                            status: this.bannerModel.status ? this.bannerModel.status : '',
+                            status: String(this.bannerModel.status) ? String(this.bannerModel.status) : '',
                             image: this.bannerModel.image ? this.bannerModel.image : '',
                             content: this.bannerModel.content ? this.bannerModel.content : '',
                             subtitle: this.bannerModel.subtitle ? this.bannerModel.subtitle : '',
                             priority: this.bannerModel.priority ? this.bannerModel.priority : '',
-                            categories: this.bannerModel.categories ? this.bannerModel.categories['_id'] : '',
-                            subCategories: this.bannerModel.subCategories ? this.bannerModel.subCategories['_id'] : ''
+                            categories: this.bannerModel.categories._id ? this.bannerModel.categories._id : '',
+                            subCategories: this.bannerModel.subCategories ? this.bannerModel.subCategories : ''
                         })
                     }
                 }, error => console.error(error));
@@ -86,20 +87,23 @@ export class BannerEditComponent implements OnInit {
         this.router.navigate(['home/banner']);
     }
 
-    handelImageChange(files: FileList){
-        console.log("files--->",files)
-;        this.fileToUpload = files.item(0);
+    handelImageChange(files: FileList) {
+        this.fileToUpload = files.item(0);
         this.fileToUpload.mimeType = this.fileToUpload.type;
         this.uploadFileToActivity();
     }
 
     uploadFileToActivity() {
+        this.isUploading = true;
         this.bannerService.uploadUrl(this.fileToUpload).subscribe(data => {
-          console.log("=======>",data);
-          }, error => {
-            console.log("=======>",error);
-          });
-      }
+            console.log("=======>", data);
+            this.isUploading = false;
+            //Get link and add it to form
+        }, error => {
+            this.isUploading = false;
+            console.log("=======>", error);
+        });
+    }
     save() {
         if (this.bannerModel) {
             Object.assign(this.bannerModel, this.bannerForm.value);

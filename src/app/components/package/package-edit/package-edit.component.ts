@@ -192,7 +192,7 @@ export class PackageEditComponent implements OnInit {
             this.packageService.save(this.packageForm.value).subscribe(
                 (response: any) => {
                     console.log(response)
-                    if (response.status === 200) {
+                    if (response.success) {
                         this.errors = 'Save was successful!';
                         this.back();
                     }

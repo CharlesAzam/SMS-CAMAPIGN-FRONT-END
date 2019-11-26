@@ -46,7 +46,7 @@ export class ProgramEditComponent implements OnInit {
         laligalive: new FormControl('', [Validators.required]),
         tags: new FormControl('', [Validators.required]),
         programType: new FormControl('', [Validators.required]),
-        image: new FormControl('', [Validators.required]),
+        image: new FormControl([Validators.required]),
         time: new FormControl('', [Validators.required]),
         duration: new FormControl('', [Validators.required])
     })
@@ -80,7 +80,7 @@ export class ProgramEditComponent implements OnInit {
                             time: this.programModel.time ? this.programModel.time : '',
                             image: this.programModel.image ? this.programModel.image : '',
                             contents: this.programModel.contents ? this.programModel.contents : '',
-                            date: moment(this.programModel.date) ? moment(this.programModel.date) : '',
+                            date: this.programModel.date ? this.programModel.date : '',
                             dateTimeInGmt: this.programModel.dateTimeInGmt ? this.programModel.dateTimeInGmt : '',
                             laligalive: String(this.programModel.laligalive) ? String(this.programModel.laligalive) : '',
                             tags: this.programModel.tags ? this.programModel.tags : '',
