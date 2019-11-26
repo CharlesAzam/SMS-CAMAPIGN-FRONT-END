@@ -128,7 +128,9 @@
                                         <th scope="row">{{i+1}}</th>
                                         <td>{{season.title}}</td>
                                         <td>{{season.episodes.length}}</td>
-                                        <td>Edit, Delete</td>
+                                        <td>
+                                            <a style="cursor: pointer;" (click)="openDialog(season)">Edit</a>, <a style="cursor: pointer;" (click)="removeSeason(i)">Delete</a>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
