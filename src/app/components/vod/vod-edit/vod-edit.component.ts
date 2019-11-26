@@ -334,8 +334,10 @@ export class VodEditComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(result)
-            this.seasons.push(result)
+            if (result) {
+                this.seasons.push(result);
+            }
+
         })
     }
 
@@ -387,8 +389,11 @@ export class AddSeasonsDialog {
         })
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result)
-            this.episodes.push(result);
+            if (result) {
+                console.log(result)
+                this.episodes.push(result);
+            }
+
         })
     }
 
@@ -412,7 +417,7 @@ export class AddEpisodesDialog {
         title: new FormControl('', [Validators.required]),
         description: new FormControl('', [Validators.required]),
         tags: new FormControl('', [Validators.required]),
-        releaseDate: new FormControl('', Validators.required),
+        releaseDate: new FormControl(''),
         duration: new FormControl(),
         starring: new FormControl('', [Validators.required]),
         director: new FormControl('', [Validators.required]),

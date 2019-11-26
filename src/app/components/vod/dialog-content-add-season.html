@@ -66,5 +66,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="getData()" cdkFocusInitial>Submit</button>
+  <button mat-button [disabled]="seasonForm.invalid" [mat-dialog-close]="getData()" cdkFocusInitial>Submit</button>
 </mat-dialog-actions>

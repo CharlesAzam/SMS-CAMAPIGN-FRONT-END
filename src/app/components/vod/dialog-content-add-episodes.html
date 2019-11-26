@@ -175,5 +175,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="episodeForm.value" cdkFocusInitial>Add Episode</button>
+    <button mat-button [disabled]="episodeForm.invalid" [mat-dialog-close]="episodeForm.value" cdkFocusInitial>Add Episode</button>
 </mat-dialog-actions>
