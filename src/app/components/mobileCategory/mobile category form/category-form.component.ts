@@ -17,7 +17,7 @@ export class CategoryFormComponent implements OnInit {
 
   categoryForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    banner: new FormControl(''),
+    // banner: new FormControl(''),
     language: new FormControl('', [Validators.required]),
     icon: new FormControl('', [Validators.required]),
     type: new FormControl('', [Validators.required]),
@@ -37,6 +37,13 @@ export class CategoryFormComponent implements OnInit {
     'TVGUIDE',
     'VOD'
   ]
+  icons: any[]=[
+    {key:'ic_home', value: 'HOME' },
+    {key:'ic_movie', value: 'MOVIES' },
+    {key:'ic_sports', value: 'SPORTS' },
+    {key:'ic_livetv', value: 'LIVETV' },
+    {key:'ic_more', value: 'MORE' },
+  ]
 
 
   constructor(private router: Router,
@@ -48,7 +55,7 @@ export class CategoryFormComponent implements OnInit {
 
   ngOnInit() {
     this.getSubCategories();
-    this.getBanners();
+    // this.getBanners();
     this.getLanguages()
     this.activatedRoute.params.subscribe(params => {
       if (params.id !== 'new') {
@@ -58,7 +65,7 @@ export class CategoryFormComponent implements OnInit {
             this.categoryModel = response.data[0];
             this.categoryForm.setValue({
               name: this.categoryModel.name ? this.categoryModel.name : '',
-              banner: this.categoryModel.banner ? this.categoryModel.banner : '',
+              // banner: this.categoryModel.banner ? this.categoryModel.banner : '',
               language: this.categoryModel.language ? this.categoryModel.language : '',
               type: this.categoryModel.type ? this.categoryModel.type : '',
               icon: this.categoryModel.icon ? this.categoryModel.icon : '',
@@ -86,7 +93,8 @@ export class CategoryFormComponent implements OnInit {
   getSubCategories() {
     this.subCategoryService.find().subscribe((response: any) => {
       if (response.status === 200) {
-        this.subCategories = response.data
+        console.log("responseresponseresponse",response)
+;        this.subCategories = response.data
       }
     },
       error => console.error(error))

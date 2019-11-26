@@ -15,9 +15,18 @@
                 </mat-form-field>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <mat-form-field class="input-layouts">
                     <input matInput formControlName="icon" placeholder="Icon" required>
+                </mat-form-field>
+            </div> -->
+
+            <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>icon</mat-label>
+                    <mat-select formControlName="icon">
+                        <mat-option *ngFor="let icon of icons" [value]="icon.key">{{icon.value}}</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
 
@@ -40,14 +49,14 @@
                 </mat-form-field>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Banners</mat-label>
                     <mat-select formControlName="banner" multiple>
                         <mat-option *ngFor="let bann of banners" [value]="bann._id">{{bann.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
 
             <mat-form-field style="width: 100%;">
                 <mat-label>Language</mat-label>
