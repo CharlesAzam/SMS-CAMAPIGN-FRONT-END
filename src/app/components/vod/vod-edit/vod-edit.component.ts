@@ -327,10 +327,10 @@ export class VodEditComponent implements OnInit {
 
 
 
-    openDialog() {
+    openDialog(season?: any) {
         const dialogRef = this.dialog.open(AddSeasonsDialog, {
             width: '800px',
-            data: {}
+            data: season ? season : null
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -339,6 +339,10 @@ export class VodEditComponent implements OnInit {
             }
 
         })
+    }
+
+    removeSeason(index) {
+        this.seasons.splice(index, 1);
     }
 
     back() {
@@ -380,7 +384,18 @@ export class AddSeasonsDialog {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private router: Router,
         private dialog: MatDialog
-    ) { }
+    ) {
+        if (data !== null) {
+            this.seasonForm.setValue({
+                title: data.title,
+                currency: data.currency,
+                noOfDays: data.noOfDays,
+                price: data.price
+            })
+            this.episodes = data.episodes;
+        }
+
+    }
 
     openAddSeasonsDialog() {
         const dialogRef = this.dialog.open(AddEpisodesDialog, {
@@ -390,15 +405,15 @@ export class AddSeasonsDialog {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result)
-                this.episodes.push(result);
+                // console.log(result.content)
+                this.episodes.push(result.content);
             }
 
         })
     }
 
     removeEpisode(index) {
-        //Remove episode
+        this.episodes.splice(index, 1);
     }
 
     getData() {
@@ -414,128 +429,31 @@ export class AddSeasonsDialog {
 export class AddEpisodesDialog {
 
     episodeForm = new FormGroup({
-        title: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required]),
-        tags: new FormControl('', [Validators.required]),
-        releaseDate: new FormControl(''),
-        duration: new FormControl(),
-        starring: new FormControl('', [Validators.required]),
-        director: new FormControl('', [Validators.required]),
-        categories: new FormControl('', [Validators.required]),
-        country: new FormControl('', [Validators.required]),
-        subCategories: new FormControl('', [Validators.required]),
-        language: new FormControl('', [Validators.required]),
-        isFree: new FormControl('', [Validators.required]),
-        priceDetail: new FormGroup({
-            price: new FormControl('', [Validators.required]),
-            currency: new FormControl('', [Validators.required])
-        }),
-        isFreeAzam: new FormControl('', [Validators.required]),
-        isSeries: new FormControl('', [Validators.required]),
-        status: new FormControl('', [Validators.required]),
-        boundingBox: new FormControl('', [Validators.required]),
-        cdnID: new FormControl('', [Validators.required]),
-        series: new FormControl('', [Validators.required]),
-        images: new FormControl(''),
-        imageThumb: new FormControl('', [Validators.required]),
-        packageID: new FormControl(''),
-        createdBy: new FormControl(''),
-        vodType: new FormControl('', [Validators.required])
+        content: new FormControl('', [Validators.required])
     })
 
-    languages: any[] = [];
-    tags: any[] = []
-    categories: any[] = []
-    countries: any[] = []
-    packages: any[] = []
-    subCategories: any[] = []
-    cdns: any[] = []
-    boxes: string[] = ['HORIZONTAL_CARD', 'VERTICAL_CARD', 'BANNER', 'LOGO'];
-
-
-    getCategories() {
-        this.categoriesService.find().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.categories = response.data;
-            }
-        },
-            error => console.error(error));
-    }
-
-    getTags() {
-        this.tagsService.find().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.tags = response.data;
-            }
-        },
-            error => console.error(error));
-    }
-
-    getSubCategories() {
-        this.subCategoriesService.find().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.subCategories = response.data;
-            }
-        },
-            error => console.error(error));
-    }
-
-    getPackages() {
-        this.packageService.find().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.packages = response.data;
-            }
-        },
-            error => console.error(error));
-    }
+    contents: any[] = []
 
     getLanguages() {
-        this.languageService.list().subscribe((response: any) => {
+        this.contentService.find('vod').subscribe((response: any) => {
             if (response.status === 200) {
-                this.languages = response.data;
+                this.contents = response.data;
             }
         },
             error => console.error(error));
     }
 
-    getCountries() {
-        this.countryService.list().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.countries = response.data;
-            }
-        },
-            error => console.error(error));
-    }
 
-    getCDNLibrary() {
-        this.cdnService.find().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.cdns = response.data;
-            }
-        },
-            error => console.error(error))
-    }
 
 
     constructor(
         public dialogRef: MatDialogRef<AddEpisodesDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private router: Router,
-        private categoriesService: CategoriesService,
-        private subCategoriesService: SubCategoriesService,
-        private tagsService: MobileTagsService,
-        private packageService: PackageService,
-        private languageService: LanguageService,
-        private countryService: CountryService,
-        private cdnService: VideoLibraryService,
+        private contentService: VodService,
+
     ) {
-        this.getCategories();
-        this.getCountries();
-        this.getSubCategories();
-        this.getPackages();
-        this.getTags();
         this.getLanguages();
-        this.getCDNLibrary();
     }
 
 
