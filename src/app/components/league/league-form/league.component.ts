@@ -19,7 +19,7 @@ export class LeagueComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     banner: new FormControl(''),
     language: new FormControl('', [Validators.required]),
-    icon: new FormControl('', [Validators.required]),
+    imageThumb: new FormControl('', [Validators.required]),
     type: new FormControl('', [Validators.required]),
     subCategories: new FormControl(''),
     priority: new FormControl('', [Validators.required]),
@@ -30,7 +30,7 @@ export class LeagueComponent implements OnInit {
   languages: any[] = [];
   subCategories: any[] = []
   banners: any[] = []
-  categoryModel: Categories
+  categoryModel: LeagueModel
   types: string[]=[
     'RADIO',
     'NEWS',
@@ -61,7 +61,7 @@ export class LeagueComponent implements OnInit {
               banner: this.categoryModel.banner ? this.categoryModel.banner : '',
               language: this.categoryModel.language ? this.categoryModel.language : '',
               type: this.categoryModel.type ? this.categoryModel.type : '',
-              icon: this.categoryModel.icon ? this.categoryModel.icon : '',
+              imageThumb: this.categoryModel.imageThumb ? this.categoryModel.imageThumb : '',
               subCategories: this.categoryModel.subCategories ? this.categoryModel.subCategories : [],
               priority: this.categoryModel.priority ? this.categoryModel.priority : '',
               isHome: this.categoryModel.isHome ? this.categoryModel.isHome : true,

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import {AuthenticationService} from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   error:string;
-  constructor(private router:Router) { }
+  constructor(private router:Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
   }
@@ -20,6 +21,9 @@ export class LoginComponent implements OnInit {
 
   submit() {
     if (this.form.valid) {
+      console.log();
+      
+      // this.authService.login()
       this.router.navigate(['/home']);
     }
   }
