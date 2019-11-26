@@ -41,8 +41,9 @@ export class VodListComponent implements OnInit {
     paginator: MatPaginator
 
     ngOnInit(): void {
-        this.getContentCount();
+        
         this.selectedType = this.types[0];
+        this.getContentCount(this.selectedType);
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
@@ -56,6 +57,7 @@ export class VodListComponent implements OnInit {
     getContentType(event) {
         //Get count for particular vod type
         this.selectedType = event.value;
+        this.getContentCount(this.selectedType);
         this.getData(event.value, 1, this.paginator.pageSize)
 
     }
@@ -93,8 +95,8 @@ export class VodListComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    getContentCount() {
-        this.vodService.getCount().subscribe((result: any) => {
+    getContentCount(contentType) {
+        this.vodService.getCount(contentType).subscribe((result: any) => {
             if (result.success) {
                 this.count = result.count;
             }

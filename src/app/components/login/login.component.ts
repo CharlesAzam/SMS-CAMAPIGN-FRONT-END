@@ -21,10 +21,18 @@ export class LoginComponent implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      console.log();
-      
-      // this.authService.login()
-      this.router.navigate(['/home']);
+      console.log(this.form.value);
+      const username = this.form.value.username;
+      const password = this.form.value.password;
+      this.authService.login(username, password).subscribe(
+        user => {
+          console.log("user=====>", user)
+          this.router.navigate(['/home']);
+        },err => {
+          console.log("errr------>",err)
+        }
+      )
+     
     }
   }
 }
