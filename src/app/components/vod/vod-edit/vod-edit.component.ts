@@ -323,9 +323,10 @@ export class VodEditComponent implements OnInit {
                 default:
                     this.vodService.findById(params.id).subscribe((response: any) => {
                         if (response.status === 200) {
-                            console.log(response)
+                            // console.log(response)
                             this.vod = response.data[0];
                             this.imageUrl = this.vod.imageThumb;
+                            console.log(this.vod.categories.map((subs) => subs._id))
                             if (this.vod.contentType === 'VOD') {
                                 switch (this.vod.vodType) {
                                     case "VIDEO":
@@ -339,7 +340,7 @@ export class VodEditComponent implements OnInit {
                                             director: this.vod.director ? this.vod.starring : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                             country: this.vod.country ? this.vod.country : '',
-                                            subCategories: this.vod.subCategories ? this.vod.subCategories : '',
+                                            subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
