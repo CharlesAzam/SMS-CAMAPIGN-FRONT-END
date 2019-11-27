@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API } from 'src/environments/environment';
-const API_URL = 'http://localhost:3000/cms'
+// const API_URL = 'http://localhost:3000/cms'
 
 @Injectable()
 export class ProgramService {
@@ -25,11 +25,9 @@ export class ProgramService {
 
     uploadUrl(fileToUpload: File): Observable<Object> {
         let headers = new HttpHeaders()
-        const endpoint = API_URL+'/upload/file';
+        const endpoint = API.BASE_URL+'/cms/upload-file';
         const formData: FormData = new FormData();
-        console.log("fileToUpload", fileToUpload)
         formData.append('file', fileToUpload, fileToUpload.name);
-        console.log("=====>",formData);
         return this.http.post(endpoint, formData, {headers})
     }
 
@@ -68,7 +66,7 @@ export class ProgramService {
     }
 
     update(data: Program) {
-        let url = API.BASE_URL + `/program/${data._id}/update`;
+        let url = API.BASE_URL + `/cms/program/${data._id}/update`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<any>(url, data, { headers });

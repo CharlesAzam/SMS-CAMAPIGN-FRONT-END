@@ -21,6 +21,8 @@ export class ProgramEditComponent implements OnInit {
     programModel: Program;
     errors: string;
     fileToUpload: any = null;
+    isUploading: boolean = false;
+    imageUrl: string = "";
 
     tagss: any[]
 
@@ -73,12 +75,13 @@ export class ProgramEditComponent implements OnInit {
                         // console.log(response.data)
                         this.programModel = response.data[0];
                         console.log(this.programModel)
+                        this.imageUrl = this.programModel.image;
                         this.programForm.setValue({
                             title: this.programModel.title ? this.programModel.title : '',
                             type: this.programModel.type ? this.programModel.type : '',
                             description: this.programModel.description ? this.programModel.description : '',
                             time: this.programModel.time ? this.programModel.time : '',
-                            image: this.programModel.image ? this.programModel.image : '',
+                            image: this.programModel.image ? "" : '',
                             contents: this.programModel.contents ? this.programModel.contents : '',
                             date: this.programModel.date ? this.programModel.date : '',
                             dateTimeInGmt: this.programModel.dateTimeInGmt ? this.programModel.dateTimeInGmt : '',
@@ -98,22 +101,29 @@ export class ProgramEditComponent implements OnInit {
     }
 
     handelImageChange(files: FileList) {
-        console.log("files--->", files)
-            ; this.fileToUpload = files.item(0);
+        this.fileToUpload = files.item(0);
         this.fileToUpload.mimeType = this.fileToUpload.type;
         this.uploadFileToActivity();
     }
 
     uploadFileToActivity() {
-        this.programService.uploadUrl(this.fileToUpload).subscribe(data => {
-            console.log("=======>", data);
+        this.isUploading = true;
+        this.programService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
+
+            this.isUploading = false;
+            if (response.status == 200 || response.success) {
+                this.imageUrl = response.fileUrl;
+            }
+            else
+                console.log(response)
         }, error => {
+            this.isUploading = false;
             console.log("=======>", error);
         });
     }
     save() {
         if (this.programModel) {
-            this.programForm.value['image'] = 'https://korbanglafoodsolution.files.wordpress.com/2017/03/background-indomie-header4.png';
+            this.programForm.value['image'] = this.imageUrl;
             this.programForm.value['dateTimeInGmt'] = moment(this.programForm.value.date).format('YYYY-MM-DD') + " " + this.programForm.value.time;
             Object.assign(this.programModel, this.programForm.value);
             this.programService.update(this.programModel).subscribe((response: any) => {
@@ -124,7 +134,7 @@ export class ProgramEditComponent implements OnInit {
 
 
         } else {
-            this.programForm.value['image'] = 'https://korbanglafoodsolution.files.wordpress.com/2017/03/background-indomie-header4.png';
+            this.programForm.value['image'] = this.imageUrl;
             this.programForm.value['dateTimeInGmt'] = moment(this.programForm.value.date).format('YYYY-MM-DD') + " " + this.programForm.value.time;
             this.programService.save(this.programForm.value).subscribe(
                 banner => {
