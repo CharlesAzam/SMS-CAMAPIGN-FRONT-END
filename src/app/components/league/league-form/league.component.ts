@@ -23,15 +23,22 @@ export class LeagueComponent implements OnInit {
   leagueForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required]),
     language: new FormControl("", [Validators.required]),
-    imageThumb: new FormControl([Validators.required]),
+    leagueTypeImageThumb: new FormControl([Validators.required]),
+    imageThumb: new FormControl( [Validators.required]),
     type: new FormControl("", [Validators.required]),
     priority: new FormControl("", [Validators.required]),
-    isHome: new FormControl("", [Validators.required]),
+    isHome: new FormControl([Validators.required]),
     status: new FormControl("", [Validators.required])
   });
 
   languages: any[] = [];
   leagueModel: League;
+  fileToUpload: any = null;
+  isUploading: boolean = false;
+  imageUrl: string = "";
+  imageThumbUrl: string
+  imageLeagueThumb: string
+
   types: string[] = ["RADIO", "NEWS", "TVGUIDE", "VOD"];
 
   constructor(
@@ -49,16 +56,20 @@ export class LeagueComponent implements OnInit {
           (response: any) => {
             if (response.status === 200) {
               this.leagueModel = response.data[0];
-              console.log(this.leagueModel.isHome)
+              this.imageLeagueThumb = this.leagueModel.leagueTypeImageThumb;
+              this.imageThumbUrl = this.leagueModel.imageThumb;
               this.leagueForm.setValue({
                 name: this.leagueModel.name ? this.leagueModel.name : "",
 
                 language: this.leagueModel.language
                   ? this.leagueModel.language
                   : "",
-                type: this.leagueModel.type ? this.leagueModel.type : "",
+                  type: this.leagueModel.leagueType ? this.leagueModel.leagueType : "",
+                leagueTypeImageThumb: this.leagueModel.leagueTypeImageThumb
+                  ? ''
+                  : "",
                 imageThumb: this.leagueModel.imageThumb
-                  ? this.leagueModel.imageThumb
+                  ? ''
                   : "",
 
                 priority: this.leagueModel.priority
@@ -80,8 +91,40 @@ export class LeagueComponent implements OnInit {
     this.router.navigate(["home/category"]);
   }
 
+  handelImageChange(files: FileList, type) {
+    this.fileToUpload = files.item(0);
+    this.fileToUpload.mimeType = this.fileToUpload.type;
+    this.uploadFileToActivity(type);
+  }
+
+  uploadFileToActivity(type) {
+    this.isUploading = true;
+    this.leagueService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
+
+      this.isUploading = false;
+      if (response.status == 200 || response.success) {
+        if (type === 'thumb')
+          this.imageThumbUrl = response.fileUrl;
+        else
+          this.imageLeagueThumb = response.fileUrl
+      }
+      else
+        console.log(response)
+    }, error => {
+      this.isUploading = false;
+      console.log("=======>", error);
+    });
+  }
+
   onSubmit() {
     if (this.leagueModel) {
+      if (this.imageLeagueThumb) {
+        this.leagueForm.value['leagueTypeImageThumb'] = this.imageLeagueThumb;
+      }
+
+      if (this.imageThumbUrl) {
+        this.leagueForm.value['imageThumb'] = this.imageThumbUrl;
+      }
       Object.assign(this.leagueModel, this.leagueForm.value);
       this.leagueService.update(this.leagueModel).subscribe(
         (response: any) => {
@@ -92,6 +135,13 @@ export class LeagueComponent implements OnInit {
         error => console.error(error)
       );
     } else {
+      if (this.imageLeagueThumb) {
+        this.leagueForm.value['leagueTypeImageThumb'] = this.imageLeagueThumb;
+      }
+
+      if (this.imageThumbUrl) {
+        this.leagueForm.value['imageThumb'] = this.imageThumbUrl;
+      }
       this.leagueService
         .save(this.checkIfValueIsEmpty(this.leagueForm.value))
         .subscribe(

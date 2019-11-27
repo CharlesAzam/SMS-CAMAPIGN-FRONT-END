@@ -111,8 +111,10 @@ export class BannerEditComponent implements OnInit {
         });
     }
     save() {
-        if (this.bannerModel) {
+        if (this.imageUrl)
             this.bannerForm.value['image'] = this.imageUrl;
+
+        if (this.bannerModel) {
             Object.assign(this.bannerModel, this.bannerForm.value);
             this.bannerService.update(this.bannerModel).subscribe((response: any) => {
                 if (response.status === 200)
@@ -122,7 +124,6 @@ export class BannerEditComponent implements OnInit {
 
 
         } else {
-            this.bannerForm.value['image'] = this.imageUrl;
             this.bannerService.save(this.bannerForm.value).subscribe(
                 banner => {
                     this.bannerModel = banner;

@@ -9,7 +9,7 @@ import { API } from "src/environments/environment";
 
 @Injectable()
 export class LeagueService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   leagueList: League[] = [];
   findById(id: string): Observable<League> {
     let url = API.BASE_URL + "/cms/league/" + id;
@@ -58,4 +58,15 @@ export class LeagueService {
     let url = API.BASE_URL + `/cms/count/league`;
     return this.http.get(url);
   }
+
+  uploadUrl(fileToUpload: File): Observable<Object> {
+    let headers = new HttpHeaders()
+    const endpoint = API.BASE_URL + '/cms/upload-file';
+    const formData: FormData = new FormData();
+    console.log("fileToUpload", fileToUpload)
+    formData.append('file', fileToUpload, fileToUpload.name);
+    console.log("=====>", formData);
+    return this.http.post(endpoint, formData, { headers })
+  }
+
 }
