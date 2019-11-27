@@ -72,14 +72,14 @@
 
                         <div class="form-group">
                             <label for="Decription">{{bannerModel?'Change':'Upload'}} Image:</label>
-                            <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*" class="form-control" formControlName="image"
+                            <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*" class="form-control" 
                                 placeholder="Enter Upload image thumb">
 
                         </div>
                         <mat-spinner *ngIf='isUploading'></mat-spinner>
 
-                        <div class="form-group" *ngIf='bannerModel'>
-                            <img src={{bannerModel.image}} width="100" height="100" />
+                        <div class="form-group" *ngIf='imageUrl'>
+                            <img src={{imageUrl}} width="100" height="100" />
 
                         </div>
 

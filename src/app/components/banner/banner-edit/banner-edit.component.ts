@@ -20,6 +20,7 @@ export class BannerEditComponent implements OnInit {
     errors: string;
     fileToUpload: any = null;
     isUploading: boolean = false;
+    imageUrl: string = "";
 
     categorys: any[]
     subs: any[]
@@ -39,7 +40,7 @@ export class BannerEditComponent implements OnInit {
         priority: new FormControl('', [Validators.required]),
         categories: new FormControl('', [Validators.required]),
         subCategories: new FormControl('', [Validators.required]),
-        image: new FormControl([Validators.required]),
+        image: new FormControl(''),
         status: new FormControl('', [Validators.required])
     })
 
@@ -65,6 +66,7 @@ export class BannerEditComponent implements OnInit {
                         // console.log(response.data)
                         this.bannerModel = response.data[0];
                         console.log(this.bannerModel)
+                        this.imageUrl = this.bannerModel.image;
                         this.bannerForm.setValue({
                             name: this.bannerModel.name ? this.bannerModel.name : '',
                             type: this.bannerModel.type ? this.bannerModel.type : '',
@@ -95,10 +97,14 @@ export class BannerEditComponent implements OnInit {
 
     uploadFileToActivity() {
         this.isUploading = true;
-        this.bannerService.uploadUrl(this.fileToUpload).subscribe(data => {
-            console.log("=======>", data);
+        this.bannerService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
+
             this.isUploading = false;
-            //Get link and add it to form
+            if (response.status == 200 || response.success) {
+                this.imageUrl = response.fileUrl;
+            }
+            else
+                console.log(response)
         }, error => {
             this.isUploading = false;
             console.log("=======>", error);
@@ -106,6 +112,7 @@ export class BannerEditComponent implements OnInit {
     }
     save() {
         if (this.bannerModel) {
+            this.bannerForm.value['image'] = this.imageUrl;
             Object.assign(this.bannerModel, this.bannerForm.value);
             this.bannerService.update(this.bannerModel).subscribe((response: any) => {
                 if (response.status === 200)
@@ -115,7 +122,7 @@ export class BannerEditComponent implements OnInit {
 
 
         } else {
-            this.bannerForm.value['image'] = 'https://korbanglafoodsolution.files.wordpress.com/2017/03/background-indomie-header4.png';
+            this.bannerForm.value['image'] = this.imageUrl;
             this.bannerService.save(this.bannerForm.value).subscribe(
                 banner => {
                     this.bannerModel = banner;
