@@ -30,12 +30,46 @@ export class VodEditComponent implements OnInit {
 
     formType: string = "";
 
-    contentForm = new FormGroup({});
+    // contentForm = new FormGroup({});
+    contentForm = new FormGroup({
+        title: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+        tags: new FormControl('', [Validators.required]),
+        releaseDate: new FormControl('', Validators.required),
+        duration: new FormControl(),
+        starring: new FormControl('', [Validators.required]),
+        director: new FormControl('', [Validators.required]),
+        categories: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        subCategories: new FormControl('', [Validators.required]),
+        language: new FormControl('', [Validators.required]),
+        isFree: new FormControl('', [Validators.required]),
+        priceDetails: new FormGroup({
+            price: new FormControl('', [Validators.required]),
+            currency: new FormControl('', [Validators.required]),
+            noOfDays: new FormControl('', [Validators.required])
+        }),
+        isFreeAzam: new FormControl('', [Validators.required]),
+        isSeries: new FormControl('false'),
+        status: new FormControl('', [Validators.required]),
+        boundingBox: new FormControl('', [Validators.required]),
+        cdnID: new FormControl('', [Validators.required]),
+        series: new FormControl([]),
+        images: new FormControl([]),
+        imageThumb: new FormControl('', [Validators.required]),
+        packageID: new FormControl(''),
+        createdBy: new FormControl(''),
+    })
 
     id: string;
     vod: Vod;
     errors: string;
-    vodType: string
+    vodType: string;
+    contentType: string;
+
+    isUploading: boolean = false;
+    imageUrl: string = "";
+    fileToUpload: any = null;
 
 
     visible = true;
@@ -111,10 +145,11 @@ export class VodEditComponent implements OnInit {
         this.getCDNLibrary();
 
         this.route.params.subscribe((params: any) => {
-            console.log("params.id",params.id)
+            console.log("params.id", params.id)
             switch (params.id) {
                 case "RADIO":
-                    this.formType = 'Radio'
+                    this.formType = 'Radio';
+                    this.contentType = 'RADIO';
                     this.contentForm = new FormGroup({
                         title: new FormControl('', [Validators.required]),
                         description: new FormControl('', [Validators.required]),
@@ -128,10 +163,10 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetail: new FormGroup({
+                        priceDetails: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
-                            noOfDays: new FormControl('',[Validators.required])
+                            noOfDays: new FormControl('', [Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -143,11 +178,12 @@ export class VodEditComponent implements OnInit {
                         imageThumb: new FormControl('', [Validators.required]),
                         packageID: new FormControl(''),
                         createdBy: new FormControl(''),
-                        vodType: new FormControl('', [Validators.required])
                     })
                     break;
                 case "SERIES":
                     this.formType = 'Series';
+                    this.contentType = 'VOD';
+                    this.vodType = "SERIES";
                     this.isSeriesForm = !this.isSeriesForm;
                     this.contentForm = new FormGroup({
                         title: new FormControl('', [Validators.required]),
@@ -162,10 +198,10 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetail: new FormGroup({
+                        priceDetails: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
-                            noOfDays: new FormControl('',[Validators.required])
+                            noOfDays: new FormControl('', [Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -177,11 +213,11 @@ export class VodEditComponent implements OnInit {
                         imageThumb: new FormControl('', [Validators.required]),
                         packageID: new FormControl(''),
                         createdBy: new FormControl(''),
-                        vodType: new FormControl('', [Validators.required])
                     })
                     break;
                 case "NEWS":
                     this.formType = 'News'
+                    this.contentType = 'NEWS';
                     this.contentForm = new FormGroup({
                         title: new FormControl('', [Validators.required]),
                         description: new FormControl('', [Validators.required]),
@@ -195,10 +231,10 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetail: new FormGroup({
+                        priceDetails: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
-                            noOfDays: new FormControl('',[Validators.required])
+                            noOfDays: new FormControl('', [Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -210,12 +246,13 @@ export class VodEditComponent implements OnInit {
                         imageThumb: new FormControl('', [Validators.required]),
                         packageID: new FormControl(''),
                         createdBy: new FormControl(''),
-                        vodType: new FormControl('', [Validators.required])
                     })
                     break;
 
                 case "VIDEOONDEMAND":
                     this.formType = "Video On Demand"
+                    this.contentType = 'VOD';
+                    this.vodType = "VIDEO";
                     this.contentForm = new FormGroup({
                         title: new FormControl('', [Validators.required]),
                         description: new FormControl('', [Validators.required]),
@@ -229,10 +266,45 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetail: new FormGroup({
+                        priceDetails: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
-                            noOfDays: new FormControl('',[Validators.required])
+                            noOfDays: new FormControl('', [Validators.required])
+                        }),
+                        isFreeAzam: new FormControl('', [Validators.required]),
+                        isSeries: new FormControl('false'),
+                        status: new FormControl('', [Validators.required]),
+                        boundingBox: new FormControl('', [Validators.required]),
+                        cdnID: new FormControl('', [Validators.required]),
+                        series: new FormControl([]),
+                        images: new FormControl([]),
+                        imageThumb: new FormControl('', [Validators.required]),
+                        packageID: new FormControl(''),
+                        createdBy: new FormControl(''),
+                    })
+                    break;
+
+                case "LIVETV":
+                    this.formType = "Live TV"
+                    this.contentType = 'VOD';
+                    this.vodType = "LIVETV";
+                    this.contentForm = new FormGroup({
+                        title: new FormControl('', [Validators.required]),
+                        description: new FormControl('', [Validators.required]),
+                        tags: new FormControl('', [Validators.required]),
+                        releaseDate: new FormControl('', Validators.required),
+                        duration: new FormControl(),
+                        starring: new FormControl('', [Validators.required]),
+                        director: new FormControl('', [Validators.required]),
+                        categories: new FormControl('', [Validators.required]),
+                        country: new FormControl('', [Validators.required]),
+                        subCategories: new FormControl('', [Validators.required]),
+                        language: new FormControl('', [Validators.required]),
+                        isFree: new FormControl('', [Validators.required]),
+                        priceDetails: new FormGroup({
+                            price: new FormControl('', [Validators.required]),
+                            currency: new FormControl('', [Validators.required]),
+                            noOfDays: new FormControl('', [Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
                         isSeries: new FormControl('', [Validators.required]),
@@ -241,64 +313,133 @@ export class VodEditComponent implements OnInit {
                         cdnID: new FormControl('', [Validators.required]),
                         series: new FormControl('', [Validators.required]),
                         images: new FormControl(''),
-                        imageThumb: new FormControl('http://google.com', [Validators.required]),
+                        imageThumb: new FormControl('', [Validators.required]),
                         packageID: new FormControl(''),
                         createdBy: new FormControl(''),
-                        vodType: new FormControl('', [Validators.required])
                     })
                     break;
 
-                    case "LIVETV":
-                        this.formType = "Live TV"
-                        this.contentForm = new FormGroup({
-                            title: new FormControl('', [Validators.required]),
-                            description: new FormControl('', [Validators.required]),
-                            tags: new FormControl('', [Validators.required]),
-                            releaseDate: new FormControl('', Validators.required),
-                            duration: new FormControl(),
-                            starring: new FormControl('', [Validators.required]),
-                            director: new FormControl('', [Validators.required]),
-                            categories: new FormControl('', [Validators.required]),
-                            country: new FormControl('', [Validators.required]),
-                            subCategories: new FormControl('', [Validators.required]),
-                            language: new FormControl('', [Validators.required]),
-                            isFree: new FormControl('', [Validators.required]),
-                            priceDetail: new FormGroup({
-                                price: new FormControl('', [Validators.required]),
-                                currency: new FormControl('', [Validators.required]),
-                                noOfDays: new FormControl('',[Validators.required])
-                            }),
-                            isFreeAzam: new FormControl('', [Validators.required]),
-                            isSeries: new FormControl('', [Validators.required]),
-                            status: new FormControl('', [Validators.required]),
-                            boundingBox: new FormControl('', [Validators.required]),
-                            cdnID: new FormControl('', [Validators.required]),
-                            series: new FormControl('', [Validators.required]),
-                            images: new FormControl(''),
-                            imageThumb: new FormControl('', [Validators.required]),
-                            packageID: new FormControl(''),
-                            createdBy: new FormControl(''),
-                            vodType: new FormControl('', [Validators.required])
-                        })
-                        break;
-
 
                 default:
+                    this.vodService.findById(params.id).subscribe((response: any) => {
+                        if (response.status === 200) {
+                            console.log(response)
+                            this.vod = response.data[0];
+                            this.imageUrl = this.vod.imageThumb;
+                            if (this.vod.contentType === 'VOD') {
+                                switch (this.vod.vodType) {
+                                    case "VIDEO":
+                                        this.contentForm.setValue({
+                                            title: this.vod.title ? this.vod.title : '',
+                                            description: this.vod.description ? this.vod.description : '',
+                                            tags: this.vod.tags ? this.vod.tags : [],
+                                            releaseDate: this.vod.releaseDate ? this.vod.releaseDate : '',
+                                            duration: this.vod.duration ? this.vod.duration : '',
+                                            starring: this.vod.starring ? this.vod.starring : '',
+                                            director: this.vod.director ? this.vod.starring : '',
+                                            categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
+                                            country: this.vod.country ? this.vod.country : '',
+                                            subCategories: this.vod.subCategories ? this.vod.subCategories : '',
+                                            language: this.vod.language ? this.vod.language : '',
+                                            isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
+                                            priceDetails: {
+                                                price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
+                                                currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
+                                                noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',
+                                            },
+                                            isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
+                                            isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
+                                            status: String(this.vod.status) ? String(this.vod.status) : '',
+                                            boundingBox: this.vod.boundingBox ? this.vod.boundingBox : '',
+                                            cdnID: this.vod.cdnID ? this.vod.cdnID : '',
+                                            series: this.vod.series ? this.vod.series : [],
+                                            images: this.vod.images ? this.vod.images : [],
+                                            imageThumb: this.vod.imageThumb ? '' : '',
+                                            packageID: this.vod.packageID ? this.vod.packageID : '',
+                                            createdBy: this.vod.createdBy ? this.vod.createdBy : '',
+                                        })
+
+                                        break;
+
+                                    case "SERIES":
+
+                                        break;
+
+                                    case "LIVETV":
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            } else if (this.vod.contentType === 'RADIO') {
+
+                            } else if (this.vod.contentType === 'NEWS') {
+
+                            }
+
+                        }
+                    });
                     break;
             }
         })
     }
 
-    save() {
-        this.vodService.save(this.checkIfValueIsEmpty(this.contentForm.value)).subscribe(
-            vod => {
-                this.errors = 'Save was successful!';
-                this.back();
-            },
-            err => {
-                this.errors = 'Error saving';
+
+    handelImageChange(files: FileList) {
+        this.fileToUpload = files.item(0);
+        this.fileToUpload.mimeType = this.fileToUpload.type;
+        this.uploadFileToActivity();
+    }
+
+    uploadFileToActivity() {
+        this.isUploading = true;
+        this.vodService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
+
+            this.isUploading = false;
+            if (response.status == 200 || response.success) {
+                this.imageUrl = response.fileUrl;
             }
-        );
+            else
+                console.log(response)
+        }, error => {
+            this.isUploading = false;
+            console.log("=======>", error);
+        });
+    }
+
+    save() {
+        if (this.imageUrl && !this.isNewForm)
+            this.contentForm.value['imageThumb'] = this.imageUrl;
+
+        this.contentForm.value['contentType'] = this.contentType;
+        if (this.vodType)
+            this.contentForm.value['vodType'] = this.vodType
+
+        console.log(this.contentForm.value)
+        if (this.vod) {
+            Object.assign(this.vod, this.contentForm.value);
+
+            this.vodService.update(this.checkIfValueIsEmpty(this.vod)).subscribe(
+                vod => {
+                    this.errors = 'Save was successful!';
+                    this.back();
+                },
+                err => {
+                    this.errors = 'Error saving';
+                }
+            );
+        } else {
+            this.vodService.save(this.checkIfValueIsEmpty(this.contentForm.value)).subscribe(
+                vod => {
+                    this.errors = 'Save was successful!';
+                    this.back();
+                },
+                err => {
+                    this.errors = 'Error saving';
+                }
+            );
+        }
     }
 
     getCategories() {

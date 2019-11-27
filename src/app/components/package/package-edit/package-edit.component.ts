@@ -154,17 +154,18 @@ export class PackageEditComponent implements OnInit {
     }
 
     save() {
+        let price = this.packageForm.value.price;
+
+        let priceArray = []
+        priceArray.push({
+            price: price,
+            currency: this.packageForm.value.currency,
+            noOfDays: this.packageForm.value.noOfDays
+        })
+
+        this.packageForm.value.price = priceArray;
         if (this.packageDef) {
-            let price = this.packageForm.value.price;
 
-            let priceArray = []
-            priceArray.push({
-                price: price,
-                currency: this.packageForm.value.currency,
-                noOfDays: this.packageForm.value.noOfDays
-            })
-
-            this.packageForm.value.price = priceArray;
             Object.assign(this.packageDef, this.packageForm.value);
             this.packageService.update(this.packageDef).subscribe(
                 (response: any) => {
@@ -179,16 +180,6 @@ export class PackageEditComponent implements OnInit {
                 }
             );
         } else {
-            let price = this.packageForm.value.price;
-
-            let priceArray = []
-            priceArray.push({
-                price: price,
-                currency: this.packageForm.value.currency,
-                noOfDays: this.packageForm.value.noOfDays
-            })
-
-            this.packageForm.value.price = priceArray;
             this.packageService.save(this.packageForm.value).subscribe(
                 (response: any) => {
                     console.log(response)

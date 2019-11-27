@@ -41,7 +41,7 @@ export class VodListComponent implements OnInit {
     paginator: MatPaginator
 
     ngOnInit(): void {
-        
+
         this.selectedType = this.types[0];
         this.getContentCount(this.selectedType);
 
@@ -85,6 +85,15 @@ export class VodListComponent implements OnInit {
 
     search(): void {
         // this.vodService.load(this.filter);
+    }
+
+    deleteContent(data, index?) {
+        this.vodService.delete(data).subscribe((response: any) => {
+            if (response.status === 200 || response.success) {
+                this.getData('vod', 1, 5);
+                this.getContentCount('vod');
+            }
+        }, error => console.error(error))
     }
 
     select(selected: Vod): void {

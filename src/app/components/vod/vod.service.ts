@@ -13,8 +13,19 @@ export class VodService {
 
     vodList: Vod[] = [];
 
+    uploadUrl(fileToUpload: File): Observable<Object> {
+        let headers = new HttpHeaders()
+        const endpoint = API.BASE_URL+'/cms/upload-file';
+        const formData: FormData = new FormData();
+        console.log("fileToUpload", fileToUpload)
+        formData.append('file', fileToUpload, fileToUpload.name);
+        console.log("=====>",formData);
+        return this.http.post(endpoint, formData, {headers})
+    }
+
+
     findById(id: string): Observable<Vod> {
-        let url = API.BASE_URL + '/api/content/'+id;
+        let url = API.BASE_URL + '/cms/get-content/'+id;
         
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -55,6 +66,21 @@ export class VodService {
             .set('Accept', 'application/json');
         return this.http.post<any>(url, entity, { headers });
     }
+
+    update(data: Vod) {
+        let url = API.BASE_URL + `/cms/content/${data._id}/update`;
+        let headers = new HttpHeaders()
+            .set('Accept', 'application/json');
+        return this.http.put<any>(url, data, { headers });
+    }
+
+    delete(data: Vod) {
+        let url = API.BASE_URL + `/cms/content/${data._id}/delete`;
+        let headers = new HttpHeaders()
+            .set('Accept', 'application/json');
+        return this.http.put<any>(url, data, { headers });
+    }
+
 
     getCount(contentType) {
         let url = API.BASE_URL + `/cms/count/content/${contentType}`;
