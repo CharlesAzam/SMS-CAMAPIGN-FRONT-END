@@ -44,7 +44,7 @@ export class VodEditComponent implements OnInit {
         subCategories: new FormControl('', [Validators.required]),
         language: new FormControl('', [Validators.required]),
         isFree: new FormControl('', [Validators.required]),
-        priceDetails: new FormGroup({
+        price: new FormGroup({
             price: new FormControl('', [Validators.required]),
             currency: new FormControl('', [Validators.required]),
             noOfDays: new FormControl('', [Validators.required])
@@ -163,7 +163,7 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetails: new FormGroup({
+                        price: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
                             noOfDays: new FormControl('', [Validators.required])
@@ -198,7 +198,7 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetails: new FormGroup({
+                        price: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
                             noOfDays: new FormControl('', [Validators.required])
@@ -231,7 +231,7 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetails: new FormGroup({
+                        price: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
                             noOfDays: new FormControl('', [Validators.required])
@@ -266,7 +266,7 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetails: new FormGroup({
+                        price: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
                             noOfDays: new FormControl('', [Validators.required])
@@ -301,18 +301,18 @@ export class VodEditComponent implements OnInit {
                         subCategories: new FormControl('', [Validators.required]),
                         language: new FormControl('', [Validators.required]),
                         isFree: new FormControl('', [Validators.required]),
-                        priceDetails: new FormGroup({
+                        price: new FormGroup({
                             price: new FormControl('', [Validators.required]),
                             currency: new FormControl('', [Validators.required]),
                             noOfDays: new FormControl('', [Validators.required])
                         }),
                         isFreeAzam: new FormControl('', [Validators.required]),
-                        isSeries: new FormControl('', [Validators.required]),
+                        isSeries: new FormControl('false'),
                         status: new FormControl('', [Validators.required]),
                         boundingBox: new FormControl('', [Validators.required]),
                         cdnID: new FormControl('', [Validators.required]),
-                        series: new FormControl('', [Validators.required]),
-                        images: new FormControl(''),
+                        series: new FormControl([]),
+                        images: new FormControl([]),
                         imageThumb: new FormControl('', [Validators.required]),
                         packageID: new FormControl(''),
                         createdBy: new FormControl(''),
@@ -342,7 +342,7 @@ export class VodEditComponent implements OnInit {
                                             subCategories: this.vod.subCategories ? this.vod.subCategories : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
-                                            priceDetails: {
+                                            price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
                                                 currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
                                                 noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',

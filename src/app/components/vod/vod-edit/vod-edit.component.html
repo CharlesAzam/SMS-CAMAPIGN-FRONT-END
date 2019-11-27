@@ -156,7 +156,7 @@
                             </mat-button-toggle-group>
                         </div>
 
-                        <div formGroupName="priceDetails">
+                        <div formGroupName="price">
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Price" formControlName="price" required>
                                 <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
@@ -229,9 +229,6 @@
                             <img src={{imageUrl}} width="100" height="100" />
 
                         </div>
-
-
-
 
                         <div class="form-group">
                             <button (click)="save()" class="btn btn-default">Save</button>
