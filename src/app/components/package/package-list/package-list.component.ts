@@ -36,11 +36,6 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     dataSource = new MatTableDataSource<any>([]);
 
     displayedColumns: string[] = ['No', 'name', 'description', 'action']
-
-    get packageList(): Package[] {
-        return [];
-    }
-
     constructor(private packageService: PackageService, private router: Router) {
     }
 

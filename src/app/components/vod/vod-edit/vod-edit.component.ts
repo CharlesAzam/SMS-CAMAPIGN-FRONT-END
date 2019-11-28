@@ -118,7 +118,7 @@ export class VodEditComponent implements OnInit {
         this.getCDNLibrary();
 
         this.route.params.subscribe((params: any) => {
-           switch (params.id) {
+            switch (params.id) {
                 case "RADIO":
                     this.formType = 'Radio';
                     this.contentType = 'RADIO';
@@ -207,7 +207,7 @@ export class VodEditComponent implements OnInit {
 
                                         break;
 
-                                    case "SERIES": 
+                                    case "SERIES":
                                         this.formType = 'Series';
                                         this.contentType = 'VOD';
                                         this.vodType = "SERIES";
@@ -382,13 +382,13 @@ export class VodEditComponent implements OnInit {
         this.contentForm.value['contentType'] = this.contentType;
         if (this.vodType)
             this.contentForm.value['vodType'] = this.vodType
-        
-        if(this.isSeriesForm){
+
+        if (this.isSeriesForm) {
             this.contentForm.value.series = {
                 "season": this.seasons
-              };
-              this.contentForm.value['images'] = this.images;
-            
+            };
+            this.contentForm.value['images'] = this.images;
+
         }
         if (this.vod) {
             Object.assign(this.vod, this.contentForm.value);
@@ -403,9 +403,9 @@ export class VodEditComponent implements OnInit {
                 }
             );
         } else {
-            console.log('Form Value=',this.contentForm.value);
-            
-           // return false;
+            console.log('Form Value=', this.contentForm.value);
+
+            // return false;
             this.vodService.save(this.checkIfValueIsEmpty(this.contentForm.value)).subscribe(
                 vod => {
                     this.errors = 'Save was successful!';
@@ -422,18 +422,18 @@ export class VodEditComponent implements OnInit {
         this.route.params.subscribe((params: any) => {
             let type = params.id;
             if (type == "LIVETV" || type == "SERIES" || type == "VIDEOONDEMAND") {
-              type = "VOD";
+                type = "VOD";
             }
-      
+
             this.categoriesService.findByType(type).subscribe(
-              (response: any) => {
-                if (response.status === 200) {
-                  this.categorys = response.data;
-                }
-              },
-              error => console.error(error)
+                (response: any) => {
+                    if (response.status === 200) {
+                        this.categorys = response.data;
+                    }
+                },
+                error => console.error(error)
             );
-          });
+        });
     }
 
     getTags() {
@@ -445,7 +445,7 @@ export class VodEditComponent implements OnInit {
             error => console.error(error));
     }
 
-    getSubCategories(event) { 
+    getSubCategories(event) {
         this.subCategoriesService.findByCategory(event.value).subscribe((response: any) => {
             if (response.status === 200) {
                 this.subCategorie = response.data;
@@ -500,7 +500,14 @@ export class VodEditComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this.seasons.push(result);
+                if (result._id) {
+                    this.seasons.map((season) => {
+                        return season._id === result._id ? result : season
+                    })
+                } else {
+                    this.seasons.push(result);
+
+                }
             }
 
         })
@@ -732,6 +739,7 @@ export class AddSeasonsDialog {
         "TZS",
         "USD"
     ];
+    seasonEditObject: Object = null;
 
     constructor(
         public dialogRef: MatDialogRef<AddSeasonsDialog>,
@@ -740,6 +748,7 @@ export class AddSeasonsDialog {
         private dialog: MatDialog
     ) {
         if (data !== null) {
+            this.seasonEditObject = data;
             this.seasonForm.setValue({
                 title: data.title,
                 currency: data.price[0].currency,
@@ -759,7 +768,7 @@ export class AddSeasonsDialog {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                 console.log('Epidode=',result.content)
+                console.log('Epidode=', result.content)
                 this.episode.push(result.content);
             }
 
@@ -778,12 +787,18 @@ export class AddSeasonsDialog {
             noOfDays: this.seasonForm.value.noOfDays
         })
         // this.seasonForm.value['episodes'] = this.episodes;
-
-        return {
+        let result = {
             title: this.seasonForm.value.title,
             price: priceArray,
-            episode: this.episode
+            episode: this.episode,
         };
+        if (this.seasonEditObject !== null) {
+            Object.assign(this.seasonEditObject, result)
+            return this.seasonEditObject;
+        } else {
+            return result;
+        }
+
     }
 }
 
