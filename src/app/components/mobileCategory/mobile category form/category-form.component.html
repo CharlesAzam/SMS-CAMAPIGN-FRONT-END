@@ -85,7 +85,7 @@
       </div>
       <mat-spinner *ngIf="isUploading"></mat-spinner>
 
-      <div class="form-group" *ngIf="categoryModel">
+      <div class="form-group" *ngIf="categoryModel && categoryModel.isLeague">
         <img
           src="{{ categoryModel.leagueTypeImageThumb }}"
           width="100"

@@ -332,6 +332,7 @@ export class VodEditComponent implements OnInit {
                                 this.contentType = 'NEWS';
                                 this.initializeNewsForm()
                                 this.isNewsForm = !this.isNewsForm;
+                                this.images = this.vod.images;
                                 this.contentForm.setValue({
                                     title: this.vod.title ? this.vod.title : '',
                                     description: this.vod.description ? this.vod.description : '',
