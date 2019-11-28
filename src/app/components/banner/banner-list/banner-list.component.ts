@@ -28,7 +28,7 @@ export class BannerListComponent {
     dataSource = new MatTableDataSource<Banner>([]);
     count: number;
 
-    displayedColumns: string[] = ['id', 'name', 'description', 'status', 'action']
+    displayedColumns: string[] = ['No', 'name', 'description', 'status', 'action']
 
     constructor(private bannerService: BannerService) {
     }

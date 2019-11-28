@@ -1,9 +1,8 @@
 <h2 mat-dialog-title>Add Seasons</h2>
 <mat-dialog-content class="mat-typography">
-
   <form [formGroup]="seasonForm">
     <mat-form-field style="width: 100%;">
-      <input matInput placeholder="Title" formControlName="title" required>
+      <input matInput placeholder="Title" formControlName="title" required />
       <!-- <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error> -->
     </mat-form-field>
 
@@ -19,14 +18,18 @@
       <div>
         noOfDays : {{pric.noOfDays}}
       </div>
-
     </mat-card>
-
 
     <!-- <div style="margin-left: 20px; margin-right: 20px;"> -->
     <div>
       <mat-form-field style="width: 100%;">
-        <input matInput placeholder="Price" formControlName="price" type="number" required>
+        <input
+          matInput
+          placeholder="Price"
+          formControlName="price"
+          type="number"
+          required
+        />
         <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
       </mat-form-field>
 
@@ -34,20 +37,29 @@
         <mat-form-field style="width: 100%;">
           <mat-label>Currency</mat-label>
           <mat-select formControlName="currency" required>
-            <mat-option *ngFor="let currenc of currencies" [value]="currenc">{{currenc}}
+            <mat-option *ngFor="let currenc of currencies" [value]="currenc"
+              >{{currenc}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
       <mat-form-field style="width: 100%;">
-        <input matInput placeholder="Number of Days" formControlName="noOfDays" type="number" required>
+        <input
+          matInput
+          placeholder="Number of Days"
+          formControlName="noOfDays"
+          type="number"
+          required
+        />
         <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
       </mat-form-field>
-
     </div>
 
-    <mat-card *ngFor="let episode of episodes; let i = index" style="margin: 10px">
+    <mat-card
+      *ngFor="let episode of episode; let i = index"
+      style="margin: 10px"
+    >
       <mat-card-title>{{episode.title}}</mat-card-title>
       <mat-card-subtitle>{{episode.description}}</mat-card-subtitle>
       <mat-card-actions>
@@ -56,16 +68,20 @@
     </mat-card>
 
     <div class="form-group">
-      <button mat-raised-button (click)="openAddSeasonsDialog()">Add Episodes</button>
+      <button mat-raised-button (click)="openAddSeasonsDialog()">
+        Add Episodes
+      </button>
     </div>
-
-
-
   </form>
-
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [disabled]="seasonForm.invalid || episodes.length === 0" [mat-dialog-close]="getData()"
-    cdkFocusInitial>Submit</button>
+  <button
+    mat-button
+    [disabled]="seasonForm.invalid || episode.length === 0"
+    [mat-dialog-close]="getData()"
+    cdkFocusInitial
+  >
+    Submit
+  </button>
 </mat-dialog-actions>
