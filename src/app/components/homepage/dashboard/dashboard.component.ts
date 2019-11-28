@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,ɵisObservable } from '@angular/core';
 import {VodService} from '../../vod/vod.service'
 
 
@@ -14,16 +14,9 @@ constructor(private VodServie: VodService) {
   
 }
   title:string = "Dashbord";
-  protected LIVETV: any=null;
-  
-  
-  ngOnInit() {
-    console.log(this.getNotification('LIVETV'));
-
-  }
-
+  LIVETV: number;
   categories: any[] = [
-    {name:"Live TV",ImageSrc:"https://img.icons8.com/color/96/000000/tv-show.png",notification:"?"},
+    {name:"Live TV",ImageSrc:"https://img.icons8.com/color/96/000000/tv-show.png",notification:'7'},
     {name:"Video on Demand",ImageSrc:"https://img.icons8.com/color/96/000000/movie.png",notification:"12"},
     {name:"Sports",ImageSrc:"https://img.icons8.com/color/96/000000/sports-mode.png",notification:"13"},
     {name:"TV Series",ImageSrc:"https://img.icons8.com/color/96/000000/tv.png",notification:"13"},
@@ -34,11 +27,25 @@ constructor(private VodServie: VodService) {
     {name:"Stories",ImageSrc:"https://img.icons8.com/color/96/000000/storytelling.png",notification:"19"},
   ]
 
+  
+  
+  
+  
+  ngOnInit() {
+    // console.log(this.getNotification('LIVETV'));
+    this.getNotification('LIVETV')
+
+  }
+
+
+
   getNotification(Param: string){
-    return this.VodServie.getCount(Param).subscribe((result: any) => {
+  this.VodServie.getCount(Param).subscribe((result: any) => {
       if (result.success) {
+        console.log(result)
         //console.log(JSON.stringify(result.count))
-        result.count;
+        this.categories[0].notifcation = result.count;
+        
       }
     })
 
