@@ -26,14 +26,14 @@ export class PackageListComponent implements OnInit, AfterViewInit {
 
     count: number;
 
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
 
 
     filter = new PackageFilter();
     selectedPackage: Package;
     planInfo = null;
 
-    dataSource = new MatTableDataSource<Package>([]);
+    dataSource = new MatTableDataSource<any>([]);
 
     displayedColumns: string[] = ['No', 'name', 'description', 'action']
 
@@ -48,7 +48,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
         // this.getPlanInfo();
         // this.dataSource.paginator = this.paginator;
         this.getPackageCount();
-        this.dataSource.sort = this.sort;
+        // this.dataSource.sort = this.sort;
     }
 
 

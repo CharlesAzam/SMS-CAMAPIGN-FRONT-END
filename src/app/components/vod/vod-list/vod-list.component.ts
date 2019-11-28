@@ -22,7 +22,6 @@ export class VodListComponent implements OnInit {
         "VOD",
         "NEWS",
         "RADIO",
-        "TVGUIDE"
     ]
 
     selectedType: string = this.types[0];

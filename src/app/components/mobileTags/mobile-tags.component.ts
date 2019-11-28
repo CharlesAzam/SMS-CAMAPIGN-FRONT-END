@@ -61,6 +61,9 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
 
     })
   }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   // applyFilter(filterValue: string) {
   //   this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -49,6 +49,11 @@ export class MobileSubCategoriesComponent implements OnInit {
       error => console.error(error))
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
   getSubCategories(pageIndex, pageSize) {
     this.subCategoryService.find(pageIndex, pageSize).subscribe((response: any) => {
       if (response.status === 200) {

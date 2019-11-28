@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { VodListComponent, ContentDialog } from './vod-list/vod-list.component';
-import { VodEditComponent, AddSeasonsDialog, AddEpisodesDialog } from './vod-edit/vod-edit.component';
+import { VodEditComponent, AddSeasonsDialog, AddEpisodesDialog, AddMultipleImages } from './vod-edit/vod-edit.component';
 import { VodService } from './vod.service';
 import { VOD_ROUTES } from './vod.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
@@ -23,7 +23,8 @@ import { NZorroModules } from 'src/app/modules/app-nzorro.module';
     VodEditComponent,
     AddSeasonsDialog,
     ContentDialog,
-    AddEpisodesDialog
+    AddEpisodesDialog,
+    AddMultipleImages
   ],
   providers: [
     VodService
@@ -31,7 +32,8 @@ import { NZorroModules } from 'src/app/modules/app-nzorro.module';
   entryComponents: [
     ContentDialog,
     AddSeasonsDialog,
-    AddEpisodesDialog
+    AddEpisodesDialog,
+    AddMultipleImages
   ],
   exports: [
   ]
