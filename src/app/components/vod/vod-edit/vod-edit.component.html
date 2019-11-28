@@ -71,20 +71,10 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)"
+                                        formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-
-
-                            <div class="form-group">
-                                <mat-form-field style="width: 100%;">
-                                    <mat-label>Country</mat-label>
-                                    <mat-select formControlName="country">
-                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -100,6 +90,17 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
 
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
@@ -141,6 +142,16 @@
                             </div>
 
                             <div class="form-group">
+                                <mat-label>Status</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="status" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+
+
+                            <div class="form-group">
                                 <mat-label>Is Free?</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
                                     formControlName="isFree" style="margin-left: 10px;" required>
@@ -160,16 +171,22 @@
 
                             <div formGroupName="price">
                                 <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="Price" formControlName="price" required>
+                                    <input matInput placeholder="Price" type="number" formControlName="price" required>
                                     <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
 
                                 </mat-form-field>
 
-                                <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="Currency" formControlName="currency" required>
-                                    <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
 
-                                </mat-form-field>
+                                <div class="form-group">
+                                    <mat-form-field style="width: 100%;">
+                                        <mat-label>Currency</mat-label>
+                                        <mat-select formControlName="currency">
+                                            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                                                {{currency}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
 
                                 <mat-form-field style="width: 100%;">
                                     <input matInput placeholder="Number of days valid" formControlName="noOfDays"
@@ -304,7 +321,8 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)"
+                                        formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
@@ -313,15 +331,7 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <mat-form-field style="width: 100%;">
-                                    <mat-label>Country</mat-label>
-                                    <mat-select formControlName="country">
-                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
+
 
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
@@ -336,6 +346,16 @@
 
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
                                     <mat-label>Lanugage</mat-label>
                                     <mat-select formControlName="language">
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
@@ -343,6 +363,17 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <mat-label>Status</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="status" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
                             </div>
 
 
@@ -366,16 +397,22 @@
 
                             <div formGroupName="price">
                                 <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="Price" formControlName="price" required>
+                                    <input matInput placeholder="Price" type="number" formControlName="price" required>
                                     <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
 
                                 </mat-form-field>
 
-                                <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="Currency" formControlName="currency" required>
-                                    <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
 
-                                </mat-form-field>
+                                <div class="form-group">
+                                    <mat-form-field style="width: 100%;">
+                                        <mat-label>Currency</mat-label>
+                                        <mat-select formControlName="currency">
+                                            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                                                {{currency}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
 
                                 <mat-form-field style="width: 100%;">
                                     <input matInput placeholder="Number of days valid" formControlName="noOfDays"
@@ -384,6 +421,7 @@
 
                                 </mat-form-field>
                             </div>
+
 
                             <mat-form-field style="width: 100%;">
                                 <mat-select formControlName="status" placeholder="Status">
@@ -499,7 +537,8 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)"
+                                        formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
@@ -510,9 +549,10 @@
 
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
-                                    <mat-label>Country</mat-label>
-                                    <mat-select formControlName="country">
-                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
+                                    <mat-label>Sub Category</mat-label>
+                                    <mat-select formControlName="subCategories" multiple>
+                                        <mat-option *ngFor="let subCategory of subCategorie" [value]="subCategory._id">
+                                            {{subCategory.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -520,10 +560,9 @@
 
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
-                                    <mat-label>Sub Category</mat-label>
-                                    <mat-select formControlName="subCategories" multiple>
-                                        <mat-option *ngFor="let subCategory of subCategorie" [value]="subCategory._id">
-                                            {{subCategory.name}}
+                                    <mat-label>Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -539,6 +578,16 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+
+                            <div class="form-group">
+                                <mat-label>Status</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="status" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+
 
                             <div class="form-group">
                                 <mat-label>Is Free?</mat-label>
@@ -560,16 +609,22 @@
 
                             <div formGroupName="price">
                                 <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="Price" formControlName="price" required>
+                                    <input matInput placeholder="Price" type="number" formControlName="price" required>
                                     <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
 
                                 </mat-form-field>
 
-                                <mat-form-field style="width: 100%;">
-                                    <input matInput placeholder="Currency" formControlName="currency" required>
-                                    <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
 
-                                </mat-form-field>
+                                <div class="form-group">
+                                    <mat-form-field style="width: 100%;">
+                                        <mat-label>Currency</mat-label>
+                                        <mat-select formControlName="currency">
+                                            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                                                {{currency}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
 
                                 <mat-form-field style="width: 100%;">
                                     <input matInput placeholder="Number of days valid" formControlName="noOfDays"
@@ -578,6 +633,7 @@
 
                                 </mat-form-field>
                             </div>
+
 
                             <mat-form-field style="width: 100%;">
                                 <mat-select formControlName="status" placeholder="Status">
@@ -668,7 +724,8 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)"
+                                        formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
@@ -690,7 +747,8 @@
 
                             <div class="row" style="width: 100%;">
                                 <div>
-                                    <mat-card class="col-sm-3 col-md-3" *ngFor="let image of images; let i = index;" style="margin: 10px">
+                                    <mat-card class="col-sm-3 col-md-3" *ngFor="let image of images; let i = index;"
+                                        style="margin: 10px">
                                         <img src={{image}} width="200" height="200" />
                                         <mat-card-actions>
                                             <button mat-button (click)="removeImage(i)">DELETE</button>
@@ -703,6 +761,16 @@
                             <div class="form-group">
                                 <button mat-raised-button (click)="openImagesDialog()">Add Images</button>
                             </div>
+
+                            <div class="form-group">
+                                <mat-label>Status</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="status" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+
 
                             <div class="form-group">
                                 <mat-label>Is Free?</mat-label>

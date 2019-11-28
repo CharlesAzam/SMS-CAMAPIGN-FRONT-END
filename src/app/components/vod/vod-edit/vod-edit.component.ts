@@ -42,6 +42,11 @@ export class VodEditComponent implements OnInit {
     imageUrl: string = "";
     fileToUpload: any = null;
 
+    currencies: string[] = [
+        "TZS",
+        "USD"
+    ]
+
 
     visible = true;
     selectable = true;
@@ -222,7 +227,7 @@ export class VodEditComponent implements OnInit {
                                             duration: this.vod.duration ? this.vod.duration : '',
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.starring : '',
-                                            categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
+                                            categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country : '',
                                             subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
@@ -564,7 +569,7 @@ export class VodEditComponent implements OnInit {
             language: new FormControl('', [Validators.required]),
             isFree: new FormControl('', [Validators.required]),
             price: new FormGroup({
-                price: new FormControl('', [Validators.required]),
+                price: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
                 currency: new FormControl('', [Validators.required]),
                 noOfDays: new FormControl('', [Validators.required])
             }),
