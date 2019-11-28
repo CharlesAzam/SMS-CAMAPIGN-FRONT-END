@@ -181,7 +181,7 @@ export class CategoryFormComponent implements OnInit {
     this.isUploading = true;
     this.categoryService.uploadUrl(this.fileToUpload).subscribe(
       data => {
-        this.uploadImageURL = data.fileUrl ? data.fileUrl : "";
+        this.uploadImageURL = data["fileUrl"]; // ? data.fileUrl : "";
         this.isUploading = false;
       },
       error => {
