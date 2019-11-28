@@ -100,6 +100,7 @@ export class VodEditComponent implements OnInit {
     cdns: any[] = []
     boxes: string[] = ['HORIZONTAL_CARD', 'VERTICAL_CARD', 'BANNER', 'LOGO'];
     seasons: any[] = [];
+    images: string[] = []
 
     vodTypes: string[] = [
         "VIDEO",
@@ -335,11 +336,6 @@ export class VodEditComponent implements OnInit {
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
-                                    price: {
-                                        price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
-                                        currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
-                                        noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',
-                                    },
                                     isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                     isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
                                     status: String(this.vod.status) ? String(this.vod.status) : '',
@@ -381,15 +377,18 @@ export class VodEditComponent implements OnInit {
     }
 
     save() {
-        if (this.imageUrl && !this.isNewsForm)
+        if (this.imageUrl)
             this.contentForm.value['imageThumb'] = this.imageUrl;
 
         this.contentForm.value['contentType'] = this.contentType;
         if (this.vodType)
             this.contentForm.value['vodType'] = this.vodType
-        
-        if(this.isSeriesForm)
+
+        if (this.isSeriesForm)
             this.contentForm.value['series'] = this.seasons;
+        
+        if(this.isNewsForm)
+            this.contentForm.value['images'] = this.images;
 
         console.log(this.contentForm.value)
         if (this.vod) {
@@ -494,6 +493,25 @@ export class VodEditComponent implements OnInit {
             }
 
         })
+    }
+
+    openImagesDialog() {
+        const dialogRef = this.dialog.open(AddMultipleImages, {
+            width: '800px',
+            data: null
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.images = result;
+            }
+
+        })
+    }
+
+    removeImage(index) {
+        this.images.splice(index, 1);
+
     }
 
     removeSeason(index) {
@@ -610,11 +628,6 @@ export class VodEditComponent implements OnInit {
             categories: new FormControl('', [Validators.required]),
             subCategories: new FormControl('', [Validators.required]),
             isFree: new FormControl('', [Validators.required]),
-            price: new FormGroup({
-                price: new FormControl('', [Validators.required]),
-                currency: new FormControl('', [Validators.required]),
-                noOfDays: new FormControl('', [Validators.required])
-            }),
             isFreeAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('false'),
             status: new FormControl('', [Validators.required]),
@@ -799,4 +812,57 @@ export class AddEpisodesDialog {
 
 
 
+}
+
+
+@Component({
+    selector: 'dialog-content-type',
+    templateUrl: '../dialog-content-add-images.html',
+})
+export class AddMultipleImages {
+
+    images: string[] = [];
+    isUploading: boolean = false;
+    fileToUpload: any = null;
+
+    constructor(
+        public dialogRef: MatDialogRef<AddMultipleImages>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private vodService: VodService
+    ) {
+
+    }
+
+
+    handelImageChange(files: FileList) {
+        for (let index = 0; index < files.length; index++) {
+            this.fileToUpload = files.item(index)
+            this.fileToUpload.mimeType = this.fileToUpload.type;
+            this.uploadFileToActivity();
+        }
+        // this.fileToUpload = files.item(0);
+
+    }
+
+    uploadFileToActivity() {
+        this.isUploading = true;
+        this.vodService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
+
+            this.isUploading = false;
+            if (response.status == 200 || response.success) {
+                this.images.push(response.fileUrl);
+            }
+            else
+                console.log(response)
+        }, error => {
+            this.isUploading = false;
+            console.log("=======>", error);
+        });
+    }
+
+
+    removeImage(index) {
+        this.images.splice(index, 1);
+
+    }
 }
