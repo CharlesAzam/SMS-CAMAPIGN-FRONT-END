@@ -71,7 +71,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
@@ -130,7 +130,7 @@
                                         <tr>
                                             <th scope="row">{{i+1}}</th>
                                             <td>{{season.title}}</td>
-                                            <td>{{season.episodes.length}}</td>
+                                            <td>{{season.episode.length}}</td>
                                             <td>
                                                 <a style="cursor: pointer;" (click)="openDialog(season)">Edit</a>, <a
                                                     style="cursor: pointer;" (click)="removeSeason(i)">Delete</a>
@@ -304,7 +304,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
@@ -499,7 +499,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
@@ -558,7 +558,7 @@
                                         <tr>
                                             <th scope="row">{{i+1}}</th>
                                             <td>{{season.title}}</td>
-                                            <td>{{season.episodes.length}}</td>
+                                            <td>{{season.episode.length}}</td>
                                             <td>
                                                 <a style="cursor: pointer;" (click)="openDialog(season)">Edit</a>, <a
                                                     style="cursor: pointer;" (click)="removeSeason(i)">Delete</a>
@@ -696,7 +696,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Categories</mat-label>
-                                    <mat-select formControlName="categories" multiple required>
+                                    <mat-select (selectionChange)="getSubCategories($event)" formControlName="categories" multiple required>
                                         <mat-option *ngFor="let category of categorys" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>

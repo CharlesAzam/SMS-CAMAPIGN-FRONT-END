@@ -110,15 +110,14 @@ export class VodEditComponent implements OnInit {
     ngOnInit() {
         this.getCategories();
         this.getCountries();
-        this.getSubCategories();
+        // this.getSubCategories();
         this.getPackages();
         this.getTags();
         this.getLanguages();
         this.getCDNLibrary();
 
         this.route.params.subscribe((params: any) => {
-            console.log("params.id", params.id)
-            switch (params.id) {
+           switch (params.id) {
                 case "RADIO":
                     this.formType = 'Radio';
                     this.contentType = 'RADIO';
@@ -207,13 +206,13 @@ export class VodEditComponent implements OnInit {
 
                                         break;
 
-                                    case "SERIES":
+                                    case "SERIES": 
                                         this.formType = 'Series';
                                         this.contentType = 'VOD';
                                         this.vodType = "SERIES";
                                         this.isSeriesForm = !this.isSeriesForm;
                                         this.initializeSeriesForm()
-
+                                        this.seasons = this.vod.series[0].season;
                                         this.contentForm.setValue({
                                             title: this.vod.title ? this.vod.title : '',
                                             description: this.vod.description ? this.vod.description : '',
@@ -388,8 +387,12 @@ export class VodEditComponent implements OnInit {
         if (this.vodType)
             this.contentForm.value['vodType'] = this.vodType
         
-        if(this.isSeriesForm)
-            this.contentForm.value['series'] = this.seasons;
+        if(this.isSeriesForm){
+            this.contentForm.value.series = {
+                "season": this.seasons
+              };
+            console.log('Season=',this.seasons);    
+        }
 
         console.log(this.contentForm.value)
         if (this.vod) {
@@ -405,6 +408,9 @@ export class VodEditComponent implements OnInit {
                 }
             );
         } else {
+            console.log('Form Value=',this.contentForm.value);
+            
+           // return false;
             this.vodService.save(this.checkIfValueIsEmpty(this.contentForm.value)).subscribe(
                 vod => {
                     this.errors = 'Save was successful!';
@@ -418,12 +424,21 @@ export class VodEditComponent implements OnInit {
     }
 
     getCategories() {
-        this.categoriesService.find().subscribe((response: any) => {
-            if (response.status === 200) {
-                this.categorys = response.data;
+        this.route.params.subscribe((params: any) => {
+            let type = params.id;
+            if (type == "LIVETV" || type == "SERIES" || type == "VIDEOONDEMAND") {
+              type = "VOD";
             }
-        },
-            error => console.error(error));
+      
+            this.categoriesService.findByType(type).subscribe(
+              (response: any) => {
+                if (response.status === 200) {
+                  this.categorys = response.data;
+                }
+              },
+              error => console.error(error)
+            );
+          });
     }
 
     getTags() {
@@ -435,8 +450,8 @@ export class VodEditComponent implements OnInit {
             error => console.error(error));
     }
 
-    getSubCategories() {
-        this.subCategoriesService.find().subscribe((response: any) => {
+    getSubCategories(event) { 
+        this.subCategoriesService.findByCategory(event.value).subscribe((response: any) => {
             if (response.status === 200) {
                 this.subCategorie = response.data;
             }
@@ -703,7 +718,7 @@ export class AddSeasonsDialog {
         currency: new FormControl(''),
         noOfDays: new FormControl('')
     })
-    episodes: any[] = [];
+    episode: any[] = [];
     currencies: any[] = [
         "TZS",
         "USD"
@@ -722,7 +737,7 @@ export class AddSeasonsDialog {
                 noOfDays: data.price[0].noOfDays,
                 price: data.price[0].price
             })
-            this.episodes = data.episodes;
+            this.episode = data.episode;
         }
 
     }
@@ -735,15 +750,15 @@ export class AddSeasonsDialog {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // console.log(result.content)
-                this.episodes.push(result.content);
+                 console.log('Epidode=',result.content)
+                this.episode.push(result.content);
             }
 
         })
     }
 
     removeEpisode(index) {
-        this.episodes.splice(index, 1);
+        this.episode.splice(index, 1);
     }
 
     getData() {
@@ -758,7 +773,7 @@ export class AddSeasonsDialog {
         return {
             title: this.seasonForm.value.title,
             price: priceArray,
-            episodes: this.episodes
+            episode: this.episode
         };
     }
 }

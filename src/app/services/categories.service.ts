@@ -23,6 +23,11 @@ export class CategoriesService {
   //         console.error('error loading', err);
   //     });
   // }
+  findByType(type: string): Observable<Categories> {
+    let url = API.BASE_URL + "/cms/categorybytype/" + type;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<Categories>(url, { headers });
+  }
   find(pageNumber?, size?): Observable<Categories[]> {
     let url = API.BASE_URL + "/cms/category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
