@@ -1,9 +1,12 @@
-<div class="card">
-  <img src={{Image_src}}>
+<div class="card" (click)="Router(RouteParam)">
+  <img style="margin-left: 50px" src={{Image_src}}>
   <div class="container">
     <div class="title-contaniner">
-      <span matBadge="10" matBadgeOverlap="false" matBadgePosition="before after" matBadgeColor="blue">
-        <h4><b>{{card_title}}</b></h4>
+     
+      <span matBadge={{notification_count}} matBadgeOverlap="true" matBadgePosition="before after" matBadgeColor="blue">
+        <div style="margin-left: 50px;">
+        <h4 style="margin-top: 50px;"><b>{{card_title}}</b></h4>
+      </div>
       </span>
       <!-- removing the code for now -->
       <!-- <div class="btn-view">
