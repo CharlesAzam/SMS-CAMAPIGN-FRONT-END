@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row ">
     <div class="col-sm-1 col-md-4" *ngFor="let category of categories">
-      <app-card-component card_title={{category}}></app-card-component>
+      <app-card-component Image_src={{category.ImageSrc}}   card_title={{category.name}} notification_count={{category.notification}}></app-card-component>
     </div>
   </div>
 
