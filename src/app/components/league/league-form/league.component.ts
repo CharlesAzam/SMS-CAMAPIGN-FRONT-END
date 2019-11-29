@@ -23,9 +23,9 @@ export class LeagueComponent implements OnInit {
   leagueForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required]),
     language: new FormControl("", [Validators.required]),
-    leagueTypeImageThumb: new FormControl('', [Validators.required]),
-    imageThumb: new FormControl('', [Validators.required]),
-    type: new FormControl("", [Validators.required]),
+    leagueTypeImageThumb: new FormControl(''),
+    imageThumb: new FormControl(''),
+    leagueType: new FormControl("", [Validators.required]),
     priority: new FormControl("", [Validators.required]),
     isHome: new FormControl([Validators.required]),
     status: new FormControl("", [Validators.required])
@@ -64,7 +64,7 @@ export class LeagueComponent implements OnInit {
                 language: this.leagueModel.language
                   ? this.leagueModel.language
                   : "",
-                type: this.leagueModel.leagueType ? this.leagueModel.leagueType : "",
+                  leagueType: this.leagueModel.leagueType ? this.leagueModel.leagueType : "",
                 leagueTypeImageThumb: this.leagueModel.leagueTypeImageThumb
                   ? ''
                   : "",
