@@ -188,9 +188,9 @@ export class VodEditComponent implements OnInit {
                                             duration: this.vod.duration ? this.vod.duration : '',
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.starring : '',
-                                            categories: this.vod.categories ? this.vod.categories.map((categor) => categor._id) : '',
+                                            categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country : '',
-                                            subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
+                                            subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
@@ -229,7 +229,7 @@ export class VodEditComponent implements OnInit {
                                             director: this.vod.director ? this.vod.starring : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country : '',
-                                            subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
+                                            subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
@@ -266,9 +266,9 @@ export class VodEditComponent implements OnInit {
                                             duration: this.vod.duration ? this.vod.duration : '',
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.starring : '',
-                                            categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
+                                            categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country : '',
-                                            subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
+                                            subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
@@ -307,7 +307,7 @@ export class VodEditComponent implements OnInit {
                                     director: this.vod.director ? this.vod.starring : '',
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     country: this.vod.country ? this.vod.country : '',
-                                    subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
+                                    subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     language: this.vod.language ? this.vod.language : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                     price: {
@@ -339,7 +339,7 @@ export class VodEditComponent implements OnInit {
                                     tags: this.vod.tags ? this.vod.tags : [],
 
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
-                                    subCategories: this.vod.subCategories ? this.vod.categories.map((subs) => subs._id) : '',
+                                    subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                     isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                     isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
@@ -426,13 +426,14 @@ export class VodEditComponent implements OnInit {
 
     getCategories() {
         this.route.params.subscribe((params: any) => {
-            let type = params.id;
-            if (type == "LIVETV" || type == "SERIES" || type == "VIDEOONDEMAND") {
-                type = "VOD";
-            }
-
-            this.categoriesService.findByType(type).subscribe(
+            // let type = params.id;
+            // if (type == "LIVETV" || type == "SERIES" || type == "VIDEOONDEMAND") {
+            //     type = "VOD";
+            // }
+            console.log(this.contentType)
+            this.categoriesService.findByType(this.contentType).subscribe(
                 (response: any) => {
+                    console.log(response)
                     if (response.status === 200) {
                         this.categorys = response.data;
                     }
