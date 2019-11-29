@@ -9,12 +9,12 @@ import { API } from "src/environments/environment";
 export class SubCategoriesService {
   url = "http://localhost:3001/cms/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   find(pageNumber?, size?) {
     let url = API.BASE_URL + "/cms/sub-category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-    if (pageNumber !== null || size !== null) {
+    if (pageNumber || size) {
       let params = {
         pageNumber: pageNumber,
         size: size

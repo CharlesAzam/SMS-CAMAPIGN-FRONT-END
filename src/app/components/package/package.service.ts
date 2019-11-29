@@ -43,7 +43,7 @@ export class PackageService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
-        if (pageNumber !== null || size !== null) {
+        if (pageNumber || size) {
             let params = {
                 "pageNumber": pageNumber,
                 "size": size

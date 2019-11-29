@@ -506,6 +506,7 @@ export class VodEditComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
+                console.log(result)
                 if (result._id) {
                     this.seasons.map((season) => {
                         return season._id === result._id ? result : season

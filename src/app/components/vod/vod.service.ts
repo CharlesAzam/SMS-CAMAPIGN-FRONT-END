@@ -15,18 +15,18 @@ export class VodService {
 
     uploadUrl(fileToUpload: File): Observable<Object> {
         let headers = new HttpHeaders()
-        const endpoint = API.BASE_URL+'/cms/upload-file';
+        const endpoint = API.BASE_URL + '/cms/upload-file';
         const formData: FormData = new FormData();
         console.log("fileToUpload", fileToUpload)
         formData.append('file', fileToUpload, fileToUpload.name);
-        console.log("=====>",formData);
-        return this.http.post(endpoint, formData, {headers})
+        console.log("=====>", formData);
+        return this.http.post(endpoint, formData, { headers })
     }
 
 
     findById(id: string): Observable<Vod> {
-        let url = API.BASE_URL + '/cms/get-content/'+id;
-        
+        let url = API.BASE_URL + '/cms/get-content/' + id;
+
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<Vod>(url, { headers });
@@ -49,7 +49,7 @@ export class VodService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
-        if (pageNumber !== null || size !== null) {
+        if (pageNumber || size) {
             let params = {
                 "pageNumber": pageNumber,
                 "size": size
