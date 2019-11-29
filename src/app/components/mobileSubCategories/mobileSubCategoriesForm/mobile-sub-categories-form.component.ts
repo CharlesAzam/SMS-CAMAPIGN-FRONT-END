@@ -25,7 +25,6 @@ export class MobileSubCategoriesFormComponent implements OnInit {
   boxes: any[] = [
     'VERTICAL_CARD',
     'HORIZONTAL_CARD',
-    'VERTICAL_CARD',
     'BANNER',
     'LOGO'
   ]
