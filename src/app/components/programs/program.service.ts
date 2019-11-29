@@ -25,10 +25,10 @@ export class ProgramService {
 
     uploadUrl(fileToUpload: File): Observable<Object> {
         let headers = new HttpHeaders()
-        const endpoint = API.BASE_URL+'/cms/upload-file';
+        const endpoint = API.BASE_URL + '/cms/upload-file';
         const formData: FormData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
-        return this.http.post(endpoint, formData, {headers})
+        return this.http.post(endpoint, formData, { headers })
     }
 
     load(filter: ProgramFilter): void {
@@ -47,7 +47,7 @@ export class ProgramService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
-        if (pageIndex !== null || pageSize !== null) {
+        if (pageIndex || pageSize) {
             let params = {
                 "pageNumber": pageIndex,
                 "size": pageSize

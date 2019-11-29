@@ -27,7 +27,7 @@ export class LeagueService {
   find(pageNumber?, size?): Observable<League[]> {
     let url = API.BASE_URL + "/cms/league-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-    if (pageNumber !== null || size !== null) {
+    if (pageNumber  || size ) {
       let params = {
         pageNumber: pageNumber,
         size: size

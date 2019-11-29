@@ -49,7 +49,7 @@ export class BannerService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
-        if (pageIndex !== null || pageSize !== null) {
+        if (pageIndex || pageSize ) {
             let params = {
                 "pageNumber": pageIndex,
                 "size": pageSize

@@ -38,7 +38,10 @@ export class VideoLibraryService {
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
 
-    if (index !== null || size !== null) {
+      console.log(size);
+      console.log(index)
+
+    if (index || size) {
       let params = {
         "pageNumber": index,
         "size": size

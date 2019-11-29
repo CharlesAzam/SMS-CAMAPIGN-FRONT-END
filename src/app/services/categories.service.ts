@@ -8,7 +8,7 @@ import { API } from "src/environments/environment";
 
 @Injectable()
 export class CategoriesService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   categoriesList: Categories[] = [];
   findById(id: string): Observable<Categories> {
     let url = API.BASE_URL + "/cms/category/" + id;
@@ -31,7 +31,7 @@ export class CategoriesService {
   find(pageNumber?, size?): Observable<Categories[]> {
     let url = API.BASE_URL + "/cms/category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-    if (pageNumber !== null || size !== null) {
+    if (pageNumber || size) {
       let params = {
         pageNumber: pageNumber,
         size: size
