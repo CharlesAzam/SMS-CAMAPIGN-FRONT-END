@@ -498,19 +498,19 @@ export class VodEditComponent implements OnInit {
 
 
 
-    openDialog(season?: any) {
+    openDialog(i?) {
+        console.log(String(i))
+        const index = i;
+
         const dialogRef = this.dialog.open(AddSeasonsDialog, {
             width: '800px',
-            data: season ? season : null
+            data: String(index) !== 'undefined' ? this.seasons[index] : null
         });
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                console.log(result)
-                if (result._id) {
-                    this.seasons.map((season) => {
-                        return season._id === result._id ? result : season
-                    })
+                if (String(index) !== 'undefined') {
+                    this.seasons[index] = result;
                 } else {
                     this.seasons.push(result);
 
@@ -754,7 +754,8 @@ export class AddSeasonsDialog {
         private router: Router,
         private dialog: MatDialog
     ) {
-        if (data !== null) {
+        console.log(data);
+        if (data) {
             this.seasonEditObject = data;
             this.seasonForm.setValue({
                 title: data.title,
