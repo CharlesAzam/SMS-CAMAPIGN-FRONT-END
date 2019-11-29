@@ -47,7 +47,7 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
         this.videoLibraryService.delete(id).subscribe(
             response => {
                 console.log(response);
-                this.getVideoLibrary(this.paginator.pageIndex, this.paginator.pageSize)
+                this.getVideoLibrary(this.paginator.pageIndex+1, this.paginator.pageSize)
             },
             err => {
                 console.log(err);

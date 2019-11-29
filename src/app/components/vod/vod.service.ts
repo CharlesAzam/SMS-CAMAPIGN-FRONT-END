@@ -1,7 +1,8 @@
 import { Vod } from './vod';
 import { VodFilter } from './vod-filter';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API } from 'src/environments/environment';
 
@@ -10,6 +11,9 @@ export class VodService {
 
     constructor(private http: HttpClient) {
     }
+
+    categorySubject= new Subject<any>();
+    category$=this.categorySubject.asObservable();
 
     vodList: Vod[] = [];
 
@@ -85,6 +89,18 @@ export class VodService {
     getCount(contentType) {
         let url = API.BASE_URL + `/cms/count/content/${contentType}`;
         return this.http.get(url);
+    }
+
+    getCount2(contentType) {
+        let url = API.BASE_URL + `/cms/count/content/${contentType}`;
+        return this.http.get<any>(url).pipe(map(result=>{
+            console.log("This is return value \n"+JSON.stringify(result));
+            return result;
+        }));
+    }
+
+    getNotification(category){
+      this.categorySubject.next();
     }
 }
 

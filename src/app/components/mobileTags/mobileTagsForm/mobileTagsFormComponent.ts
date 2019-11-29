@@ -26,7 +26,7 @@ export class MobileTagFormComponent implements OnInit {
     language: new FormControl('', [Validators.required])
   })
   languages: any[] = [];
-  types: string[] = ['RADIO', 'NEWS', 'TV GUIDE', 'VOD'];
+  types: string[] = ['RADIO', 'NEWS', 'VOD'];
 
   back() {
     this.router.navigate(['home/MobileTags']);
