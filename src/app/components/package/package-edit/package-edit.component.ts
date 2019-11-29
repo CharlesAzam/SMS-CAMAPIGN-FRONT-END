@@ -170,7 +170,7 @@ export class PackageEditComponent implements OnInit {
             this.packageService.update(this.packageDef).subscribe(
                 (response: any) => {
                     console.log(response)
-                    if (response.status === 200) {
+                    if (response.status || response.Code) {
                         this.errors = 'Updarte was successful!';
                         this.back();
                     }
@@ -183,7 +183,7 @@ export class PackageEditComponent implements OnInit {
             this.packageService.save(this.packageForm.value).subscribe(
                 (response: any) => {
                     console.log(response)
-                    if (response.success) {
+                    if (response.status || response.Code) {
                         this.errors = 'Save was successful!';
                         this.back();
                     }
