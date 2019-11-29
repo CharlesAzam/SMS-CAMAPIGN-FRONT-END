@@ -114,8 +114,8 @@ export class VodEditComponent implements OnInit {
     ]
 
     ngOnInit() {
-        
-         this.getCountries();
+
+        this.getCountries();
         // this.getSubCategories();
         this.getPackages();
         this.getTags();
@@ -175,7 +175,7 @@ export class VodEditComponent implements OnInit {
                             this.vod = response.data[0];
                             this.getCategories(this.vod.contentType);
                             this.imageUrl = this.vod.imageThumb;
-                          if (this.vod.contentType === 'VOD') {
+                            if (this.vod.contentType === 'VOD') {
                                 switch (this.vod.vodType) {
                                     case "VIDEO":
                                         this.formType = "Video On Demand"
@@ -183,7 +183,7 @@ export class VodEditComponent implements OnInit {
                                         this.vodType = "VIDEO";
                                         this.isVideoForm = !this.isVideoForm;
                                         this.initializeVideoForm()
-                                        this.getSubCategories({value:this.vod.categories.map((categor) => categor._id)});
+                                        this.getSubCategories({ value: this.vod.categories.map((categor) => categor._id) });
                                         this.contentForm.setValue({
                                             title: this.vod.title ? this.vod.title : '',
                                             description: this.vod.description ? this.vod.description : '',
@@ -210,7 +210,7 @@ export class VodEditComponent implements OnInit {
                                             series: this.vod.series ? this.vod.series : [],
                                             images: this.vod.images ? this.vod.images : [],
                                             imageThumb: this.vod.imageThumb ? '' : '',
-                                          //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                                            //  packageID: this.vod.packageID ? this.vod.packageID : '',
                                             createdBy: this.vod.createdBy ? this.vod.createdBy : '',
                                         })
 
@@ -222,7 +222,7 @@ export class VodEditComponent implements OnInit {
                                         this.vodType = "SERIES";
                                         this.isSeriesForm = !this.isSeriesForm;
                                         this.initializeSeriesForm()
-                                        this.getSubCategories({value:this.vod.categories.map((categor) => categor._id)});
+                                        this.getSubCategories({ value: this.vod.categories.map((categor) => categor._id) });
                                         this.seasons = this.vod.series[0].season;
                                         this.contentForm.setValue({
                                             title: this.vod.title ? this.vod.title : '',
@@ -250,7 +250,7 @@ export class VodEditComponent implements OnInit {
                                             series: this.vod.series ? this.vod.series : [],
                                             images: this.vod.images ? this.vod.images : [],
                                             imageThumb: this.vod.imageThumb ? '' : '',
-                                          //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                                            //  packageID: this.vod.packageID ? this.vod.packageID : '',
                                             createdBy: this.vod.createdBy ? this.vod.createdBy : '',
                                         })
 
@@ -263,7 +263,7 @@ export class VodEditComponent implements OnInit {
                                         this.vodType = "LIVETV";
                                         this.isLiveTvForm = !this.isLiveTvForm;
                                         this.initializeLiveTVForm();
-                                        this.getSubCategories({value:this.vod.categories.map((categor) => categor._id)});
+                                        this.getSubCategories({ value: this.vod.categories.map((categor) => categor._id) });
                                         this.contentForm.setValue({
                                             title: this.vod.title ? this.vod.title : '',
                                             description: this.vod.description ? this.vod.description : '',
@@ -290,7 +290,7 @@ export class VodEditComponent implements OnInit {
                                             series: this.vod.series ? this.vod.series : [],
                                             images: this.vod.images ? this.vod.images : [],
                                             imageThumb: this.vod.imageThumb ? '' : '',
-                                          //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                                            //  packageID: this.vod.packageID ? this.vod.packageID : '',
                                             createdBy: this.vod.createdBy ? this.vod.createdBy : '',
                                         })
 
@@ -304,7 +304,7 @@ export class VodEditComponent implements OnInit {
                                 this.contentType = 'RADIO';
                                 this.isRadioForm = !this.isRadioForm
                                 this.initiliazeRadioForm();
-                                this.getSubCategories({value:this.vod.categories.map((categor) => categor._id)});
+                                this.getSubCategories({ value: this.vod.categories.map((categor) => categor._id) });
                                 this.contentForm.setValue({
                                     title: this.vod.title ? this.vod.title : '',
                                     description: this.vod.description ? this.vod.description : '',
@@ -330,7 +330,7 @@ export class VodEditComponent implements OnInit {
                                     series: this.vod.series ? this.vod.series : [],
                                     images: this.vod.images ? this.vod.images : [],
                                     imageThumb: this.vod.imageThumb ? '' : '',
-                                   // packageID: this.vod.packageID ? this.vod.packageID : '',
+                                    // packageID: this.vod.packageID ? this.vod.packageID : '',
                                     createdBy: this.vod.createdBy ? this.vod.createdBy : '',
                                 })
 
@@ -338,7 +338,7 @@ export class VodEditComponent implements OnInit {
                                 this.formType = 'News'
                                 this.contentType = 'NEWS';
                                 this.initializeNewsForm()
-                                this.getSubCategories({value:this.vod.categories.map((categor) => categor._id)});
+                                this.getSubCategories({ value: this.vod.categories.map((categor) => categor._id) });
                                 this.isNewsForm = !this.isNewsForm;
                                 this.images = this.vod.images;
                                 this.contentForm.setValue({
@@ -381,10 +381,10 @@ export class VodEditComponent implements OnInit {
             if (response.status == 200 || response.success) {
                 this.imageUrl = response.fileUrl;
             }
-            
+
         }, error => {
             this.isUploading = false;
-           });
+        });
     }
 
     save() {
@@ -399,10 +399,12 @@ export class VodEditComponent implements OnInit {
             this.contentForm.value.series = {
                 "season": this.seasons
             };
-            this.contentForm.value['images'] = this.images;
 
         }
-      if (this.vod) {
+        if (this.isNewsForm) {
+            this.contentForm.value['images'] = this.images;
+        }
+        if (this.vod) {
             Object.assign(this.vod, this.contentForm.value);
 
             this.vodService.update(this.checkIfValueIsEmpty(this.vod)).subscribe(
@@ -415,7 +417,7 @@ export class VodEditComponent implements OnInit {
                 }
             );
         } else {
-          this.vodService.save(this.checkIfValueIsEmpty(this.contentForm.value)).subscribe(
+            this.vodService.save(this.checkIfValueIsEmpty(this.contentForm.value)).subscribe(
                 vod => {
                     this.errors = 'Save was successful!';
                     this.back();
@@ -428,16 +430,16 @@ export class VodEditComponent implements OnInit {
     }
 
     getCategories(type) {
-    if (type == "LIVETV" || type == "SERIES" || type == "VIDEOONDEMAND") {
-                type = "VOD";
-    }
-    this.categoriesService.findByType(type).subscribe((response: any) => {
+        if (type == "LIVETV" || type == "SERIES" || type == "VIDEOONDEMAND") {
+            type = "VOD";
+        }
+        this.categoriesService.findByType(type).subscribe((response: any) => {
             if (response.status === 200) {
                 this.categorys = response.data;
             }
         },
-        error => console.error(error)
-    );  
+            error => console.error(error)
+        );
     }
 
     getTags() {
@@ -450,7 +452,7 @@ export class VodEditComponent implements OnInit {
     }
 
     getSubCategories(event) {
-       this.subCategoriesService.findByCategory(event.value).subscribe((response: any) => {
+        this.subCategoriesService.findByCategory(event.value).subscribe((response: any) => {
             if (response.status === 200) {
                 this.subCategorie = response.data;
             }
@@ -580,7 +582,7 @@ export class VodEditComponent implements OnInit {
             series: new FormControl([]),
             images: new FormControl([]),
             imageThumb: new FormControl('', [Validators.required]),
-           // packageID: new FormControl(''),
+            // packageID: new FormControl(''),
             createdBy: new FormControl(''),
         })
     }
@@ -635,7 +637,7 @@ export class VodEditComponent implements OnInit {
             series: new FormControl([]),
             images: new FormControl([]),
             imageThumb: new FormControl('', [Validators.required]),
-           // packageID: new FormControl(''),
+            // packageID: new FormControl(''),
             createdBy: new FormControl(''),
         })
 
@@ -686,7 +688,7 @@ export class VodEditComponent implements OnInit {
             series: new FormControl([]),
             images: new FormControl([]),
             imageThumb: new FormControl('', [Validators.required]),
-          //  packageID: new FormControl(''),
+            //  packageID: new FormControl(''),
             createdBy: new FormControl(''),
         })
     }
@@ -718,7 +720,7 @@ export class VodEditComponent implements OnInit {
             series: new FormControl([]),
             images: new FormControl([]),
             imageThumb: new FormControl('', [Validators.required]),
-          //  packageID: new FormControl(''),
+            //  packageID: new FormControl(''),
             createdBy: new FormControl(''),
         })
     }
@@ -772,7 +774,7 @@ export class AddSeasonsDialog {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-               this.episode.push(result.content);
+                this.episode.push(result.content);
             }
 
         })
@@ -881,7 +883,7 @@ export class AddMultipleImages {
             if (response.status == 200 || response.success) {
                 this.images.push(response.fileUrl);
             }
-           
+
         }, error => {
             this.isUploading = false;
         });
