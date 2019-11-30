@@ -44,7 +44,7 @@ export class CategoryFormComponent implements OnInit {
   icons: any[] = [
     { key: "ic_home", value: "HOME" },
     { key: "ic_movie", value: "MOVIES" },
-    { key: "ic_sports", value: "SPORTS" },
+    { key: "ic_sport", value: "SPORTS" },
     { key: "ic_livetv", value: "LIVETV" },
     { key: "ic_more", value: "MORE" }
   ];
