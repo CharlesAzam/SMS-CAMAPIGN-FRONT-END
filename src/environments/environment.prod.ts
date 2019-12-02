@@ -1,6 +1,6 @@
 export const environment = {
   production: true
 };
-export const apiDetails={
-  baseURL:'http://34.245.129.208:3000/'
-}
+export const API = {
+  BASE_URL: "http://52.213.58.247:3000"
+};
