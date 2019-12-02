@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService } from '../banner.service';
 import { Banner } from '../banner';
-import { map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { of, ReplaySubject, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { SubCategoriesService } from 'src/app/services/sub.categories.service';
@@ -28,7 +28,18 @@ export class BannerEditComponent implements OnInit {
         'package',
         'vod'
     ]
-    content: any[] = []
+    content: any[] = [];
+
+    filterCategoriesCtrl: FormControl = new FormControl();
+    filterSubCategoryCtrl: FormControl = new FormControl();
+    filterContentCtrl: FormControl = new FormControl();
+
+    filteredCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredSubCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredContent: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+
+    protected _onDestroy = new Subject<void>();
+
 
 
     bannerForm = new FormGroup({
@@ -83,6 +94,79 @@ export class BannerEditComponent implements OnInit {
                 }, error => console.error(error));
             }
         });
+
+        this.filterCategoriesCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterCategories();
+            })
+
+        this.filterContentCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterContent();
+            })
+
+        this.filterSubCategoryCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterSubCategories();
+            })
+
+
+    }
+
+    filterCategories() {
+        if (!this.categorys)
+            return;
+
+        let search: string = this.filterCategoriesCtrl.value;
+        if (!search) {
+            this.filteredCategories.next(this.categorys.slice())
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredCategories.next(
+            this.categorys.filter(category => category.name.toLowerCase().indexOf(search) > -1)
+        )
+    }
+
+    filterSubCategories() {
+        if (!this.subs)
+            return;
+
+        let search: string = this.filterSubCategoryCtrl.value;
+        if (!search) {
+            this.filteredSubCategories.next(this.subs.slice())
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredSubCategories.next(
+            this.subs.filter(sub => sub.name.toLowerCase().indexOf(search) > -1)
+        )
+    }
+
+    filterContent() {
+        if (!this.content)
+            return;
+
+        let search = this.filterContentCtrl.value;
+        if (!search) {
+            this.filteredContent.next(this.content.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredContent.next(
+            this.content.filter(cont =>
+                cont.title ?
+                    cont.title.toLowerCase().indexOf(search) > -1 :
+                    ''
+            )
+        )
     }
 
     back() {
@@ -144,6 +228,7 @@ export class BannerEditComponent implements OnInit {
             console.log(response)
             if (response.status === 200) {
                 this.categorys = response.data;
+                this.filteredCategories.next(this.categorys.slice());
             }
         },
             error => console.error(error))
@@ -154,6 +239,7 @@ export class BannerEditComponent implements OnInit {
             console.log(response)
             if (response.status === 200) {
                 this.subs = response.data;
+                this.filteredSubCategories.next(this.subs.slice());
             }
         },
             error => console.error(error))
@@ -163,6 +249,7 @@ export class BannerEditComponent implements OnInit {
         this.contentService.find('vod').subscribe((response: any) => {
             if (response.status === 200) {
                 this.content = response.data;
+                this.filteredContent.next(this.content.slice());
             }
         },
             error => console.error(error))

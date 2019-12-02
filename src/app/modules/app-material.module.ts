@@ -24,6 +24,7 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule,
 } from '@angular/material';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 const modules = [
   MatCardModule,
@@ -50,7 +51,9 @@ const modules = [
   MatTabsModule,
   MatTableModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+  NgxMatSelectSearchModule,
+
 ];
 
 @NgModule({

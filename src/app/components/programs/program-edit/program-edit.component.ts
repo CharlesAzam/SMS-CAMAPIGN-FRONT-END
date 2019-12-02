@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramService } from '../program.service';
 import { Program } from '../program';
-import { map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { of, ReplaySubject, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { SubCategoriesService } from 'src/app/services/sub.categories.service';
@@ -23,6 +23,12 @@ export class ProgramEditComponent implements OnInit {
     fileToUpload: any = null;
     isUploading: boolean = false;
     imageUrl: string = "";
+    filterContentCtrl: FormControl = new FormControl();
+    filterTagsCtrl: FormControl = new FormControl();
+    filteredContent: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredTags: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+
+    protected _onDestroy = new Subject<void>();
 
     tagss: any[]
 
@@ -48,7 +54,7 @@ export class ProgramEditComponent implements OnInit {
         laligalive: new FormControl('', [Validators.required]),
         tags: new FormControl('', [Validators.required]),
         programType: new FormControl('', [Validators.required]),
-        image: new FormControl([Validators.required]),
+        image: new FormControl('', [Validators.required]),
         time: new FormControl('', [Validators.required]),
         duration: new FormControl('', [Validators.required])
     })
@@ -94,6 +100,60 @@ export class ProgramEditComponent implements OnInit {
                 }, error => console.error(error));
             }
         });
+
+        this.filterContentCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterContent();
+            })
+
+        this.filterTagsCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterTags();
+            })
+    }
+
+    filterContent() {
+        if (!this.content)
+            return;
+
+        let search = this.filterContentCtrl.value;
+        if (!search) {
+            this.filteredContent.next(this.content.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredContent.next(
+            this.content.filter(cont =>
+                cont.title ?
+                    cont.title.toLowerCase().indexOf(search) > -1 :
+                    ''
+            )
+        )
+    }
+
+    filterTags() {
+        if (!this.tagss)
+            return;
+
+        let search = this.filterTagsCtrl.value;
+        if (!search) {
+            this.filteredTags.next(this.tagss.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredTags.next(
+            this.tagss.filter(cont =>
+                cont.name ?
+                    cont.name.toLowerCase().indexOf(search) > -1 :
+                    ''
+            )
+        )
     }
 
     back() {
@@ -155,6 +215,7 @@ export class ProgramEditComponent implements OnInit {
         this.tagService.find().subscribe((response: any) => {
             if (response.status === 200) {
                 this.tagss = response.data;
+                this.filteredTags.next(this.tagss.slice());
             }
         },
             error => console.error(error))
@@ -173,6 +234,7 @@ export class ProgramEditComponent implements OnInit {
         this.contentService.find('vod').subscribe((response: any) => {
             if (response.status === 200) {
                 this.content = response.data;
+                this.filteredContent.next(this.content.slice());
             }
         },
             error => console.error(error))

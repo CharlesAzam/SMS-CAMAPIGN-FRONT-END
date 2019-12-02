@@ -19,7 +19,10 @@
                 <mat-form-field style="width: 100%;">
                     <mat-label>Category</mat-label>
                     <mat-select formControlName="parentCatID">
-                        <mat-option *ngFor="let category of categories" [value]="category._id">{{category.name}}
+                        <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                            [noEntriesFoundLabel]="'Category not found'" [placeholderLabel]="'Find Category...'">
+                        </ngx-mat-select-search>
+                        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">{{category.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

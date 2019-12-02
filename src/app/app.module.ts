@@ -49,6 +49,8 @@ import { LeagueComponent } from "./components/league/league-form/league.componen
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { MatInputModule } from "@angular/material";
 import { LeagueService } from "./services/league.service";
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -92,6 +94,7 @@ import { LeagueService } from "./services/league.service";
     CategoriesModule,
     VodModule,
     PackageModule,
+    NgxMatSelectSearchModule,
     CouponModule,
     RadioModule,
     ProductModule,

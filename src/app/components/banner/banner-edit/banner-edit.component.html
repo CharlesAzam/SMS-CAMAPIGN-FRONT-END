@@ -10,7 +10,7 @@
 
                     <p *ngIf="errors">{{ errors }}</p>
 
-                    <form  [formGroup]="bannerForm" (ngSubmit)="save()">
+                    <form [formGroup]="bannerForm" (ngSubmit)="save()">
 
                         <mat-form-field style="width: 100%;">
                             <input matInput placeholder="Name" formControlName="name" required>
@@ -33,7 +33,11 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Content</mat-label>
                             <mat-select formControlName="content" required>
-                                <mat-option *ngFor="let cont of content" [value]="cont._id">{{cont.title}}
+                                <ngx-mat-select-search [formControl]="filterContentCtrl"
+                                    [noEntriesFoundLabel]="'Content not found'" [placeholderLabel]="'Find Content...'">
+                                </ngx-mat-select-search>
+                                <mat-option *ngFor="let cont of filteredContent | async" [value]="cont._id">
+                                    {{cont.title}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -56,7 +60,12 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Category</mat-label>
                             <mat-select formControlName="categories">
-                                <mat-option *ngFor="let category of categorys" [value]="category._id">{{category.name}}
+                                <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                                    [noEntriesFoundLabel]="'Category not found'"
+                                    [placeholderLabel]="'Find Category...'">
+                                </ngx-mat-select-search>
+                                <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
+                                    {{category.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -64,7 +73,11 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Sub Categories</mat-label>
                             <mat-select formControlName="subCategories">
-                                <mat-option *ngFor="let sub of subs" [value]="sub._id">{{sub.name}}
+                                <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                    [noEntriesFoundLabel]="'Sub Category not found'"
+                                    [placeholderLabel]="'Find Sub Category...'">
+                                </ngx-mat-select-search>
+                                <mat-option *ngFor="let sub of filteredSubCategories | async" [value]="sub._id">{{sub.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -72,8 +85,8 @@
 
                         <div class="form-group">
                             <label for="Decription">{{bannerModel?'Change':'Upload'}} Image:</label>
-                            <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*" class="form-control" 
-                                placeholder="Enter Upload image thumb">
+                            <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*"
+                                class="form-control" placeholder="Enter Upload image thumb">
 
                         </div>
                         <mat-spinner *ngIf='isUploading'></mat-spinner>

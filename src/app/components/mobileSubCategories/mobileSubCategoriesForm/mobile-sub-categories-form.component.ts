@@ -6,6 +6,8 @@ import { SubCategoriesService } from 'src/app/services/sub.categories.service';
 import { SubCategory } from 'src/app/models/sub.categories';
 import { LanguageService } from 'src/app/services/language.service';
 import { VodService } from '../../vod/vod.service';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-mobile-sub-categories-form',
   templateUrl: './mobile-sub-categories-form.component.html',
@@ -33,6 +35,15 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     'short',
     'big'
   ]
+
+  filterCategoriesCtrl: FormControl = new FormControl();
+
+  filteredCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+
+  protected _onDestroy = new Subject<void>();
+
+
+
   subCategoryModel: SubCategory
   showType: boolean = false;
   subCategoryForm = new FormGroup({
@@ -71,6 +82,12 @@ export class MobileSubCategoriesFormComponent implements OnInit {
       }
     });
 
+    this.filterCategoriesCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCategories();
+      })
+
   }
 
   isTypeVisible() {
@@ -94,8 +111,26 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     this.categoryService.find().subscribe((result: any) => {
       if (result.status == 200) {
         this.categories = result.data;
+        this.filteredCategories.next(this.categories.slice());
+
       }
     })
+  }
+
+  filterCategories() {
+    if (!this.categories)
+      return;
+
+    let search: string = this.filterCategoriesCtrl.value;
+    if (!search) {
+      this.filteredCategories.next(this.categories.slice())
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredCategories.next(
+      this.categories.filter(category => category.name.toLowerCase().indexOf(search) > -1)
+    )
   }
 
   back() {
