@@ -454,7 +454,15 @@ export class VodEditComponent implements OnInit {
     getSubCategories(event) {
         this.subCategoriesService.findByCategory(event.value).subscribe((response: any) => {
             if (response.status === 200) {
-                this.subCategorie = response.data;
+                const tmpArr = [];
+                const currentSelection = this.contentForm.controls.subCategories;
+                this.subCategorie = response.data.map((sub)=>{
+                   if(currentSelection.value.indexOf(sub._id) >= 0){
+                    tmpArr.push(sub._id);
+                   }
+                   return sub;
+                });        
+                this.contentForm.patchValue({subCategories :tmpArr});           
             }
         },
             error => console.error(error));
