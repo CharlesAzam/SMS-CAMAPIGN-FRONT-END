@@ -36,7 +36,7 @@ export class BannerListComponent {
     delete(row) {
         this.bannerService.delete(row._id).subscribe((response: any) => {
             if (response.status === 200) {
-                this.getBanners(this.paginator.pageIndex, this.paginator.pageSize);
+                this.getBanners(this.paginator.pageIndex+1, this.paginator.pageSize);
             }
         },
             error => console.error(error))

@@ -42,7 +42,7 @@
                             <mat-label>Azam Package Mapping Name</mat-label>
                             <mat-select formControlName="azamPackageMappingName">
                                 <mat-option *ngFor="let package of azamPackages" [value]="package.planCode">
-                                    {{package.packageName}}
+                                    {{package.planName}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

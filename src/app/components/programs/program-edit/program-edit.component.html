@@ -33,7 +33,11 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Content</mat-label>
                             <mat-select formControlName="contents" required>
-                                <mat-option *ngFor="let cont of content" [value]="cont._id">{{cont.title}}
+                                <ngx-mat-select-search [formControl]="filterContentCtrl"
+                                    [noEntriesFoundLabel]="'Content not found'" [placeholderLabel]="'Find Content...'">
+                                </ngx-mat-select-search>
+                                <mat-option *ngFor="let cont of filteredContent | async" [value]="cont._id">
+                                    {{cont.title}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -58,7 +62,10 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Tags</mat-label>
                             <mat-select formControlName="tags" required>
-                                <mat-option *ngFor="let tags of tagss" [value]="tags.name">{{tags.name}}
+                                <ngx-mat-select-search [formControl]="filterTagsCtrl"
+                                    [noEntriesFoundLabel]="'Tag not found'" [placeholderLabel]="'Find Tag...'">
+                                </ngx-mat-select-search>
+                                <mat-option *ngFor="let tags of filteredTags | async" [value]="tags.name">{{tags.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -86,10 +93,10 @@
 
 
 
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label for="Decription">{{programModel?'Change':'Upload'}} Image:</label>
-                            <input (change)="handelImageChange($event.target.files)"  accept="image/*" type="file" class="form-control"
-                                formControlName="image" placeholder="Enter Upload image thumb">
+                            <input (change)="handelImageChange($event.target.files)" accept="image/*" type="file"
+                                class="form-control" formControlName="image" placeholder="Enter Upload image thumb">
 
                         </div>
 

@@ -24,38 +24,52 @@ import { AdminComponent } from "./components/admin/Create-Role/admin.component";
 import { UserListComponent } from "./components/admin/user-list/user-list.component";
 import { LeagueComponent } from "./components/league/league-form/league.component";
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+
+
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   {
     path: "home",
     component: HomepageComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
       {
         path: "dashboard",
         component: DashboardComponent
+        , canActivate: [AuthGuard],
+
+
+
       },
       {
         path: "movies",
         loadChildren: "./components/movie/movies.module#MoviesModule"
+        , canActivate: [AuthGuard],
+
       },
       {
         path: "categories",
         loadChildren:
-          "./components/homepage/categories/categories.module#CategoriesModule"
+          "./components/homepage/categories/categories.module#CategoriesModule", canActivate: [AuthGuard],
+
       },
       {
         path: "content",
-        loadChildren: "./components/vod/vod.module#VodModule"
+        loadChildren: "./components/vod/vod.module#VodModule", canActivate: [AuthGuard],
+
       },
       {
         path: "package",
-        loadChildren: "./components/package/package.module#PackageModule"
+        loadChildren: "./components/package/package.module#PackageModule", canActivate: [AuthGuard],
+
       },
       {
         path: "coupon",
-        loadChildren: "./components/coupon/coupon.module#CouponModule"
+        loadChildren: "./components/coupon/coupon.module#CouponModule", canActivate: [AuthGuard],
+
       },
       // {
       //   path: "radio",
@@ -63,84 +77,104 @@ const routes: Routes = [
       // },
       {
         path: "product",
-        loadChildren: "./components/product/product.module#ProductModule"
+        loadChildren: "./components/product/product.module#ProductModule", canActivate: [AuthGuard],
+
       },
       {
         path: "video-library",
         loadChildren:
-          "./components/video-library/video-library.module#VideoLibraryModule"
+          "./components/video-library/video-library.module#VideoLibraryModule", canActivate: [AuthGuard],
+
       },
       {
         path: "banner",
-        loadChildren: "./components/banner/banner.module#BannerModule"
+        loadChildren: "./components/banner/banner.module#BannerModule", canActivate: [AuthGuard],
+
       },
       {
         path: "program",
-        loadChildren: "./components/programs/program.module#ProgramModule"
+        loadChildren: "./components/programs/program.module#ProgramModule", canActivate: [AuthGuard],
+
       },
       {
         path: "category",
-        component: CreateCategoryComponent
+        component: CreateCategoryComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "sideBar",
-        component: SideNavComponent
+        component: SideNavComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "subCategory",
-        component: MobileSubCategoriesComponent
+        component: MobileSubCategoriesComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "subCategoryForm/:id",
-        component: MobileSubCategoriesFormComponent
+        component: MobileSubCategoriesFormComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "NewsTags",
-        component: NewsTagComponent
+        component: NewsTagComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "NewsTagsForms",
-        component: CreateTagsComponent
+        component: CreateTagsComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "MobileTags",
-        component: MobileTagsComponent
+        component: MobileTagsComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "MobileTagForm/:id",
-        component: MobileTagFormComponent
+        component: MobileTagFormComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "Channels",
-        component: ChannelComponent
+        component: ChannelComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "ChannelsForm",
-        component: CreateChannelsComponentForm
+        component: CreateChannelsComponentForm, canActivate: [AuthGuard],
+
       },
       {
         path: "StoriesIdea",
-        component: NewsStroyIdeaComponent
+        component: NewsStroyIdeaComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "StoriesIdeaForm",
-        component: CreateNewsStoryComponent
+        component: CreateNewsStoryComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "NewsVideos",
-        component: CreateNewsVideosComponent
+        component: CreateNewsVideosComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "NewsPhoto",
-        component: NewsPhotosComponent
+        component: NewsPhotosComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "NewsPhotoForm",
-        component: CreateNewsPhotosComponent
+        component: CreateNewsPhotosComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "CategoryForm/:id",
-        component: CategoryFormComponent
+        component: CategoryFormComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "Demo2",
@@ -149,23 +183,28 @@ const routes: Routes = [
       },
       {
         path: "Admin",
-        component: AdminComponent
+        component: AdminComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "UserList",
-        component: UserListComponent
+        component: UserListComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "LeagueList",
-        component: LeaguelistComponent
+        component: LeaguelistComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "CreateLeague",
-        component: LeagueComponent
+        component: LeagueComponent, canActivate: [AuthGuard],
+
       },
       {
         path: "CreateLeague/:id",
-        component: LeagueComponent
+        component: LeagueComponent, canActivate: [AuthGuard],
+
       }
     ]
   }
@@ -175,4 +214,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

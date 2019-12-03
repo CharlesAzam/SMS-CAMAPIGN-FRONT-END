@@ -4,7 +4,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { EditorModule } from "@tinymce/tinymce-angular";
 
 import { MoviesService } from "./services/movies.service";
@@ -49,6 +49,12 @@ import { LeagueComponent } from "./components/league/league-form/league.componen
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { MatInputModule } from "@angular/material";
 import { LeagueService } from "./services/league.service";
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { JwtInterceptor } from './services/interceptor.service';
+import { ErrorInterceptor } from './services/error-interceptor.service';
+
+
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -92,6 +98,7 @@ import { LeagueService } from "./services/league.service";
     CategoriesModule,
     VodModule,
     PackageModule,
+    NgxMatSelectSearchModule,
     CouponModule,
     RadioModule,
     ProductModule,
@@ -103,7 +110,14 @@ import { LeagueService } from "./services/league.service";
     ReactiveFormsModule,
     MatInputModule
   ],
-  providers: [MoviesService, LanguageService, CountryService, LeagueService],
+  providers: [
+    MoviesService, LanguageService, CountryService, LeagueService, AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+
+  ]
+  ,
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

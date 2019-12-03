@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0",
+    "build": "ng build --host 0.0.0.0",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -27,6 +27,7 @@
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "ng-zorro-antd": "^8.5.1",
+    "ngx-mat-select-search": "^2.0.0",
     "ngx-material-timepicker": "^5.2.3",
     "ngx-restangular": "^1.0.1",
     "rxjs": "~6.4.0",

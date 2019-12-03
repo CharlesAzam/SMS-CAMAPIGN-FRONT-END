@@ -5,6 +5,7 @@ export class Banner {
     description: string;
     image: string;
     content: any;
+    URL: String;
     priority: number;
     categories: any;
     subCategories: any;

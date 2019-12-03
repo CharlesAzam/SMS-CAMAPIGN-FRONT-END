@@ -26,7 +26,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Tags</mat-label>
                                     <mat-select formControlName="tags" multiple required>
-                                        <mat-option *ngFor="let ta of tagss" [value]="ta._id">{{ta.name}}
+                                        <ngx-mat-select-search [formControl]="filterTagsCtrl"
+                                            [noEntriesFoundLabel]="'Tag not found'" [placeholderLabel]="'Find Tag..'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ta.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -73,7 +76,11 @@
                                     <mat-label>Categories</mat-label>
                                     <mat-select (selectionChange)="getSubCategories($event)"
                                         formControlName="categories" multiple required>
-                                        <mat-option *ngFor="let category of categorys" [value]="category._id">
+                                        <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                                            [noEntriesFoundLabel]="'Category not found'"
+                                            [placeholderLabel]="'Find Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
                                     </mat-select>
@@ -84,7 +91,11 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
                                     <mat-select formControlName="subCategories" multiple>
-                                        <mat-option *ngFor="let subCategory of subCategorie" [value]="subCategory._id">
+                                        <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                            [noEntriesFoundLabel]="'Sub Category not found'"
+                                            [placeholderLabel]="'Find Sub Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let subCategory of filteredSubCategories | async" [value]="subCategory._id">
                                             {{subCategory.name}}
                                         </mat-option>
                                     </mat-select>
@@ -163,7 +174,7 @@
                             <div class="form-group">
                                 <mat-label>Is Free Azam?</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
-                                    formControlName="isFreeAzam" style="margin-left: 10px;" required>
+                                    formControlName="isFreeForAzam" style="margin-left: 10px;" required>
                                     <mat-button-toggle value=true>TRUE</mat-button-toggle>
                                     <mat-button-toggle value=false>FALSE</mat-button-toggle>
                                 </mat-button-toggle-group>
@@ -212,7 +223,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>CDNS</mat-label>
                                     <mat-select formControlName="cdnID" required>
-                                        <mat-option *ngFor="let cdn of cdns" [value]="cdn._id">{{cdn.name}}
+                                        <ngx-mat-select-search [formControl]="filterCdnCtrl"
+                                            [noEntriesFoundLabel]="'CDN not found'" [placeholderLabel]="'Find CDN...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let cdn of filteredCdns | async" [value]="cdn._id">{{cdn.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -269,7 +283,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Tags</mat-label>
                                     <mat-select formControlName="tags" multiple required>
-                                        <mat-option *ngFor="let ta of tagss" [value]="ta._id">{{ta.name}}
+                                        <ngx-mat-select-search [formControl]="filterTagsCtrl"
+                                            [noEntriesFoundLabel]="'Tag not found'" [placeholderLabel]="'Find Tag..'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ta.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -316,7 +333,11 @@
                                     <mat-label>Categories</mat-label>
                                     <mat-select (selectionChange)="getSubCategories($event)"
                                         formControlName="categories" multiple required>
-                                        <mat-option *ngFor="let category of categorys" [value]="category._id">
+                                        <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                                            [noEntriesFoundLabel]="'Category not found'"
+                                            [placeholderLabel]="'Find Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
                                     </mat-select>
@@ -330,7 +351,11 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
                                     <mat-select formControlName="subCategories" multiple>
-                                        <mat-option *ngFor="let subCategory of subCategorie" [value]="subCategory._id">
+                                        <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                            [noEntriesFoundLabel]="'Sub Category not found'"
+                                            [placeholderLabel]="'Find Sub Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let subCategory of filteredSubCategories | async" [value]="subCategory._id">
                                             {{subCategory.name}}
                                         </mat-option>
                                     </mat-select>
@@ -382,7 +407,7 @@
                             <div class="form-group">
                                 <mat-label>Is Free Azam?</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
-                                    formControlName="isFreeAzam" style="margin-left: 10px;" required>
+                                    formControlName="isFreeForAzam" style="margin-left: 10px;" required>
                                     <mat-button-toggle value=true>TRUE</mat-button-toggle>
                                     <mat-button-toggle value=false>FALSE</mat-button-toggle>
                                 </mat-button-toggle-group>
@@ -431,7 +456,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>CDNS</mat-label>
                                     <mat-select formControlName="cdnID" required>
-                                        <mat-option *ngFor="let cdn of cdns" [value]="cdn._id">{{cdn.name}}
+                                        <ngx-mat-select-search [formControl]="filterCdnCtrl"
+                                            [noEntriesFoundLabel]="'CDN not found'" [placeholderLabel]="'Find CDN...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let cdn of filteredCdns | async" [value]="cdn._id">{{cdn.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -488,7 +516,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Tags</mat-label>
                                     <mat-select formControlName="tags" multiple required>
-                                        <mat-option *ngFor="let ta of tagss" [value]="ta._id">{{ta.name}}
+                                        <ngx-mat-select-search [formControl]="filterTagsCtrl"
+                                            [noEntriesFoundLabel]="'Tag not found'" [placeholderLabel]="'Find Tag..'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ta.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -523,7 +554,11 @@
                                     <mat-label>Categories</mat-label>
                                     <mat-select (selectionChange)="getSubCategories($event)"
                                         formControlName="categories" multiple required>
-                                        <mat-option *ngFor="let category of categorys" [value]="category._id">
+                                        <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                                            [noEntriesFoundLabel]="'Category not found'"
+                                            [placeholderLabel]="'Find Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
                                     </mat-select>
@@ -535,7 +570,11 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
                                     <mat-select formControlName="subCategories" multiple>
-                                        <mat-option *ngFor="let subCategory of subCategorie" [value]="subCategory._id">
+                                        <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                            [noEntriesFoundLabel]="'Sub Category not found'"
+                                            [placeholderLabel]="'Find Sub Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let subCategory of filteredSubCategories | async" [value]="subCategory._id">
                                             {{subCategory.name}}
                                         </mat-option>
                                     </mat-select>
@@ -585,7 +624,7 @@
                             <div class="form-group">
                                 <mat-label>Is Free Azam?</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
-                                    formControlName="isFreeAzam" style="margin-left: 10px;" required>
+                                    formControlName="isFreeForAzam" style="margin-left: 10px;" required>
                                     <mat-button-toggle value=true>TRUE</mat-button-toggle>
                                     <mat-button-toggle value=false>FALSE</mat-button-toggle>
                                 </mat-button-toggle-group>
@@ -634,7 +673,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>CDNS</mat-label>
                                     <mat-select formControlName="cdnID" required>
-                                        <mat-option *ngFor="let cdn of cdns" [value]="cdn._id">{{cdn.name}}
+                                        <ngx-mat-select-search [formControl]="filterCdnCtrl"
+                                            [noEntriesFoundLabel]="'CDN not found'" [placeholderLabel]="'Find CDN...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let cdn of filteredCdns | async" [value]="cdn._id">{{cdn.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -691,7 +733,10 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Tags</mat-label>
                                     <mat-select formControlName="tags" multiple required>
-                                        <mat-option *ngFor="let ta of tagss" [value]="ta._id">{{ta.name}}
+                                        <ngx-mat-select-search [formControl]="filterTagsCtrl"
+                                            [noEntriesFoundLabel]="'Tag not found'" [placeholderLabel]="'Find Tag..'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ta.name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -702,7 +747,11 @@
                                     <mat-label>Categories</mat-label>
                                     <mat-select (selectionChange)="getSubCategories($event)"
                                         formControlName="categories" multiple required>
-                                        <mat-option *ngFor="let category of categorys" [value]="category._id">
+                                        <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                                            [noEntriesFoundLabel]="'Category not found'"
+                                            [placeholderLabel]="'Find Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
                                             {{category.name}}
                                         </mat-option>
                                     </mat-select>
@@ -713,7 +762,11 @@
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
                                     <mat-select formControlName="subCategories" multiple>
-                                        <mat-option *ngFor="let subCategory of subCategorie" [value]="subCategory._id">
+                                        <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                            [noEntriesFoundLabel]="'Sub Category not found'"
+                                            [placeholderLabel]="'Find Sub Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let subCategory of filteredSubCategories | async" [value]="subCategory._id">
                                             {{subCategory.name}}
                                         </mat-option>
                                     </mat-select>
@@ -760,19 +813,12 @@
                             <div class="form-group">
                                 <mat-label>Is Free Azam?</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
-                                    formControlName="isFreeAzam" style="margin-left: 10px;" required>
+                                    formControlName="isFreeForAzam" style="margin-left: 10px;" required>
                                     <mat-button-toggle value=true>TRUE</mat-button-toggle>
                                     <mat-button-toggle value=false>FALSE</mat-button-toggle>
                                 </mat-button-toggle-group>
                             </div>
 
-
-                            <!-- <mat-form-field style="width: 100%;">
-                                                    <input matInput placeholder="Image Thumbnail" formControlName="imageThumb" name="imageThumb"
-                                                        required>
-                                                    <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error>
-                        
-                                                </mat-form-field> -->
                             <div class="form-group">
                                 <label for="Decription">{{vod?'Change':'Upload'}} Image:</label>
                                 <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*"

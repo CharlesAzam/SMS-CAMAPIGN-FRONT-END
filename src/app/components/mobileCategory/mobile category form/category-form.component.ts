@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import {
   FormControl,
   Validators,
@@ -12,12 +12,14 @@ import { BannerService } from "../../banner/banner.service";
 import { CategoriesService } from "src/app/services/categories.service";
 import { Categories } from "src/app/models/categories";
 import { LanguageService } from "src/app/services/language.service";
+import { takeUntil, take } from 'rxjs/operators';
+import { Subject, ReplaySubject } from 'rxjs';
 @Component({
   selector: "app-category-form",
   templateUrl: "./category-form.component.html",
   styleUrls: ["./category-form.component.css"]
 })
-export class CategoryFormComponent implements OnInit {
+export class CategoryFormComponent implements OnInit, AfterViewInit {
   categoryForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required]),
     // banner: new FormControl(''),
@@ -33,6 +35,16 @@ export class CategoryFormComponent implements OnInit {
     status: new FormControl(true, [Validators.required])
   });
 
+  filterTypesCtrl: FormControl = new FormControl();
+  filterLanguageCtrl: FormControl = new FormControl();
+
+  filteredTypes: ReplaySubject<String[]> = new ReplaySubject<String[]>();
+  filteredLanguages: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+
+
+  protected _onDestroy = new Subject<void>();
+
+
   languages: any[] = [];
   subCategories: any[] = [];
   banners: any[] = [];
@@ -44,7 +56,7 @@ export class CategoryFormComponent implements OnInit {
   icons: any[] = [
     { key: "ic_home", value: "HOME" },
     { key: "ic_movie", value: "MOVIES" },
-    { key: "ic_sports", value: "SPORTS" },
+    { key: "ic_sport", value: "SPORTS" },
     { key: "ic_livetv", value: "LIVETV" },
     { key: "ic_more", value: "MORE" }
   ];
@@ -56,7 +68,7 @@ export class CategoryFormComponent implements OnInit {
     private bannerService: BannerService,
     private categoryService: CategoriesService,
     private languageService: LanguageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.getSubCategories();
@@ -103,6 +115,60 @@ export class CategoryFormComponent implements OnInit {
         );
       }
     });
+
+
+    this.filteredTypes.next(this.types.slice());
+
+    this.filterTypesCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterTypes();
+      })
+
+    this.filterLanguageCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterLanguages();
+      })
+  }
+
+
+  ngAfterViewInit() {
+  }
+
+
+  filterTypes() {
+    if (!this.types)
+      return;
+
+    let search = this.filterTypesCtrl.value;
+    if (!search) {
+      this.filteredTypes.next(this.types.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredTypes.next(
+      this.types.filter(type => type.toLowerCase().indexOf(search) > -1)
+    )
+  }
+
+  filterLanguages() {
+    if (!this.languages)
+      return;
+
+    let search = this.filterLanguageCtrl.value;
+    if (!search) {
+      this.filteredLanguages.next(this.languages.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredLanguages.next(
+      this.languages.filter(language => language.name.toLowerCase().indexOf(search) > -1)
+    )
   }
 
   getBanners() {
@@ -164,6 +230,8 @@ export class CategoryFormComponent implements OnInit {
       response => {
         if (response.status === 200) {
           this.languages = response.data;
+          this.filteredLanguages.next(this.languages.slice());
+
         }
       },
       error => {

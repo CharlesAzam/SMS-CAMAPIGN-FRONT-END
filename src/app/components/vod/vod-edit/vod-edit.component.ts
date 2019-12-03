@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VodService } from '../vod.service';
 import { Vod } from '../vod';
-import { map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { of, ReplaySubject, Subject } from 'rxjs';
 import { MatChipInputEvent, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -27,6 +27,20 @@ export class VodEditComponent implements OnInit {
     isVideoForm: boolean = false;
     isLiveTvForm: boolean = false;
     isSeriesForm: boolean = false;
+
+    filterCategoriesCtrl: FormControl = new FormControl();
+    filterSubCategoryCtrl: FormControl = new FormControl();
+    filterCdnCtrl: FormControl = new FormControl();
+    filterTagsCtrl: FormControl = new FormControl();
+
+    filteredCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredSubCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredCdns: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredTags: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+
+    protected _onDestroy = new Subject<void>();
+
+
 
     formType: string = "";
 
@@ -202,7 +216,7 @@ export class VodEditComponent implements OnInit {
                                                 currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
                                                 noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',
                                             },
-                                            isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
+                                            isFreeForAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                             isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
                                             status: String(this.vod.status) ? String(this.vod.status) : '',
                                             boundingBox: this.vod.boundingBox ? this.vod.boundingBox : '',
@@ -242,7 +256,7 @@ export class VodEditComponent implements OnInit {
                                                 currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
                                                 noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',
                                             },
-                                            isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
+                                            isFreeForAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                             isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
                                             status: String(this.vod.status) ? String(this.vod.status) : '',
                                             boundingBox: this.vod.boundingBox ? this.vod.boundingBox : '',
@@ -282,7 +296,7 @@ export class VodEditComponent implements OnInit {
                                                 currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
                                                 noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',
                                             },
-                                            isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
+                                            isFreeForAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                             isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
                                             status: String(this.vod.status) ? String(this.vod.status) : '',
                                             boundingBox: this.vod.boundingBox ? this.vod.boundingBox : '',
@@ -322,7 +336,7 @@ export class VodEditComponent implements OnInit {
                                         currency: this.vod.priceDetail[0] ? this.vod.priceDetail[0].currency : '',
                                         noOfDays: this.vod.priceDetail[0] ? this.vod.priceDetail[0].noOfDays : '',
                                     },
-                                    isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
+                                    isFreeForAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                     isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
                                     status: String(this.vod.status) ? String(this.vod.status) : '',
                                     boundingBox: this.vod.boundingBox ? this.vod.boundingBox : '',
@@ -349,7 +363,7 @@ export class VodEditComponent implements OnInit {
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
-                                    isFreeAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
+                                    isFreeForAzam: String(this.vod.isFreeForAzam) ? String(this.vod.isFreeForAzam) : '',
                                     isSeries: String(this.vod.isSeries) ? String(this.vod.isSeries) : '',
                                     status: String(this.vod.status) ? String(this.vod.status) : '',
                                     series: this.vod.series ? this.vod.series : [],
@@ -364,6 +378,30 @@ export class VodEditComponent implements OnInit {
                     break;
             }
         })
+
+        this.filterTagsCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterTags();
+            })
+
+        this.filterCategoriesCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterCategories();
+            })
+
+        this.filterSubCategoryCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterSubCategories();
+            })
+
+        this.filterCdnCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterCdn();
+            })
     }
 
 
@@ -436,6 +474,7 @@ export class VodEditComponent implements OnInit {
         this.categoriesService.findByType(type).subscribe((response: any) => {
             if (response.status === 200) {
                 this.categorys = response.data;
+                this.filteredCategories.next(this.categorys.slice());
             }
         },
             error => console.error(error)
@@ -446,6 +485,7 @@ export class VodEditComponent implements OnInit {
         this.tagsService.find().subscribe((response: any) => {
             if (response.status === 200) {
                 this.tagss = response.data;
+                this.filteredTags.next(this.tagss.slice());
             }
         },
             error => console.error(error));
@@ -462,7 +502,8 @@ export class VodEditComponent implements OnInit {
                    }
                    return sub;
                 });        
-                this.contentForm.patchValue({subCategories :tmpArr});           
+                this.contentForm.patchValue({subCategories :tmpArr}); 
+                this.filteredSubCategories.next(this.subCategorie)
             }
         },
             error => console.error(error));
@@ -488,6 +529,7 @@ export class VodEditComponent implements OnInit {
 
     getCountries() {
         this.countryService.list().subscribe((response: any) => {
+            console.log(response)
             if (response.status === 200) {
                 this.countries = response.data;
             }
@@ -499,9 +541,84 @@ export class VodEditComponent implements OnInit {
         this.cdnService.find().subscribe((response: any) => {
             if (response.status === 200) {
                 this.cdns = response.data;
+                this.filteredCdns.next(this.cdns.slice())
             }
         },
             error => console.error(error))
+    }
+
+    filterSubCategories() {
+        if (!this.subCategorie)
+            return;
+
+        let search: string = this.filterSubCategoryCtrl.value;
+        if (!search) {
+            this.filteredSubCategories.next(this.subCategorie.slice())
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredSubCategories.next(
+            this.subCategorie.filter(sub => sub.name.toLowerCase().indexOf(search) > -1)
+        )
+    }
+
+    filterTags() {
+        if (!this.tagss)
+            return;
+
+        let search = this.filterTagsCtrl.value;
+        if (!search) {
+            this.filteredTags.next(this.tagss.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredTags.next(
+            this.tagss.filter(cont =>
+                cont.name ?
+                    cont.name.toLowerCase().indexOf(search) > -1 :
+                    ''
+            )
+        )
+    }
+
+    filterCdn() {
+        if (!this.cdns)
+            return;
+
+        let search = this.filterCdnCtrl.value;
+        if (!search) {
+            this.filteredCdns.next(this.cdns.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredCdns.next(
+            this.cdns.filter(cont =>
+                cont.name ?
+                    cont.name.toLowerCase().indexOf(search) > -1 :
+                    ''
+            )
+        )
+    }
+
+    filterCategories() {
+        if (!this.categorys)
+            return;
+
+        let search: string = this.filterCategoriesCtrl.value;
+        if (!search) {
+            this.filteredCategories.next(this.categorys.slice())
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredCategories.next(
+            this.categorys.filter(category => category.name.toLowerCase().indexOf(search) > -1)
+        )
     }
 
 
@@ -583,7 +700,7 @@ export class VodEditComponent implements OnInit {
                 currency: new FormControl('', [Validators.required]),
                 noOfDays: new FormControl('', [Validators.required])
             }),
-            isFreeAzam: new FormControl('', [Validators.required]),
+            isFreeForAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('true'),
             status: new FormControl('', [Validators.required]),
             boundingBox: new FormControl('', [Validators.required]),
@@ -610,7 +727,7 @@ export class VodEditComponent implements OnInit {
                 currency: new FormControl('', [Validators.required]),
                 noOfDays: new FormControl('', [Validators.required])
             }),
-            isFreeAzam: new FormControl('', [Validators.required]),
+            isFreeForAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('false'),
             status: new FormControl('', [Validators.required]),
             series: new FormControl([]),
@@ -638,7 +755,7 @@ export class VodEditComponent implements OnInit {
                 currency: new FormControl('', [Validators.required]),
                 noOfDays: new FormControl('', [Validators.required])
             }),
-            isFreeAzam: new FormControl('', [Validators.required]),
+            isFreeForAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('false'),
             status: new FormControl('', [Validators.required]),
             boundingBox: new FormControl('', [Validators.required]),
@@ -661,7 +778,7 @@ export class VodEditComponent implements OnInit {
             categories: new FormControl('', [Validators.required]),
             subCategories: new FormControl('', [Validators.required]),
             isFree: new FormControl('', [Validators.required]),
-            isFreeAzam: new FormControl('', [Validators.required]),
+            isFreeForAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('false'),
             status: new FormControl('', [Validators.required]),
             series: new FormControl([]),
@@ -689,7 +806,7 @@ export class VodEditComponent implements OnInit {
                 currency: new FormControl('', [Validators.required]),
                 noOfDays: new FormControl('', [Validators.required])
             }),
-            isFreeAzam: new FormControl('', [Validators.required]),
+            isFreeForAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('false'),
             status: new FormControl('', [Validators.required]),
             boundingBox: new FormControl('', [Validators.required]),
@@ -721,7 +838,7 @@ export class VodEditComponent implements OnInit {
                 currency: new FormControl('', [Validators.required]),
                 noOfDays: new FormControl('', [Validators.required])
             }),
-            isFreeAzam: new FormControl('', [Validators.required]),
+            isFreeForAzam: new FormControl('', [Validators.required]),
             isSeries: new FormControl('false'),
             status: new FormControl('', [Validators.required]),
             boundingBox: new FormControl('', [Validators.required]),
