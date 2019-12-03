@@ -29,8 +29,16 @@
                             <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
 
                         </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
+                        <div>
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Type</mat-label>
+                                <mat-select (selectionChange)="getTypeOfBanner($event)" formControlName="type">
+                                    <mat-option *ngFor="let typ of types" [value]="typ">{{typ}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field *ngIf="bannerType=='vod'" style="width: 100%;">
                             <mat-label>Content</mat-label>
                             <mat-select formControlName="content" required>
                                 <ngx-mat-select-search [formControl]="filterContentCtrl"
@@ -43,12 +51,10 @@
                         </mat-form-field>
 
 
-                        <mat-form-field style="width: 100%;">
-                            <mat-label>Type</mat-label>
-                            <mat-select formControlName="type">
-                                <mat-option *ngFor="let typ of types" [value]="typ">{{typ}}
-                                </mat-option>
-                            </mat-select>
+                        <mat-form-field *ngIf="bannerType=='package'" style="width: 100%;">
+                            <input matInput placeholder="Link" formControlName="URL" required>
+                            <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
@@ -77,7 +83,8 @@
                                     [noEntriesFoundLabel]="'Sub Category not found'"
                                     [placeholderLabel]="'Find Sub Category...'">
                                 </ngx-mat-select-search>
-                                <mat-option *ngFor="let sub of filteredSubCategories | async" [value]="sub._id">{{sub.name}}
+                                <mat-option *ngFor="let sub of filteredSubCategories | async" [value]="sub._id">
+                                    {{sub.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

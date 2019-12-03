@@ -28,6 +28,7 @@ export class BannerEditComponent implements OnInit {
         'package',
         'vod'
     ]
+    bannerType='vod'
     content: any[] = [];
 
     filterCategoriesCtrl: FormControl = new FormControl();
@@ -47,8 +48,9 @@ export class BannerEditComponent implements OnInit {
         description: new FormControl('', [Validators.required]),
         subtitle: new FormControl('', [Validators.required]),
         type: new FormControl('', [Validators.required]),
-        content: new FormControl('', [Validators.required]),
+        content: new FormControl(''),
         priority: new FormControl('', [Validators.required]),
+        URL: new FormControl(''),
         categories: new FormControl('', [Validators.required]),
         subCategories: new FormControl('', [Validators.required]),
         image: new FormControl(''),
@@ -87,6 +89,7 @@ export class BannerEditComponent implements OnInit {
                             content: this.bannerModel.content ? this.bannerModel.content : '',
                             subtitle: this.bannerModel.subtitle ? this.bannerModel.subtitle : '',
                             priority: this.bannerModel.priority ? this.bannerModel.priority : '',
+                            URL: this.bannerModel.URL ? this.bannerModel.URL: '',
                             categories: this.bannerModel.categories._id ? this.bannerModel.categories._id : '',
                             subCategories: this.bannerModel.subCategories ? this.bannerModel.subCategories : ''
                         })
@@ -116,6 +119,11 @@ export class BannerEditComponent implements OnInit {
 
     }
 
+
+    getTypeOfBanner(event){
+        this.bannerType= event.value
+        console.log("eeee--",this.bannerType)
+    }
     filterCategories() {
         if (!this.categorys)
             return;
