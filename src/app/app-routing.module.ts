@@ -12,7 +12,7 @@ import { CreateNewsStoryComponent } from "./components/newsStroyIdea/newsStoryId
 import { CreateNewsVideosComponent } from "./components/newsVideos/newsVideos.component";
 import { CreateNewsPhotosComponent } from "./components/newsPhotos/newsPhotosForms/create-news-photos.component";
 import { CategoryFormComponent } from "./components/mobileCategory/mobile category form/category-form.component";
-import { CreateCategoriesModule } from "./components/homepage/Demo2/create-categories.module";
+// import { CreateCategoriesModule } from "./components/homepage/Demo2/create-categories.module";
 import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.component";
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
 import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/MobileSubCategoriesComponent";

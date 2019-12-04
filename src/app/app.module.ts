@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./modules/app-material.module";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from "./components/homepage/dashboard/dashboard.component";
-// import { CategoriesModule } from "./components/homepage/categories/categories.module";
+import { CategoriesModule } from "./components/homepage/categories/categories.module";
 import { VodModule } from "../app/components/vod/vod.module";
 import { PackageModule } from "../app/components/package/package.module";
 import { CouponModule } from "../app/components/coupon/coupon.module";
@@ -95,7 +95,7 @@ import { ErrorInterceptor } from './services/error-interceptor.service';
     MoviesModule,
     MaterialModule,
     BrowserAnimationsModule,
-    // CategoriesModule,
+    CategoriesModule,
     VodModule,
     PackageModule,
     NgxMatSelectSearchModule,
