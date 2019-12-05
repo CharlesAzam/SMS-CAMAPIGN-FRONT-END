@@ -1,23 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
 import { AuthenticationService } from '../components/login/login.service';
+import { MatDialog } from '@angular/material';
+import { ErrorDialog } from '../components/error-dialog/dialog-error';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authenticationService: AuthenticationService) { }
+    constructor(private authenticationService: AuthenticationService, public dialog: MatDialog) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(map((event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
-                if (event.status === 401 || event.body.status === 401) {
-                    this.authenticationService.logout();
-                    location.reload(true);
-                }
-            }
-            return event;
-        }));
+        return next.handle(request)
+            .pipe(
+                retry(1),
+                catchError((error: HttpErrorResponse) => {
+                    let errorMessage: any;
+                    if (error.error instanceof ErrorEvent) {
+                        errorMessage = `Error: ${error.error.message}`;
+                    } else {
+                        // server-side error
+                        errorMessage = { status: error.status, message: error.message }
+                    }
+                    const ref = this.dialog.open(ErrorDialog, {
+                        width: '400px',
+                        data: errorMessage
+                    });
+                    ref.afterClosed().subscribe((result) => {
+                        if (error.status === 401) {
+                            this.authenticationService.logout();
+                            location.reload(true);
+                        }
+                    })
+                    return throwError(errorMessage);
+                })
+            )
     }
 }

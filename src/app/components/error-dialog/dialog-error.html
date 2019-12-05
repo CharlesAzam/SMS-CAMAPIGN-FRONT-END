@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Error {{error.status}}</h2>
+<mat-dialog-content class="mat-typography">
+    {{error.message}}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
