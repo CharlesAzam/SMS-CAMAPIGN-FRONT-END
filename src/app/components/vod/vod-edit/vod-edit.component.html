@@ -34,18 +34,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <!--
-                            <div class="form-group">
-                                <mat-form-field style="width: 100%;">
-                                    <mat-label>Package</mat-label>
-                                    <mat-select formControlName="packageID" multiple required>
-                                        <mat-option *ngFor="let pack of packages" [value]="pack._id">{{pack.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            -->
-
+            
 
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
@@ -60,13 +49,13 @@
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Starring" formControlName="starring" name="starring"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error> -->
                             </mat-form-field>
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Director" formControlName="director" name="director"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error> -->
                             </mat-form-field>
 
@@ -90,7 +79,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
-                                    <mat-select formControlName="subCategories" multiple>
+                                    <mat-select formControlName="subCategories" multiple required>
                                         <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
                                             [noEntriesFoundLabel]="'Sub Category not found'"
                                             [placeholderLabel]="'Find Sub Category...'">
@@ -105,7 +94,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
-                                    <mat-select formControlName="country">
+                                    <mat-select formControlName="country" required>
                                         <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
                                         </mat-option>
                                     </mat-select>
@@ -116,7 +105,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Lanugage</mat-label>
-                                    <mat-select formControlName="language">
+                                    <mat-select formControlName="language" required>
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
                                             {{lang.name}}
                                         </mat-option>
@@ -191,7 +180,7 @@
                                 <div class="form-group">
                                     <mat-form-field style="width: 100%;">
                                         <mat-label>Currency</mat-label>
-                                        <mat-select formControlName="currency">
+                                        <mat-select formControlName="currency" required> 
                                             <mat-option *ngFor="let currency of currencies" [value]="currency">
                                                 {{currency}}
                                             </mat-option>
@@ -291,17 +280,6 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <!--
-                            <div class="form-group">
-                                <mat-form-field style="width: 100%;">
-                                    <mat-label>Package</mat-label>
-                                    <mat-select formControlName="packageID" multiple required>
-                                        <mat-option *ngFor="let pack of packages" [value]="pack._id">{{pack.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            -->
 
 
                             <div class="form-group">
@@ -317,13 +295,13 @@
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Starring" formControlName="starring" name="starring"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error> -->
                             </mat-form-field>
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Director" formControlName="director" name="director"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error> -->
                             </mat-form-field>
 
@@ -350,7 +328,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
-                                    <mat-select formControlName="subCategories" multiple>
+                                    <mat-select formControlName="subCategories" multiple required>
                                         <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
                                             [noEntriesFoundLabel]="'Sub Category not found'"
                                             [placeholderLabel]="'Find Sub Category...'">
@@ -433,7 +411,7 @@
                                 <div class="form-group">
                                     <mat-form-field style="width: 100%;">
                                         <mat-label>Currency</mat-label>
-                                        <mat-select formControlName="currency">
+                                        <mat-select formControlName="currency" required>
                                             <mat-option *ngFor="let currency of currencies" [value]="currency">
                                                 {{currency}}
                                             </mat-option>
@@ -477,16 +455,10 @@
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Duration" formControlName="duration" name="duration"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="duration.invalid">Duration can not be empty</mat-error> -->
                             </mat-form-field>
 
-                            <!-- <mat-form-field style="width: 100%;">
-                                            <input matInput placeholder="Image Thumbnail" formControlName="imageThumb" name="imageThumb"
-                                                required>
-                                            <mat-error *ngIf="imageThumb.invalid">Image thumbnail can not be empty</mat-error>
-                
-                                        </mat-form-field> -->
                             <div class="form-group">
                                 <label for="Decription">{{vod?'Change':'Upload'}} Image:</label>
                                 <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*"
@@ -547,13 +519,13 @@
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Starring" formControlName="starring" name="starring"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error> -->
                             </mat-form-field>
 
                             <mat-form-field style="width: 100%;">
                                 <input matInput placeholder="Director" formControlName="director" name="director"
-                                    required>
+                                    >
                                 <!-- <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error> -->
                             </mat-form-field>
 
@@ -578,7 +550,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
-                                    <mat-select formControlName="subCategories" multiple>
+                                    <mat-select formControlName="subCategories" multiple required>
                                         <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
                                             [noEntriesFoundLabel]="'Sub Category not found'"
                                             [placeholderLabel]="'Find Sub Category...'">
@@ -718,7 +690,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button (click)="save()" class="btn btn-default">{{vod?'Update':'Save'}}</button>
+                                <button [disabled]="!contentForm.valid" (click)="save()" class="btn btn-default">{{vod?'Update':'Save'}}</button>
                             </div>
 
                         </form>
@@ -770,7 +742,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Sub Category</mat-label>
-                                    <mat-select formControlName="subCategories" multiple>
+                                    <mat-select formControlName="subCategories" multiple required>
                                         <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
                                             [noEntriesFoundLabel]="'Sub Category not found'"
                                             [placeholderLabel]="'Find Sub Category...'">
