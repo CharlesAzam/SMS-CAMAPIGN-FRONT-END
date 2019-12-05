@@ -53,6 +53,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { JwtInterceptor } from './services/interceptor.service';
 import { ErrorInterceptor } from './services/error-interceptor.service';
+import { ErrorDialog } from './components/error-dialog/dialog-error';
 
 
 
@@ -83,8 +84,10 @@ import { ErrorInterceptor } from './services/error-interceptor.service';
     AdminComponent,
     UserListComponent,
     LeagueComponent,
-    LeaguelistComponent
+    LeaguelistComponent,
     // TopnavComponent
+    ErrorDialog
+
   ],
   imports: [
     BrowserModule,
@@ -110,12 +113,13 @@ import { ErrorInterceptor } from './services/error-interceptor.service';
     ReactiveFormsModule,
     MatInputModule
   ],
+  entryComponents: [
+    ErrorDialog
+  ],
   providers: [
     MoviesService, LanguageService, CountryService, LeagueService, AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
-
   ]
   ,
   bootstrap: [AppComponent]
