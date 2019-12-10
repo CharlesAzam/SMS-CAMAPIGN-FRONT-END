@@ -29,11 +29,13 @@ export class VodEditComponent implements OnInit {
     isSeriesForm: boolean = false;
 
     filterCategoriesCtrl: FormControl = new FormControl();
+    filterCountryCtrl: FormControl = new FormControl();
     filterSubCategoryCtrl: FormControl = new FormControl();
     filterCdnCtrl: FormControl = new FormControl();
     filterTagsCtrl: FormControl = new FormControl();
 
     filteredCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+    filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
     filteredSubCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
     filteredCdns: ReplaySubject<any[]> = new ReplaySubject<any[]>();
     filteredTags: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -207,7 +209,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.starring : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country : '',
+                                            country: this.vod.country.map((country) => country._id) ? this.vod.country.map((country) => { return country._id }) : '',
 
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
@@ -249,7 +251,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.starring : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country : '',
+                                            country: this.vod.country.map((country) => country._id) ? this.vod.country.map((country) => { return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -289,7 +291,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.starring : '',
                                             categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country : '',
+                                            country: this.vod.country.map((country) => country._id) ? this.vod.country.map((country) => { return country._id }) : '',                                            
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -329,7 +331,7 @@ export class VodEditComponent implements OnInit {
                                     starring: this.vod.starring ? this.vod.starring : '',
                                     director: this.vod.director ? this.vod.starring : '',
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
-                                    country: this.vod.country ? this.vod.country : '',
+                                    country: this.vod.country.map((country) => country._id) ? this.vod.country.map((country) => { return country._id }) : '',                                    
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     language: this.vod.language ? this.vod.language : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -404,6 +406,12 @@ export class VodEditComponent implements OnInit {
             .subscribe(() => {
                 this.filterCdn();
             })
+
+        this.filterCountryCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+            this.filterCountry();
+        })
     }
 
 
@@ -534,6 +542,9 @@ export class VodEditComponent implements OnInit {
             console.log(response)
             if (response.status === 200) {
                 this.countries = response.data;
+                this.filteredCountries.next(this.countries.slice())
+                console.log('----------->',this.countries)
+
             }
         },
             error => console.error(error));
@@ -606,6 +617,28 @@ export class VodEditComponent implements OnInit {
             )
         )
     }
+
+    filterCountry() {
+        if (!this.countries)
+            return;
+
+        let search = this.filterCountryCtrl.value;
+        if (!search) {
+            this.filteredCountries.next(this.countries.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredCountries.next(
+            this.countries.filter(cont =>
+                cont.country ?
+                    cont.country.toLowerCase().indexOf(search) > -1 :
+                    ''
+            )
+        )
+    }
+
 
     filterCategories() {
         if (!this.categorys)

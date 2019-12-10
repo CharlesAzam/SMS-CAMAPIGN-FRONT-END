@@ -141,7 +141,7 @@ export class PackageEditComponent implements OnInit {
     getCountries() {
         this.countryService.list().subscribe(
             country => {
-                console.log(country)
+                console.log('--------->',country)
                 this.countries = country.data
             }, err => {
                 console.log("err----->", err);
