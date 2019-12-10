@@ -799,6 +799,21 @@
                                 </mat-form-field>
                             </div>
 
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select
+                                        formControlName="country" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            [noEntriesFoundLabel]="'Country not found'"
+                                            [placeholderLabel]="'Find Country...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
+                                            {{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
 
                             <div class="row" style="width: 100%;">
                                 <div>

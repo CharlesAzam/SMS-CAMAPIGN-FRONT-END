@@ -6,8 +6,8 @@ export const environment = {
   production: false
 };
 export const API = {
-  BASE_URL: "http://52.213.58.247:3002"
-  // BASE_URL: "http://localhost:3000"
+  // BASE_URL: "http://52.213.58.247:3002"
+  BASE_URL: "http://localhost:3000"
 };
 /*
  * For easier debugging in development mode, you can import the following file
