@@ -11,6 +11,7 @@ export class Categories {
   public icon: string;
 
   public isLeague: string;
+  public imageThumb: string;
   public leagueType: string;
   public leagueTypeImageThumb: string;
   // public subCategories: any[]

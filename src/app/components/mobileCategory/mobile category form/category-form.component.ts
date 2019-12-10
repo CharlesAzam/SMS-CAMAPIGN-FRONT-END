@@ -12,8 +12,8 @@ import { BannerService } from "../../banner/banner.service";
 import { CategoriesService } from "src/app/services/categories.service";
 import { Categories } from "src/app/models/categories";
 import { LanguageService } from "src/app/services/language.service";
-import { takeUntil, take } from 'rxjs/operators';
-import { Subject, ReplaySubject } from 'rxjs';
+import { takeUntil, take } from "rxjs/operators";
+import { Subject, ReplaySubject } from "rxjs";
 @Component({
   selector: "app-category-form",
   templateUrl: "./category-form.component.html",
@@ -31,6 +31,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     isHome: new FormControl(true, [Validators.required]),
     isLeague: new FormControl(false, [Validators.required]),
     leagueType: new FormControl(""),
+    imageThumb: new FormControl(""),
     leagueTypeImageThumb: new FormControl(""),
     status: new FormControl(true, [Validators.required])
   });
@@ -41,17 +42,16 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   filteredTypes: ReplaySubject<String[]> = new ReplaySubject<String[]>();
   filteredLanguages: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
 
-
   protected _onDestroy = new Subject<void>();
-
 
   languages: any[] = [];
   subCategories: any[] = [];
   banners: any[] = [];
   categoryModel: Categories;
-  isUploading: boolean = false;
+  isUploading_leagueTypeImageThumb: boolean = false;
+  isUploading_imageThumb: boolean = false;
   fileToUpload: any = null;
-  uploadImageURL: any = null;
+  uploadImageURL: any[] = [];
   types: string[] = ["RADIO", "NEWS", "TVGUIDE", "VOD"];
   icons: any[] = [
     { key: "ic_home", value: "HOME" },
@@ -68,7 +68,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private bannerService: BannerService,
     private categoryService: CategoriesService,
     private languageService: LanguageService
-  ) { }
+  ) {}
 
   ngOnInit() {
     // this.getSubCategories();
@@ -106,7 +106,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
                 leagueType: String(this.categoryModel.leagueType)
                   ? String(this.categoryModel.leagueType)
                   : "",
-
+                imageThumb: "",
                 leagueTypeImageThumb: "" // this.categoryModel.leagueTypeImageThumb ? this.categoryModel.leagueTypeImageThumb : ""
               });
             }
@@ -116,30 +116,25 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
       }
     });
 
-
     this.filteredTypes.next(this.types.slice());
 
     this.filterTypesCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterTypes();
-      })
+      });
 
     this.filterLanguageCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterLanguages();
-      })
+      });
   }
 
-
-  ngAfterViewInit() {
-  }
-
+  ngAfterViewInit() {}
 
   filterTypes() {
-    if (!this.types)
-      return;
+    if (!this.types) return;
 
     let search = this.filterTypesCtrl.value;
     if (!search) {
@@ -151,12 +146,11 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
 
     this.filteredTypes.next(
       this.types.filter(type => type.toLowerCase().indexOf(search) > -1)
-    )
+    );
   }
 
   filterLanguages() {
-    if (!this.languages)
-      return;
+    if (!this.languages) return;
 
     let search = this.filterLanguageCtrl.value;
     if (!search) {
@@ -167,8 +161,10 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     }
 
     this.filteredLanguages.next(
-      this.languages.filter(language => language.name.toLowerCase().indexOf(search) > -1)
-    )
+      this.languages.filter(
+        language => language.name.toLowerCase().indexOf(search) > -1
+      )
+    );
   }
 
   getBanners() {
@@ -199,8 +195,16 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    if (this.uploadImageURL) {
-      this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL;
+    if (
+      this.uploadImageURL &&
+      this.categoryForm.value["leagueTypeImageThumb"]
+    ) {
+      this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
+        "leagueTypeImageThumb"
+      ];
+    }
+    if (this.uploadImageURL && this.categoryForm.value["imageThumb"]) {
+      this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
     }
     if (this.categoryModel) {
       Object.assign(this.categoryModel, this.categoryForm.value);
@@ -231,7 +235,6 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
         if (response.status === 200) {
           this.languages = response.data;
           this.filteredLanguages.next(this.languages.slice());
-
         }
       },
       error => {
@@ -239,21 +242,34 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  handelImageChange(files: FileList) {
+  handelImageChange(files: FileList, controlName: string) {
     this.fileToUpload = files.item(0);
     this.fileToUpload.mimeType = this.fileToUpload.type;
-    this.uploadFileToActivity();
+    this.uploadFileToActivity(controlName);
   }
 
-  uploadFileToActivity() {
-    this.isUploading = true;
+  uploadFileToActivity(controlName: any) {
+    if (controlName === "imageThumb") {
+      this.isUploading_imageThumb = true;
+    } else if (controlName === "leagueTypeImageThumb") {
+      this.isUploading_leagueTypeImageThumb = true;
+    }
+
     this.categoryService.uploadUrl(this.fileToUpload).subscribe(
       data => {
-        this.uploadImageURL = data["fileUrl"]; // ? data.fileUrl : "";
-        this.isUploading = false;
+        this.uploadImageURL[controlName] = data["fileUrl"]; // ? data.fileUrl : "";
+        if (controlName === "imageThumb") {
+          this.isUploading_imageThumb = false;
+        } else if (controlName === "leagueTypeImageThumb") {
+          this.isUploading_leagueTypeImageThumb = false;
+        }
       },
       error => {
-        this.isUploading = false;
+        if (controlName === "imageThumb") {
+          this.isUploading_imageThumb = false;
+        } else if (controlName === "leagueTypeImageThumb") {
+          this.isUploading_leagueTypeImageThumb = false;
+        }
       }
     );
   }

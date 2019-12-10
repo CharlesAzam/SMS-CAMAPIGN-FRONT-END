@@ -5,40 +5,70 @@
       <hr />
       <div class="form-group">
         <mat-form-field class="input-layouts">
-          <input matInput formControlName="name" placeholder="Enter name" required />
+          <input
+            matInput
+            formControlName="name"
+            placeholder="Enter name"
+            required
+          />
         </mat-form-field>
       </div>
 
       <mat-form-field style="width: 100%;">
         <mat-label>Language</mat-label>
         <mat-select formControlName="language">
-          <ngx-mat-select-search [formControl]="filterLanguageCtrl" [noEntriesFoundLabel]= "'Language not found'" [placeholderLabel]="'Find Language...'"></ngx-mat-select-search>
-          <mat-option *ngFor="let lang of filteredLanguages | async" [value]="lang._id">{{ lang.name }}
+          <ngx-mat-select-search
+            [formControl]="filterLanguageCtrl"
+            [noEntriesFoundLabel]="'Language not found'"
+            [placeholderLabel]="'Find Language...'"
+          ></ngx-mat-select-search>
+          <mat-option
+            *ngFor="let lang of filteredLanguages | async"
+            [value]="lang._id"
+            >{{ lang.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <div class="form-group">
         <mat-form-field class="input-layouts">
-          <input matInput formControlName="priority" type="number" placeholder="Priority" required />
+          <input
+            matInput
+            formControlName="priority"
+            type="number"
+            placeholder="Priority"
+            required
+          />
         </mat-form-field>
       </div>
       <div class="form-group">
         <mat-form-field style="width: 100%;">
           <mat-label>Type</mat-label>
           <mat-select formControlName="type">
-            <ngx-mat-select-search [formControl]="filterTypesCtrl" [noEntriesFoundLabel]= "'Type not found'" [placeholderLabel]="'Find Type...'" ></ngx-mat-select-search>
-            <mat-option *ngFor="let type of filteredTypes | async" [value]="type">{{
-              type
-            }}</mat-option>
+            <ngx-mat-select-search
+              [formControl]="filterTypesCtrl"
+              [noEntriesFoundLabel]="'Type not found'"
+              [placeholderLabel]="'Find Type...'"
+            ></ngx-mat-select-search>
+            <mat-option
+              *ngFor="let type of filteredTypes | async"
+              [value]="type"
+              >{{ type }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-label>Is League</mat-label>
-        <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" formControlName="isLeague"
-          style="margin-left: 10px;" required>
+        <mat-button-toggle-group
+          appearance="legacy"
+          name="fontStyle"
+          aria-label="Font Style"
+          formControlName="isLeague"
+          style="margin-left: 10px;"
+          required
+        >
           <mat-button-toggle value="true">Yes</mat-button-toggle>
           <mat-button-toggle value="false">No</mat-button-toggle>
         </mat-button-toggle-group>
@@ -46,19 +76,56 @@
 
       <div class="form-group" *ngIf="categoryForm.value.isLeague === 'true'">
         <mat-form-field class="input-layouts">
-          <input matInput formControlName="leagueType" placeholder="Enter League Type" />
+          <input
+            matInput
+            formControlName="leagueType"
+            placeholder="Enter League Type"
+          />
         </mat-form-field>
       </div>
 
       <div class="form-group" *ngIf="categoryForm.value.isLeague === 'true'">
-        <label for="leagueTypeImageThumb">{{ categoryModel ? "Change" : "Upload" }} League Thumb Image:</label>
-        <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*" class="form-control"
-          formControlName="leagueTypeImageThumb" placeholder="Enter Upload image thumb" />
+        <label for="imageThumb"
+          >{{ categoryModel ? "Change" : "Upload" }} Image Thumb:</label
+        >
+        <input
+          (change)="handelImageChange($event.target.files, 'imageThumb')"
+          type="file"
+          accept="image/*"
+          class="form-control"
+          formControlName="imageThumb"
+          placeholder="Enter Upload image thumb"
+        />
       </div>
-      <mat-spinner *ngIf="isUploading"></mat-spinner>
+      <mat-spinner *ngIf="isUploading_imageThumb"></mat-spinner>
 
       <div class="form-group" *ngIf="categoryModel && categoryModel.isLeague">
-        <img src="{{ categoryModel.leagueTypeImageThumb }}" width="100" height="100" />
+        <img src="{{ categoryModel.imageThumb }}" width="100" height="100" />
+      </div>
+
+      <div class="form-group" *ngIf="categoryForm.value.isLeague === 'true'">
+        <label for="leagueTypeImageThumb"
+          >{{ categoryModel ? "Change" : "Upload" }} League Thumb Image:</label
+        >
+        <input
+          (change)="
+            handelImageChange($event.target.files, 'leagueTypeImageThumb')
+          "
+          type="file"
+          accept="image/*"
+          class="form-control"
+          formControlName="leagueTypeImageThumb"
+          placeholder="Enter Upload image thumb"
+        />
+      </div>
+      <mat-spinner *ngIf="isUploading_leagueTypeImageThumb"></mat-spinner>
+
+      <div class="form-group" *ngIf="categoryModel && categoryModel.isLeague">
+        <img
+          src="{{ categoryModel.leagueTypeImageThumb }}"
+          width="100"
+          height="100"
+        />
       </div>
 
       <!-- <div class="form-group">
@@ -100,23 +167,40 @@
 
       <div class="form-group">
         <mat-label>Located Home?</mat-label>
-        <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" formControlName="isHome"
-          style="margin-left: 10px;" required>
+        <mat-button-toggle-group
+          appearance="legacy"
+          name="fontStyle"
+          aria-label="Font Style"
+          formControlName="isHome"
+          style="margin-left: 10px;"
+          required
+        >
           <mat-button-toggle value="true">TRUE</mat-button-toggle>
           <mat-button-toggle value="false">FALSE</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
       <div class="form-group">
         <mat-label>Status</mat-label>
-        <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" formControlName="status"
-          style="margin-left: 10px;" required>
+        <mat-button-toggle-group
+          appearance="legacy"
+          name="fontStyle"
+          aria-label="Font Style"
+          formControlName="status"
+          style="margin-left: 10px;"
+          required
+        >
           <mat-button-toggle value="true">ACTIVE</mat-button-toggle>
           <mat-button-toggle value="false">INACTIVE</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 
       <div>
-        <button align="center" [disabled]="categoryForm.invalid" mat-raised-button type="submit">
+        <button
+          align="center"
+          [disabled]="categoryForm.invalid"
+          mat-raised-button
+          type="submit"
+        >
           {{ categoryModel ? "Update" : "Save" }}
         </button>
       </div>
