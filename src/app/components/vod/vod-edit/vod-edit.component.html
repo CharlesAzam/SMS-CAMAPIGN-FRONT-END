@@ -91,11 +91,27 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
                                     <mat-select formControlName="country" required>
-                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> -->
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select
+                                        formControlName="country" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            [noEntriesFoundLabel]="'Country not found'"
+                                            [placeholderLabel]="'Find Country...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
+                                            {{count.country}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -340,11 +356,26 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
                                     <mat-select formControlName="country">
-                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> -->
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select
+                                        formControlName="country" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            [noEntriesFoundLabel]="'Country not found'"
+                                            [placeholderLabel]="'Find Country...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
+                                            {{count.country}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -371,8 +402,7 @@
                                     <mat-button-toggle value=false>FALSE</mat-button-toggle>
                                 </mat-button-toggle-group>
                             </div>
-
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="vodType === 'VIDEO'">
                                 <mat-label>isEpisode</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
                                     formControlName="isEpisode" style="margin-left: 10px;" required>
@@ -562,11 +592,26 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
                                     <mat-select formControlName="country">
-                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.name}}
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> -->
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select
+                                        formControlName="country" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            [noEntriesFoundLabel]="'Country not found'"
+                                            [placeholderLabel]="'Find Country...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
+                                            {{count.country}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

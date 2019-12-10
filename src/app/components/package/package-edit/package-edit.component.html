@@ -32,7 +32,7 @@
                         <mat-form-field style="width: 100%;">
                             <mat-label>Country</mat-label>
                             <mat-select formControlName="countryDetail" required>
-                                <mat-option *ngFor="let country of countries" [value]="country._id">{{country.name}}
+                                <mat-option *ngFor="let country of countries" [value]="country._id">{{country.country}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

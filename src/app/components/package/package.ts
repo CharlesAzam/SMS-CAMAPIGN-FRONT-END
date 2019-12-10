@@ -9,7 +9,7 @@ export class Package {
     isVodAllowed: boolean = false;
     link: string;
     validityInDays: string;
-    countryDetail: string
+    countryDetail: any;
     noOfDays: string;
     status: boolean = false;
     price: string | Object;
