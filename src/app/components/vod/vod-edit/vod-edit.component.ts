@@ -937,6 +937,7 @@ export class AddSeasonsDialog {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                result.content.id = result.content._id;
                 this.episode.push(result.content);
             }
 
