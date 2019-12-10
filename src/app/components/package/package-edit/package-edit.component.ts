@@ -94,7 +94,7 @@ export class PackageEditComponent implements OnInit {
                     isVodAllowed: String(this.packageDef.isVodAllowed) ? String(this.packageDef.isVodAllowed) : '',
                     // link: this.packageDef.link ? this.packageDef.link : '',
                     noOfDays: this.packageDef.price[0].noOfDays ? this.packageDef.price[0].noOfDays : '',
-                    countryDetail: this.packageDef.countryDetail ? this.packageDef.countryDetail : '',
+                    countryDetail: this.packageDef.countryDetail ? this.packageDef.countryDetail['_id'] : '',
                     validityInDays: String(this.packageDef.validityInDays) ? String(this.packageDef.validityInDays) : '',
                     status: this.packageDef.status ? this.packageDef.status : '',
                     price: this.packageDef.price[0].price ? this.packageDef.price[0].price : '',
