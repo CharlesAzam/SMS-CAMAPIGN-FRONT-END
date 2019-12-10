@@ -402,8 +402,7 @@
                                     <mat-button-toggle value=false>FALSE</mat-button-toggle>
                                 </mat-button-toggle-group>
                             </div>
-
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="vodType === 'VIDEO'">
                                 <mat-label>isEpisode</mat-label>
                                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
                                     formControlName="isEpisode" style="margin-left: 10px;" required>
