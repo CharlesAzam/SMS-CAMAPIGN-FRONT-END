@@ -15,6 +15,7 @@ export class AdminEditComponent implements OnInit {
 
     createUserModel = new Admin();
     roles = [];
+    hide = true;
 
     userForm = new FormGroup({
         username: new FormControl('', [Validators.required]),
