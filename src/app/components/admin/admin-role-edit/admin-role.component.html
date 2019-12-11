@@ -1,0 +1,42 @@
+<div class="container">
+    <mat-card style="margin-top: 30px;">
+        <h2>Add Role</h2>
+        <form #roleForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+            <hr>
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput name="name" placeholder="Enter name" [(ngModel)]="roleModel.roleName">
+                </mat-form-field>
+            </div>
+            <mat-label style="margin-bottom: 20px;">Permission set</mat-label>
+
+            <mat-accordion>
+                <div *ngFor="let role of modulesAndActions">
+                    <mat-expansion-panel style="margin-bottom: 20px;">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{role.module}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <div *ngFor="let action of role.actions">
+                            <!-- <mat-form-field> -->
+                            <custom-checkbox [module]="role.module" [action]="action"
+                                (saveSelection)="savePermissionSet($event)">{{action}}</custom-checkbox>
+                            <!-- </mat-form-field> -->
+                        </div>
+
+                    </mat-expansion-panel>
+                </div>
+
+            </mat-accordion>
+            <div>
+                <button [disabled]="roleForm.invalid" mat-raised-button type="submit">Create User</button>
+            </div>
+
+        </form>
+    </mat-card>
+</div>
