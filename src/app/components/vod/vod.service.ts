@@ -102,5 +102,10 @@ export class VodService {
     getNotification(category){
       this.categorySubject.next();
     }
+
+    getChannels(){
+        let url = API.BASE_URL + `/cms/channels`;
+        return this.http.get(url);
+    }
 }
 
