@@ -23,6 +23,8 @@ import {
   MatPaginatorModule,
   MatDialogModule,
   MatProgressSpinnerModule,
+  MatExpansionModule,
+  MatCheckboxModule,
 } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
@@ -53,6 +55,8 @@ const modules = [
   MatPaginatorModule,
   MatDialogModule,
   NgxMatSelectSearchModule,
+  MatCheckboxModule,
+  MatExpansionModule
 
 ];
 

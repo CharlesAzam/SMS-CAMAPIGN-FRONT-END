@@ -1,18 +1,39 @@
 <!-- <app-side-nav></app-side-nav> -->
 
 <mat-toolbar class="example-header">
-  <button mat-button (click)="sidenav.toggle()">
-    <mat-icon color="primary">menu</mat-icon>
-  </button>
-  <img style="height: 30px !important;" src="/assets/azam-logo.png">
 
-  <mat-select style="width: 200px !important; margin-left: 80%;">
-    <mat-option value="Admin" routerLink="UserList">Admin</mat-option>
-    <mat-option> Country</mat-option>
-    <mat-option> Providers</mat-option>
-  </mat-select>
-  <button mat-button style="margin-left: 0% !important;">Log Out</button>
+  <div>
+    <button mat-button (click)="sidenav.toggle()">
+      <mat-icon color="primary">menu</mat-icon>
+    </button>
+    <img style="height: 30px !important;" src="/assets/azam-logo.png">
+  </div>
+
+
+  <div>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon color="primary">account_circle</mat-icon>
+      Settings
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="admin">
+        <span>Users</span>
+      </button>
+      <button mat-menu-item [routerLink]="['admin/roles']">
+        <span>Roles</span>
+      </button>
+      <button mat-menu-item>
+        <span>Countries</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+
 </mat-toolbar>
+
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" opened="false" class="example-sidenav" [fixedInViewport]=false [fixedTopGap]=0
     [fixedBottomGap]="0">

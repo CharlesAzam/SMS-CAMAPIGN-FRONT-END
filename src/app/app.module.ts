@@ -43,8 +43,6 @@ import { NewsPhotosComponent } from "./components/newsPhotos/news-photos/news-ph
 import { LanguageService } from "./services/language.service";
 import { CountryService } from "./services/coutry.service";
 import { ProgramModule } from "./components/programs/program.module";
-import { AdminComponent } from "./components/admin/Create-Role/admin.component";
-import { UserListComponent } from "./components/admin/user-list/user-list.component";
 import { LeagueComponent } from "./components/league/league-form/league.component";
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { MatInputModule } from "@angular/material";
@@ -54,6 +52,7 @@ import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { JwtInterceptor } from './services/interceptor.service';
 import { ErrorInterceptor } from './services/error-interceptor.service';
 import { ErrorDialog } from './components/error-dialog/dialog-error';
+import { AdminModule } from './components/admin/admin.module';
 
 
 
@@ -81,8 +80,6 @@ import { ErrorDialog } from './components/error-dialog/dialog-error';
     NewsTagComponent,
     NewsStroyIdeaComponent,
     NewsPhotosComponent,
-    AdminComponent,
-    UserListComponent,
     LeagueComponent,
     LeaguelistComponent,
     // TopnavComponent
@@ -91,6 +88,7 @@ import { ErrorDialog } from './components/error-dialog/dialog-error';
   ],
   imports: [
     BrowserModule,
+    AdminModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
