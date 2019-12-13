@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material';
+import { AuthenticationService } from '../login/login.service';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -29,6 +30,7 @@ export class HomepageComponent implements OnInit {
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -59,6 +61,11 @@ export class HomepageComponent implements OnInit {
   routeToChannels($event) {
 
     this.router.navigate(['Channels'], { relativeTo: this.activatedRoute });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login'])
   }
 
   submit() {

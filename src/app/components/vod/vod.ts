@@ -12,6 +12,7 @@ export class Vod {
     language: string;
     isFree: boolean = false;
     isFreeForAzam: boolean = false;
+    referenceChannelID: string;
     isSeries: boolean;
     isEpisode: boolean  = false;
     contentType: string;

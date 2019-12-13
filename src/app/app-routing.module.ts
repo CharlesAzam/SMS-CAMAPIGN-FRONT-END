@@ -20,8 +20,7 @@ import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategori
 import { NewsTagComponent } from "./components/newsTags/news-tag/news-tag.component";
 import { NewsStroyIdeaComponent } from "./components/newsStroyIdea/news-stroy-idea/news-stroy-idea.component";
 import { NewsPhotosComponent } from "./components/newsPhotos/news-photos/news-photos.component";
-import { AdminComponent } from "./components/admin/Create-Role/admin.component";
-import { UserListComponent } from "./components/admin/user-list/user-list.component";
+
 import { LeagueComponent } from "./components/league/league-form/league.component";
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
@@ -182,13 +181,9 @@ const routes: Routes = [
           "./components/homepage/Demo2/create-categories.module#CreateCategoriesModule"
       },
       {
-        path: "Admin",
-        component: AdminComponent, canActivate: [AuthGuard],
-
-      },
-      {
-        path: "UserList",
-        component: UserListComponent, canActivate: [AuthGuard],
+        path: "admin",
+        loadChildren:
+          "./components/admin/admin.module#AdminModule", canActivate: [AuthGuard],
 
       },
       {

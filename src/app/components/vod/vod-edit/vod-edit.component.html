@@ -270,7 +270,7 @@
                         </form>
                     </div>
 
-                    <div *ngIf="isVideoForm || isLiveTvForm">
+                    <div *ngIf="isVideoForm">
                         <form [formGroup]="contentForm">
 
                             <mat-form-field style="width: 100%;">
@@ -387,6 +387,255 @@
                                     <mat-select formControlName="language">
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
                                             {{lang.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <mat-label>Status</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="status" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+                            <div class="form-group" *ngIf="vodType === 'VIDEO'">
+                                <mat-label>isEpisode</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="isEpisode" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+
+
+                            <div class="form-group">
+                                <mat-label>Is Free?</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="isFree" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+
+                            <div class="form-group">
+                                <mat-label>Is Free Azam?</mat-label>
+                                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                                    formControlName="isFreeForAzam" style="margin-left: 10px;" required>
+                                    <mat-button-toggle value=true>TRUE</mat-button-toggle>
+                                    <mat-button-toggle value=false>FALSE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+
+                            <div formGroupName="price">
+                                <mat-form-field style="width: 100%;">
+                                    <input matInput placeholder="Price" type="number" formControlName="price" required>
+                                    <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
+
+                                </mat-form-field>
+
+
+                                <div class="form-group">
+                                    <mat-form-field style="width: 100%;">
+                                        <mat-label>Currency</mat-label>
+                                        <mat-select formControlName="currency" required>
+                                            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                                                {{currency}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <mat-form-field style="width: 100%;">
+                                    <input matInput placeholder="Number of days valid" formControlName="noOfDays"
+                                        required>
+                                    <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
+
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Bonding Box</mat-label>
+                                    <mat-select formControlName="boundingBox" required>
+                                        <mat-option *ngFor="let box of boxes" [value]="box">{{box}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>CDNS</mat-label>
+                                    <mat-select formControlName="cdnID" required>
+                                        <ngx-mat-select-search [formControl]="filterCdnCtrl"
+                                            [noEntriesFoundLabel]="'CDN not found'" [placeholderLabel]="'Find CDN...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let cdn of filteredCdns | async" [value]="cdn._id">{{cdn.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Duration" formControlName="duration" name="duration"
+                                    >
+                                <!-- <mat-error *ngIf="duration.invalid">Duration can not be empty</mat-error> -->
+                            </mat-form-field>
+
+                            <div class="form-group">
+                                <label for="Decription">{{vod?'Change':'Upload'}} Image:</label>
+                                <input (change)="handelImageChange($event.target.files)" type="file" accept="image/*"
+                                    class="form-control" placeholder="Enter Upload image thumb">
+
+                            </div>
+                            <mat-spinner *ngIf='isUploading'></mat-spinner>
+
+                            <div class="form-group" *ngIf='imageUrl'>
+                                <img src={{imageUrl}} width="100" height="100" />
+
+                            </div>
+
+                            <div class="form-group">
+                                <button (click)="save()" class="btn btn-default">{{vod?'Update':'Save'}}</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div *ngIf="isLiveTvForm">
+                        <form [formGroup]="contentForm">
+
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Title" formControlName="title" required>
+                                <!-- <mat-error *ngIf="title.invalid">Content title can not be empty</mat-error> -->
+                            </mat-form-field>
+
+                            <mat-form-field style="width: 100%;">
+                                <textarea matInput placeholder="Description" formControlName="description"
+                                    name="description" required></textarea>
+                                <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+                            </mat-form-field>
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Tags</mat-label>
+                                    <mat-select formControlName="tags" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterTagsCtrl"
+                                            [noEntriesFoundLabel]="'Tag not found'" [placeholderLabel]="'Find Tag..'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ta.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <input matInput formControlName="releaseDate" [matDatepicker]="picker"
+                                        placeholder="Release Date" name="releaseDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
+                                </mat-form-field>
+                            </div>
+
+
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Starring" formControlName="starring" name="starring"
+                                    >
+                                <!-- <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error> -->
+                            </mat-form-field>
+
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Director" formControlName="director" name="director"
+                                    >
+                                <!-- <mat-error *ngIf="starring.invalid">Director can not be empty</mat-error> -->
+                            </mat-form-field>
+
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Categories</mat-label>
+                                    <mat-select (selectionChange)="getSubCategories($event)"
+                                        formControlName="categories" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCategoriesCtrl"
+                                            [noEntriesFoundLabel]="'Category not found'"
+                                            [placeholderLabel]="'Find Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
+                                            {{category.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Sub Category</mat-label>
+                                    <mat-select formControlName="subCategories" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                            [noEntriesFoundLabel]="'Sub Category not found'"
+                                            [placeholderLabel]="'Find Sub Category...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let subCategory of filteredSubCategories | async" [value]="subCategory._id">
+                                            {{subCategory.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option *ngFor="let count of countries" [value]="count._id">{{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> -->
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select
+                                        formControlName="country" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            [noEntriesFoundLabel]="'Country not found'"
+                                            [placeholderLabel]="'Find Country...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
+                                            {{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Lanugage</mat-label>
+                                    <mat-select formControlName="language">
+                                        <mat-option *ngFor="let lang of languages" [value]="lang._id">
+                                            {{lang.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Reference channel</mat-label>
+                                    <mat-select formControlName="referenceChannelID" required>
+                                        <mat-option *ngFor="let channel of channels" [value]="channel.channel_id">
+                                            {{channel.channel_name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -799,6 +1048,21 @@
                                 </mat-form-field>
                             </div>
 
+                            <div class="form-group">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select
+                                        formControlName="country" multiple required>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            [noEntriesFoundLabel]="'Country not found'"
+                                            [placeholderLabel]="'Find Country...'">
+                                        </ngx-mat-select-search>
+                                        <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
+                                            {{count.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
 
                             <div class="row" style="width: 100%;">
                                 <div>

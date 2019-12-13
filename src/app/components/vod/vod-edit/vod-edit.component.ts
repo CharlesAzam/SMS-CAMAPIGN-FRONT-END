@@ -115,6 +115,7 @@ export class VodEditComponent implements OnInit {
     languages: any[] = [];
     tagss: any[] = []
     categorys: any[] = []
+    channels: any[] = []
     countries: any[] = []
     packages: any[] = []
     subCategorie: any[] = []
@@ -133,6 +134,7 @@ export class VodEditComponent implements OnInit {
 
         this.getCountries();
         // this.getSubCategories();
+        this.getChannels();
         this.getPackages();
         this.getTags();
         this.getLanguages();
@@ -294,6 +296,7 @@ export class VodEditComponent implements OnInit {
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                            
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : '',
+                                            referenceChannelID: this.vod.referenceChannelID? this.vod.referenceChannelID: '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -363,7 +366,7 @@ export class VodEditComponent implements OnInit {
                                     title: this.vod.title ? this.vod.title : '',
                                     description: this.vod.description ? this.vod.description : '',
                                     tags: this.vod.tags ? this.vod.tags : [],
-
+                                    country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                    
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -526,6 +529,17 @@ export class VodEditComponent implements OnInit {
             }
         },
             error => console.error(error));
+    }
+
+    getChannels(){
+        this.vodService.getChannels()
+        .subscribe((response: any) => {
+                this.channels = response.data;
+                console.log("channels ====>")
+        },
+        error=>{
+            console.log(error);
+        })
     }
 
     getLanguages() {
@@ -809,7 +823,7 @@ export class VodEditComponent implements OnInit {
             title: new FormControl('', [Validators.required]),
             description: new FormControl('', [Validators.required]),
             tags: new FormControl('', [Validators.required]),
-
+            country: new FormControl('', [Validators.required]),
             categories: new FormControl('', [Validators.required]),
             subCategories: new FormControl('', [Validators.required]),
             isFree: new FormControl('', [Validators.required]),
@@ -866,6 +880,7 @@ export class VodEditComponent implements OnInit {
             director: new FormControl(''),
             categories: new FormControl('', [Validators.required]),
             country: new FormControl('', [Validators.required]),
+            referenceChannelID: new FormControl('', [Validators.required]),
             subCategories: new FormControl('', [Validators.required]),
             language: new FormControl('', [Validators.required]),
             isFree: new FormControl('', [Validators.required]),
