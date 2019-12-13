@@ -51,7 +51,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   isUploading_leagueTypeImageThumb: boolean = false;
   isUploading_imageThumb: boolean = false;
   fileToUpload: any = null;
-  uploadImageURL: any[] = [];
+  uploadImageURL: any = {};
   types: string[] = ["RADIO", "NEWS", "TVGUIDE", "VOD"];
   icons: any[] = [
     { key: "ic_home", value: "HOME" },
@@ -68,7 +68,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private bannerService: BannerService,
     private categoryService: CategoriesService,
     private languageService: LanguageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.getSubCategories();
@@ -131,7 +131,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   filterTypes() {
     if (!this.types) return;
@@ -196,19 +196,23 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (
-      this.uploadImageURL &&
+      this.uploadImageURL['leagueTypeImageThumb'] &&
       this.categoryForm.value["leagueTypeImageThumb"]
     ) {
       this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
         "leagueTypeImageThumb"
       ];
     }
-    if (this.uploadImageURL && this.categoryForm.value["imageThumb"]) {
+    else {
+      this.categoryForm.value["leagueTypeImageThumb"] = this.categoryModel.leagueTypeImageThumb;
+    }
+    if (this.uploadImageURL['imageThumb'] && this.categoryForm.value["imageThumb"]) {
       this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
+    } else {
+      this.categoryForm.value["imageThumb"] = this.categoryModel.imageThumb;
     }
     if (this.categoryModel) {
       Object.assign(this.categoryModel, this.categoryForm.value);
-
       this.categoryService.update(this.categoryModel).subscribe(
         (response: any) => {
           if (response.status === 200) this.routeToCategoryList();

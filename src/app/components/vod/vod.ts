@@ -9,12 +9,12 @@ export class Vod {
     categories: any[];
     country: any[];
     subCategories: any[];
-    language: string;
+    language: any[];
     isFree: boolean = false;
     isFreeForAzam: boolean = false;
     referenceChannelID: string;
     isSeries: boolean;
-    isEpisode: boolean  = false;
+    isEpisode: boolean = false;
     contentType: string;
     status: string;
     boundingBox: string;

@@ -121,7 +121,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Lanugage</mat-label>
-                                    <mat-select formControlName="language" required>
+                                    <mat-select formControlName="language" required multiple>
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
                                             {{lang.name}}
                                         </mat-option>
@@ -384,7 +384,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Lanugage</mat-label>
-                                    <mat-select formControlName="language">
+                                    <mat-select formControlName="language" multiple>
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
                                             {{lang.name}}
                                         </mat-option>
@@ -623,7 +623,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Lanugage</mat-label>
-                                    <mat-select formControlName="language">
+                                    <mat-select formControlName="language" multiple> 
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
                                             {{lang.name}}
                                         </mat-option>
@@ -869,7 +869,7 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Lanugage</mat-label>
-                                    <mat-select formControlName="language">
+                                    <mat-select formControlName="language" multiple>
                                         <mat-option *ngFor="let lang of languages" [value]="lang._id">
                                             {{lang.name}}
                                         </mat-option>
