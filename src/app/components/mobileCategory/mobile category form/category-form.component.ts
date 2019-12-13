@@ -82,6 +82,10 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
             if (response.status === 200) {
               console.log(response.data);
               this.categoryModel = response.data[0];
+              this.uploadImageURL[
+                "leagueTypeImageThumb"
+              ] = this.categoryModel.leagueTypeImageThumb;
+              this.uploadImageURL["imageThumb"] = this.categoryModel.imageThumb;
               this.categoryForm.setValue({
                 name: this.categoryModel.name ? this.categoryModel.name : "",
                 language: this.categoryModel.language
@@ -106,8 +110,12 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
                 leagueType: String(this.categoryModel.leagueType)
                   ? String(this.categoryModel.leagueType)
                   : "",
-                imageThumb: "",
-                leagueTypeImageThumb: "" // this.categoryModel.leagueTypeImageThumb ? this.categoryModel.leagueTypeImageThumb : ""
+                imageThumb: this.categoryModel.imageThumb
+                  ? this.categoryModel.imageThumb
+                  : "",
+                leagueTypeImageThumb: this.categoryModel.leagueTypeImageThumb
+                  ? this.categoryModel.leagueTypeImageThumb
+                  : ""
               });
             }
           },
@@ -195,15 +203,12 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    if (
-      this.uploadImageURL &&
-      this.categoryForm.value["leagueTypeImageThumb"]
-    ) {
+    if (this.uploadImageURL && this.uploadImageURL["leagueTypeImageThumb"]) {
       this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
         "leagueTypeImageThumb"
       ];
     }
-    if (this.uploadImageURL && this.categoryForm.value["imageThumb"]) {
+    if (this.uploadImageURL && this.uploadImageURL["imageThumb"]) {
       this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
     }
     if (this.categoryModel) {
