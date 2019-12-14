@@ -25,7 +25,7 @@
           <!--Filter input button container end -->
 
 
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="datasourceSW" class="mat-elevation-z8">
             <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
             <!-- Position Column -->
             <ng-container matColumnDef="position">
@@ -59,7 +59,7 @@
           </table>
 
           <!-- <div class="table-paginator-style"> -->
-          <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+          <mat-paginator [length]="swahiliCategoryCount" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
           </mat-paginator>
           <!-- </div> -->
         </mat-card>
@@ -92,7 +92,7 @@
           <!--Filter input button container end -->
 
 
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="datasourceEN" class="mat-elevation-z8">
             <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
             <!-- Position Column -->
             <ng-container matColumnDef="position">
@@ -126,10 +126,8 @@
           </table>
 
           <!-- <div class="table-paginator-style"> -->
-          <!-- <div class="table-paginator-style"> -->
-          <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+          <mat-paginator [length]="englishCategoryCount" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
           </mat-paginator>
-          <!-- </div> -->
           <!-- </div> -->
         </mat-card>
       </div>

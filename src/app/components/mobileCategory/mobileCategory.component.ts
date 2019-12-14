@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { MatPaginator } from '@angular/material';
 import { startWith, tap } from 'rxjs/operators';
+import { LanguageService } from 'src/app/services/language.service';
 @Component({
   selector: 'app-create-category',
   templateUrl: './mobileCategory.html',
@@ -22,11 +23,17 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   paginator: MatPaginator
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute, private categoryService: CategoriesService) { }
+    private activatedRoute: ActivatedRoute,
+    private categoryService: CategoriesService,
+    private languageService: LanguageService) { }
 
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
+  languages: any[] = [];
   count: number
-  dataSource = new MatTableDataSource<any>([]);
+  datasourceEN = new MatTableDataSource<any>([]);
+  datasourceSW = new MatTableDataSource<any>([]);
+  swahiliCategoryCount: number;
+  englishCategoryCount: number;
 
 
   /*Table logic*/
@@ -49,20 +56,49 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.datasourceEN.filter = filterValue.trim().toLowerCase();
+    this.datasourceSW.filter = filterValue.trim().toLowerCase();
   }
 
   /*Table logic*/
 
   ngOnInit() {
     this.getCategoryCount();
-    // this.getCategories(1, 5);
   }
 
   getCategories(pageNumber, size) {
     this.categoryService.find(pageNumber, size).subscribe((result: any) => {
       if (result.status == 200) {
-        this.dataSource = new MatTableDataSource<any>(result.data);
+        this.languageService.list().subscribe(
+          response => {
+            if (response.status === 200) {
+              this.languages = response.data;
+              if (this.languages) {
+                let en = this.languages.find(lang => lang.name.toLowerCase() === 'english');
+                let sw = this.languages.find(lang => lang.name.toLowerCase() === 'swahili');
+
+                this.datasourceSW = new MatTableDataSource<any>(result.data.filter((data) => {
+                  if (data.language === sw._id) {
+                    return data;
+                  }
+                }));
+                this.swahiliCategoryCount = this.datasourceSW.data.length;
+
+                this.datasourceEN = new MatTableDataSource<any>(result.data.filter((data) => {
+                  if (data.language === en._id) {
+                    return data;
+                  }
+                }));
+
+                this.englishCategoryCount = this.datasourceEN.data.length;
+              }
+            }
+          },
+          error => {
+            console.log("Error! ", error);
+          }
+        );
+
       }
     })
   }
@@ -75,6 +111,16 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
     })
   }
 
-
-
+  getLanguages() {
+    this.languageService.list().subscribe(
+      response => {
+        if (response.status === 200) {
+          this.languages = response.data;
+        }
+      },
+      error => {
+        console.log("Error! ", error);
+      }
+    );
+  }
 }
