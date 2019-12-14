@@ -51,7 +51,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   isUploading_leagueTypeImageThumb: boolean = false;
   isUploading_imageThumb: boolean = false;
   fileToUpload: any = null;
-  uploadImageURL: any[] = [];
+  uploadImageURL: any = {};
   types: string[] = ["RADIO", "NEWS", "TVGUIDE", "VOD"];
   icons: any[] = [
     { key: "ic_home", value: "HOME" },
@@ -210,10 +210,11 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     }
     if (this.uploadImageURL && this.uploadImageURL["imageThumb"]) {
       this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
+    } else {
+      this.categoryForm.value["imageThumb"] = this.categoryModel.imageThumb;
     }
     if (this.categoryModel) {
       Object.assign(this.categoryModel, this.categoryForm.value);
-
       this.categoryService.update(this.categoryModel).subscribe(
         (response: any) => {
           if (response.status === 200) this.routeToCategoryList();
