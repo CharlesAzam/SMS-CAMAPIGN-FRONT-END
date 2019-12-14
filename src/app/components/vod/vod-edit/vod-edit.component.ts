@@ -811,7 +811,7 @@ export class VodEditComponent implements OnInit {
             cdnID: new FormControl('', [Validators.required]),
             series: new FormControl([]),
             images: new FormControl([]),
-            imageThumb: new FormControl('', [Validators.required]),
+            imageThumb: new FormControl(''),
             // packageID: new FormControl(''),
             createdBy: new FormControl(''),
         })
