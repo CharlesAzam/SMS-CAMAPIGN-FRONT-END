@@ -11,17 +11,27 @@ export class SubCategoriesService {
 
   constructor(private http: HttpClient) { }
 
-  find(pageNumber?, size?) {
+  find(pageNumber?, size?, language?) {
     let url = API.BASE_URL + "/cms/sub-category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-    if (pageNumber || size) {
-      let params = {
-        pageNumber: pageNumber,
-        size: size
-      };
-      return this.http.get<any>(url, { params, headers });
+    let params: any = {}
+
+    if (pageNumber) {
+      params.pageNumber = pageNumber
     }
-    return this.http.get<any>(url, { headers });
+
+    if (language) {
+      params.language = language
+    }
+
+    if (size) {
+      params.size = size
+    }
+
+    if (params) {
+      return this.http.get<any[]>(url, { params, headers });
+    }
+    return this.http.get<any[]>(url, { headers });
   }
   findById(id: string) {
     let url = API.BASE_URL + "/cms/sub-category/" + id;
@@ -53,8 +63,8 @@ export class SubCategoriesService {
     return this.http.delete<any>(url, { headers });
   }
 
-  getCount() {
-    let url = API.BASE_URL + `/cms/count/subcategory`;
+  getCount(language?) {
+    let url = API.BASE_URL + `/cms/count/subcategory${language ? '?language=' + language : ''}`;
     return this.http.get(url);
   }
 

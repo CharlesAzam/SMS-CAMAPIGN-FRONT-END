@@ -21,10 +21,9 @@ export class MobileSubCategoriesComponent implements OnInit {
 
   languages: any[] = []
   displayedColumns: string[] = ['position', 'name', 'category', 'Status', 'symbol'];
-  datasourceEN = new MatTableDataSource<any>([]);
-  datasourceSW = new MatTableDataSource<any>([]);
-  swahiliCategoryCount: number;
-  englishCategoryCount: number;
+  datasource = new MatTableDataSource<any>([]);
+  selectedLanguageId: string;
+
 
   count: number
 
@@ -33,15 +32,38 @@ export class MobileSubCategoriesComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.getCategoryCount()
   }
 
   ngAfterViewInit(): void {
-    // let pageIndex = this.paginator.pageIndex + 1
+    this.getLanguages().subscribe((result: any) => {
+      if (result.status === 200) {
+        this.languages = result.data;
+        this.selectedLanguageId = result.data[0]._id;
+        this.getCategoryCount(this.selectedLanguageId).subscribe((response: any) => {
+          if (response.success) {
+            this.count = response.count
+            this.paginator.page.pipe(
+              startWith(null),
+              tap(() => this.getSubCategories(this.selectedLanguageId, this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
 
-    this.paginator.page.pipe(
-      startWith(null),
-      tap(() => this.getSubCategories(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+          }
+        }, error => console.log(error))
+      }
+    }, error => console.log(error))
+  }
+
+  onTabChanged(event) {
+    this.selectedLanguageId = this.languages[event.index]._id;
+    this.paginator.pageIndex = 0;
+    this.datasource = new MatTableDataSource<any>([]);
+    this.getCategoryCount(this.selectedLanguageId).subscribe((response: any) => {
+      if (response.success) {
+        this.count = response.count;
+        this.getSubCategories(this.selectedLanguageId, 1, 10)
+      }
+    },
+      error => console.log(error));
+
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator
@@ -50,61 +72,32 @@ export class MobileSubCategoriesComponent implements OnInit {
   deleteCategory(id) {
     this.subCategoryService.delete(id).subscribe((response: any) => {
       if (response.status === 200) {
-        this.getSubCategories(1, 10);
+        this.getSubCategories(1, 10, this.selectedLanguageId);
       }
     },
       error => console.error(error))
   }
 
   applyFilter(filterValue: string) {
-    this.datasourceEN.filter = filterValue.trim().toLowerCase();
-    this.datasourceSW.filter = filterValue.trim().toLowerCase();
-
+    this.datasource.filter = filterValue.trim().toLowerCase();
   }
 
 
-  getSubCategories(pageIndex, pageSize) {
-    this.subCategoryService.find(pageIndex, pageSize).subscribe((result: any) => {
-      if (result.status === 200) {
-        this.languageService.list().subscribe(
-          response => {
-            if (response.status === 200) {
-              this.languages = response.data;
-              if (this.languages) {
-                let en = this.languages.find(lang => lang.name.toLowerCase() === 'english');
-                let sw = this.languages.find(lang => lang.name.toLowerCase() === 'swahili');
-
-                this.datasourceSW = new MatTableDataSource<any>(result.data.filter((data) => {
-                  if (data.language === sw._id) {
-                    return data;
-                  }
-                }));
-                this.swahiliCategoryCount = this.datasourceSW.data.length;
-
-                this.datasourceEN = new MatTableDataSource<any>(result.data.filter((data) => {
-                  if (data.language === en._id) {
-                    return data;
-                  }
-                }));
-
-                this.englishCategoryCount = this.datasourceEN.data.length;
-              }
-            }
-          },
-          error => {
-            console.log("Error! ", error);
-          }
-        );
+  getSubCategories(language, pageNumber, size) {
+    this.subCategoryService.find(pageNumber, size, language).subscribe((result: any) => {
+      if (result.status == 200) {
+        this.datasource = result.data;
       }
-    }, error => console.log(error))
+    },
+      error => console.log(error))
   }
 
-  getCategoryCount() {
-    this.subCategoryService.getCount().subscribe((result: any) => {
-      if (result.success) {
-        this.count = result.count;
-      }
-    })
+  getCategoryCount(language) {
+    return this.subCategoryService.getCount(language);
+  }
+
+  getLanguages() {
+    return this.languageService.list();
   }
 
 }
