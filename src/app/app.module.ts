@@ -53,6 +53,7 @@ import { JwtInterceptor } from './services/interceptor.service';
 import { ErrorInterceptor } from './services/error-interceptor.service';
 import { ErrorDialog } from './components/error-dialog/dialog-error';
 import { AdminModule } from './components/admin/admin.module';
+import { ReportComponent } from './report/report.component';
 
 
 
@@ -83,7 +84,8 @@ import { AdminModule } from './components/admin/admin.module';
     LeagueComponent,
     LeaguelistComponent,
     // TopnavComponent
-    ErrorDialog
+    ErrorDialog,
+    ReportComponent
 
   ],
   imports: [
