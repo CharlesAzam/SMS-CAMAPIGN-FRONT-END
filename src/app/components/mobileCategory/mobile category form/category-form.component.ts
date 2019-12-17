@@ -195,21 +195,24 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    if (
-      this.uploadImageURL['leagueTypeImageThumb']) {
-      this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
-        "leagueTypeImageThumb"
-      ];
+    console.log(this.categoryForm.value['isLeague'])
+    if (this.categoryForm.value['isLeague'] === 'true') {
+      if (
+        this.uploadImageURL['leagueTypeImageThumb']) {
+        this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
+          "leagueTypeImageThumb"
+        ];
+      }
+      else {
+        this.categoryForm.value["leagueTypeImageThumb"] = this.categoryModel.leagueTypeImageThumb;
+      }
+      if (this.uploadImageURL['imageThumb']) {
+        this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
+      } else {
+        this.categoryForm.value["imageThumb"] = this.categoryModel.imageThumb;
+      }
     }
-    else {
-      this.categoryForm.value["leagueTypeImageThumb"] = this.categoryModel.leagueTypeImageThumb;
-    }
-    if (this.uploadImageURL['imageThumb']) {
-      this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
-    } else {
-      this.categoryForm.value["imageThumb"] = this.categoryModel.imageThumb;
-    }
-    console.log(this.categoryForm.value)
+
     if (this.categoryModel) {
       Object.assign(this.categoryModel, this.categoryForm.value);
       this.categoryService.update(this.categoryModel).subscribe(
