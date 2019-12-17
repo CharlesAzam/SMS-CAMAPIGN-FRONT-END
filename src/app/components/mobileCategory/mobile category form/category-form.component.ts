@@ -68,7 +68,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private bannerService: BannerService,
     private categoryService: CategoriesService,
     private languageService: LanguageService
-  ) { }
+  ) {}
 
   ngOnInit() {
     // this.getSubCategories();
@@ -82,6 +82,10 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
             if (response.status === 200) {
               console.log(response.data);
               this.categoryModel = response.data[0];
+              this.uploadImageURL[
+                "leagueTypeImageThumb"
+              ] = this.categoryModel.leagueTypeImageThumb;
+              this.uploadImageURL["imageThumb"] = this.categoryModel.imageThumb;
               this.categoryForm.setValue({
                 name: this.categoryModel.name ? this.categoryModel.name : "",
                 language: this.categoryModel.language
@@ -106,8 +110,12 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
                 leagueType: String(this.categoryModel.leagueType)
                   ? String(this.categoryModel.leagueType)
                   : "",
-                imageThumb: "",
-                leagueTypeImageThumb: "" // this.categoryModel.leagueTypeImageThumb ? this.categoryModel.leagueTypeImageThumb : ""
+                imageThumb: this.categoryModel.imageThumb
+                  ? this.categoryModel.imageThumb
+                  : "",
+                leagueTypeImageThumb: this.categoryModel.leagueTypeImageThumb
+                  ? this.categoryModel.leagueTypeImageThumb
+                  : ""
               });
             }
           },
@@ -131,7 +139,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {}
 
   filterTypes() {
     if (!this.types) return;
@@ -196,17 +204,21 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (
-      this.uploadImageURL['leagueTypeImageThumb'] &&
+      this.uploadImageURL["leagueTypeImageThumb"] &&
       this.categoryForm.value["leagueTypeImageThumb"]
     ) {
       this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
         "leagueTypeImageThumb"
       ];
+    } else {
+      this.categoryForm.value[
+        "leagueTypeImageThumb"
+      ] = this.categoryModel.leagueTypeImageThumb;
     }
-    else {
-      this.categoryForm.value["leagueTypeImageThumb"] = this.categoryModel.leagueTypeImageThumb;
-    }
-    if (this.uploadImageURL['imageThumb'] && this.categoryForm.value["imageThumb"]) {
+    if (
+      this.uploadImageURL["imageThumb"] &&
+      this.categoryForm.value["imageThumb"]
+    ) {
       this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
     } else {
       this.categoryForm.value["imageThumb"] = this.categoryModel.imageThumb;

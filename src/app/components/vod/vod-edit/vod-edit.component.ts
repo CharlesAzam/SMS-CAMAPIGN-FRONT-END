@@ -209,7 +209,7 @@ export class VodEditComponent implements OnInit {
                                             releaseDate: this.vod.releaseDate ? this.vod.releaseDate : '',
                                             duration: this.vod.duration ? this.vod.duration : '',
                                             starring: this.vod.starring ? this.vod.starring : '',
-                                            director: this.vod.director ? this.vod.starring : '',
+                                            director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
 
@@ -251,7 +251,7 @@ export class VodEditComponent implements OnInit {
                                             releaseDate: this.vod.releaseDate ? this.vod.releaseDate : '',
                                             duration: this.vod.duration ? this.vod.duration : '',
                                             starring: this.vod.starring ? this.vod.starring : '',
-                                            director: this.vod.director ? this.vod.starring : '',
+                                            director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
@@ -291,12 +291,12 @@ export class VodEditComponent implements OnInit {
                                             releaseDate: this.vod.releaseDate ? this.vod.releaseDate : '',
                                             duration: this.vod.duration ? this.vod.duration : '',
                                             starring: this.vod.starring ? this.vod.starring : '',
-                                            director: this.vod.director ? this.vod.starring : '',
+                                            director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                            
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
-                                            referenceChannelID: this.vod.referenceChannelID? this.vod.referenceChannelID: '',
+                                            referenceChannelID: parseInt(this.vod.referenceChannelID,10)? parseInt(this.vod.referenceChannelID,10): '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -332,7 +332,7 @@ export class VodEditComponent implements OnInit {
                                     tags: this.vod.tags ? this.vod.tags : [],
                                     duration: this.vod.duration ? this.vod.duration : '',
                                     starring: this.vod.starring ? this.vod.starring : '',
-                                    director: this.vod.director ? this.vod.starring : '',
+                                    director: this.vod.director ? this.vod.director : '',
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                    
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
@@ -535,7 +535,7 @@ export class VodEditComponent implements OnInit {
         this.vodService.getChannels()
         .subscribe((response: any) => {
                 this.channels = response.data;
-                console.log("channels ====>")
+                
         },
         error=>{
             console.log(error);
@@ -553,13 +553,10 @@ export class VodEditComponent implements OnInit {
 
     getCountries() {
         this.countryService.list().subscribe((response: any) => {
-            console.log(response)
-            if (response.status === 200) {
+          if (response.status === 200) {
                 this.countries = response.data;
                 this.filteredCountries.next(this.countries.slice())
-                console.log('----------->',this.countries)
-
-            }
+         }
         },
             error => console.error(error));
     }
@@ -673,9 +670,7 @@ export class VodEditComponent implements OnInit {
 
 
     openDialog(i?) {
-        console.log(String(i))
-        const index = i;
-
+       const index = i;
         const dialogRef = this.dialog.open(AddSeasonsDialog, {
             width: '800px',
             data: String(index) !== 'undefined' ? this.seasons[index] : null
