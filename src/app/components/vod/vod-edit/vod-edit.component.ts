@@ -191,6 +191,7 @@ export class VodEditComponent implements OnInit {
                     this.vodService.findById(params.id).subscribe((response: any) => {
                         if (response.status === 200) {
                             this.vod = response.data[0];
+                            console.log('Alll Data=',this.vod);
                             this.getCategories(this.vod.contentType);
                             this.imageUrl = this.vod.imageThumb;
                             if (this.vod.contentType === 'VOD') {
@@ -214,7 +215,7 @@ export class VodEditComponent implements OnInit {
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
 
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                            language: this.vod.language ? this.vod.language : [],
+                                            language: this.vod.language ? [this.vod.language] : [],
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -255,7 +256,7 @@ export class VodEditComponent implements OnInit {
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                            language: this.vod.language ? this.vod.language : [],
+                                            language: this.vod.language ? [this.vod.language] : [],
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -295,7 +296,7 @@ export class VodEditComponent implements OnInit {
                                             categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                            
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                            language: this.vod.language ? this.vod.language : [],
+                                            language: this.vod.language ? [this.vod.language] : [],
                                             referenceChannelID: parseInt(this.vod.referenceChannelID,10)? parseInt(this.vod.referenceChannelID,10): '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
@@ -336,7 +337,7 @@ export class VodEditComponent implements OnInit {
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                    
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                    language: this.vod.language ? this.vod.language : [],
+                                    language: this.vod.language ? [this.vod.language] : [],
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                     price: {
                                         price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
