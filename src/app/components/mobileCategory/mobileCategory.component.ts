@@ -1,51 +1,67 @@
-
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { CategoriesService } from 'src/app/services/categories.service';
-import { MatPaginator } from '@angular/material';
-import { startWith, tap } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { MatTableDataSource } from "@angular/material/table";
+import { CategoriesService } from "src/app/services/categories.service";
+import { MatPaginator } from "@angular/material";
+import { startWith, tap } from "rxjs/operators";
 @Component({
-  selector: 'app-create-category',
-  templateUrl: './mobileCategory.html',
-  styleUrls: ['./mobileCategory.css']
+  selector: "app-create-category",
+  templateUrl: "./mobileCategory.html",
+  styleUrls: ["./mobileCategory.css"]
 })
 export class CreateCategoryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // let pageIndex = this.paginator.pageIndex + 1
 
-    this.paginator.page.pipe(
-      startWith(null),
-      tap(() => this.getCategories(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+    this.paginator.page
+      .pipe(
+        startWith(null),
+        tap(() =>
+          this.getCategories(
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize
+          )
+        )
+      )
+      .subscribe();
   }
   @ViewChild(MatPaginator, { static: false })
-  paginator: MatPaginator
+  paginator: MatPaginator;
 
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute, private categoryService: CategoriesService) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private categoryService: CategoriesService
+  ) {}
 
-  displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
-  count: number
+  displayedColumns: string[] = ["position", "name", "Status", "symbol"];
+  count: number;
   dataSource = new MatTableDataSource<any>([]);
-
 
   /*Table logic*/
   deleteCategory(row) {
-    this.categoryService.delete(row._id).subscribe((response: any) => {
-      if (response.status === 200)
-        this.getCategories(1, 10);
-
-    },
-      error => console.error(error))
+    if (confirm("Are you sure to delete this Category?")) {
+      this.categoryService.delete(row._id).subscribe(
+        (response: any) => {
+          if (response.status === 200) {
+            this.getCategoryCount();
+            this.getCategories(
+              this.paginator.pageIndex + 1,
+              this.paginator.pageSize
+            );
+          }
+        },
+        error => console.error(error)
+      );
+    }
   }
 
   editCategory(row) {
-    this.router.navigate(['home/CategoryForm', row._id]);
+    this.router.navigate(["home/CategoryForm", row._id]);
   }
 
   routeToCategoryForm() {
-    this.router.navigate(['home/CategoryForm']);
-
+    this.router.navigate(["home/CategoryForm"]);
   }
 
   applyFilter(filterValue: string) {
@@ -64,7 +80,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
       if (result.status == 200) {
         this.dataSource = new MatTableDataSource<any>(result.data);
       }
-    })
+    });
   }
 
   getCategoryCount() {
@@ -72,9 +88,6 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
       if (result.success) {
         this.count = result.count;
       }
-    })
+    });
   }
-
-
-
 }

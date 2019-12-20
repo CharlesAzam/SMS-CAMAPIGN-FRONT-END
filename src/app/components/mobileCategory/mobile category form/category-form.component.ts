@@ -207,15 +207,9 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
       this.categoryForm.value["leagueTypeImageThumb"] = this.uploadImageURL[
         "leagueTypeImageThumb"
       ];
-    } else {
-      this.categoryForm.value[
-        "leagueTypeImageThumb"
-      ] = this.categoryModel.leagueTypeImageThumb;
     }
     if (this.uploadImageURL["imageThumb"]) {
       this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
-    } else {
-      this.categoryForm.value["imageThumb"] = this.categoryModel.imageThumb;
     }
     if (this.categoryModel) {
       Object.assign(this.categoryModel, this.categoryForm.value);

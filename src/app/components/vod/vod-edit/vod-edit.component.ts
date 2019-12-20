@@ -87,10 +87,11 @@ export class VodEditComponent implements OnInit {
     }
 
     remove(tag): void {
-        const index = this.tagss.indexOf(tag);
-
-        if (index >= 0) {
-            this.tagss.splice(index, 1);
+        if (confirm("Are you sure to remove  this?")) {
+            const index = this.tagss.indexOf(tag);
+            if (index >= 0) {
+                this.tagss.splice(index, 1);
+            }
         }
     }
 
@@ -215,7 +216,7 @@ export class VodEditComponent implements OnInit {
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
 
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                            language: this.vod.language ? [this.vod.language] : [],
+                                            language: this.vod.language ? this.vod.language : [],
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -256,7 +257,7 @@ export class VodEditComponent implements OnInit {
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                            language: this.vod.language ? [this.vod.language] : [],
+                                            language: this.vod.language ? this.vod.language : [],
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -296,7 +297,7 @@ export class VodEditComponent implements OnInit {
                                             categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
                                             country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                            
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                            language: this.vod.language ? [this.vod.language] : [],
+                                            language: this.vod.language ? this.vod.language : [],
                                             referenceChannelID: parseInt(this.vod.referenceChannelID,10)? parseInt(this.vod.referenceChannelID,10): '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
@@ -337,7 +338,7 @@ export class VodEditComponent implements OnInit {
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                    
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
-                                    language: this.vod.language ? [this.vod.language] : [],
+                                    language: this.vod.language ? this.vod.language : [],
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                     price: {
                                         price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -705,12 +706,15 @@ export class VodEditComponent implements OnInit {
     }
 
     removeImage(index) {
-        this.images.splice(index, 1);
-
+        if (confirm("Are you sure to remove this File?")) {
+            this.images.splice(index, 1);
+        }
     }
 
     removeSeason(index) {
-        this.seasons.splice(index, 1);
+        if (confirm("Are you sure to remove this Season?")) {
+         this.seasons.splice(index, 1);
+        }
     }
 
     back() {
@@ -956,7 +960,9 @@ export class AddSeasonsDialog {
     }
 
     removeEpisode(index) {
-        this.episode.splice(index, 1);
+        if (confirm("Are you sure to remove this Episode?")) {
+            this.episode.splice(index, 1);
+        }
     }
 
     getData() {
@@ -1066,7 +1072,8 @@ export class AddMultipleImages {
 
 
     removeImage(index) {
-        this.images.splice(index, 1);
-
+        if (confirm("Are you sure to remove this File?")) {
+            this.images.splice(index, 1);
+        }
     }
 }
