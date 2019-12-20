@@ -1,10 +1,14 @@
-<mat-tab-group>
-  <mat-tab label="Swahili">
+<mat-tab-group
+  (selectedTabChange)="onTabChanged($event)"
+  *ngIf="languages.length > 0"
+>
+  <mat-tab label="{{ language.name }}" *ngFor="let language of languages">
     <div class="container">
       <mat-card style="margin-top: 30px;">
         <div class="header">
-          <h2 class="title">Tags</h2>
+          <h2 class="title">{{ language.name }} Tags</h2>
         </div>
+        <div class="content"></div>
         <div class="content"></div>
       </mat-card>
       <div>
@@ -27,91 +31,9 @@
               Create Tags
             </button>
           </div>
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef>No.</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                {{ paginator.pageIndex * paginator.pageSize + i + 1 }}
-              </td></ng-container
-            >
-
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>Name</th>
-              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="type">
-              <th mat-header-cell *matHeaderCellDef>Type</th>
-              <td mat-cell *matCellDef="let element">{{ element.type }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let row">
-                <mat-icon
-                  aria-hidden="false"
-                  style="cursor: pointer;"
-                  (click)="deleteCategory(row)"
-                  aria-label="Example home icon"
-                  >delete
-                </mat-icon>
-                <span style=" margin-right: 20px;margin-left: 20px;"></span>
-                <mat-icon
-                  aria-hidden="false"
-                  style="cursor: pointer;"
-                  [routerLink]="['../MobileTagForm', row._id]"
-                  aria-label="Example home icon"
-                  >edit</mat-icon
-                >
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-
-          <mat-paginator
-            [length]="count"
-            [pageSize]="10"
-            class="table-paginator-style"
-            [pageSizeOptions]="[10, 20, 50]"
-            showFirstLastButtons
-          >
-          </mat-paginator>
-        </mat-card>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab label="English">
-    <div class="container">
-      <mat-card style="margin-top: 30px;">
-        <div class="header">
-          <h2 class="title">Tags</h2>
-        </div>
-        <div class="content"></div>
-      </mat-card>
-      <div>
-        <mat-card style="margin-top: 30px;">
-          <div>
-            <mat-form-field style="width: 88%;">
-              <input
-                matInput
-                (keyup)="applyFilter($event.target.value)"
-                placeholder="Filter"
-              />
-            </mat-form-field>
-
-            <button
-              mat-raised-button
-              color="primary"
-              style="margin-left: 23px;"
-              [routerLink]="['../MobileTagForm/new']"
-            >
-              Create Tags
-            </button>
-          </div>
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef>Id.</th>
               <td mat-cell *matCellDef="let element; let i = index">
                 {{ paginator.pageIndex * paginator.pageSize + i + 1 }}
               </td></ng-container

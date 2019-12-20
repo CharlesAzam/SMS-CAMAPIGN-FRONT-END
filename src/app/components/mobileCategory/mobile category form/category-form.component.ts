@@ -82,10 +82,6 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
             if (response.status === 200) {
               console.log(response.data);
               this.categoryModel = response.data[0];
-              this.uploadImageURL[
-                "leagueTypeImageThumb"
-              ] = this.categoryModel.leagueTypeImageThumb;
-              this.uploadImageURL["imageThumb"] = this.categoryModel.imageThumb;
               this.categoryForm.setValue({
                 name: this.categoryModel.name ? this.categoryModel.name : "",
                 language: this.categoryModel.language
@@ -110,12 +106,8 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
                 leagueType: String(this.categoryModel.leagueType)
                   ? String(this.categoryModel.leagueType)
                   : "",
-                imageThumb: this.categoryModel.imageThumb
-                  ? this.categoryModel.imageThumb
-                  : "",
-                leagueTypeImageThumb: this.categoryModel.leagueTypeImageThumb
-                  ? this.categoryModel.leagueTypeImageThumb
-                  : ""
+                imageThumb: "",
+                leagueTypeImageThumb: "" // this.categoryModel.leagueTypeImageThumb ? this.categoryModel.leagueTypeImageThumb : ""
               });
             }
           },
@@ -211,6 +203,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     if (this.uploadImageURL["imageThumb"]) {
       this.categoryForm.value["imageThumb"] = this.uploadImageURL["imageThumb"];
     }
+
     if (this.categoryModel) {
       Object.assign(this.categoryModel, this.categoryForm.value);
       this.categoryService.update(this.categoryModel).subscribe(

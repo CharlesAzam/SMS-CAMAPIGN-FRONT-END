@@ -1,10 +1,10 @@
-<mat-tab-group>
-  <mat-tab label="Swahili">
+<mat-tab-group (selectedTabChange)="onTabChanged($event);" *ngIf="languages.length > 0">
+  <mat-tab label={{language.name}} *ngFor="let language of languages">
     <div class="container">
 
       <mat-card style="margin-top: 30px;">
         <div class="header">
-          <h2 class="title">Sub Category SW</h2>
+          <h2 class="title">{{language.name}} Sub-Catgeories</h2>
         </div>
         <div class="content">
 
@@ -27,85 +27,7 @@
           <!--Filter input button container end -->
 
 
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
-            <!-- Position Column -->
-            <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef> No. </th>
-              <td mat-cell *matCellDef="let element; let i = index"> {{(paginator.pageIndex*paginator.pageSize)+i+1}}
-              </td>
-            </ng-container>
-            <!-- Category Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="category">
-              <th mat-header-cell *matHeaderCellDef> Category </th>
-              <td mat-cell *matCellDef="let element"> {{element.parentCatID?element.parentCatID.name: '- -'}} </td>
-            </ng-container>
-
-            <!-- Status Column -->
-            <ng-container matColumnDef="Status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-            </ng-container>
-            <!-- Action Column -->
-            <ng-container matColumnDef="symbol">
-              <th mat-header-cell *matHeaderCellDef> Action </th>
-              <td mat-cell *matCellDef="let row">
-                <mat-icon aria-hidden="false" (click)="deleteCategory(row._id)" style="cursor: pointer;"
-                  aria-label="Example home icon">delete
-                </mat-icon>
-                <span style=" margin-right: 20px;margin-left: 20px;"></span>
-                <mat-icon aria-hidden="false" [routerLink]="['../subCategoryForm', row._id]" style="cursor: pointer;"
-                  aria-label="Example home icon">edit</mat-icon>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-          <!-- <div class="table-paginator-style"> -->
-          <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]"
-            showFirstLastButtons>
-          </mat-paginator>
-          <!-- </div> -->
-        </mat-card>
-      </div>
-    </div>
-  </mat-tab>
-
-
-  <mat-tab label="English">
-    <div class="container">
-
-      <mat-card style="margin-top: 30px;">
-        <div class="header">
-          <h2 class="title">Sub Category EN</h2>
-        </div>
-        <div class="content">
-
-        </div>
-      </mat-card>
-      <div>
-
-
-        <mat-card style="margin-top: 30px;">
-          <div>
-            <mat-form-field style="width: 83%;">
-              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-            </mat-form-field>
-
-            <button mat-raised-button color="primary" style="margin-left: 23px;"
-              [routerLink]="['../subCategoryForm/new']">
-              Create Sub Category
-            </button>
-          </div>
-          <!--Filter input button container end -->
-
-
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
             <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
             <!-- Position Column -->
             <ng-container matColumnDef="position">

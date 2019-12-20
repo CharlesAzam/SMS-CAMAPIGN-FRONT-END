@@ -28,14 +28,24 @@ export class CategoriesService {
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<Categories>(url, { headers });
   }
-  find(pageNumber?, size?): Observable<Categories[]> {
+  find(pageNumber?, size?, language?): Observable<Categories[]> {
     let url = API.BASE_URL + "/cms/category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-    if (pageNumber || size) {
-      let params = {
-        pageNumber: pageNumber,
-        size: size
-      };
+    let params: any = {}
+
+    if (pageNumber) {
+      params.pageNumber = pageNumber
+    }
+
+    if (language) {
+      params.language = language
+    }
+
+    if (size) {
+      params.size = size
+    }
+
+    if (params) {
       return this.http.get<Categories[]>(url, { params, headers });
     }
     return this.http.get<Categories[]>(url, { headers });
@@ -58,8 +68,9 @@ export class CategoriesService {
     return this.http.delete<Categories>(url, { headers });
   }
 
-  getCount() {
-    let url = API.BASE_URL + `/cms/count/category`;
+  getCount(language?) {
+    console.log('language',language)
+    let url = API.BASE_URL + `/cms/count/category${language?'?language='+language:''}`;
     return this.http.get(url);
   }
   uploadUrl(fileToUpload: File): Observable<Object> {

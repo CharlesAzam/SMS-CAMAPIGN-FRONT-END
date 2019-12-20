@@ -1,0 +1,109 @@
+<div class="container" style="margin-top: 30px;">
+    <mat-card>
+        <div class="header">
+            <h2 class="title">Reports</h2>
+        </div>
+        <div class="content">
+
+        </div>
+    </mat-card>
+
+    <mat-card style="margin-top: 30px;">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Search Method</mat-label>
+                        <mat-select formControlName="method">
+                            <ngx-mat-select-search [formControl]="filterMethodCtrl"
+                                [noEntriesFoundLabel]="'Method not found'" [placeholderLabel]="'Find method...'">
+                            </ngx-mat-select-search>
+                            <mat-option *ngFor="let method of filterMethods | async" [value]="method._id">
+                                {{method.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Country</mat-label>
+                        <mat-select formControlName="country">
+                            <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                [noEntriesFoundLabel]="'Country not found'" [placeholderLabel]="'Find Country...'">
+                            </ngx-mat-select-search>
+                            <mat-option *ngFor="let country of filterCountries | async" [value]="country._id">
+                                {{country.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" >
+            <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit">Search</button>
+            <button color='danger' mat-raised-button type="submit">Reset</button>
+        </div>
+
+        <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="No">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                <td mat-cell *matCellDef="let element; let i= index"> {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Category Column -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container> <!-- Sub Categories Column -->
+
+            <!-- Sub Categories Column -->
+            <ng-container matColumnDef="azamPacakgeMappingName" mat-sort-header>
+                <th mat-header-cell *matHeaderCellDef> Mapped Azam Package </th>
+                <td mat-cell *matCellDef="let element"> {{element.azamPacakgeMappingName}} </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="free">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Free </th>
+                <td mat-cell *matCellDef="let element"> {{element.free}} </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="isVodAllowed">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Content Allowed? </th>
+                <td mat-cell *matCellDef="let element"> {{element.isVodAllowed}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="noOfDaysValidity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No of Days Validity </th>
+                <td mat-cell *matCellDef="let element"> {{element.validityInDays}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+        </mat-paginator>
+
+    </mat-card>
+</div>
