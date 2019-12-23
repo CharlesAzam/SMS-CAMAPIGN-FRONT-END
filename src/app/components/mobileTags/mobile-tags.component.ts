@@ -4,7 +4,8 @@ import { MobileTags } from '../../models/mobile-tags';
 import { MatTableDataSource } from '@angular/material/table';
 import { MobileTagsService } from '../../../app/services/mobile-tags.service';
 import { startWith, tap } from 'rxjs/operators';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatDialog } from '@angular/material';
+import { WarningDialog } from '../warning-dialog/dialog-warning';
 
 export class mobileTagFilter {
   name: string = '';
@@ -23,26 +24,35 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
 
     this.paginator.page.pipe(
       startWith(null),
-      tap(() => this.getTags(this.paginator.pageIndex+1, this.paginator.pageSize))).subscribe();
+      tap(() => this.getTags(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute, private tagService: MobileTagsService) { }
+    private activatedRoute: ActivatedRoute,
+    private tagService: MobileTagsService,
+    private dialog: MatDialog) { }
   TagModel: MobileTags = new MobileTags();
   displayedColumns: string[] = ['id', 'name', 'type', 'action'];
   dataSource = new MatTableDataSource<any>([]);
   count: number
   /*Table logic*/
-  deleteCategory(row) {
-    this.tagService.delete(row._id).subscribe((result: any) => {
-      if (result.status == 200) {
-        this.getTags(1, 5);
-        // this.dataSource.data
-      }
 
-    })
+
+  deleteCategory(row) {
+    this.dialog.open(WarningDialog, {
+      width: '400px',
+      data: { title: 'Warning', message: `Are you sure want to delete ${row.name} tag` }
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this.tagService.delete(row._id).subscribe((result: any) => {
+          if (result.status == 200) {
+            this.getTags(1, 5);
+          }
+        }, error => console.log(error))
+      }
+    });
   }
 
   routeToTagForm() {
@@ -65,11 +75,6 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
-
-  /*Table logic*/
 
   ngOnInit() {
     this.getTagCount();

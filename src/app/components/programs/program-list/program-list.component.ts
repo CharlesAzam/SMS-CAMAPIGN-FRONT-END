@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ProgramFilter } from '../program-filter';
 import { ProgramService } from '../program.service';
 import { Program } from '../program';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { startWith, tap } from 'rxjs/operators';
+import { WarningDialog } from '../../warning-dialog/dialog-warning';
 
 @Component({
     selector: 'program',
@@ -30,16 +31,24 @@ export class ProgramListComponent {
 
     displayedColumns: string[] = ['id', 'title', 'description', 'time', 'action']
 
-    constructor(private programService: ProgramService) {
+    constructor(private programService: ProgramService, private dialog: MatDialog) {
     }
 
     delete(row) {
-        this.programService.delete(row._id).subscribe((response: any) => {
-            if (response.status === 200) {
-                this.getPrograms(this.paginator.pageIndex+1, this.paginator.pageSize);
+        this.dialog.open(WarningDialog, {
+            width: '400px',
+            data: { title: 'Warning', message: `Are you sure want to delete ${row.name} program` }
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this.programService.delete(row._id).subscribe((response: any) => {
+                    if (response.status === 200) {
+                        this.getPrograms(this.paginator.pageIndex + 1, this.paginator.pageSize);
+                    }
+                },
+                    error => console.error(error))
             }
-        },
-            error => console.error(error))
+        });
+
     }
 
     ngOnInit() {

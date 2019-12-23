@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
+import { WarningDialog } from '../../warning-dialog/dialog-warning';
 
 @Component({
     selector: 'vod',
@@ -87,13 +88,22 @@ export class VodListComponent implements OnInit {
     }
 
     deleteContent(data, index?) {
-        this.vodService.delete(data).subscribe((response: any) => {
-            if (response.status === 200 || response.success) {
-                this.getData('vod', 1, 5);
-                this.getContentCount('vod');
+
+        this.dialog.open(WarningDialog, {
+            width: '400px',
+            data: { title: 'Warning', message: `Are you sure want to delete ${data.title} Content` }
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this.vodService.delete(data).subscribe((response: any) => {
+                    if (response.status === 200 || response.success) {
+                        this.getData('vod', 1, 5);
+                        this.getContentCount('vod');
+                    }
+                }, error => console.error(error))
             }
-        }, error => console.error(error))
+        });
     }
+
 
     select(selected: Vod): void {
         this.selectedVod = selected;

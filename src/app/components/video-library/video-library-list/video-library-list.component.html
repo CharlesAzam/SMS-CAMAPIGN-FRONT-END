@@ -60,7 +60,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
-          <mat-icon aria-hidden="false" style="cursor: pointer;" (click)="delete(row._id)"
+          <mat-icon aria-hidden="false" style="cursor: pointer;" (click)="delete(row)"
             aria-label="Example home icon">delete</mat-icon>
           <span style="margin-left: 20px;"></span>
           <mat-icon aria-hidden="false" style="cursor: pointer;" [routerLink]="['../video-library', row._id]"
