@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VodService } from '../vod.service';
 import { Vod } from '../vod';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { of, ReplaySubject, Subject } from 'rxjs';
-import { MatChipInputEvent, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatChipInputEvent, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSelect, MatOption } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
@@ -124,6 +124,8 @@ export class VodEditComponent implements OnInit {
     boxes: string[] = ['HORIZONTAL_CARD', 'VERTICAL_CARD', 'BANNER', 'LOGO'];
     seasons: any[] = [];
     images: string[] = []
+    allSelected = false;
+    @ViewChild('countrySelection') countrySelection: MatSelect;
 
     vodTypes: string[] = [
         "VIDEO",
@@ -425,7 +427,15 @@ export class VodEditComponent implements OnInit {
         this.fileToUpload.mimeType = this.fileToUpload.type;
         this.uploadFileToActivity();
     }
-
+    toggleAllSelection() {
+        this.allSelected = !this.allSelected;  // to control select-unselect
+        
+        if (this.allSelected) {
+          this.countrySelection.options.forEach( (item : MatOption) => item.select());
+        } else {
+          this.countrySelection.options.forEach( (item : MatOption) => {item.deselect()});
+        }
+      }
     uploadFileToActivity() {
         this.isUploading = true;
         this.vodService.uploadUrl(this.fileToUpload).subscribe((response: any) => {

@@ -104,12 +104,13 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
-                                    <mat-select
+                                    <mat-select #countrySelection
                                         formControlName="country" multiple required>
                                         <ngx-mat-select-search [formControl]="filterCountryCtrl"
                                             [noEntriesFoundLabel]="'Country not found'"
                                             [placeholderLabel]="'Find Country...'">
                                         </ngx-mat-select-search>
+                                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
                                         <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
                                             {{count.country}}
                                         </mat-option>
@@ -368,12 +369,13 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
-                                    <mat-select
+                                    <mat-select #countrySelection
                                         formControlName="country" multiple required>
                                         <ngx-mat-select-search [formControl]="filterCountryCtrl"
                                             [noEntriesFoundLabel]="'Country not found'"
                                             [placeholderLabel]="'Find Country...'">
                                         </ngx-mat-select-search>
+                                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
                                         <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
                                             {{count.country}}
                                         </mat-option>
@@ -607,12 +609,13 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
-                                    <mat-select
+                                    <mat-select #countrySelection
                                         formControlName="country" multiple required>
                                         <ngx-mat-select-search [formControl]="filterCountryCtrl"
                                             [noEntriesFoundLabel]="'Country not found'"
                                             [placeholderLabel]="'Find Country...'">
                                         </ngx-mat-select-search>
+                                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
                                         <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
                                             {{count.country}}
                                         </mat-option>
@@ -853,12 +856,13 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
-                                    <mat-select
+                                    <mat-select #countrySelection
                                         formControlName="country" multiple required>
                                         <ngx-mat-select-search [formControl]="filterCountryCtrl"
                                             [noEntriesFoundLabel]="'Country not found'"
                                             [placeholderLabel]="'Find Country...'">
                                         </ngx-mat-select-search>
+                                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
                                         <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
                                             {{count.country}}
                                         </mat-option>
@@ -1051,12 +1055,13 @@
                             <div class="form-group">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Country</mat-label>
-                                    <mat-select
+                                    <mat-select #countrySelection
                                         formControlName="country" multiple required>
                                         <ngx-mat-select-search [formControl]="filterCountryCtrl"
                                             [noEntriesFoundLabel]="'Country not found'"
                                             [placeholderLabel]="'Find Country...'">
                                         </ngx-mat-select-search>
+                                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
                                         <mat-option *ngFor="let count of filteredCountries | async" [value]="count._id">
                                             {{count.country}}
                                         </mat-option>

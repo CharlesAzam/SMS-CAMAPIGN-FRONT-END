@@ -62,8 +62,12 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
   ) {}
   TagModel: MobileTags = new MobileTags();
   displayedColumns: string[] = ["id", "name", "type", "action"];
-  dataSource = new MatTableDataSource<any>([]);
+  datasource = new MatTableDataSource<any>([]);
+  languages: any[] = [];
+  swahiliTagCount: number;
+  englishTagCount: number;
   count: number;
+
   /*Table logic*/
   deleteCategory(row) {
     if (confirm("Are you sure to delete this Tag?")) {
@@ -75,7 +79,6 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
             this.paginator.pageIndex + 1,
             this.paginator.pageSize
           );
-          // this.dataSource.data
         }
       });
     }
@@ -90,11 +93,14 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
   }
 
   getTags(language, pageIndex, size) {
-    this.tagService.find(pageIndex, size, language).subscribe((result: any) => {
-      if (result.status == 200) {
-        this.datasource = result.data;
-      }
-    });
+    this.tagService.find(pageIndex, size, language).subscribe(
+      (result: any) => {
+        if (result.status == 200) {
+          this.datasource = result.data;
+        }
+      },
+      error => console.log(error)
+    );
   }
 
   applyFilter(filterValue: string) {

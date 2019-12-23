@@ -52,7 +52,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <mat-form-field *ngIf="bannerType == 'vod'" style="width: 100%;">
+            <mat-form-field *ngIf="type == 'vod'" style="width: 100%;">
               <mat-label>Content</mat-label>
               <mat-select formControlName="content" required>
                 <ngx-mat-select-search
@@ -70,16 +70,8 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field
-              *ngIf="bannerType == 'package'"
-              style="width: 100%;"
-            >
-              <input
-                matInput
-                placeholder="Link"
-                formControlName="URL"
-                required
-              />
+            <mat-form-field *ngIf="type == 'package'" style="width: 100%;">
+              <input matInput placeholder="Link" formControlName="URL" />
               <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
             </mat-form-field>
 
