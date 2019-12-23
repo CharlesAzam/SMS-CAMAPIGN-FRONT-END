@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { CategoriesService } from "src/app/services/categories.service";
-import { MatPaginator } from "@angular/material";
+import { MatPaginator, MatDialog } from "@angular/material";
 import { startWith, tap } from "rxjs/operators";
 import { LanguageService } from "src/app/services/language.service";
+import { WarningDialog } from "../warning-dialog/dialog-warning";
 @Component({
   selector: "app-create-category",
   templateUrl: "./mobileCategory.html",
@@ -50,7 +51,8 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private categoryService: CategoriesService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private dialog: MatDialog
   ) {}
 
   displayedColumns: string[] = ["position", "name", "Status", "symbol"];
@@ -77,21 +79,31 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
 
   /*Table logic*/
   deleteCategory(row) {
-    if (confirm("Are you sure to delete this Category?")) {
-      this.categoryService.delete(row._id).subscribe(
-        (response: any) => {
-          if (response.status === 200) {
-            this.getCategoryCount(this.selectedLanguageId);
-            this.getCategories(
-              this.selectedLanguageId,
-              this.paginator.pageIndex + 1,
-              this.paginator.pageSize
-            );
-          }
-        },
-        error => console.error(error)
-      );
-    }
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${row.name} category`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.categoryService.delete(row._id).subscribe(
+            (response: any) => {
+              if (response.status === 200)
+                this.getCategoryCount(this.selectedLanguageId);
+              this.getCategories(
+                this.selectedLanguageId,
+                this.paginator.pageIndex + 1,
+                this.paginator.pageSize
+              );
+            },
+            error => console.error(error)
+          );
+        }
+      });
   }
 
   editCategory(row) {

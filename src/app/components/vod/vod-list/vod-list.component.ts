@@ -21,7 +21,7 @@ import { Router } from "@angular/router";
 import { FormControl, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { map, startWith, tap } from "rxjs/operators";
-
+import { WarningDialog } from "../../warning-dialog/dialog-warning";
 @Component({
   selector: "vod",
   templateUrl: "vod-list.component.html"
@@ -107,16 +107,30 @@ export class VodListComponent implements OnInit {
   }
 
   deleteContent(data, index?) {
-    if (confirm("Are you sure to delete  this Content?")) {
-      this.vodService.delete(data).subscribe(
-        (response: any) => {
-          if (response.status === 200 || response.success) {
-            this.getContentType({ value: data.contentType });
-          }
-        },
-        error => console.error(error)
-      );
-    }
+    //stsart
+
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${data.title} Content`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.vodService.delete(data).subscribe(
+            (response: any) => {
+              if (response.status === 200 || response.success) {
+                this.getContentType({ value: data.contentType });
+              }
+            },
+            error => console.error(error)
+          );
+        }
+      });
+    //sa
   }
 
   select(selected: Vod): void {

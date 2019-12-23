@@ -4,8 +4,9 @@ import { FormControl } from "@angular/forms";
 import { SubCategoriesService } from "src/app/services/sub.categories.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { startWith, tap } from "rxjs/operators";
-import { MatPaginator } from "@angular/material";
+import { MatPaginator, MatDialog } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
+import { WarningDialog } from "../warning-dialog/dialog-warning";
 @Component({
   selector: "app-mobile-sub-categories-component",
   templateUrl: "./MobileSubCategoriesComponent.html",
@@ -16,7 +17,8 @@ export class MobileSubCategoriesComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private subCategoryService: SubCategoriesService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private dialog: MatDialog
   ) {}
 
   languages: any[] = [];
@@ -86,22 +88,32 @@ export class MobileSubCategoriesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator;
 
-  deleteCategory(id) {
-    if (confirm("Are you sure to delete this Sub-Category?")) {
-      this.subCategoryService.delete(id).subscribe(
-        (response: any) => {
-          if (response.status === 200) {
-            this.getCategoryCount(this.selectedLanguageId);
-            this.getSubCategories(
-              this.selectedLanguageId,
-              this.paginator.pageIndex + 1,
-              this.paginator.pageSize
-            );
-          }
-        },
-        error => console.error(error)
-      );
-    }
+  deleteCategory(row) {
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${row.name} subcategory`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.subCategoryService.delete(row._id).subscribe(
+            (response: any) => {
+              if (response.status === 200)
+                this.getCategoryCount(this.selectedLanguageId);
+              this.getSubCategories(
+                this.selectedLanguageId,
+                this.paginator.pageIndex + 1,
+                this.paginator.pageSize
+              );
+            },
+            error => console.error(error)
+          );
+        }
+      });
   }
 
   applyFilter(filterValue: string) {

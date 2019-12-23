@@ -3,9 +3,15 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { PackageFilter } from "../package-filter";
 import { PackageService } from "../package.service";
 import { Package } from "../package";
-import { MatSort, MatPaginator, MatTableDataSource } from "@angular/material";
+import {
+  MatSort,
+  MatPaginator,
+  MatTableDataSource,
+  MatDialog
+} from "@angular/material";
 import { Router } from "@angular/router";
 import { tap, startWith } from "rxjs/operators";
+import { WarningDialog } from "../../warning-dialog/dialog-warning";
 
 @Component({
   selector: "package",
@@ -41,7 +47,11 @@ export class PackageListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>([]);
 
   displayedColumns: string[] = ["No", "name", "description", "action"];
-  constructor(private packageService: PackageService, private router: Router) {}
+  constructor(
+    private packageService: PackageService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     // this.getPlanInfo();

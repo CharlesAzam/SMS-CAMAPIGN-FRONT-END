@@ -4,8 +4,9 @@ import { MobileTags } from "../../models/mobile-tags";
 import { MatTableDataSource } from "@angular/material/table";
 import { MobileTagsService } from "../../../app/services/mobile-tags.service";
 import { startWith, tap } from "rxjs/operators";
-import { MatPaginator } from "@angular/material";
+import { MatPaginator, MatDialog } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
+import { WarningDialog } from "../warning-dialog/dialog-warning";
 
 export class mobileTagFilter {
   name: string = "";
@@ -58,7 +59,8 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private tagService: MobileTagsService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private dialog: MatDialog
   ) {}
   TagModel: MobileTags = new MobileTags();
   displayedColumns: string[] = ["id", "name", "type", "action"];
@@ -69,19 +71,34 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
   count: number;
 
   /*Table logic*/
+
   deleteCategory(row) {
-    if (confirm("Are you sure to delete this Tag?")) {
-      this.tagService.delete(row._id).subscribe((result: any) => {
-        if (result.status == 200) {
-          this.getTagCount(this.selectedLanguageId);
-          this.getTags(
-            this.selectedLanguageId,
-            this.paginator.pageIndex + 1,
-            this.paginator.pageSize
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${row.name} tag`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.tagService.delete(row._id).subscribe(
+            (result: any) => {
+              if (result.status == 200) {
+                this.getTagCount(this.selectedLanguageId);
+                this.getTags(
+                  this.selectedLanguageId,
+                  this.paginator.pageIndex + 1,
+                  this.paginator.pageSize
+                );
+              }
+            },
+            error => console.log(error)
           );
         }
       });
-    }
   }
 
   routeToTagForm() {

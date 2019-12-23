@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { BannerFilter } from "../banner-filter";
 import { BannerService } from "../banner.service";
 import { Banner } from "../banner";
-import { MatSort, MatPaginator, MatTableDataSource } from "@angular/material";
+import {
+  MatSort,
+  MatPaginator,
+  MatTableDataSource,
+  MatDialog
+} from "@angular/material";
 import { startWith, tap } from "rxjs/operators";
+import { WarningDialog } from "../../warning-dialog/dialog-warning";
 
 @Component({
   selector: "banner",
@@ -39,23 +44,36 @@ export class BannerListComponent {
     "action"
   ];
 
-  constructor(private bannerService: BannerService) {}
+  constructor(
+    private bannerService: BannerService,
+    private dialog: MatDialog
+  ) {}
 
   delete(row) {
-    if (confirm("Are you sure to delete this Banner?")) {
-      this.bannerService.delete(row._id).subscribe(
-        (response: any) => {
-          if (response.status === 200) {
-            this.getCount();
-            this.getBanners(
-              this.paginator.pageIndex + 1,
-              this.paginator.pageSize
-            );
-          }
-        },
-        error => console.error(error)
-      );
-    }
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${row.name} banner`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.bannerService.delete(row._id).subscribe(
+            (response: any) => {
+              if (response.status === 200) {
+                this.getBanners(
+                  this.paginator.pageIndex + 1,
+                  this.paginator.pageSize
+                );
+              }
+            },
+            error => console.error(error)
+          );
+        }
+      });
   }
 
   ngOnInit() {

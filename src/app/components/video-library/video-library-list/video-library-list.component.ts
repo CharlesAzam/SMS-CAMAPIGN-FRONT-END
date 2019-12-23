@@ -3,9 +3,15 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { VideoLibraryFilter } from "../video-library-filter";
 import { VideoLibraryService } from "../video-library.service";
 import { VideoLibrary } from "../video-library";
-import { MatSort, MatPaginator, MatTableDataSource } from "@angular/material";
+import {
+  MatSort,
+  MatPaginator,
+  MatTableDataSource,
+  MatDialog
+} from "@angular/material";
 import { Router, ActivatedRoute } from "@angular/router";
 import { startWith, tap } from "rxjs/operators";
+import { WarningDialog } from "../../warning-dialog/dialog-warning";
 
 @Component({
   selector: "video-library",
@@ -40,8 +46,7 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private videoLibraryService: VideoLibraryService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -49,21 +54,32 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  delete(id) {
-    if (confirm("Are you sure to delete selected item?")) {
-      this.videoLibraryService.delete(id).subscribe(
-        response => {
-          this.getCount();
-          this.getVideoLibrary(
-            this.paginator.pageIndex + 1,
-            this.paginator.pageSize
-          );
-        },
-        err => {
-          console.log(err);
+  delete(data) {
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${data.name} video library`
         }
-      );
-    }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.videoLibraryService.delete(data._id).subscribe(
+            response => {
+              console.log(response);
+              this.getVideoLibrary(
+                this.paginator.pageIndex + 1,
+                this.paginator.pageSize
+              );
+            },
+            err => {
+              console.log(err);
+            }
+          );
+        }
+      });
   }
 
   getVideoLibrary(index, size) {
