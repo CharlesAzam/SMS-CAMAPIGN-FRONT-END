@@ -78,10 +78,21 @@
         <!-- <a mat-list-item routerLink="product">In-App Purchase Products</a> -->
         <!-- <a mat-list-item routerLink="LeagueList">League</a> -->
         <a mat-list-item routerLink="video-library">Video Library</a>
-        <a mat-list-item routerLink="reports">Reports</a>
       </div>
 
+      <mat-list-item (click)="showReports = !showReports" class="parent">
+        <mat-icon color="primary" style="margin-right: 5px;">bar_chart</mat-icon>
+        <span class="full-width" *ngIf="isExpanded || isShowing">Reports</span>
+        <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showReports}"
+          *ngIf="isExpanded || isShowing">expand_more
+        </mat-icon>
+      </mat-list-item>
 
+      <div class="submenu" [ngClass]="{'expanded' : showReports}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item routerLink="reports">Users Reports</a>
+        <a mat-list-item routerLink="reports/collections">Collection Reports</a>
+        <a mat-list-item routerLink="reports/transactions">Transaction Reports</a>
+      </div>
     </mat-nav-list>
 
   </mat-sidenav>

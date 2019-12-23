@@ -53,7 +53,7 @@ import { JwtInterceptor } from './services/interceptor.service';
 import { ErrorInterceptor } from './services/error-interceptor.service';
 import { ErrorDialog } from './components/error-dialog/dialog-error';
 import { AdminModule } from './components/admin/admin.module';
-import { ReportComponent } from './report/report.component';
+import { ReportsModule } from './components/reports/reports.module';
 
 
 
@@ -83,9 +83,7 @@ import { ReportComponent } from './report/report.component';
     NewsPhotosComponent,
     LeagueComponent,
     LeaguelistComponent,
-    // TopnavComponent
     ErrorDialog,
-    ReportComponent
 
   ],
   imports: [
@@ -111,6 +109,7 @@ import { ReportComponent } from './report/report.component';
     ProgramModule,
     CreateCategoriesModule,
     ReactiveFormsModule,
+    ReportsModule,
     MatInputModule
   ],
   entryComponents: [

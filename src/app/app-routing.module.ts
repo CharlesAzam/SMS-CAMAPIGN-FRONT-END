@@ -24,7 +24,6 @@ import { NewsPhotosComponent } from "./components/newsPhotos/news-photos/news-ph
 import { LeagueComponent } from "./components/league/league-form/league.component";
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
-import { ReportComponent } from './report/report.component';
 
 
 const routes: Routes = [
@@ -133,7 +132,7 @@ const routes: Routes = [
       },
       {
         path: "reports",
-        component: ReportComponent, canActivate: [AuthGuard],
+        loadChildren: "./components/reports/reports.module#ReportsModule", canActivate: [AuthGuard],
 
       },
       {
