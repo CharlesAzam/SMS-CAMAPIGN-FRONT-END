@@ -3,8 +3,9 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoriesService } from 'src/app/services/categories.service';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatDialog } from '@angular/material';
 import { startWith, tap } from 'rxjs/operators';
+import { WarningDialog } from '../warning-dialog/dialog-warning';
 @Component({
   selector: 'app-create-category',
   templateUrl: './mobileCategory.html',
@@ -22,7 +23,9 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   paginator: MatPaginator
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute, private categoryService: CategoriesService) { }
+    private activatedRoute: ActivatedRoute,
+    private categoryService: CategoriesService,
+    private dialog: MatDialog) { }
 
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
   count: number
@@ -31,12 +34,20 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
 
   /*Table logic*/
   deleteCategory(row) {
-    this.categoryService.delete(row._id).subscribe((response: any) => {
-      if (response.status === 200)
-        this.getCategories(1, 10);
+    this.dialog.open(WarningDialog, {
+      width: '400px',
+      data: { title: 'Warning', message: `Are you sure want to delete ${row.name} category` }
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this.categoryService.delete(row._id).subscribe((response: any) => {
+          if (response.status === 200)
+            this.getCategories(1, 10);
+        },
+          error => console.error(error))
+      }
+    });
 
-    },
-      error => console.error(error))
+
   }
 
   editCategory(row) {
