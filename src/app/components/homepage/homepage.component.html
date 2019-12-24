@@ -17,15 +17,13 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="admin">
+      <button mat-menu-item [routerLink]="['admin/users']">
         <span>Users</span>
       </button>
       <button mat-menu-item [routerLink]="['admin/roles']">
         <span>Roles</span>
       </button>
-      <button mat-menu-item>
-        <span>Countries</span>
-      </button>
+
       <button mat-menu-item (click)="logout()">
         <span>Logout</span>
       </button>

@@ -53,6 +53,7 @@ import { JwtInterceptor } from './services/interceptor.service';
 import { ErrorInterceptor } from './services/error-interceptor.service';
 import { ErrorDialog } from './components/error-dialog/dialog-error';
 import { AdminModule } from './components/admin/admin.module';
+import { WarningDialog } from './components/warning-dialog/dialog-warning';
 
 
 
@@ -83,8 +84,8 @@ import { AdminModule } from './components/admin/admin.module';
     LeagueComponent,
     LeaguelistComponent,
     // TopnavComponent
-    ErrorDialog
-
+    ErrorDialog,
+    WarningDialog
   ],
   imports: [
     BrowserModule,
@@ -112,7 +113,8 @@ import { AdminModule } from './components/admin/admin.module';
     MatInputModule
   ],
   entryComponents: [
-    ErrorDialog
+    ErrorDialog,
+    WarningDialog
   ],
   providers: [
     MoviesService, LanguageService, CountryService, LeagueService, AuthGuard,

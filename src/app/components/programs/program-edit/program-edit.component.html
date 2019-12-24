@@ -74,7 +74,7 @@
 
                         <div class="form-group">
                             <mat-form-field style="width: 100%;">
-                                <input matInput formControlName="date" [matDatepicker]="picker" placeholder="Date"
+                                <input matInput formControlName="date" [matDatepicker]="picker" placeholder="Date" (click)="picker.open()"
                                     name="date">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
@@ -84,7 +84,7 @@
 
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Choose Time" [ngxTimepicker]="time" [format]="24"
+                            <input matInput placeholder="Choose Time" [ngxTimepicker]="time" [format]="24" 
                                 formControlName="time">
                             <!-- <mat-datepicker-toggle matSuffix [for]="time"></mat-datepicker-toggle> -->
                             <ngx-material-timepicker #time></ngx-material-timepicker>

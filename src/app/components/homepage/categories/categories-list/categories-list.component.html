@@ -1,52 +1,54 @@
 <div class="card">
-    
-      <div class="header">
-        <h2 class="title">Mobile Categories</h2>
+  <div class="header">
+    <h2 class="title">Mobile Categories</h2>
+  </div>
+  <div class="content">
+    <form #f="ngForm">
+      <div class="form-group">
+        <label>Category Name:</label>
+        <input
+          [(ngModel)]="filter.categoryName"
+          name="categoryName"
+          class="form-control"
+        />
       </div>
-      <div class="content">
-    
-        <form #f="ngForm">
 
-          <div class="form-group">
-            <label>Category Name:</label>
-            <input [(ngModel)]="filter.categoryName" name="categoryName" class="form-control">
-          </div>
-
-          <div class="form-group">
-            <button (click)="search()" [disabled]="!f?.valid" class="btn btn-default">
-              Search
-            </button>
-            <a [routerLink]="['../categories','new']" class="btn btn-default">
-                New
-            </a>
-  
-          </div>
-          
-        </form>
-    
+      <div class="form-group">
+        <button
+          (click)="search()"
+          [disabled]="!f?.valid"
+          class="btn btn-default"
+        >
+          Search
+        </button>
+        <a [routerLink]="['../categories', 'new']" class="btn btn-default">
+          New
+        </a>
       </div>
-    </div>
-    
-    <div class="card" *ngIf="categoriesList.length > 0">
-    
-      <table class="table table-contensed" >
-        <thead>
-        <tr>            
-            <th>id</th>            
-            <th>Category Name</th>            
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tr *ngFor="let item of categoriesList" [class.active]="item === selectedCategories">
-            <td>{{item.id}}</td>
-            <td>{{item.categoryName}}</td>
-            <td>{{item.descriptiom}}</td>
-            <td>
-                
-                <a [routerLink]="['../categories', item.id ]">Details</a> |           
-                <a (click)="select(item)">Select</a>
-            </td>
-        </tr>
-      </table>
-    
-    </div>
+    </form>
+  </div>
+</div>
+
+<div class="card" *ngIf="categoriesList.length > 0">
+  <table class="table table-contensed">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Category Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tr
+      *ngFor="let item of categoriesList"
+      [class.active]="item === selectedCategories"
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ item.categoryName }}</td>
+      <td>{{ item.descriptiom }}</td>
+      <td>
+        <a [routerLink]="['../categories', item.id]">Details</a> |
+        <a (click)="select(item)">Select</a>
+      </td>
+    </tr>
+  </table>
+</div>

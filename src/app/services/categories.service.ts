@@ -8,7 +8,7 @@ import { API } from "src/environments/environment";
 
 @Injectable()
 export class CategoriesService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   categoriesList: Categories[] = [];
   findById(id: string): Observable<Categories> {
     let url = API.BASE_URL + "/cms/category/" + id;
@@ -28,15 +28,27 @@ export class CategoriesService {
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<Categories>(url, { headers });
   }
-  find(pageNumber?, size?,filter?): Observable<Categories[]> {
+  find(pageNumber?, size?, language?, filter?): Observable<Categories[]> {
     let url = API.BASE_URL + "/cms/category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-    if (pageNumber || size) {
-      let params = {
-        pageNumber: pageNumber,
-        size: size,
-        filter:filter
-      };
+    let params: any = {};
+
+    if (pageNumber) {
+      params.pageNumber = pageNumber;
+    }
+
+    if (language) {
+      params.language = language;
+    }
+
+    if (size) {
+      params.size = size;
+    }
+    if (filter) {
+      params.filter = filter;
+    }
+
+    if (params) {
       return this.http.get<Categories[]>(url, { params, headers });
     }
     return this.http.get<Categories[]>(url, { headers });
@@ -59,8 +71,11 @@ export class CategoriesService {
     return this.http.delete<Categories>(url, { headers });
   }
 
-  getCount() {
-    let url = API.BASE_URL + `/cms/count/category`;
+  getCount(language?) {
+    console.log("language", language);
+    let url =
+      API.BASE_URL +
+      `/cms/count/category${language ? "?language=" + language : ""}`;
     return this.http.get(url);
   }
   uploadUrl(fileToUpload: File): Observable<Object> {
