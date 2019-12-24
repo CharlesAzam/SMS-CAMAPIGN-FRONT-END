@@ -82,18 +82,29 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  removePackage(pack, index) {
-    if (confirm("Are you sure to delete this Package?")) {
-      this.packageService.delete(pack).subscribe((response: any) => {
-        if (response.status === 200) {
-          this.getPackageCount();
-          this.getPackageList(
-            this.paginator.pageIndex + 1,
-            this.paginator.pageSize
-          );
+  removePackage(row, index) {
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${row.name} program`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.packageService.delete(row).subscribe((response: any) => {
+            if (response.status === 200) {
+              this.getPackageCount();
+              this.getPackageList(
+                this.paginator.pageIndex + 1,
+                this.paginator.pageSize
+              );
+            }
+          });
         }
       });
-    }
   }
 
   getPackageCount() {

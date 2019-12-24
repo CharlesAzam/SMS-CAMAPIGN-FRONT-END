@@ -53,7 +53,7 @@ export class ProgramListComponent {
         width: "400px",
         data: {
           title: "Warning",
-          message: `Are you sure want to delete ${row.name} program`
+          message: `Are you sure want to delete ${row.title} program`
         }
       })
       .afterClosed()
