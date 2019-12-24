@@ -28,13 +28,14 @@ export class CategoriesService {
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<Categories>(url, { headers });
   }
-  find(pageNumber?, size?): Observable<Categories[]> {
+  find(pageNumber?, size?,filter?): Observable<Categories[]> {
     let url = API.BASE_URL + "/cms/category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
     if (pageNumber || size) {
       let params = {
         pageNumber: pageNumber,
-        size: size
+        size: size,
+        filter:filter
       };
       return this.http.get<Categories[]>(url, { params, headers });
     }

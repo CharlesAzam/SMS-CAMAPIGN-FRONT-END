@@ -11,13 +11,14 @@ export class SubCategoriesService {
 
   constructor(private http: HttpClient) { }
 
-  find(pageNumber?, size?) {
+  find(pageNumber?, size? ,filter?) {
     let url = API.BASE_URL + "/cms/sub-category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
     if (pageNumber || size) {
       let params = {
         pageNumber: pageNumber,
-        size: size
+        size: size,
+        filter:filter
       };
       return this.http.get<any>(url, { params, headers });
     }
