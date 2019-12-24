@@ -1,23 +1,20 @@
-import { VideoLibrary } from './video-library';
-import { VideoLibraryFilter } from './video-library-filter';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { API } from 'src/environments/environment';
+import { VideoLibrary } from "./video-library";
+import { VideoLibraryFilter } from "./video-library-filter";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { API } from "src/environments/environment";
 
 @Injectable()
 export class VideoLibraryService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   videoLibraryList: VideoLibrary[] = [];
 
   findById(id: string): Observable<VideoLibrary> {
-    let url = API.BASE_URL + '/cms/cdn/' + id;
+    let url = API.BASE_URL + "/cms/cdn/" + id;
     // let params = { "id": id };
-    let headers = new HttpHeaders()
-      .set('Accept', 'application/json');
+    let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<VideoLibrary>(url, { headers });
   }
 
@@ -32,25 +29,22 @@ export class VideoLibraryService {
   //     )
   // }
 
-
   find(index?, size?): Observable<VideoLibrary[]> {
-    let url = API.BASE_URL + '/cms/cdn-list';
-    let headers = new HttpHeaders()
-      .set('Accept', 'application/json');
+    let url = API.BASE_URL + "/cms/cdn-list?filter=true";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-      console.log(size);
-      console.log(index)
+    console.log(size);
+    console.log(index);
 
     if (index || size) {
       let params = {
-        "pageNumber": index,
-        "size": size
+        pageNumber: index,
+        size: size
       };
-      return this.http.get<any>(url, { params, headers })
+      return this.http.get<any>(url, { params, headers });
     }
-    return this.http.get<any>(url, { headers })
+    return this.http.get<any>(url, { headers });
   }
-
 
   // find(): Observable<VideoLibrary[]> {
   //     let url = API_URL;
@@ -60,23 +54,20 @@ export class VideoLibraryService {
   // }
 
   save(entity: VideoLibrary): Observable<VideoLibrary> {
-    let url = API.BASE_URL + '/cms/cdn/create';
-    let headers = new HttpHeaders()
-      .set('Accept', 'application/json');
+    let url = API.BASE_URL + "/cms/cdn/create";
+    let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<VideoLibrary>(url, entity, { headers });
   }
 
   delete(id: string) {
     let url = API.BASE_URL + `/cms/cdn/${id}/`;
-    let headers = new HttpHeaders()
-      .set('Accept', 'application/json');
+    let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.delete<any>(url, { headers });
   }
 
   update(data: any) {
     let url = API.BASE_URL + `/cms/cdn/${data._id}/update`;
-    let headers = new HttpHeaders()
-      .set('Accept', 'application/json');
+    let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.put<any>(url, data, { headers });
   }
 
@@ -84,6 +75,4 @@ export class VideoLibraryService {
     let url = API.BASE_URL + `/cms/count/cdn`;
     return this.http.get(url);
   }
-
 }
-

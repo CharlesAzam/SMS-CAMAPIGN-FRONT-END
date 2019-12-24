@@ -125,7 +125,7 @@ export class VodEditComponent implements OnInit {
     seasons: any[] = [];
     images: string[] = []
     allSelected = false;
-    @ViewChild('countrySelection') countrySelection: MatSelect;
+    @ViewChild('countrySelection',null) countrySelection: MatSelect;
 
     vodTypes: string[] = [
         "VIDEO",
