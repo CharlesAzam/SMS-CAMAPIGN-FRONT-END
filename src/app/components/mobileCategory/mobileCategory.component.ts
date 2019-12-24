@@ -30,7 +30,8 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
                       this.getCategories(
                         this.selectedLanguageId,
                         this.paginator.pageIndex + 1,
-                        this.paginator.pageSize
+                        this.paginator.pageSize,
+                        ""
                       )
                     )
                   )
@@ -46,6 +47,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator;
+  searchTimeout = null;
 
   constructor(
     private router: Router,
@@ -70,7 +72,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
       (response: any) => {
         if (response.success) {
           this.count = response.count;
-          this.getCategories(this.selectedLanguageId, 1, 10);
+          this.getCategories(this.selectedLanguageId, 1, 10, "");
         }
       },
       error => console.log(error)
@@ -97,7 +99,8 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
               this.getCategories(
                 this.selectedLanguageId,
                 this.paginator.pageIndex + 1,
-                this.paginator.pageSize
+                this.paginator.pageSize,
+                ""
               );
             },
             error => console.error(error)
@@ -115,15 +118,23 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(filterValue: string) {
-    this.datasource.filter = filterValue.trim().toLowerCase();
+    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.getCategories(
+        1,
+        this.paginator.pageSize,
+        filterValue.trim().toLowerCase(),
+        filterValue
+      );
+    }, 500);
   }
 
   /*Table logic*/
 
   ngOnInit() {}
 
-  getCategories(language, pageNumber, size) {
-    this.categoryService.find(pageNumber, size, language).subscribe(
+  getCategories(language, pageNumber, size, filterText) {
+    this.categoryService.find(pageNumber, size, language, filterText).subscribe(
       (result: any) => {
         if (result.status == 200) {
           this.datasource = result.data;

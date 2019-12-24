@@ -33,6 +33,7 @@ export class MobileSubCategoriesComponent implements OnInit {
   selectedLanguageId: string;
 
   count: number;
+  searchTimeout = null;
 
   routeToCategoryForm() {
     this.router.navigate(["home/subCategoryForm"]);
@@ -56,7 +57,8 @@ export class MobileSubCategoriesComponent implements OnInit {
                       this.getSubCategories(
                         this.selectedLanguageId,
                         this.paginator.pageIndex + 1,
-                        this.paginator.pageSize
+                        this.paginator.pageSize,
+                        ""
                       )
                     )
                   )
@@ -79,7 +81,7 @@ export class MobileSubCategoriesComponent implements OnInit {
       (response: any) => {
         if (response.success) {
           this.count = response.count;
-          this.getSubCategories(this.selectedLanguageId, 1, 10);
+          this.getSubCategories(this.selectedLanguageId, 1, 10, "");
         }
       },
       error => console.log(error)
@@ -107,7 +109,8 @@ export class MobileSubCategoriesComponent implements OnInit {
               this.getSubCategories(
                 this.selectedLanguageId,
                 this.paginator.pageIndex + 1,
-                this.paginator.pageSize
+                this.paginator.pageSize,
+                ""
               );
             },
             error => console.error(error)
@@ -120,15 +123,17 @@ export class MobileSubCategoriesComponent implements OnInit {
     this.datasource.filter = filterValue.trim().toLowerCase();
   }
 
-  getSubCategories(language, pageNumber, size) {
-    this.subCategoryService.find(pageNumber, size, language).subscribe(
-      (result: any) => {
-        if (result.status == 200) {
-          this.datasource = result.data;
-        }
-      },
-      error => console.log(error)
-    );
+  getSubCategories(language, pageNumber, size, filterText) {
+    this.subCategoryService
+      .find(pageNumber, size, language, filterText)
+      .subscribe(
+        (result: any) => {
+          if (result.status == 200) {
+            this.datasource = result.data;
+          }
+        },
+        error => console.log(error)
+      );
   }
 
   getCategoryCount(language) {
