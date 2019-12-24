@@ -16,7 +16,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
 
     this.paginator.page.pipe(
       startWith(null),
-      tap(() => this.getCategories(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+      tap(() => this.getCategories(this.paginator.pageIndex + 1, this.paginator.pageSize,''))).subscribe();
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator
@@ -27,13 +27,13 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
   count: number
   dataSource = new MatTableDataSource<any>([]);
-
+  searchTimeout = null
 
   /*Table logic*/
   deleteCategory(row) {
     this.categoryService.delete(row._id).subscribe((response: any) => {
       if (response.status === 200)
-        this.getCategories(1, 10);
+        this.getCategories(1, 10,'');
 
     },
       error => console.error(error))
@@ -49,7 +49,10 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.searchTimeout) clearTimeout(this.searchTimeout)
+    this.searchTimeout = setTimeout(() => {
+      this.getCategories(1,this.paginator.pageSize,filterValue.trim().toLowerCase())
+    }, 500)
   }
 
   /*Table logic*/
@@ -59,8 +62,8 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
     // this.getCategories(1, 5);
   }
 
-  getCategories(pageNumber, size) {
-    this.categoryService.find(pageNumber, size).subscribe((result: any) => {
+  getCategories(pageNumber, size,filterText) {
+    this.categoryService.find(pageNumber, size,filterText).subscribe((result: any) => {
       if (result.status == 200) {
         this.dataSource = new MatTableDataSource<any>(result.data);
       }

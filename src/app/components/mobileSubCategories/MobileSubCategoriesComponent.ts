@@ -20,6 +20,7 @@ export class MobileSubCategoriesComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
 
   count: number
+  searchTimeout = null
 
   routeToCategoryForm() {
     this.router.navigate(['home/subCategoryForm']);
@@ -34,7 +35,7 @@ export class MobileSubCategoriesComponent implements OnInit {
 
     this.paginator.page.pipe(
       startWith(null),
-      tap(() => this.getSubCategories(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+      tap(() => this.getSubCategories(this.paginator.pageIndex + 1, this.paginator.pageSize,''))).subscribe();
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator
@@ -43,19 +44,22 @@ export class MobileSubCategoriesComponent implements OnInit {
   deleteCategory(id) {
     this.subCategoryService.delete(id).subscribe((response: any) => {
       if (response.status === 200) {
-        this.getSubCategories(1, 10);
+        this.getSubCategories(1, 10,'');
       }
     },
       error => console.error(error))
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.searchTimeout) clearTimeout(this.searchTimeout)
+    this.searchTimeout = setTimeout(() => {
+      this.getSubCategories(1,this.paginator.pageSize,filterValue.trim().toLowerCase())
+    }, 500)
   }
 
 
-  getSubCategories(pageIndex, pageSize) {
-    this.subCategoryService.find(pageIndex, pageSize).subscribe((response: any) => {
+  getSubCategories(pageIndex, pageSize,filter) {
+    this.subCategoryService.find(pageIndex, pageSize,filter).subscribe((response: any) => {
       if (response.status === 200) {
         this.dataSource = new MatTableDataSource<any>(response.data)
       }
