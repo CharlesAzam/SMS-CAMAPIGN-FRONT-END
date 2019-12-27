@@ -14,6 +14,7 @@ export class HomepageComponent implements OnInit {
   showMobile: boolean = false;
   showReports: boolean = false;
   isShowing = false;
+  showSupport: boolean = false;
 
   mouseenter() {
     if (!this.isExpanded) {

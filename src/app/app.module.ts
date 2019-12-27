@@ -54,6 +54,7 @@ import { ErrorInterceptor } from './services/error-interceptor.service';
 import { ErrorDialog } from './components/error-dialog/dialog-error';
 import { AdminModule } from './components/admin/admin.module';
 import { ReportsModule } from './components/reports/reports.module';
+import { SupportModule } from './components/support/support.module';
 
 
 
@@ -110,6 +111,7 @@ import { ReportsModule } from './components/reports/reports.module';
     CreateCategoriesModule,
     ReactiveFormsModule,
     ReportsModule,
+    SupportModule,
     MatInputModule
   ],
   entryComponents: [

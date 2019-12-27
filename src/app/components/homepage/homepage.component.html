@@ -93,6 +93,19 @@
         <a mat-list-item routerLink="reports/collections">Collection Reports</a>
         <a mat-list-item routerLink="reports/transactions">Transaction Reports</a>
       </div>
+
+      <mat-list-item (click)="showSupport = !showSupport" class="parent">
+        <mat-icon color="primary" style="margin-right: 5px;">people</mat-icon>
+        <span class="full-width" *ngIf="isExpanded || isShowing">Support</span>
+        <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showSupport}"
+          *ngIf="isExpanded || isShowing">expand_more
+        </mat-icon>
+      </mat-list-item>
+
+      <div class="submenu" [ngClass]="{'expanded' : showSupport}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item routerLink="support">Logged Support</a>
+        <a mat-list-item routerLink="support/user-information">User Information</a>
+      </div>
     </mat-nav-list>
 
   </mat-sidenav>
