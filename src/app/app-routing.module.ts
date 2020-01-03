@@ -39,9 +39,6 @@ const routes: Routes = [
         path: "dashboard",
         component: DashboardComponent
         , canActivate: [AuthGuard],
-
-
-
       },
       {
         path: "movies",
@@ -184,11 +181,6 @@ const routes: Routes = [
         path: "CategoryForm/:id",
         component: CategoryFormComponent, canActivate: [AuthGuard],
 
-      },
-      {
-        path: "Demo2",
-        loadChildren:
-          "./components/homepage/Demo2/create-categories.module#CreateCategoriesModule"
       },
       {
         path: "admin",

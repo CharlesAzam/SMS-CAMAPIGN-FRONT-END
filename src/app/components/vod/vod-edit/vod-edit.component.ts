@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VodService } from '../vod.service';
 import { Vod } from '../vod';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { of, ReplaySubject, Subject } from 'rxjs';
-import { MatChipInputEvent, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatChipInputEvent, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSelect, MatOption } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
@@ -87,10 +87,11 @@ export class VodEditComponent implements OnInit {
     }
 
     remove(tag): void {
-        const index = this.tagss.indexOf(tag);
-
-        if (index >= 0) {
-            this.tagss.splice(index, 1);
+        if (confirm("Are you sure to remove  this?")) {
+            const index = this.tagss.indexOf(tag);
+            if (index >= 0) {
+                this.tagss.splice(index, 1);
+            }
         }
     }
 
@@ -123,6 +124,8 @@ export class VodEditComponent implements OnInit {
     boxes: string[] = ['HORIZONTAL_CARD', 'VERTICAL_CARD', 'BANNER', 'LOGO'];
     seasons: any[] = [];
     images: string[] = []
+    allSelected = false;
+    @ViewChild('countrySelection',null) countrySelection: MatSelect;
 
     vodTypes: string[] = [
         "VIDEO",
@@ -191,6 +194,7 @@ export class VodEditComponent implements OnInit {
                     this.vodService.findById(params.id).subscribe((response: any) => {
                         if (response.status === 200) {
                             this.vod = response.data[0];
+                            console.log('Alll Data=',this.vod);
                             this.getCategories(this.vod.contentType);
                             this.imageUrl = this.vod.imageThumb;
                             if (this.vod.contentType === 'VOD') {
@@ -423,7 +427,15 @@ export class VodEditComponent implements OnInit {
         this.fileToUpload.mimeType = this.fileToUpload.type;
         this.uploadFileToActivity();
     }
-
+    toggleAllSelection() {
+        this.allSelected = !this.allSelected;  // to control select-unselect
+        
+        if (this.allSelected) {
+          this.countrySelection.options.forEach( (item : MatOption) => item.select());
+        } else {
+          this.countrySelection.options.forEach( (item : MatOption) => {item.deselect()});
+        }
+      }
     uploadFileToActivity() {
         this.isUploading = true;
         this.vodService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
@@ -704,12 +716,15 @@ export class VodEditComponent implements OnInit {
     }
 
     removeImage(index) {
-        this.images.splice(index, 1);
-
+        if (confirm("Are you sure to remove this File?")) {
+            this.images.splice(index, 1);
+        }
     }
 
     removeSeason(index) {
-        this.seasons.splice(index, 1);
+        if (confirm("Are you sure to remove this Season?")) {
+         this.seasons.splice(index, 1);
+        }
     }
 
     back() {
@@ -806,7 +821,7 @@ export class VodEditComponent implements OnInit {
             cdnID: new FormControl('', [Validators.required]),
             series: new FormControl([]),
             images: new FormControl([]),
-            imageThumb: new FormControl('', [Validators.required]),
+            imageThumb: new FormControl(''),
             // packageID: new FormControl(''),
             createdBy: new FormControl(''),
         })
@@ -955,7 +970,9 @@ export class AddSeasonsDialog {
     }
 
     removeEpisode(index) {
-        this.episode.splice(index, 1);
+        if (confirm("Are you sure to remove this Episode?")) {
+            this.episode.splice(index, 1);
+        }
     }
 
     getData() {
@@ -1065,7 +1082,8 @@ export class AddMultipleImages {
 
 
     removeImage(index) {
-        this.images.splice(index, 1);
-
+        if (confirm("Are you sure to remove this File?")) {
+            this.images.splice(index, 1);
+        }
     }
 }
