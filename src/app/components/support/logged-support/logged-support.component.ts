@@ -46,7 +46,7 @@ export class LoggedSupportComponent implements OnInit {
     { label: 'This Week', id: 'week' },
     { label: 'This Month', id: 'month' },
     { label: 'Date Range', id: 'range' },
-    { label: 'Mobile Number', id: 'mobile' }
+    // { label: 'Mobile Number', id: 'mobile' }
   ]
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
