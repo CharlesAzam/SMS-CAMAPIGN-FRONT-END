@@ -6,7 +6,8 @@ import { CountryService } from 'src/app/services/coutry.service';
 import { SupportFilter } from '../support-filter.model';
 import *as moment from 'moment';
 import { SupportService } from '../support.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { WarningDialog } from '../../warning-dialog/dialog-warning';
 
 
 @Component({
@@ -52,10 +53,13 @@ export class LoggedSupportComponent implements OnInit {
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
-  displayedColumns: string[] = ['No', 'date', 'email', 'title', 'description', 'status']
+  displayedColumns: string[] = ['No', 'date', 'email', 'title', 'status']
   datasource = new MatTableDataSource<any>([]);
 
-  constructor(private countryService: CountryService, private supportService: SupportService) { }
+  constructor(
+    private countryService: CountryService,
+    private supportService: SupportService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getCount();
@@ -186,6 +190,19 @@ export class LoggedSupportComponent implements OnInit {
         this.count = response.count;
       }
     }, error => console.log(error))
+  }
+
+  onShowDescription(description) {
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Ticket Description",
+          message: description
+        }
+      })
+      .afterClosed()
+      .subscribe();
   }
 
 
