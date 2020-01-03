@@ -228,7 +228,7 @@ export class DetailedInformationComponent implements OnInit {
 
   getPackageCount() {
     this.supportService.getPackageCount(this.userId).subscribe((response: any) => {
-      if (response.code === 200) {
+      if (response.success) {
         this.packageCount = response.count;
       }
     }, error => console.log(error));
@@ -236,7 +236,7 @@ export class DetailedInformationComponent implements OnInit {
 
   getWalletCount() {
     this.supportService.getWalletCount(this.userId).subscribe((response: any) => {
-      if (response.code === 200) {
+      if (response.success) {
         this.walletCount = response.count;
       }
     }, error => console.log(error));
@@ -244,7 +244,7 @@ export class DetailedInformationComponent implements OnInit {
 
   getVideoCount() {
     this.supportService.getVideoCount(this.userId).subscribe((response: any) => {
-      if (response.code === 200) {
+      if (response.success) {
         this.videoCount = response.count;
       }
     }, error => console.log(error));
@@ -252,7 +252,7 @@ export class DetailedInformationComponent implements OnInit {
 
   getRehargeHistoryCount() {
     this.supportService.getRechargeHistoryCount(this.userId).subscribe((response: any) => {
-      if (response.code === 200) {
+      if (response.success) {
         this.rechargeHistoryCount = response.count;
       }
     }, error => console.log(error));
