@@ -33,7 +33,7 @@
                             <ngx-mat-select-search [formControl]="filterCountryCtrl"
                                 [noEntriesFoundLabel]="'Country not found'" [placeholderLabel]="'Find Country...'">
                             </ngx-mat-select-search>
-                            <mat-option *ngFor="let country of filteredCountries | async" [value]="country._id">
+                            <mat-option *ngFor="let country of filteredCountries | async" [value]="country.code">
                                 {{country.country}}
                             </mat-option>
                         </mat-select>
@@ -52,19 +52,10 @@
             <div class="form-group" *ngIf="method === 'range'">
                 <div class="col-md-6">
                     <mat-form-field style="width: 100%;">
-                        <input matInput [formControl]="from" [matDatepicker]="fromPicker" placeholder="From Date"
-                            name="date">
-                        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #fromPicker></mat-datepicker>
-                        <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
-                    </mat-form-field>
-                </div>
-                <div class="col-md-6">
-                    <mat-form-field style="width: 100%;">
-                        <input matInput [formControl]="to" [matDatepicker]="toPicker" placeholder="To Date" name="date">
-                        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #toPicker></mat-datepicker>
-                        <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
+                        <input matInput placeholder="Choose a range" [satDatepicker]="picker" [formControl]="range"
+                            [value]="date">
+                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
                     </mat-form-field>
                 </div>
             </div>
@@ -73,77 +64,85 @@
 
 
         <div class="row" style="margin: 10px;">
-            <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
-                (click)="search()">Search</button>
+            <button color='primary' style="margin-right: 5px;" [disabled]="method === undefined" mat-raised-button
+                type="submit" (click)="search()">Search</button>
             <button color='danger' mat-raised-button type="submit">Reset</button>
         </div>
+        <div >
+            <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
 
-        <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
-
-            <!-- Position Column -->
-            <!-- <ng-container matColumnDef="No">
+                <!-- Position Column -->
+                <!-- <ng-container matColumnDef="No">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
                 <td mat-cell *matCellDef="let element; let i= index">
                     {{(paginator.pageIndex*paginator.pageSize)+i+1}}
             </ng-container> -->
 
-            <ng-container matColumnDef="No">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-                <td mat-cell *matCellDef="let element; let i= index">
-                    1
-            </ng-container>
+                <ng-container matColumnDef="No">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                    <td mat-cell *matCellDef="let element; let i= index">
+                        {{i+1}}
+                </ng-container>
 
-            <ng-container matColumnDef="createdOn">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
-                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-            </ng-container>
+                <ng-container matColumnDef="createdOn">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+                    <td mat-cell *matCellDef="let element"> {{element.createdOn}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
-            </ng-container>
+                <ng-container matColumnDef="phone">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+                    <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-            </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="firstName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-            </ng-container>
+                <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                </ng-container>
 
 
-            <ng-container matColumnDef="lastName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-            </ng-container>
+                <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="smartCard">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Smart Card</th>
-                <td mat-cell *matCellDef="let element"> {{element.smartCard}} </td>
-            </ng-container>
+                <ng-container matColumnDef="smartCard">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Smart Card</th>
+                    <td mat-cell *matCellDef="let element"> {{element.smartCard}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="walletAmount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Amount</th>
-                <td mat-cell *matCellDef="let element"> {{element.walletAmount}} </td>
-            </ng-container>
+                <ng-container matColumnDef="walletAmount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Amount</th>
+                    <td mat-cell *matCellDef="let element"> {{element.walletBalance}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="country">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-                <td mat-cell *matCellDef="let element"> {{element.country}} </td>
-            </ng-container>
+                <ng-container matColumnDef="country">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+                    <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>status</th>
-                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-            </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>status</th>
+                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['../detailed-information', row.id]" style="cursor: pointer;"></tr>
-        </table>
-        <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
-        </mat-paginator>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    [routerLink]="['../detailed-information', row.userId]" style="cursor: pointer;"></tr>
+            </table>
+            <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+            </mat-paginator>
+        </div>
+
+        <div *ngIf="!datasource.data.length">
+            No Record found!
+        </div>
 
     </mat-card>
 </div>

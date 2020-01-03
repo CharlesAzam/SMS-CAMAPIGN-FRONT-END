@@ -34,7 +34,7 @@ export class LoggedSupportComponent implements OnInit {
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   displayedColumns: string[] = this.method !== 'mobile'
-    ? ['No', 'date', 'openingBalance', 'customers', 'azamUsers', 'nonAzamUsers', 'closingBalance']
+    ? ['No', 'date', 'openingBalance', 'customers', 'azamUsers', 'nonAzamUsers']
     : ['No', 'date', 'country', 'openingBalance', 'customers', 'azamUsers', 'nonAzamUsers', 'closingBalance']
 
 

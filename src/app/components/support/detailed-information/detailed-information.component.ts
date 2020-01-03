@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
 import { MatTableDataSource } from '@angular/material';
+import { SupportService } from '../support.service';
+import { ActivatedRoute } from '@angular/router';
+import { SupportFilter } from '../support-filter.model';
 
 @Component({
   selector: 'detailed-information',
@@ -16,11 +19,21 @@ export class DetailedInformationComponent implements OnInit {
   filterCountryCtrl = new FormControl('');
   from = new FormControl('');
   to = new FormControl('');
-  mobile = new FormControl('')
+  mobile = new FormControl('');
+  basicInfo: any;
+  packageInfo: any;
+  seasonInfo: any;
+  videoInfo: any;
+  walletInfo: any;
+  smartCardInfo: any;
+  rechargeInfo: any;
+  selectedTab: number = 0;
+
   protected _onDestroy = new Subject<void>();
 
   method: any;
   country: any;
+  userId: string;
 
 
   countries: any[] = [];
@@ -35,27 +48,69 @@ export class DetailedInformationComponent implements OnInit {
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   displayedColumns: string[] = ['No', 'phone', 'email', 'firstName', 'lastName', 'smartCard', 'walletAmount', 'createdOn', 'country', 'status'];
+  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'paidAmount', 'walletTransId', 'status'];
+  rechargeHistoryColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'paidAmount', 'status'];
+  redeemedCouponsColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode'];
+  walletTransactionColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'status'];
+  smartCardColumns: string[] = ['subId', 'packageName', 'fromDate',];
+
 
   datasource = new MatTableDataSource<any>([]);
+  packageDataSource = new MatTableDataSource<any>([]);
+  seasonDataSource = new MatTableDataSource<any>([]);
+  walletDataSource = new MatTableDataSource<any>([]);
+  smartCardDataSource = new MatTableDataSource<any>([]);
+  videoDataSource = new MatTableDataSource<any>([]);
+  rechargeDataSource = new MatTableDataSource<any>([]);
 
-  constructor(private countryService: CountryService) { }
+
+  constructor(private countryService: CountryService,
+    private supportService: SupportService,
+    private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe((params: any) => {
+      this.userId = params.id;
+    })
+  }
 
   ngOnInit() {
-    this.datasource = new MatTableDataSource<any>([
-      { phone: "255658032005", email: "thornj18@gmail.com", firstName: "Tonny", lastName: "Kayage", smartCard: "123456789", createdOn: "24-12-2019", country: "Tanzania", status: "ACTIVE" }
-    ]);
     this.getCountries();
-    this.filterCountryCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterCountry();
-      })
-    this.filteredMethods.next(this.methods.slice());
-    this.filterMethodCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterMethod();
-      })
+    this.getBasicInformation()
+  }
+
+  selectTab(event) {
+    console.log(event)
+    switch (event) {
+      case 0:
+        this.getBasicInformation()
+        break;
+
+      case 1:
+        this.getPackageInformation()
+        break;
+
+      case 2:
+        this.getSeasonInformation()
+        break;
+
+      case 3:
+        this.getVideoInformation()
+        break;
+
+      case 4:
+        this.getRechargeHistory()
+        break;
+
+      case 5:
+        this.getWalletInformation()
+        break;
+
+      case 6:
+        this.getSmartCardInformation()
+        break;
+
+      default:
+        break;
+    }
   }
 
 
@@ -69,57 +124,87 @@ export class DetailedInformationComponent implements OnInit {
       error => console.error(error));
   }
 
-  filterCountry() {
-    if (!this.countries)
-      return;
-
-    let search = this.filterCountryCtrl.value;
-    if (!search) {
-      this.filteredCountries.next(this.countries.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredCountries.next(
-      this.countries.filter(cont =>
-        cont.country ?
-          cont.country.toLowerCase().indexOf(search) > -1 :
-          ''
-      )
-    )
+  getBasicInformation() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getUsers(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.basicInfo = response.data[0];
+      }
+    }, error => console.log(error));
   }
 
-  filterMethod() {
-    if (!this.methods)
-      return;
-
-    let search = this.filterMethodCtrl.value;
-    if (!search) {
-      this.filteredMethods.next(this.methods.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredMethods.next(
-      this.methods.filter(cont =>
-        cont ?
-          cont.label.toLowerCase().indexOf(search) > -1 :
-          ''
-      )
-    )
+  getPackageInformation() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getPackageInformation(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.packageInfo = response.data;
+        this.packageDataSource = new MatTableDataSource<any>(this.packageInfo);
+      }
+    }, error => console.log(error))
   }
+
+  getSeasonInformation() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getSeasonInformation(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.seasonInfo = response.data;
+        this.seasonDataSource = new MatTableDataSource<any>(this.seasonInfo);
+      }
+    }, error => console.log(error))
+  }
+
+  getVideoInformation() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getVideoInformation(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.videoInfo = response.data;
+        this.videoDataSource = new MatTableDataSource<any>(this.videoInfo);
+      }
+    }, error => console.log(error))
+  }
+
+  getWalletInformation() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getWalletInformation(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.walletInfo = response.data;
+        this.walletDataSource = new MatTableDataSource<any>(this.walletInfo);
+      }
+    }, error => console.log(error))
+  }
+
+  getSmartCardInformation() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getSmartCardInformation(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.smartCardInfo = response.data;
+        this.smartCardDataSource = new MatTableDataSource<any>(this.smartCardInfo);
+      }
+    }, error => console.log(error))
+  }
+
+  getRechargeHistory() {
+    let filter: SupportFilter = {};
+    filter.userId = this.userId;
+    this.supportService.getRechargeHistory(filter).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.rechargeInfo = response.data;
+        this.rechargeDataSource = new MatTableDataSource<any>(this.rechargeInfo);
+      }
+    }, error => console.log(error))
+  }
+
+
 
   search() {
-    console.log('Selected Country', this.country);
-    console.log('Selected Method', this.method);
-
     if (this.method === 'week') {
 
     }
   }
-
-
-
 }

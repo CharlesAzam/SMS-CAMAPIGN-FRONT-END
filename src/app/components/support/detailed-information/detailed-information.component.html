@@ -9,15 +9,421 @@
     </mat-card>
 
     <mat-card style="margin-top: 10px;">
-        <mat-tab-group>
-            <mat-tab label="Basic Information"> Basic Information </mat-tab>
-            <mat-tab label="Packages"> Packages </mat-tab>
-            <mat-tab label="Seasons"> Seasons </mat-tab>
-            <mat-tab label="Sub Videos"> Seasons </mat-tab>
-            <mat-tab label="Recharge History"> Seasons </mat-tab>
-            <mat-tab label="Redeemed Coupons"> Seasons </mat-tab>
-            <mat-tab label="Wallet Transaction"> Seasons </mat-tab>
-            <mat-tab label="Smart Cards"> Seasons </mat-tab>
+        <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectTab($event)">
+            <mat-tab label="Basic Information">
+                <div style="margin: 50px;" *ngIf="basicInfo">
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="ID" type="string" [(ngModel)]="basicInfo.userId"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Mobile" type="string" [(ngModel)]="basicInfo.mobile"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Email Address" type="string" [(ngModel)]="basicInfo.email"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="First Name" type="string" [(ngModel)]="basicInfo.firstName"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Last Name" type="string" [(ngModel)]="basicInfo.lastName"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Smart Card No" type="string" [(ngModel)]="basicInfo.smartCard"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Created At" type="string" [(ngModel)]="basicInfo.createdOn"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Customer Balance" type="string"
+                                [(ngModel)]="basicInfo.walletBalance" [disabled]="true">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Status " type="string" [(ngModel)]="basicInfo.status"
+                                [disabled]="true">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Packages">
+                <div style="margin: 50px;">
+                    <table mat-table style="width: 100%;" *ngIf="packageDataSource.data.length>0"
+                        [dataSource]="packageDataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i= index">
+                                {{i+1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="subId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subscription ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="packageName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Package Name (amount) </th>
+                            <td mat-cell *matCellDef="let element"> {{element.packageName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="toDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>To Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="couponCode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Coupon Code</th>
+                            <td mat-cell *matCellDef="let element"> {{element.couponCode}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="paidAmount">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Paid Amount</th>
+                            <td mat-cell *matCellDef="let element"> {{element.paidAmount}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="walletTransId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Transaction ID</th>
+                            <td mat-cell *matCellDef="let element"> {{element.walletId}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="packageDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: packageDisplayedColumns;"></tr>
+                    </table>
+                    <div *ngIf="packageDataSource.data.length === 0" class="container">
+                        No Package information available
+                    </div>
+                    <!-- <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator> -->
+                </div>
+
+            </mat-tab>
+            <mat-tab label="Seasons">
+                <div style="margin: 50px;">
+                    <table mat-table style="width: 100%;" *ngIf="seasonDataSource.data.length > 0"
+                        [dataSource]="seasonDataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i= index">
+                                {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="subId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subscription ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="packageName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Season </th>
+                            <td mat-cell *matCellDef="let element"> {{element.seasonTitle}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Series </th>
+                            <td mat-cell *matCellDef="let element"> {{element.seriesTitle}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="toDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>From Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="couponCode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>To Date</th>
+                            <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="paidAmount">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+                            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="walletTransId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Transaction ID</th>
+                            <td mat-cell *matCellDef="let element"> {{element.walletId}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="packageDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: packageDisplayedColumns;"></tr>
+                    </table>
+
+                    <div *ngIf="seasonDataSource.data.length === 0">
+                        Season information not available
+                    </div>
+                    <!-- <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator> -->
+                </div>
+
+            </mat-tab>
+            <mat-tab label="Sub Videos">
+
+                <div style="margin: 50px;" *ngIf="videoDataSource.data.length > 0">
+                    <table mat-table style="width: 100%;" [dataSource]="videoDataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i= index">
+                                {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="subId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Video Title </th>
+                            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="packageName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Video Price </th>
+                            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subscribed From </th>
+                            <td mat-cell *matCellDef="let element"> {{element.subscribedFrom}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="toDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Package Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="couponCode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Transaction ID</th>
+                            <td mat-cell *matCellDef="let element"> {{element.couponCode}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="paidAmount">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>From Date</th>
+                            <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="walletTransId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>To Date</th>
+                            <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="packageDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: packageDisplayedColumns;"></tr>
+                    </table>
+                    <!-- <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator> -->
+                </div>
+
+                <div *ngIf="videoDataSource.data.length === 0">
+                    No Subscribed video information
+                </div>
+            </mat-tab>
+            <mat-tab label="Recharge History">
+                <div style="margin: 50px;" *ngIf="rechargeDataSource.data.length > 0">
+                    <table mat-table style="width: 100%;" [dataSource]="rechargeDataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i= index">
+                                {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="subId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Token </th>
+                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="packageName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Reference </th>
+                            <td mat-cell *matCellDef="let element"> {{element.packageName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> IOS Product Identifier </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="toDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="couponCode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Amount</th>
+                            <td mat-cell *matCellDef="let element"> {{element.couponCode}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="paidAmount">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Date</th>
+                            <td mat-cell *matCellDef="let element"> {{element.paidAmount}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="rechargeHistoryColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: rechargeHistoryColumns;"></tr>
+                    </table>
+                    <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator>
+                </div>
+                <div *ngIf="rechargeDataSource.data.length === 0">
+                    No recharge history
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Wallet Transaction">
+                <div style="margin: 50px;" *ngIf="walletDataSource.data.length > 0">
+                    <table mat-table style="width: 100%;" [dataSource]="walletDataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i= index">
+                                {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="subId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Transaction Id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.walletId}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="packageName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subscribed Item </th>
+                            <td mat-cell *matCellDef="let element"> {{element.subscribedItem}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subscribed Item Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.subscribedItemTitle}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="toDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount </th>
+                            <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="couponCode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
+                            <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="walletTransactionColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: walletTransactionColumns;"></tr>
+                    </table>
+                    <!-- <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator> -->
+                </div>
+
+                <div *ngIf="walletDataSource.data.length === 0">
+                    No Wallet Information available
+                </div>
+            </mat-tab>
+            <mat-tab label="Smart Cards">
+                <div style="margin: 50px;" *ngIf="smartCardDataSource.data.length>0">
+                    <table mat-table style="width: 100%;" [dataSource]="smartCardDataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i= index">
+                                {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                        </ng-container>
+
+                        <ng-container matColumnDef="subId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Id </th>
+                            <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="packageName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Holder Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Smart Card Number</th>
+                            <td mat-cell *matCellDef="let element"> {{element.smartCard}} </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="smartCardColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: smartCardColumns;"></tr>
+                    </table>
+                    <!-- <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator> -->
+                </div>
+                <div *ngIf="smartCardDataSource.data.length === 0">
+                    No smart card information available
+                </div>
+            </mat-tab>
         </mat-tab-group>
     </mat-card>
 </div>

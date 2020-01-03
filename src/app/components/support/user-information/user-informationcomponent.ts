@@ -1,26 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { SupportService } from '../support.service';
+import { SupportFilter } from '../support-filter.model';
+import *as moment from 'moment';
 
 @Component({
   selector: 'user-information',
   templateUrl: './user-information.component.html',
   styleUrls: ['./user-information.component.css']
 })
-export class UserInformationComponent implements OnInit {
+export class UserInformationComponent implements OnInit, AfterViewInit {
+
+  ngAfterViewInit(): void {
+    // let pageIndex = this.paginator.pageIndex + 1
+
+    this.paginator.page.pipe(
+      startWith(null),
+      tap(() => this.getUsers(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+  }
+  @ViewChild(MatPaginator, { static: false })
+  paginator: MatPaginator
 
   filterMethodCtrl = new FormControl('');
   filterCountryCtrl = new FormControl('');
-  from = new FormControl('');
-  to = new FormControl('');
+  range = new FormControl('');
   mobile = new FormControl('')
   protected _onDestroy = new Subject<void>();
 
   method: any;
   country: any;
+  count: number;
+  users: any;
+  filter: SupportFilter = {}
 
 
   countries: any[] = [];
@@ -38,12 +53,12 @@ export class UserInformationComponent implements OnInit {
 
   datasource = new MatTableDataSource<any>([]);
 
-  constructor(private countryService: CountryService) { }
+  constructor(private countryService: CountryService, private supportService: SupportService) { }
 
   ngOnInit() {
-    this.datasource = new MatTableDataSource<any>([
-      { phone: "255658032005", email: "thornj18@gmail.com", firstName: "Tonny", lastName: "Kayage", smartCard: "123456789", createdOn: "24-12-2019", country: "Tanzania", status: "ACTIVE" }
-    ]);
+    this.getUserCount()
+    this.datasource.paginator = this.paginator;
+
     this.getCountries();
     this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -67,6 +82,18 @@ export class UserInformationComponent implements OnInit {
       }
     },
       error => console.error(error));
+  }
+
+  getUsers(supportFilter?: SupportFilter, pageIndex?, pageSize?) {
+    this.supportService.getUsers(supportFilter, pageIndex, pageSize).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.users = response.data;
+        this.datasource = new MatTableDataSource<any>(this.users);
+      } else if (response.code === 204) {
+        this.datasource = new MatTableDataSource<any>([])
+      }
+    },
+      error => console.log(error));
   }
 
   filterCountry() {
@@ -112,12 +139,43 @@ export class UserInformationComponent implements OnInit {
   }
 
   search() {
-    console.log('Selected Country', this.country);
-    console.log('Selected Method', this.method);
+
+    this.filter = {};
+
+    if (this.country) {
+      this.filter.country = this.country;
+    }
 
     if (this.method === 'week') {
-
+      this.filter.week = true;
     }
+
+    if (this.method === 'month') {
+      this.filter.month = true;
+    }
+
+    if (this.method === 'today') {
+      this.filter.today = moment().format('YYYY-MM-DD');
+    }
+
+    if (this.method === 'mobile') {
+      this.filter.mobile = this.mobile.value;
+    }
+
+    if (this.method === 'range') {
+      this.filter.from = moment(this.range.value.begin).format('YYYY-MM-DD');
+      this.filter.to = moment(this.range.value.end).format('YYYY-MM-DD');
+    }
+    this.getUsers(this.filter);
+
+  }
+
+  getUserCount() {
+    this.supportService.getUserCount().subscribe((response: any) => {
+      if (response.code === 200) {
+        this.count = response.count;
+      }
+    }, error => console.log(error));
   }
 
 
