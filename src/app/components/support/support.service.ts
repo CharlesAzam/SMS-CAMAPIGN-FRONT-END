@@ -83,7 +83,18 @@ export class SupportService {
         let url = API.BASE_URL + '/cms/customer-portal/season/' + filter.userId;
         let headers = new HttpHeaders().set('Accept', 'application/json');
 
+        let params: any = {}
+        if (filter.pageSize)
+            params.size = filter.pageSize;
+
+        if (filter.pageIndex)
+            params.pageNumber = filter.pageIndex
+
+        if (params)
+            return this.http.get<any>(url, { params, headers });
+
         return this.http.get<any>(url, { headers });
+
     }
 
     getVideoInformation(filter: SupportFilter) {
@@ -162,7 +173,7 @@ export class SupportService {
     getSupportTickets(filter: SupportFilter) {
         let url = API.BASE_URL + '/cms/customer-portal/support'
         let headers = new HttpHeaders().set('Accept', 'application/json');
-        
+
         let params: any = {}
 
         if (filter.pageIndex)
@@ -228,6 +239,17 @@ export class SupportService {
         return this.http.get<any>(url, { headers });
     }
 
+    getSeasonCount(id: string) {
+        let url = API.BASE_URL + '/cms/customer-portal/season-count/' + id
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
+
+    getSupportCount() {
+        let url = API.BASE_URL + '/cms/customer-portal/support-count';
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
 
 }
 

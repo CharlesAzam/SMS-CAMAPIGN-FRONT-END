@@ -37,6 +37,7 @@ export class DetailedInformationComponent implements OnInit {
   rechargeHistoryCount: number;
   walletCount: number;
   videoCount: number;
+  seasonCount: number;
 
   protected _onDestroy = new Subject<void>();
 
@@ -101,7 +102,11 @@ export class DetailedInformationComponent implements OnInit {
         break;
 
       case 2:
+        this.getSeasonCount()
         this.getSeasonInformation()
+        this.paginator.page.pipe(
+          startWith(null),
+          tap(() => this.getSeasonInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
         break;
 
       case 3:
@@ -165,9 +170,11 @@ export class DetailedInformationComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getSeasonInformation() {
+  getSeasonInformation(pageIndex?, pageSize?) {
     let filter: SupportFilter = {};
     filter.userId = this.userId;
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
     this.supportService.getSeasonInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.seasonInfo = response.data;
@@ -254,6 +261,14 @@ export class DetailedInformationComponent implements OnInit {
     this.supportService.getRechargeHistoryCount(this.userId).subscribe((response: any) => {
       if (response.success) {
         this.rechargeHistoryCount = response.count;
+      }
+    }, error => console.log(error));
+  }
+
+  getSeasonCount() {
+    this.supportService.getSeasonCount(this.userId).subscribe((response: any) => {
+      if (response.success) {
+        this.seasonCount = response.count;
       }
     }, error => console.log(error));
   }

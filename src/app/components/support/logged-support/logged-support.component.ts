@@ -38,6 +38,7 @@ export class LoggedSupportComponent implements OnInit {
 
   method: any;
   country: any;
+  count: number;
 
 
   countries: any[] = [];
@@ -57,6 +58,9 @@ export class LoggedSupportComponent implements OnInit {
   constructor(private countryService: CountryService, private supportService: SupportService) { }
 
   ngOnInit() {
+    this.getCount();
+    this.datasource.paginator = this.paginator;
+
     this.getCountries();
     this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -174,6 +178,14 @@ export class LoggedSupportComponent implements OnInit {
       }
     },
       error => console.log(error));
+  }
+
+  getCount() {
+    this.supportService.getSupportCount().subscribe((response: any) => {
+      if (response.success) {
+        this.count = response.count;
+      }
+    }, error => console.log(error))
   }
 
 
