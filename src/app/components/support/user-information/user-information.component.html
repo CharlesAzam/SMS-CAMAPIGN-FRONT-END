@@ -64,29 +64,23 @@
 
 
         <div class="row" style="margin: 10px;">
-            <button color='primary' style="margin-right: 5px;" [disabled]="method === undefined" mat-raised-button
+            <button color='primary' style="margin-right: 5px;" [disabled]="method === undefined && country === undefined" mat-raised-button
                 type="submit" (click)="search()">Search</button>
             <button color='danger' mat-raised-button type="submit">Reset</button>
         </div>
-        <div >
+        <div>
             <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
 
-                <!-- Position Column -->
-                <!-- <ng-container matColumnDef="No">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-                <td mat-cell *matCellDef="let element; let i= index">
-                    {{(paginator.pageIndex*paginator.pageSize)+i+1}}
-            </ng-container> -->
 
                 <ng-container matColumnDef="No">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
                     <td mat-cell *matCellDef="let element; let i= index">
-                        {{i+1}}
+                        {{(paginator.pageIndex*paginator.pageSize)+i+1}}
                 </ng-container>
 
                 <ng-container matColumnDef="createdOn">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
-                    <td mat-cell *matCellDef="let element"> {{element.createdOn}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.createdOn | date:'medium' }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="phone">
