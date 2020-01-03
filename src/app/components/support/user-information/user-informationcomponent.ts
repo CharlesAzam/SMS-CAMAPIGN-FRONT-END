@@ -166,6 +166,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
       this.filter.from = moment(this.range.value.begin).format('YYYY-MM-DD');
       this.filter.to = moment(this.range.value.end).format('YYYY-MM-DD');
     }
+
     this.getUsers(this.filter);
 
   }

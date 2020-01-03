@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil, filter, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SupportService } from '../support.service';
 import { ActivatedRoute } from '@angular/router';
 import { SupportFilter } from '../support-filter.model';
@@ -14,6 +14,9 @@ import { SupportFilter } from '../support-filter.model';
   styleUrls: ['./detailed-information.component.css']
 })
 export class DetailedInformationComponent implements OnInit {
+
+  @ViewChild(MatPaginator, { static: false })
+  paginator: MatPaginator
 
   filterMethodCtrl = new FormControl('');
   filterCountryCtrl = new FormControl('');
@@ -28,6 +31,11 @@ export class DetailedInformationComponent implements OnInit {
   smartCardInfo: any;
   rechargeInfo: any;
   selectedTab: number = 0;
+
+  packageCount: number;
+  rechargeHistoryCount: number;
+  walletCount: number;
+  videoCount: number;
 
   protected _onDestroy = new Subject<void>();
 
@@ -48,11 +56,13 @@ export class DetailedInformationComponent implements OnInit {
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   displayedColumns: string[] = ['No', 'phone', 'email', 'firstName', 'lastName', 'smartCard', 'walletAmount', 'createdOn', 'country', 'status'];
-  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'paidAmount', 'walletTransId', 'status'];
+  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId'];
+  videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId'];
+  seasonDisplayedColumns: string[] = ['subId', 'title', 'series', 'startDate', 'endDate', 'amount', 'walletTransId'];
   rechargeHistoryColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'paidAmount', 'status'];
   redeemedCouponsColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode'];
   walletTransactionColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'status'];
-  smartCardColumns: string[] = ['subId', 'packageName', 'fromDate',];
+  smartCardColumns: string[] = ['fullName', 'smartCardNo',];
 
 
   datasource = new MatTableDataSource<any>([]);
@@ -73,19 +83,20 @@ export class DetailedInformationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCountries();
     this.getBasicInformation()
   }
 
   selectTab(event) {
-    console.log(event)
     switch (event) {
       case 0:
         this.getBasicInformation()
         break;
 
       case 1:
-        this.getPackageInformation()
+        this.getPackageCount()
+        this.paginator.page.pipe(
+          startWith(null),
+          tap(() => this.getPackageInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
         break;
 
       case 2:
@@ -93,15 +104,24 @@ export class DetailedInformationComponent implements OnInit {
         break;
 
       case 3:
-        this.getVideoInformation()
+        this.getVideoCount()
+        this.paginator.page.pipe(
+          startWith(null),
+          tap(() => this.getVideoInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
         break;
 
       case 4:
-        this.getRechargeHistory()
+        this.getRehargeHistoryCount();
+        this.paginator.page.pipe(
+          startWith(null),
+          tap(() => this.getRechargeHistory(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
         break;
 
       case 5:
-        this.getWalletInformation()
+        this.getWalletCount()
+        this.paginator.page.pipe(
+          startWith(null),
+          tap(() => this.getWalletInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
         break;
 
       case 6:
@@ -111,17 +131,6 @@ export class DetailedInformationComponent implements OnInit {
       default:
         break;
     }
-  }
-
-
-  getCountries() {
-    this.countryService.list().subscribe((response: any) => {
-      if (response.status === 200) {
-        this.countries = response.data;
-        this.filteredCountries.next(this.countries.slice())
-      }
-    },
-      error => console.error(error));
   }
 
   getBasicInformation() {
@@ -134,9 +143,11 @@ export class DetailedInformationComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  getPackageInformation() {
+  getPackageInformation(pageIndex?, pageSize?) {
     let filter: SupportFilter = {};
     filter.userId = this.userId;
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
     this.supportService.getPackageInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.packageInfo = response.data;
@@ -156,9 +167,11 @@ export class DetailedInformationComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getVideoInformation() {
+  getVideoInformation(pageIndex?, pageSize?) {
     let filter: SupportFilter = {};
     filter.userId = this.userId;
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
     this.supportService.getVideoInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.videoInfo = response.data;
@@ -167,9 +180,11 @@ export class DetailedInformationComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getWalletInformation() {
+  getWalletInformation(pageIndex?, pageSize?) {
     let filter: SupportFilter = {};
     filter.userId = this.userId;
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
     this.supportService.getWalletInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.walletInfo = response.data;
@@ -189,10 +204,12 @@ export class DetailedInformationComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getRechargeHistory() {
+  getRechargeHistory(pageIndex?, pageSize?) {
     let filter: SupportFilter = {};
     filter.userId = this.userId;
-    this.supportService.getRechargeHistory(filter).subscribe((response: any) => {
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
+    this.supportService.getRechargeInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.rechargeInfo = response.data;
         this.rechargeDataSource = new MatTableDataSource<any>(this.rechargeInfo);
@@ -200,6 +217,37 @@ export class DetailedInformationComponent implements OnInit {
     }, error => console.log(error))
   }
 
+  getPackageCount() {
+    this.supportService.getPackageCount(this.userId).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.packageCount = response.count;
+      }
+    }, error => console.log(error));
+  }
+
+  getWalletCount() {
+    this.supportService.getWalletCount(this.userId).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.walletCount = response.count;
+      }
+    }, error => console.log(error));
+  }
+
+  getVideoCount() {
+    this.supportService.getVideoCount(this.userId).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.videoCount = response.count;
+      }
+    }, error => console.log(error));
+  }
+
+  getRehargeHistoryCount() {
+    this.supportService.getRechargeHistoryCount(this.userId).subscribe((response: any) => {
+      if (response.code === 200) {
+        this.rechargeHistoryCount = response.count;
+      }
+    }, error => console.log(error));
+  }
 
 
   search() {

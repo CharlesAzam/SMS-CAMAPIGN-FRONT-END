@@ -53,6 +53,9 @@ export class SupportService {
         if (filter.userId)
             params.userId = filter.userId
 
+        if (filter.country)
+            params.country = filter.country
+
         if (params)
             return this.http.get<any[]>(url, { params, headers });
         return this.http.get<any>(url, { headers });
@@ -62,7 +65,18 @@ export class SupportService {
         let url = API.BASE_URL + '/cms/customer-portal/package/' + filter.userId;
         let headers = new HttpHeaders().set('Accept', 'application/json');
 
+        let params: any = {}
+        if (filter.pageSize)
+            params.size = filter.pageSize;
+
+        if (filter.pageIndex)
+            params.pageNumber = filter.pageIndex
+
+        if (params)
+            return this.http.get<any>(url, { params, headers });
+
         return this.http.get<any>(url, { headers });
+
     }
 
     getSeasonInformation(filter: SupportFilter) {
@@ -73,8 +87,19 @@ export class SupportService {
     }
 
     getVideoInformation(filter: SupportFilter) {
+
         let url = API.BASE_URL + '/cms/customer-portal/content/' + filter.userId;
         let headers = new HttpHeaders().set('Accept', 'application/json');
+
+        let params: any = {}
+        if (filter.pageSize)
+            params.size = filter.pageSize;
+
+        if (filter.pageIndex)
+            params.pageNumber = filter.pageIndex
+
+        if (params)
+            return this.http.get<any>(url, { params, headers });
 
         return this.http.get<any>(url, { headers });
     }
@@ -90,6 +115,16 @@ export class SupportService {
         let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
         let headers = new HttpHeaders().set('Accept', 'application/json');
 
+        let params: any = {}
+        if (filter.pageSize)
+            params.size = filter.pageSize;
+
+        if (filter.pageIndex)
+            params.pageNumber = filter.pageIndex
+
+        if (params)
+            return this.http.get<any>(url, { params, headers });
+
         return this.http.get<any>(url, { headers });
     }
 
@@ -97,15 +132,26 @@ export class SupportService {
         let url = API.BASE_URL + '/cms/customer-portal/wallet/' + filter.userId;
         let headers = new HttpHeaders().set('Accept', 'application/json');
 
+        let params: any = {}
+        if (filter.pageSize)
+            params.size = filter.pageSize;
+
+        if (filter.pageIndex)
+            params.pageNumber = filter.pageIndex
+
+        if (params)
+            return this.http.get<any>(url, { params, headers });
+
         return this.http.get<any>(url, { headers });
+
     }
 
-    getRechargeHistory(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    // getRechargeHistory(filter: SupportFilter) {
+    //     let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
+    //     let headers = new HttpHeaders().set('Accept', 'application/json');
 
-        return this.http.get<any>(url, { headers });
-    }
+    //     return this.http.get<any>(url, { headers });
+    // }
 
     getUserCount() {
         let url = API.BASE_URL + '/cms/customer-portal/users-count'
@@ -113,6 +159,35 @@ export class SupportService {
         return this.http.get<any>(url, { headers });
     }
 
+    getSupportTickets() {
+        let url = API.BASE_URL + '/cms/customer-portal/support'
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
+
+    getPackageCount(id: string) {
+        let url = API.BASE_URL + '/cms/customer-portal/package-count/' + id
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
+
+    getRechargeHistoryCount(id: string) {
+        let url = API.BASE_URL + '/cms/customer-portal/recharge-count/' + id
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
+
+    getWalletCount(id: string) {
+        let url = API.BASE_URL + '/cms/customer-portal/wallet-count/' + id
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
+
+    getVideoCount(id: string) {
+        let url = API.BASE_URL + '/cms/customer-portal/content-count/' + id
+        let headers = new HttpHeaders().set('Accept', 'application/json');
+        return this.http.get<any>(url, { headers });
+    }
 
 
 }

@@ -8,4 +8,6 @@ export class SupportFilter {
     to?: string
     country?: string
     userId?: string
+    pageIndex?: number
+    pageSize?: number
 }
