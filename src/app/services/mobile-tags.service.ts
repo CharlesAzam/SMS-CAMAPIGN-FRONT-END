@@ -10,22 +10,32 @@ export class MobileTagsService {
 
   constructor(private http: HttpClient) { }
 
-  find(pageNumber?, size?) {
+  find(pageNumber?, size?, language?) {
     let url = API.BASE_URL + '/cms/tag-list';
     //let params = { "name": "mimi","type":"low" };
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
+    let params: any = {};
 
-    if (pageNumber || size) {
-      let params = {
-        "pageNumber": pageNumber,
-        "size": size
-      };
-      return this.http.get<any>(url, { params, headers })
+    if (pageNumber) {
+      params.pageNumber = pageNumber
     }
-    return this.http.get<any>(url, { headers })
+
+    if (language) {
+      params.language = language
+    }
+
+    if (size) {
+      params.size = size
+    }
+
+    if (params) {
+      return this.http.get<any[]>(url, { params, headers });
+    }
+    return this.http.get<any[]>(url, { headers });
 
   }
+
   findById(id: string) {
     let url = API.BASE_URL + '/cms/tag/' + id;
     let headers = new HttpHeaders()
@@ -54,8 +64,8 @@ export class MobileTagsService {
     return this.http.put<any>(url, { headers });
   }
 
-  getCount() {
-    let url = API.BASE_URL + `/cms/count/tags`;
+  getCount(language?) {
+    let url = API.BASE_URL + `/cms/count/tags${language ? '?language=' + language : ''}`;
     return this.http.get(url);
   }
 

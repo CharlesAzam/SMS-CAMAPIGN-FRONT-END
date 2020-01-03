@@ -55,6 +55,7 @@ import { ErrorDialog } from './components/error-dialog/dialog-error';
 import { AdminModule } from './components/admin/admin.module';
 import { ReportsModule } from './components/reports/reports.module';
 import { SupportModule } from './components/support/support.module';
+import { WarningDialog } from './components/warning-dialog/dialog-warning';
 
 
 
@@ -84,8 +85,9 @@ import { SupportModule } from './components/support/support.module';
     NewsPhotosComponent,
     LeagueComponent,
     LeaguelistComponent,
+    // TopnavComponent
     ErrorDialog,
-
+    WarningDialog
   ],
   imports: [
     BrowserModule,
@@ -115,7 +117,8 @@ import { SupportModule } from './components/support/support.module';
     MatInputModule
   ],
   entryComponents: [
-    ErrorDialog
+    ErrorDialog,
+    WarningDialog
   ],
   providers: [
     MoviesService, LanguageService, CountryService, LeagueService, AuthGuard,

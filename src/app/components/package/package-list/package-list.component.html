@@ -3,89 +3,126 @@
     <div class="header">
       <h2 class="title">Package</h2>
     </div>
-    <div class="content">
-
-    </div>
+    <div class="content"></div>
   </mat-card>
 
-  <mat-card  style="margin-top: 30px;">
+  <mat-card style="margin-top: 30px;">
     <div>
       <mat-form-field style="width: 85.5%;">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Filter"
+        />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../package','new']">
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-left: 23px;"
+        [routerLink]="['../package', 'new']"
+      >
         Create Package
       </button>
     </div>
 
-    <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
-
+    <table
+      mat-table
+      style="width: 100%;"
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
       <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
       <!-- Position Column -->
       <ng-container matColumnDef="No">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let element; let i= index"> {{(paginator.pageIndex*paginator.pageSize)+i+1}}
-          </ng-container>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ paginator.pageIndex * paginator.pageSize + i + 1 }}
+        </td></ng-container
+      >
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
 
       <!-- Category Column -->
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-      </ng-container> <!-- Sub Categories Column -->
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+      <!-- Sub Categories Column -->
 
       <!-- Sub Categories Column -->
       <ng-container matColumnDef="azamPacakgeMappingName" mat-sort-header>
-        <th mat-header-cell *matHeaderCellDef> Mapped Azam Package </th>
-        <td mat-cell *matCellDef="let element"> {{element.azamPacakgeMappingName}} </td>
+        <th mat-header-cell *matHeaderCellDef>Mapped Azam Package</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.azamPacakgeMappingName }}
+        </td>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="free">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Free </th>
-        <td mat-cell *matCellDef="let element"> {{element.free}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Free</th>
+        <td mat-cell *matCellDef="let element">{{ element.free }}</td>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="isVodAllowed">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Content Allowed? </th>
-        <td mat-cell *matCellDef="let element"> {{element.isVodAllowed}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Is Content Allowed?
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.isVodAllowed }}</td>
       </ng-container>
 
       <ng-container matColumnDef="noOfDaysValidity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> No of Days Validity </th>
-        <td mat-cell *matCellDef="let element"> {{element.validityInDays}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          No of Days Validity
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.validityInDays }}</td>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <mat-icon aria-hidden="false" style="cursor: pointer;" (click)="removePackage(row)" aria-label="Example home icon">delete</mat-icon>
+          <mat-icon
+            aria-hidden="false"
+            style="cursor: pointer;"
+            (click)="removePackage(row)"
+            aria-label="Example home icon"
+            >delete</mat-icon
+          >
           <span style="margin-left: 20px;"></span>
-          <mat-icon aria-hidden="false" style="cursor: pointer;" [routerLink]="['../package', row._id]" aria-label="Example home icon">edit
+          <mat-icon
+            aria-hidden="false"
+            style="cursor: pointer;"
+            [routerLink]="['../package', row._id]"
+            aria-label="Example home icon"
+            >edit
           </mat-icon>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
-    </mat-paginator>
 
+    <mat-paginator
+      [length]="count"
+      [pageSize]="10"
+      class="table-paginator-style"
+      [pageSizeOptions]="[10, 20, 50]"
+      showFirstLastButtons
+    >
+    </mat-paginator>
   </mat-card>
 </div>

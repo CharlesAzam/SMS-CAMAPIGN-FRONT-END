@@ -1,86 +1,151 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MobileTags } from '../../models/mobile-tags';
-import { MatTableDataSource } from '@angular/material/table';
-import { MobileTagsService } from '../../../app/services/mobile-tags.service';
-import { startWith, tap } from 'rxjs/operators';
-import { MatPaginator } from '@angular/material';
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { MobileTags } from "../../models/mobile-tags";
+import { MatTableDataSource } from "@angular/material/table";
+import { MobileTagsService } from "../../../app/services/mobile-tags.service";
+import { startWith, tap } from "rxjs/operators";
+import { MatPaginator, MatDialog } from "@angular/material";
+import { LanguageService } from "src/app/services/language.service";
+import { WarningDialog } from "../warning-dialog/dialog-warning";
 
 export class mobileTagFilter {
-  name: string = '';
+  name: string = "";
 }
 
 @Component({
-  selector: 'app-mobile-tags',
-  templateUrl: './mobile-tags.component.html',
-  styleUrls: ['./mobile-tags.component.css']
+  selector: "app-mobile-tags",
+  templateUrl: "./mobile-tags.component.html",
+  styleUrls: ["./mobile-tags.component.css"]
 })
-
 export class MobileTagsComponent implements OnInit, AfterViewInit {
+  selectedLanguageId: string;
 
   ngAfterViewInit(): void {
     // let pageIndex = this.paginator.pageIndex + 1
-
-    this.paginator.page.pipe(
-      startWith(null),
-      tap(() => this.getTags(this.paginator.pageIndex+1, this.paginator.pageSize))).subscribe();
+    this.getLanguages().subscribe(
+      (result: any) => {
+        if (result.status === 200) {
+          this.languages = result.data;
+          this.selectedLanguageId = result.data[0]._id;
+          this.getTagCount(this.selectedLanguageId).subscribe(
+            (response: any) => {
+              if (response.success) {
+                this.count = response.count;
+                this.paginator.page
+                  .pipe(
+                    startWith(null),
+                    tap(() =>
+                      this.getTags(
+                        this.selectedLanguageId,
+                        this.paginator.pageIndex + 1,
+                        this.paginator.pageSize
+                      )
+                    )
+                  )
+                  .subscribe();
+              }
+            },
+            error => console.log(error)
+          );
+        }
+      },
+      error => console.log(error)
+    );
   }
   @ViewChild(MatPaginator, { static: false })
-  paginator: MatPaginator
+  paginator: MatPaginator;
 
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute, private tagService: MobileTagsService) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private tagService: MobileTagsService,
+    private languageService: LanguageService,
+    private dialog: MatDialog
+  ) {}
   TagModel: MobileTags = new MobileTags();
-  displayedColumns: string[] = ['id', 'name', 'type', 'action'];
-  dataSource = new MatTableDataSource<any>([]);
-  count: number
-  /*Table logic*/
-  deleteCategory(row) {
-    this.tagService.delete(row._id).subscribe((result: any) => {
-      if (result.status == 200) {
-        this.getTags(1, 5);
-        // this.dataSource.data
-      }
+  displayedColumns: string[] = ["id", "name", "type", "action"];
+  datasource = new MatTableDataSource<any>([]);
+  languages: any[] = [];
+  swahiliTagCount: number;
+  englishTagCount: number;
+  count: number;
 
-    })
+  /*Table logic*/
+
+  deleteCategory(row) {
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: "Warning",
+          message: `Are you sure want to delete ${row.name} tag`
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.tagService.delete(row._id).subscribe(
+            (result: any) => {
+              if (result.status == 200) {
+                this.getTagCount(this.selectedLanguageId);
+                this.getTags(
+                  this.selectedLanguageId,
+                  this.paginator.pageIndex + 1,
+                  this.paginator.pageSize
+                );
+              }
+            },
+            error => console.log(error)
+          );
+        }
+      });
   }
 
   routeToTagForm() {
-    this.router.navigate(['MobileTagForm'], { queryParams: { id: 'new' } });
+    this.router.navigate(["MobileTagForm"], { queryParams: { id: "new" } });
   }
 
   editTag(row) {
-    this.router.navigate(['home/MobileTagForm'], row._id);
+    this.router.navigate(["home/MobileTagForm"], row._id);
   }
 
-  getTags(pageIndex, size) {
-    this.tagService.find(pageIndex, size).subscribe((result: any) => {
-      if (result.status == 200) {
-        this.dataSource = new MatTableDataSource<any>(result.data);
-      }
-
-    })
+  getTags(language, pageIndex, size) {
+    this.tagService.find(pageIndex, size, language).subscribe(
+      (result: any) => {
+        if (result.status == 200) {
+          this.datasource = result.data;
+        }
+      },
+      error => console.log(error)
+    );
   }
+
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.datasource.filter = filterValue.trim().toLowerCase();
   }
 
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
-
-  /*Table logic*/
-
-  ngOnInit() {
-    this.getTagCount();
+  onTabChanged(event) {
+    this.selectedLanguageId = this.languages[event.index]._id;
+    this.paginator.pageIndex = 0;
+    this.datasource = new MatTableDataSource<any>([]);
+    this.getTagCount(this.selectedLanguageId).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.count = response.count;
+          this.getTags(this.selectedLanguageId, 1, 10);
+        }
+      },
+      error => console.log(error)
+    );
   }
 
-  getTagCount() {
-    this.tagService.getCount().subscribe((result: any) => {
-      if (result.success) {
-        this.count = result.count;
-      }
-    })
+  ngOnInit() {}
+
+  getTagCount(language) {
+    return this.tagService.getCount(language);
   }
 
+  getLanguages() {
+    return this.languageService.list();
+  }
 }
