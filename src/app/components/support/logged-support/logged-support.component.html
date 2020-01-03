@@ -52,19 +52,10 @@
             <div class="form-group" *ngIf="method === 'range'">
                 <div class="col-md-6">
                     <mat-form-field style="width: 100%;">
-                        <input matInput [formControl]="from" [matDatepicker]="fromPicker" placeholder="From Date"
-                            name="date">
-                        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #fromPicker></mat-datepicker>
-                        <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
-                    </mat-form-field>
-                </div>
-                <div class="col-md-6">
-                    <mat-form-field style="width: 100%;">
-                        <input matInput [formControl]="to" [matDatepicker]="toPicker" placeholder="To Date" name="date">
-                        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #toPicker></mat-datepicker>
-                        <!-- <mat-error *ngIf="releaseDate.invalid">Release date can not be empty</mat-error> -->
+                        <input matInput placeholder="Choose a range" [satDatepicker]="picker" [formControl]="range"
+                            [value]="date">
+                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
                     </mat-form-field>
                 </div>
             </div>
@@ -74,11 +65,11 @@
 
         <div class="row" style="margin: 10px;">
             <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
-                (click)="search()">Search</button>
+                (click)="search()" [disabled]="method === undefined && country === undefined" >Search</button>
             <button color='danger' mat-raised-button type="submit">Reset</button>
         </div>
 
-        <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
+        <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
 
             <!-- Position Column -->
             <ng-container matColumnDef="No">
@@ -89,28 +80,28 @@
 
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'medium'}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="customers">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-                <td mat-cell *matCellDef="let element"> {{element.customers}} </td>
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th>
+                <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="azamUsers">
+            <ng-container matColumnDef="description">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-                <td mat-cell *matCellDef="let element"> {{element.azamUsers}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
             </ng-container>
 
 
-            <ng-container matColumnDef="nonAzamUsers">
+            <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
                 <td mat-cell *matCellDef="let element"> {{element.nonAzamUsers}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="openingBalance">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile (Account)</th>
-                <td mat-cell *matCellDef="let element"> {{element.openingBalance}} </td>
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

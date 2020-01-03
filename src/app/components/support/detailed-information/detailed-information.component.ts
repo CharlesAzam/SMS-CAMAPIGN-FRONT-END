@@ -7,6 +7,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SupportService } from '../support.service';
 import { ActivatedRoute } from '@angular/router';
 import { SupportFilter } from '../support-filter.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'detailed-information',
@@ -56,9 +57,9 @@ export class DetailedInformationComponent implements OnInit {
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   displayedColumns: string[] = ['No', 'phone', 'email', 'firstName', 'lastName', 'smartCard', 'walletAmount', 'createdOn', 'country', 'status'];
-  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId'];
-  videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId'];
-  seasonDisplayedColumns: string[] = ['subId', 'title', 'series', 'startDate', 'endDate', 'amount', 'walletTransId'];
+  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId', 'status'];
+  videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId', 'status'];
+  seasonDisplayedColumns: string[] = ['subId', 'title', 'series', 'startDate', 'endDate', 'amount', 'walletTransId', 'status'];
   rechargeHistoryColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'paidAmount', 'status'];
   redeemedCouponsColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode'];
   walletTransactionColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'status'];
@@ -130,6 +131,14 @@ export class DetailedInformationComponent implements OnInit {
 
       default:
         break;
+    }
+  }
+
+  getStatus(startDate, endDate) {
+    if (moment(endDate).diff(moment(startDate)) > 0) {
+      return 'ACTIVE';
+    } else {
+      return 'EXPIRED'
     }
   }
 

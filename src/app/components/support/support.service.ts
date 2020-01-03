@@ -159,10 +159,49 @@ export class SupportService {
         return this.http.get<any>(url, { headers });
     }
 
-    getSupportTickets() {
+    getSupportTickets(filter: SupportFilter) {
         let url = API.BASE_URL + '/cms/customer-portal/support'
         let headers = new HttpHeaders().set('Accept', 'application/json');
+        
+        let params: any = {}
+
+        if (filter.pageIndex)
+            params.pageNumber = filter.pageIndex;
+
+        if (filter.pageSize)
+            params.size = filter.pageSize;
+
+        if (filter.mobile)
+            params.mobile = filter.mobile;
+
+        if (filter.email)
+            params.email = filter.email
+
+        if (filter.from)
+            params.from = filter.from
+
+        if (filter.to)
+            params.to = filter.to
+
+        if (filter.today)
+            params.today = filter.today
+
+        if (filter.week)
+            params.week = filter.week
+
+        if (filter.month)
+            params.month = filter.month
+
+        if (filter.userId)
+            params.userId = filter.userId
+
+        if (filter.country)
+            params.country = filter.country
+
+        if (params)
+            return this.http.get<any[]>(url, { params, headers });
         return this.http.get<any>(url, { headers });
+
     }
 
     getPackageCount(id: string) {
