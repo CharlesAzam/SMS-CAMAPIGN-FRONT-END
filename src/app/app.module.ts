@@ -47,17 +47,15 @@ import { LeagueComponent } from "./components/league/league-form/league.componen
 import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { MatInputModule } from "@angular/material";
 import { LeagueService } from "./services/league.service";
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
-import { JwtInterceptor } from './services/interceptor.service';
-import { ErrorInterceptor } from './services/error-interceptor.service';
-import { ErrorDialog } from './components/error-dialog/dialog-error';
-import { AdminModule } from './components/admin/admin.module';
-import { ReportsModule } from './components/reports/reports.module';
-import { SupportModule } from './components/support/support.module';
-import { WarningDialog } from './components/warning-dialog/dialog-warning';
-
-
+import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
+import { AuthGuardService as AuthGuard } from "./services/auth-guard.service";
+import { JwtInterceptor } from "./services/interceptor.service";
+import { ErrorInterceptor } from "./services/error-interceptor.service";
+import { ErrorDialog } from "./components/error-dialog/dialog-error";
+import { AdminModule } from "./components/admin/admin.module";
+import { ReportsModule } from "./components/reports/reports.module";
+import { SupportModule } from "./components/support/support.module";
+import { WarningDialog } from "./components/warning-dialog/dialog-warning";
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -116,16 +114,16 @@ import { WarningDialog } from './components/warning-dialog/dialog-warning';
     SupportModule,
     MatInputModule
   ],
-  entryComponents: [
-    ErrorDialog,
-    WarningDialog
-  ],
+  entryComponents: [ErrorDialog, WarningDialog],
   providers: [
-    MoviesService, LanguageService, CountryService, LeagueService, AuthGuard,
+    MoviesService,
+    LanguageService,
+    CountryService,
+    LeagueService,
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-  ]
-  ,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
