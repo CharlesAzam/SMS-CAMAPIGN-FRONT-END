@@ -179,6 +179,11 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     }, error => console.log(error));
   }
 
+  resetFilters() {
+    this.filter = {};
+    this.country = undefined;
+    this.method = undefined;
+  }
 
 
 }

@@ -206,5 +206,11 @@ export class LoggedSupportComponent implements OnInit {
   }
 
 
+  resetFilters() {
+    this.filter = {};
+    this.country = undefined;
+    this.method = undefined;
+  }
+
 
 }
