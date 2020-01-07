@@ -5,7 +5,7 @@ import { takeUntil, filter, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SupportService } from '../support.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SupportFilter } from '../support-filter.model';
 import * as moment from 'moment';
 
@@ -78,6 +78,7 @@ export class DetailedInformationComponent implements OnInit {
 
   constructor(private countryService: CountryService,
     private supportService: SupportService,
+    private router: Router,
     private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe((params: any) => {
       this.userId = params.id;
@@ -274,9 +275,8 @@ export class DetailedInformationComponent implements OnInit {
   }
 
 
-  search() {
-    if (this.method === 'week') {
-
-    }
+  goBack() {
+    this.router.navigate(['../../support/user-information'])
   }
+
 }
