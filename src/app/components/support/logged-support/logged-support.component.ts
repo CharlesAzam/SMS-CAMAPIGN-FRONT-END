@@ -8,6 +8,7 @@ import *as moment from 'moment';
 import { SupportService } from '../support.service';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { WarningDialog } from '../../warning-dialog/dialog-warning';
+import { TicketDescriptionDialog } from '../../ticket-description/dialog-ticket-description';
 
 
 @Component({
@@ -194,7 +195,7 @@ export class LoggedSupportComponent implements OnInit {
 
   onShowDescription(description) {
     this.dialog
-      .open(WarningDialog, {
+      .open(TicketDescriptionDialog, {
         width: "400px",
         data: {
           title: "Ticket Description",

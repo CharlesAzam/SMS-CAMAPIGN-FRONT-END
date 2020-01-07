@@ -56,6 +56,7 @@ import { AdminModule } from "./components/admin/admin.module";
 import { ReportsModule } from "./components/reports/reports.module";
 import { SupportModule } from "./components/support/support.module";
 import { WarningDialog } from "./components/warning-dialog/dialog-warning";
+import { TicketDescriptionDialog } from './components/ticket-description/dialog-ticket-description';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -85,7 +86,8 @@ import { WarningDialog } from "./components/warning-dialog/dialog-warning";
     LeaguelistComponent,
     // TopnavComponent
     ErrorDialog,
-    WarningDialog
+    WarningDialog,
+    TicketDescriptionDialog
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,7 @@ import { WarningDialog } from "./components/warning-dialog/dialog-warning";
     SupportModule,
     MatInputModule
   ],
-  entryComponents: [ErrorDialog, WarningDialog],
+  entryComponents: [ErrorDialog, WarningDialog,TicketDescriptionDialog],
   providers: [
     MoviesService,
     LanguageService,
