@@ -55,6 +55,7 @@
         <mat-form-field style="width: 100%;">
           <input
             matInput
+            (keyup.enter)="search()"
             placeholder="Mobile number"
             type="number"
             [formControl]="mobile"
@@ -93,7 +94,7 @@
       >
         Search
       </button>
-      <button color="danger" mat-raised-button type="submit">Reset</button>
+      <button color="danger" mat-raised-button  (click)="resetFilters()" type="submit">Reset</button>
     </div>
     <div>
       <table
