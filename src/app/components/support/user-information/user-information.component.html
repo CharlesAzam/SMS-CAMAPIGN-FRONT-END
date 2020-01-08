@@ -49,13 +49,6 @@
             </mat-select>
           </mat-form-field>
         </div>
-
-
-
-        <div class="row" style="margin: 10px;">
-            <button color='primary' style="margin-right: 5px;" [disabled]="method === undefined && country === undefined" mat-raised-button
-                type="submit" (click)="search()">Search</button>
-            <button color='danger' mat-raised-button type="submit" (click)="resetFilters()">Reset</button>
       </div>
 
       <div class="col-md-6" *ngIf="method === 'mobile'">

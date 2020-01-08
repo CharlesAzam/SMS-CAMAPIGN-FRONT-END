@@ -6,12 +6,7 @@ import { CountryService } from "src/app/services/coutry.service";
 import { SupportFilter } from "../support-filter.model";
 import * as moment from "moment";
 import { SupportService } from "../support.service";
-import {
-  MatTableDataSource,
-  MatPaginator,
-  MatDialog,
-  MatTooltipModule
-} from "@angular/material";
+import { MatTableDataSource, MatPaginator, MatDialog } from "@angular/material";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
 import { TicketDescriptionDialog } from "../../ticket-description/dialog-ticket-description";
 
