@@ -8,6 +8,7 @@ import { LoggedSupportComponent } from './logged-support/logged-support.componen
 import { SupportService } from './support.service';
 import { SUPPORT_ROUTES } from './support.routes';
 import { DetailedInformationComponent } from './detailed-information/detailed-information.component';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -17,6 +18,7 @@ import { DetailedInformationComponent } from './detailed-information/detailed-in
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
+    MatSortModule,
     RouterModule.forChild(SUPPORT_ROUTES),
   ],
   declarations: [

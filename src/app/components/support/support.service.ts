@@ -9,7 +9,7 @@ import { SupportFilter } from "./support-filter.model";
 
 @Injectable()
 export class SupportService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUsers(filter: SupportFilter, pageIndex?, pageSize?) {
     let url = API.BASE_URL + "/cms/customer-portal/users";
@@ -38,6 +38,10 @@ export class SupportService {
     if (filter.userId) params.userId = filter.userId;
 
     if (filter.country) params.country = filter.country;
+
+    if (filter.sortorder) params.sortorder = filter.sortorder;
+
+    if (filter.sortby) params.sortby = filter.sortby;
 
     if (params) return this.http.get<any[]>(url, { params, headers });
     return this.http.get<any>(url, { headers });
@@ -158,6 +162,10 @@ export class SupportService {
     if (filter.month) params.month = true;
 
     if (filter.userId) params.userId = filter.userId;
+
+    if (filter.sortorder) params.sortorder = filter.sortorder;
+
+    if (filter.sortby) params.sortby = filter.sortby;
 
     if (filter.country) params.country = filter.country;
     if (params) return this.http.get<any[]>(url, { params, headers });

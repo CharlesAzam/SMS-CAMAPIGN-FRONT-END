@@ -10,4 +10,6 @@ export class SupportFilter {
     userId?: string
     pageIndex?: number
     pageSize?: number
+    sortby?: string
+    sortorder?:string
 }

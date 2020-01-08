@@ -26,6 +26,7 @@ import {
   MatProgressSpinnerModule,
   MatExpansionModule,
   MatCheckboxModule,
+  MatSortModule,
 } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 

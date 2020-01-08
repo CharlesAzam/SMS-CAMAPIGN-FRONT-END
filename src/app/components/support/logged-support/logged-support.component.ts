@@ -6,7 +6,7 @@ import { CountryService } from "src/app/services/coutry.service";
 import { SupportFilter } from "../support-filter.model";
 import * as moment from "moment";
 import { SupportService } from "../support.service";
-import { MatTableDataSource, MatPaginator, MatDialog } from "@angular/material";
+import { MatTableDataSource, MatPaginator, MatDialog, MatSort } from "@angular/material";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
 import { TicketDescriptionDialog } from "../../ticket-description/dialog-ticket-description";
 
@@ -34,6 +34,8 @@ export class LoggedSupportComponent implements OnInit {
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
   filterMethodCtrl = new FormControl("");
   statusMethodCtrl = new FormControl("");
@@ -72,7 +74,7 @@ export class LoggedSupportComponent implements OnInit {
 
   displayedColumns: string[] = [
     "No",
-    "date",
+    "createdAt",
     "email",
     "mobile",
     "title",
@@ -80,14 +82,14 @@ export class LoggedSupportComponent implements OnInit {
     "updatedby",
     "status"
   ];
-  displayedDescriptionColumns: string[] = ["No", "date", "email", "title"];
+  // displayedDescriptionColumns: string[] = ["No", "date", "email", "title"];
   datasource = new MatTableDataSource<any>([]);
 
   constructor(
     private countryService: CountryService,
     private supportService: SupportService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getCount(this.filter);
@@ -232,7 +234,7 @@ export class LoggedSupportComponent implements OnInit {
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
-    this.getSupportTickets(this.filter, this.paginator.pageIndex+1, this.paginator.pageSize)
+    this.getSupportTickets(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
   }
 
   updateStatus(row) {
@@ -249,5 +251,16 @@ export class LoggedSupportComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
+
+  sortData(data) {
+    let filter: SupportFilter = {}
+    if (data.direction !== "") {
+      filter.sortby = data.active;
+      filter.sortorder = data.direction;
+      this.getSupportTickets(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
+    } else {
+      this.getSupportTickets(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
+    }
   }
 }

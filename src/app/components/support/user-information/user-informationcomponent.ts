@@ -204,4 +204,15 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     this.method = undefined;
     this.getUsers(this.filter, this.paginator.pageIndex+1, this.paginator.pageSize);
   }
+
+  sortData(data) {
+    let filter: SupportFilter = {}
+    if (data.direction !== "") {
+      filter.sortby = data.active;
+      filter.sortorder = data.direction;
+      this.getUsers(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
+    } else {
+      this.getUsers(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
+    }
+  }
 }
