@@ -254,14 +254,14 @@ export class LoggedSupportComponent implements OnInit {
   }
 
   sortData(data) {
-    let filter: SupportFilter = {}
+    // let filter: SupportFilter = {}
     this.paginator.pageIndex = 0;
     if (data.direction !== "") {
-      filter.sortby = data.active;
-      filter.sortorder = data.direction;
-      this.getSupportTickets(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
+      this.filter.sortby = data.active;
+      this.filter.sortorder = data.direction;
+      this.getSupportTickets(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
     } else {
-      this.getSupportTickets(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
+      this.getSupportTickets(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
     }
   }
 }
