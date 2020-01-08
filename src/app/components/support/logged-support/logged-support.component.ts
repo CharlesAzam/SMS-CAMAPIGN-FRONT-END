@@ -77,7 +77,7 @@ export class LoggedSupportComponent implements OnInit {
     "createdAt",
     "email",
     "mobile",
-    "title",
+    "subject",
     "more",
     "updatedby",
     "status"
@@ -255,6 +255,7 @@ export class LoggedSupportComponent implements OnInit {
 
   sortData(data) {
     let filter: SupportFilter = {}
+    this.paginator.pageIndex = 0;
     if (data.direction !== "") {
       filter.sortby = data.active;
       filter.sortorder = data.direction;
