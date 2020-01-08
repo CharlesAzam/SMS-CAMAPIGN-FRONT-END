@@ -232,6 +232,7 @@ export class LoggedSupportComponent implements OnInit {
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
+    this.getSupportTickets(this.filter, this.paginator.pageIndex+1, this.paginator.pageSize)
   }
 
   updateStatus(row) {

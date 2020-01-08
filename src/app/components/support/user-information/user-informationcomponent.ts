@@ -202,5 +202,6 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
+    this.getUsers(this.filter, this.paginator.pageIndex+1, this.paginator.pageSize);
   }
 }
