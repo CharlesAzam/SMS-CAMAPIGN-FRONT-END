@@ -1,255 +1,241 @@
-
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { API } from 'src/environments/environment';
-import { ExportToCsv } from 'export-to-csv';
-import { SupportFilter } from './support-filter.model';
-
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { map } from "rxjs/operators";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { API } from "src/environments/environment";
+import { ExportToCsv } from "export-to-csv";
+import { SupportFilter } from "./support-filter.model";
+import { userInfo } from "os";
 
 @Injectable()
 export class SupportService {
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) {
-    }
+  getUsers(filter: SupportFilter, pageIndex?, pageSize?) {
+    let url = API.BASE_URL + "/cms/customer-portal/users";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
+    let params: any = {};
 
+    if (pageIndex) params.pageNumber = pageIndex;
 
-    getUsers(filter: SupportFilter, pageIndex?, pageSize?) {
-        let url = API.BASE_URL + '/cms/customer-portal/users';
-        let headers = new HttpHeaders()
-            .set('Accept', 'application/json');
+    if (pageSize) params.size = pageSize;
 
-        let params: any = {}
+    if (filter.mobile) params.mobile = filter.mobile;
 
-        if (pageIndex)
-            params.pageNumber = pageIndex;
+    if (filter.email) params.email = filter.email;
 
-        if (pageSize)
-            params.size = pageSize;
+    if (filter.from) params.from = filter.from;
 
-        if (filter.mobile)
-            params.mobile = filter.mobile;
+    if (filter.to) params.to = filter.to;
 
-        if (filter.email)
-            params.email = filter.email
+    if (filter.today) params.today = filter.today;
 
-        if (filter.from)
-            params.from = filter.from
+    if (filter.week) params.week = true;
 
-        if (filter.to)
-            params.to = filter.to
+    if (filter.month) params.month = true;
 
-        if (filter.today)
-            params.today = filter.today
+    if (filter.userId) params.userId = filter.userId;
 
-        if (filter.week)
-            params.week = filter.week
+    if (filter.country) params.country = filter.country;
 
-        if (filter.month)
-            params.month = filter.month
+    if (params) return this.http.get<any[]>(url, { params, headers });
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.userId)
-            params.userId = filter.userId
+  getPackageInformation(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/package/" + filter.userId;
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (filter.country)
-            params.country = filter.country
+    let params: any = {};
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        if (params)
-            return this.http.get<any[]>(url, { params, headers });
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-    getPackageInformation(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/package/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    if (params) return this.http.get<any>(url, { params, headers });
 
-        let params: any = {}
-        if (filter.pageSize)
-            params.size = filter.pageSize;
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.pageIndex)
-            params.pageNumber = filter.pageIndex
+  getSeasonInformation(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/season/" + filter.userId;
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (params)
-            return this.http.get<any>(url, { params, headers });
+    let params: any = {};
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        return this.http.get<any>(url, { headers });
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-    }
+    if (params) return this.http.get<any>(url, { params, headers });
 
-    getSeasonInformation(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/season/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    return this.http.get<any>(url, { headers });
+  }
 
-        let params: any = {}
-        if (filter.pageSize)
-            params.size = filter.pageSize;
+  getVideoInformation(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/content/" + filter.userId;
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (filter.pageIndex)
-            params.pageNumber = filter.pageIndex
+    let params: any = {};
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        if (params)
-            return this.http.get<any>(url, { params, headers });
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-        return this.http.get<any>(url, { headers });
+    if (params) return this.http.get<any>(url, { params, headers });
 
-    }
+    return this.http.get<any>(url, { headers });
+  }
 
-    getVideoInformation(filter: SupportFilter) {
+  getSmartCardInformation(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/smartcards/" + filter.userId;
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        let url = API.BASE_URL + '/cms/customer-portal/content/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    return this.http.get<any>(url, { headers });
+  }
 
-        let params: any = {}
-        if (filter.pageSize)
-            params.size = filter.pageSize;
+  getRechargeInformation(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/recharge/" + filter.userId;
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (filter.pageIndex)
-            params.pageNumber = filter.pageIndex
+    let params: any = {};
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        if (params)
-            return this.http.get<any>(url, { params, headers });
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-        return this.http.get<any>(url, { headers });
-    }
+    if (params) return this.http.get<any>(url, { params, headers });
 
-    getSmartCardInformation(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/smartcards/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    return this.http.get<any>(url, { headers });
+  }
 
-        return this.http.get<any>(url, { headers });
-    }
+  getWalletInformation(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/wallet/" + filter.userId;
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-    getRechargeInformation(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    let params: any = {};
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        let params: any = {}
-        if (filter.pageSize)
-            params.size = filter.pageSize;
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-        if (filter.pageIndex)
-            params.pageNumber = filter.pageIndex
+    if (params) return this.http.get<any>(url, { params, headers });
 
-        if (params)
-            return this.http.get<any>(url, { params, headers });
+    return this.http.get<any>(url, { headers });
+  }
 
-        return this.http.get<any>(url, { headers });
-    }
+  // getRechargeHistory(filter: SupportFilter) {
+  //     let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
+  //     let headers = new HttpHeaders().set('Accept', 'application/json');
 
-    getWalletInformation(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/wallet/' + filter.userId;
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+  //     return this.http.get<any>(url, { headers });
+  // }
 
-        let params: any = {}
-        if (filter.pageSize)
-            params.size = filter.pageSize;
+  getUserCount() {
+    let url = API.BASE_URL + "/cms/customer-portal/users-count";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.pageIndex)
-            params.pageNumber = filter.pageIndex
+  getSupportTickets(filter: SupportFilter, pageIndex?, pageSize?) {
+    let url = API.BASE_URL + "/cms/customer-portal/support";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (params)
-            return this.http.get<any>(url, { params, headers });
+    let params: any = {};
 
-        return this.http.get<any>(url, { headers });
+    if (pageIndex) params.pageNumber = pageIndex;
 
-    }
+    if (pageSize) params.size = pageSize;
 
-    // getRechargeHistory(filter: SupportFilter) {
-    //     let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
-    //     let headers = new HttpHeaders().set('Accept', 'application/json');
+    if (filter.mobile) params.mobile = filter.mobile;
 
-    //     return this.http.get<any>(url, { headers });
-    // }
+    if (filter.email) params.email = filter.email;
 
-    getUserCount() {
-        let url = API.BASE_URL + '/cms/customer-portal/users-count'
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.from) params.from = filter.from;
 
-    getSupportTickets(filter: SupportFilter) {
-        let url = API.BASE_URL + '/cms/customer-portal/support'
-        let headers = new HttpHeaders().set('Accept', 'application/json');
+    if (filter.to) params.to = filter.to;
 
-        let params: any = {}
+    if (filter.today) params.today = filter.today;
 
-        if (filter.pageIndex)
-            params.pageNumber = filter.pageIndex;
+    if (filter.week) params.week = true;
 
-        if (filter.pageSize)
-            params.size = filter.pageSize;
+    if (filter.month) params.month = true;
 
-        if (filter.mobile)
-            params.mobile = filter.mobile;
+    if (filter.userId) params.userId = filter.userId;
 
-        if (filter.email)
-            params.email = filter.email
+    if (filter.country) params.country = filter.country;
+    if (params) return this.http.get<any[]>(url, { params, headers });
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.from)
-            params.from = filter.from
+  getPackageCount(id: string) {
+    let url = API.BASE_URL + "/cms/customer-portal/package-count/" + id;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.to)
-            params.to = filter.to
+  getRechargeHistoryCount(id: string) {
+    let url = API.BASE_URL + "/cms/customer-portal/recharge-count/" + id;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.today)
-            params.today = filter.today
+  getWalletCount(id: string) {
+    let url = API.BASE_URL + "/cms/customer-portal/wallet-count/" + id;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.week)
-            params.week = filter.week
+  getVideoCount(id: string) {
+    let url = API.BASE_URL + "/cms/customer-portal/content-count/" + id;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.month)
-            params.month = filter.month
+  getSeasonCount(id: string) {
+    let url = API.BASE_URL + "/cms/customer-portal/season-count/" + id;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.userId)
-            params.userId = filter.userId
+  getSupportCount(filter: SupportFilter) {
+    let url = API.BASE_URL + "/cms/customer-portal/support-count";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    let params: any = {};
 
-        if (filter.country)
-            params.country = filter.country
+    // if (pageIndex) params.pageNumber = pageIndex;
 
-        if (params)
-            return this.http.get<any[]>(url, { params, headers });
-        return this.http.get<any>(url, { headers });
+    // if (pageSize) params.size = pageSize;
 
-    }
+    if (filter.mobile) params.mobile = filter.mobile;
 
-    getPackageCount(id: string) {
-        let url = API.BASE_URL + '/cms/customer-portal/package-count/' + id
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.email) params.email = filter.email;
 
-    getRechargeHistoryCount(id: string) {
-        let url = API.BASE_URL + '/cms/customer-portal/recharge-count/' + id
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.from) params.from = filter.from;
 
-    getWalletCount(id: string) {
-        let url = API.BASE_URL + '/cms/customer-portal/wallet-count/' + id
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.to) params.to = filter.to;
 
-    getVideoCount(id: string) {
-        let url = API.BASE_URL + '/cms/customer-portal/content-count/' + id
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.today) params.today = filter.today;
 
-    getSeasonCount(id: string) {
-        let url = API.BASE_URL + '/cms/customer-portal/season-count/' + id
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.week) params.week = true;
 
-    getSupportCount() {
-        let url = API.BASE_URL + '/cms/customer-portal/support-count';
-        let headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<any>(url, { headers });
-    }
+    if (filter.month) params.month = true;
 
+    if (filter.userId) params.userId = filter.userId;
+
+    if (filter.country) params.country = filter.country;
+    if (params) return this.http.get<any[]>(url, { params, headers });
+    return this.http.get<any>(url, { headers });
+  }
+  updateStatus(row: any): Observable<Object> {
+    let headers = new HttpHeaders();
+    const endpoint = API.BASE_URL + "/cms/customer-portal/change-ticket-status";
+    const userData = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("UD=", userData);
+    return this.http.post(
+      endpoint,
+      {
+        id: row._id,
+        status: row.status,
+        updatedBy: userData.userInfo.username
+      },
+      { headers }
+    );
+  }
 }
-
