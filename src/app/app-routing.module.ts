@@ -128,6 +128,16 @@ const routes: Routes = [
 
       },
       {
+        path: "reports",
+        loadChildren: "./components/reports/reports.module#ReportsModule", canActivate: [AuthGuard],
+
+      },
+      {
+        path: "support",
+        loadChildren: "./components/support/support.module#SupportModule", canActivate: [AuthGuard],
+
+      },
+      {
         path: "MobileTagForm/:id",
         component: MobileTagFormComponent, canActivate: [AuthGuard],
 

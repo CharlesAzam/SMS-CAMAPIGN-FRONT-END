@@ -12,7 +12,9 @@ export class HomepageComponent implements OnInit {
   isExpanded = true;
   showSubmenu: boolean = false;
   showMobile: boolean = false;
+  showReports: boolean = false;
   isShowing = false;
+  showSupport: boolean = false;
 
   mouseenter() {
     if (!this.isExpanded) {

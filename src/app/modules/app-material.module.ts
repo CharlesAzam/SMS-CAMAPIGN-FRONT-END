@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 import {
   MatCardModule,
@@ -25,6 +26,7 @@ import {
   MatProgressSpinnerModule,
   MatExpansionModule,
   MatCheckboxModule,
+  MatSortModule,
 } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
@@ -56,8 +58,9 @@ const modules = [
   MatDialogModule,
   NgxMatSelectSearchModule,
   MatCheckboxModule,
-  MatExpansionModule
-
+  MatExpansionModule,
+  SatDatepickerModule, 
+  SatNativeDateModule
 ];
 
 @NgModule({
