@@ -215,7 +215,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
+                                            country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',
 
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
@@ -257,7 +257,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',
+                                            country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -297,7 +297,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                            
+                                            country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',                                            
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
                                             referenceChannelID: parseInt(this.vod.referenceChannelID,10)? parseInt(this.vod.referenceChannelID,10): '',
@@ -338,7 +338,7 @@ export class VodEditComponent implements OnInit {
                                     starring: this.vod.starring ? this.vod.starring : '',
                                     director: this.vod.director ? this.vod.director : '',
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
-                                    country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                    
+                                    country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',                                    
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     language: this.vod.language ? this.vod.language : [],
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -370,7 +370,7 @@ export class VodEditComponent implements OnInit {
                                     title: this.vod.title ? this.vod.title : '',
                                     description: this.vod.description ? this.vod.description : '',
                                     tags: this.vod.tags ? this.vod.tags : [],
-                                    country: this.vod.country ? this.vod.country.map((country) => { return country._id }) : '',                                    
+                                    country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',                                    
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -431,7 +431,15 @@ export class VodEditComponent implements OnInit {
         this.allSelected = !this.allSelected;  // to control select-unselect
         
         if (this.allSelected) {
-          this.countrySelection.options.forEach( (item : MatOption) => item.select());
+          this.countrySelection.options.forEach( (item : MatOption) => {
+            if(item.value !=0){
+                console.log("item",item)
+                item.select()
+            } else {
+                item.deselect()
+            }
+            });
+          console.log("this.countrySelection",this.countrySelection.options)
         } else {
           this.countrySelection.options.forEach( (item : MatOption) => {item.deselect()});
         }
