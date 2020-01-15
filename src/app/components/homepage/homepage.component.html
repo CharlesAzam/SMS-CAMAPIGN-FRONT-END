@@ -33,7 +33,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" opened="false" class="example-sidenav" [fixedInViewport]=false [fixedTopGap]=0
+  <mat-sidenav #sidenav mode="side" opened="true" class="example-sidenav" [fixedInViewport]=false [fixedTopGap]=0
     [fixedBottomGap]="0">
     <mat-nav-list>
       <mat-list-item routerLink="dashboard" class="parent">
@@ -87,8 +87,18 @@
       </mat-list-item>
 
       <div class="submenu" [ngClass]="{'expanded' : showReports}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item (click)="showCollection = !showCollection" class="parent">
+          <span class="full-width" *ngIf="isExpanded || isShowing">Collection Reports</span>
+          <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showCollection}"
+            *ngIf="isExpanded || isShowing">expand_more
+          </mat-icon>
+        </a>
+
+        <div class="submenu" [ngClass]="{'expanded' : showCollection}" *ngIf="isShowing || isExpanded">
+          <a mat-list-item routerLink="reports/collections/summary">Summary</a>
+          <a mat-list-item routerLink="reports/collections/detailed">Detailed</a>
+        </div>
         <a mat-list-item routerLink="reports">Users Reports</a>
-        <a mat-list-item routerLink="reports/collections">Collection Reports</a>
         <a mat-list-item routerLink="reports/transactions">Transaction Reports</a>
       </div>
 

@@ -15,6 +15,8 @@ export class HomepageComponent implements OnInit {
   showReports: boolean = false;
   isShowing = false;
   showSupport: boolean = false;
+  showCollection: boolean = false;
+
 
   mouseenter() {
     if (!this.isExpanded) {
@@ -36,6 +38,7 @@ export class HomepageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.authService.isModuleAllowed();
   }
 
   opened = false;

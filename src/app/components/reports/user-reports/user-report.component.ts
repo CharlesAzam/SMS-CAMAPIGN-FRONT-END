@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
+import { ReportService } from '../reports.service';
+import * as moment from 'moment';
+import { SupportFilter } from '../../support/support-filter.model';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-report',
@@ -13,13 +17,15 @@ export class UserReportComponet implements OnInit {
 
   filterMethodCtrl = new FormControl('');
   filterCountryCtrl = new FormControl('');
-  from = new FormControl('');
-  to = new FormControl('');
+  range = new FormControl('');
   mobile = new FormControl('')
+  count: number;
+  datasource = new MatTableDataSource<any>([])
   protected _onDestroy = new Subject<void>();
 
   method: any;
   country: any;
+  filter: SupportFilter;
 
 
   countries: any[] = [];
@@ -28,7 +34,6 @@ export class UserReportComponet implements OnInit {
     { label: 'This Week', id: 'week' },
     { label: 'This Month', id: 'month' },
     { label: 'Date Range', id: 'range' },
-    { label: 'Mobile Number', id: 'mobile' }
   ]
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -38,10 +43,11 @@ export class UserReportComponet implements OnInit {
     : ['No', 'date', 'country', 'openingBalance', 'customers', 'azamUsers', 'nonAzamUsers', 'closingBalance']
 
 
-  constructor(private countryService: CountryService) { }
+  constructor(private countryService: CountryService, private reportService: ReportService) { }
 
   ngOnInit() {
     this.getCountries();
+    this.getUserCount("REG_SUM");
     this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
@@ -54,6 +60,30 @@ export class UserReportComponet implements OnInit {
         this.filterMethod();
       })
   }
+
+  ngAfterViewInit(): void {
+    // let pageIndex = this.paginator.pageIndex + 1
+    this.filter = {};
+    this.filter.type = "REG_SUM"
+
+    this.paginator.page
+      .pipe(
+        startWith(null),
+        tap(() =>
+          this.getUserReports(
+            this.filter,
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize
+          )
+        )
+      )
+      .subscribe();
+
+  }
+  @ViewChild(MatPaginator, { static: false })
+  paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
 
   getCountries() {
@@ -109,12 +139,73 @@ export class UserReportComponet implements OnInit {
   }
 
   search() {
-    console.log('Selected Country', this.country);
-    console.log('Selected Method', this.method);
+    this.filter = {};
 
-    if (this.method === 'week') {
-
+    if (this.method === "week") {
+      this.filter.week = true;
     }
+
+    if (this.method === "month") {
+      this.filter.month = true;
+    }
+
+    if (this.method === "today") {
+      this.filter.today = moment().format("YYYY-MM-DD");
+    }
+
+    if (this.method === "mobile") {
+      this.filter.mobile = this.mobile.value;
+    }
+
+    if (this.method === "range") {
+      this.filter.from = moment(this.range.value.begin).format("YYYY-MM-DD");
+      this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
+    }
+
+    if (this.country) {
+      this.filter.country = this.country;
+      this.filter.type = 'CNT_REG_SUM'
+      this.getUserCount(this.filter.type, this.filter.country)
+
+    } else {
+      this.filter.type = 'REG_SUM'
+      this.getUserCount(this.filter.type)
+    }
+
+    this.getUserReports(this.filter);
+
+  }
+
+  getUserReports(filter: SupportFilter, pageIndex?, pageSize?) {
+    filter.pageIndex = pageIndex ? pageIndex : this.paginator.pageIndex + 1;
+    filter.pageSize = pageSize ? pageSize : this.paginator.pageSize;
+    this.reportService.getUserReports(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.datasource = response.data;
+      }
+    }, error => console.error(error))
+  }
+
+  getUserCount(type: string, country?: string) {
+    let filter: SupportFilter = {};
+    filter.type = type;
+    filter.country = country;
+    this.reportService.getUserReports(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.count = response.count;
+      }
+    }, error => console.error(error))
+  }
+
+
+  resetFilters() {
+    this.filter = {
+      type: 'REG_SUM'
+    };
+    this.country = undefined;
+    this.method = undefined;
+    this.getUserReports(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
+
   }
 
 
