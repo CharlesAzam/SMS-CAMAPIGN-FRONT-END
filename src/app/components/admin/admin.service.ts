@@ -32,7 +32,21 @@ export class AdminService {
         "pageNumber": index,
         "size": size
       };
-      return this.http.get<any>(url, { params, headers })
+      return this.http.get<any>(url, {  headers })
+    }
+    return this.http.get<any>(url, { headers })
+  }
+
+  listUsers(index?, size?): Observable<Admin[]> {
+    let url = API.BASE_URL + '/cms/cms-user/list';
+    let headers = new HttpHeaders()
+      .set('Accept', 'application/json');
+    if (index || size) {
+      let params = {
+        "pageNumber": index,
+        "size": size
+      };
+      return this.http.get<any>(url, {  headers })
     }
     return this.http.get<any>(url, { headers })
   }
@@ -60,12 +74,20 @@ export class AdminService {
     return this.http.post<Admin>(url, entity, { headers });
   }
 
-  delete(id: string) {
-    let url = API.BASE_URL + `/cms/cdn/${id}/`;
+  deleteUser(id: string) {
+    let url = API.BASE_URL + `/cms/cms-user/${id}/`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.delete<any>(url, { headers });
   }
+
+  deleteRole(id: string) {
+    let url = API.BASE_URL + `/cms/roles/${id}/`;
+    let headers = new HttpHeaders()
+      .set('Accept', 'application/json');
+    return this.http.delete<any>(url, { headers });
+  }
+
 
   update(data: any) {
     let url = API.BASE_URL + `/cms/cdn/${data._id}/update`;

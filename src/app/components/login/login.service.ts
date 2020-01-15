@@ -24,18 +24,35 @@ export class AuthenticationService {
             .pipe(map(user => {
                 console.log("user====>", user)
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
+                // user.
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
             }));
     }
 
-    isModuleAllowed(module: string) {
+    isModuleAllowed(moduleName: string) {
         let user = this.currentUserValue;
         if (user.userInfo.isSuperAdmin) {
             return true;
         } else {
-            user.accessList.find(element => element.module === module)
+            // user.accessList.find(element => {
+            //     console.log('element', element.module.toLowerCase())
+            //     console.log('module name', moduleName.toLowerCase())
+            //     if (moduleName.toLowerCase().includes(element.module.toLowerCase())) {
+            //         // console.log(moduleName)
+            //         return true;
+            //     }
+            //     else {
+            //         return false
+
+            //     }
+            // });
+            // // if () {
+            // //     return true;
+            // // } else {
+            // //     return false;
+            // // }
         }
     }
 

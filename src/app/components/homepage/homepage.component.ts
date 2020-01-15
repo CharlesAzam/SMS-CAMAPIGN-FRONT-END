@@ -38,7 +38,7 @@ export class HomepageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.authService.isModuleAllowed();
+    
   }
 
   opened = false;
@@ -76,5 +76,9 @@ export class HomepageComponent implements OnInit {
   submit() {
 
     this.router.navigate(['movies'], { relativeTo: this.activatedRoute });
+  }
+
+  isModulePermitted(moduleName: string) {
+    this.authService.isModuleAllowed(moduleName);
   }
 }
