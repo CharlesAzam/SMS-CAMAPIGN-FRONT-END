@@ -20,12 +20,7 @@
         </button>
       </div>
 
-      <!--Filter input button container end -->
-
-
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
-        <!-- Position Column -->
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef> No. </th>
           <td mat-cell *matCellDef="let element; let i= index"> {{(paginator.pageIndex*paginator.pageSize)+i+1}}
@@ -53,10 +48,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-      <!-- <div class="table-paginator-style"> -->
-      <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+      <mat-pagi      <!-- <div class="table-paginator-style"> -->
+        nator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
       </mat-paginator>
-      <!-- </div> -->
     </mat-card>
   </div>
 </div>
