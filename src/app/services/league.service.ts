@@ -2,8 +2,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { CategoryFilter } from "../components/homepage/category/category-filter";
-import { Categories } from "../models/categories";
 import { League } from "../models/league-model";
 import { API } from "src/environments/environment";
 
