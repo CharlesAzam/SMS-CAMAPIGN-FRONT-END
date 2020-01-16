@@ -1,14 +1,12 @@
 <!-- <app-side-nav></app-side-nav> -->
 
 <mat-toolbar class="example-header">
-
   <div>
     <button mat-button (click)="sidenav.toggle()">
       <mat-icon color="primary">menu</mat-icon>
     </button>
-    <img style="height: 30px !important;" src="/assets/azam-logo.png">
+    <img style="height: 30px !important;" src="/assets/azam-logo.png" />
   </div>
-
 
   <div>
     <button mat-button [matMenuTriggerFor]="menu">
@@ -17,10 +15,18 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['admin/users']">
+      <button
+        *ngIf="userInfo.isSuperAdmin == true"
+        mat-menu-item
+        [routerLink]="['admin/users']"
+      >
         <span>Users</span>
       </button>
-      <button mat-menu-item [routerLink]="['admin/roles']">
+      <button
+        *ngIf="userInfo.isSuperAdmin == true"
+        mat-menu-item
+        [routerLink]="['admin/roles']"
+      >
         <span>Roles</span>
       </button>
 
@@ -29,15 +35,23 @@
       </button>
     </mat-menu>
   </div>
-
 </mat-toolbar>
 
 <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" opened="true" class="example-sidenav" [fixedInViewport]=false [fixedTopGap]=0
-    [fixedBottomGap]="0">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    opened="true"
+    class="example-sidenav"
+    [fixedInViewport]="false"
+    [fixedTopGap]="0"
+    [fixedBottomGap]="0"
+  >
     <mat-nav-list>
       <mat-list-item routerLink="dashboard" class="parent">
-        <mat-icon color="primary" style="margin-right: 5px;">dashboard</mat-icon>
+        <mat-icon color="primary" style="margin-right: 5px;"
+          >dashboard</mat-icon
+        >
 
         <span class="full-width">Dashboard</span>
       </mat-list-item>
@@ -56,15 +70,27 @@
       </div> -->
 
       <mat-list-item (click)="showMobile = !showMobile" class="parent">
-        <mat-icon color="primary" style="margin-right: 5px;">smartphone</mat-icon>
+        <mat-icon color="primary" style="margin-right: 5px;"
+          >smartphone</mat-icon
+        >
         <span class="full-width" *ngIf="isExpanded || isShowing">Mobile</span>
-        <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showMobile}"
-          *ngIf="isExpanded || isShowing">expand_more
+        <mat-icon
+          class="menu-button"
+          color="primary"
+          [ngClass]="{ rotated: showMobile }"
+          *ngIf="isExpanded || isShowing"
+          >expand_more
         </mat-icon>
       </mat-list-item>
-      <div class="submenu" [ngClass]="{'expanded' : showMobile}" *ngIf="isShowing || isExpanded">
+      <div
+        class="submenu"
+        [ngClass]="{ expanded: showMobile }"
+        *ngIf="isShowing || isExpanded"
+      >
         <a mat-list-item (click)="getCategories($event)">Categories</a>
-        <a mat-list-item (click)="routeToSubCategories($event)">Sub Categories</a>
+        <a mat-list-item (click)="routeToSubCategories($event)"
+          >Sub Categories</a
+        >
         <a mat-list-item routerLink="MobileTags">Tags</a>
         <!-- <a mat-list-item (click)="routeToChannels($event)">Channels</a> -->
         <a mat-list-item routerLink="banner">Banner</a>
@@ -79,43 +105,80 @@
       </div>
 
       <mat-list-item (click)="showReports = !showReports" class="parent">
-        <mat-icon color="primary" style="margin-right: 5px;">bar_chart</mat-icon>
+        <mat-icon color="primary" style="margin-right: 5px;"
+          >bar_chart</mat-icon
+        >
         <span class="full-width" *ngIf="isExpanded || isShowing">Reports</span>
-        <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showReports}"
-          *ngIf="isExpanded || isShowing">expand_more
+        <mat-icon
+          class="menu-button"
+          color="primary"
+          [ngClass]="{ rotated: showReports }"
+          *ngIf="isExpanded || isShowing"
+          >expand_more
         </mat-icon>
       </mat-list-item>
 
-      <div class="submenu" [ngClass]="{'expanded' : showReports}" *ngIf="isShowing || isExpanded">
-        <a mat-list-item (click)="showCollection = !showCollection" class="parent">
-          <span class="full-width" *ngIf="isExpanded || isShowing">Collection Reports</span>
-          <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showCollection}"
-            *ngIf="isExpanded || isShowing">expand_more
+      <div
+        class="submenu"
+        [ngClass]="{ expanded: showReports }"
+        *ngIf="isShowing || isExpanded"
+      >
+        <a
+          mat-list-item
+          (click)="showCollection = !showCollection"
+          class="parent"
+        >
+          <span class="full-width" *ngIf="isExpanded || isShowing"
+            >Collection Reports</span
+          >
+          <mat-icon
+            class="menu-button"
+            color="primary"
+            [ngClass]="{ rotated: showCollection }"
+            *ngIf="isExpanded || isShowing"
+            >expand_more
           </mat-icon>
         </a>
 
-        <div class="submenu" [ngClass]="{'expanded' : showCollection}" *ngIf="isShowing || isExpanded">
+        <div
+          class="submenu"
+          [ngClass]="{ expanded: showCollection }"
+          *ngIf="isShowing || isExpanded"
+        >
           <a mat-list-item routerLink="reports/collections/summary">Summary</a>
-          <a mat-list-item routerLink="reports/collections/detailed">Detailed</a>
+          <a mat-list-item routerLink="reports/collections/detailed"
+            >Detailed</a
+          >
         </div>
         <a mat-list-item routerLink="reports">Users Reports</a>
-        <a mat-list-item routerLink="reports/transactions">Transaction Reports</a>
+        <a mat-list-item routerLink="reports/transactions"
+          >Transaction Reports</a
+        >
       </div>
 
       <mat-list-item (click)="showSupport = !showSupport" class="parent">
         <mat-icon color="primary" style="margin-right: 5px;">people</mat-icon>
         <span class="full-width" *ngIf="isExpanded || isShowing">Support</span>
-        <mat-icon class="menu-button" color="primary" [ngClass]="{'rotated' : showSupport}"
-          *ngIf="isExpanded || isShowing">expand_more
+        <mat-icon
+          class="menu-button"
+          color="primary"
+          [ngClass]="{ rotated: showSupport }"
+          *ngIf="isExpanded || isShowing"
+          >expand_more
         </mat-icon>
       </mat-list-item>
 
-      <div class="submenu" [ngClass]="{'expanded' : showSupport}" *ngIf="isShowing || isExpanded">
+      <div
+        class="submenu"
+        [ngClass]="{ expanded: showSupport }"
+        *ngIf="isShowing || isExpanded"
+      >
         <a mat-list-item routerLink="support">Logged Support</a>
-        <a mat-list-item routerLink="support/user-information">User Information</a>
+        <a mat-list-item routerLink="support/user-information"
+          >User Information</a
+        >
       </div>
     </mat-nav-list>
-
   </mat-sidenav>
 
   <mat-sidenav-content>
