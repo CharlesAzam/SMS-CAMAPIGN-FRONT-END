@@ -12,7 +12,7 @@
     <mat-card style="margin-top: 10px;">
         <div class="row" style="margin: 10px;">
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" *ngIf="type === 'summary'">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Search Method</mat-label>
                         <mat-select [(value)]="method" required>
@@ -20,6 +20,20 @@
                                 [noEntriesFoundLabel]="'Method not found'" [placeholderLabel]="'Find method...'">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let method of filteredMethods | async" [value]="method.id">
+                                {{method.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="type === 'detailed'">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Search Method</mat-label>
+                        <mat-select [(value)]="method" required>
+                            <ngx-mat-select-search [formControl]="filterMethodCtrl"
+                                [noEntriesFoundLabel]="'Method not found'" [placeholderLabel]="'Find method...'">
+                            </ngx-mat-select-search>
+                            <mat-option *ngFor="let method of filteredDetailedMethods | async" [value]="method.id">
                                 {{method.label}}
                             </mat-option>
                         </mat-select>

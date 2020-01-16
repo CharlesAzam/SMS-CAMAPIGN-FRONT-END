@@ -72,9 +72,23 @@ export class CollectionReportComponent implements OnInit {
 
 
   countries: any[] = [];
-  methods: any[] = [];
+  methods: any[] = [
+    { label: 'Today', id: 'today' },
+    { label: 'This Week', id: 'week' },
+    { label: 'This Month', id: 'month' },
+    { label: 'Date Range', id: 'range' },
+    { label: 'Mobile Number', id: 'mobile' }
+  ];
+
+  summaryMethods: any[] = [
+    { label: 'Today', id: 'today' },
+    { label: 'This Week', id: 'week' },
+    { label: 'This Month', id: 'month' },
+    { label: 'Date Range', id: 'range' },
+  ];
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredDetailedMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   datasource = new MatTableDataSource<any>([]);
 
@@ -84,27 +98,21 @@ export class CollectionReportComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((params) => {
       if (params) {
+        this.filter = {}
         this.type = params.get('type');
         this.displayedColumns = [];
-        this.methods = [];
-
+        this.datasource = new MatTableDataSource<any>([]);
         if (this.type === 'summary') {
           this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
-          this.methods = [
-            { label: 'Today', id: 'today' },
-            { label: 'This Week', id: 'week' },
-            { label: 'This Month', id: 'month' },
-            { label: 'Date Range', id: 'range' },
-          ]
+          this.getCollectionSummary(
+            this.filter,
+            1,
+            10
+          )
         } else {
+          this.datasource = new MatTableDataSource<any>([]);
           this.displayedColumns = ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
-          this.methods = [
-            { label: 'Today', id: 'today' },
-            { label: 'This Week', id: 'week' },
-            { label: 'This Month', id: 'month' },
-            { label: 'Date Range', id: 'range' },
-            { label: 'Mobile Number', id: 'mobile' }
-          ]
+          this.getDetailedReport(this.filter, 1, 10);
         }
       }
     })
@@ -115,7 +123,14 @@ export class CollectionReportComponent implements OnInit {
       .subscribe(() => {
         this.filterCountry();
       })
-    this.filteredMethods.next(this.methods.slice());
+    this.filteredMethods.next(this.summaryMethods.slice());
+    this.filterMethodCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterMethod();
+      })
+
+    this.filteredDetailedMethods.next(this.methods.slice());
     this.filterMethodCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
