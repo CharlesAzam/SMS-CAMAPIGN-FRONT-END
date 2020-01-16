@@ -11,6 +11,8 @@ import { AdminUsersListComponent } from './admin-users-list/admin-list.component
 import { RoleEditComponent } from './admin-role-edit/admin-role.component';
 import { RoleListComponent } from './admin-roles-list/admin-roles.component';
 import { CheckBoxComponent } from './checkbox.component';
+import { WarningDialog } from '../warning-dialog/dialog-warning';
+import { MatDialog } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -25,10 +27,12 @@ import { CheckBoxComponent } from './checkbox.component';
     AdminEditComponent,
     AdminUsersListComponent,
     RoleEditComponent,
-    RoleListComponent
+    RoleListComponent,
   ],
   providers: [
     AdminService
+  ],
+  entryComponents:[
   ],
   exports: [
   ]

@@ -21,7 +21,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                         errorMessage = `Error: ${error.error.message}`;
                     } else {
                         // server-side error
-                        errorMessage = { status: error.status, message: error.message }
+                        if (error.status === 403)
+                            errorMessage = { status: error.status, message: 'Insufficient Priveleges, Contact adminstrator' }
+                        else
+                            errorMessage = { status: error.status, message: error.message }
                     }
                     const ref = this.dialog.open(ErrorDialog, {
                         width: '400px',

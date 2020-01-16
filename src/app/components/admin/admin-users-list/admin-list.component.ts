@@ -3,9 +3,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AdminFilter } from '../admin-filter';
 import { AdminService } from '../admin.service';
 import { Admin } from '../admin';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { startWith, tap } from 'rxjs/operators';
+import { WarningDialog } from '../../warning-dialog/dialog-warning';
 
 
 @Component({
@@ -19,49 +20,55 @@ export class AdminUsersListComponent implements OnInit, AfterViewInit {
 
         this.paginator.page.pipe(
             startWith(null),
-            tap(() => this.getCategories(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+            tap(() => this.getUserList(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
     }
     @ViewChild(MatPaginator, { static: false })
     paginator: MatPaginator
 
-    constructor(private router: Router,
-        private activatedRoute: ActivatedRoute, ) { }
+    constructor(
+        private dialog: MatDialog,
+        private adminService: AdminService) { }
 
     displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
     count: number
     dataSource = new MatTableDataSource<any>([]);
 
-
-    /*Table logic*/
-    deleteCategory(row) {
-
-    }
-
-    editCategory(row) {
-        this.router.navigate(['home/CategoryForm', row._id]);
-    }
-
-    routeToCategoryForm() {
-        this.router.navigate(['home/admin/new']);
-
-    }
-
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    /*Table logic*/
-
     ngOnInit() {
-        this.getCategoryCount();
-        // this.getCategories(1, 5);
     }
 
-    getCategories(pageNumber, size) {
-
+    getUserList(pageIndex?, pageSize?) {
+        this.adminService.listUsers(pageIndex, pageSize).subscribe((response: any) => {
+            console.log(response)
+            if (response.status === 200) {
+                this.dataSource = response.data
+            }
+        }, error => console.log(error));
     }
 
-    getCategoryCount() {
+    removeUser(row) {
+
+        this.dialog
+            .open(WarningDialog, {
+                width: "400px",
+                data: {
+                    title: "Warning",
+                    message: `Are you sure want to delete ${row.username} `
+                }
+            })
+            .afterClosed()
+            .subscribe(result => {
+                if (result) {
+                    this.adminService.deleteUser(row._id).subscribe((response: any) => {
+                        if (response.status === 200) {
+                            this.getUserList();
+                        }
+                    }, error => console.log(error));
+                }
+            });
 
     }
 
