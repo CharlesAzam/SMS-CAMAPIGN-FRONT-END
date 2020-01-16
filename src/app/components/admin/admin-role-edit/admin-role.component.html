@@ -8,7 +8,7 @@
                     <input matInput name="name" placeholder="Enter name" [(ngModel)]="roleModel.roleName">
                 </mat-form-field>
             </div>
-            <mat-label style="margin-bottom: 20px;">Permission set</mat-label>
+            <mat-label style="margin-bottom: 20px;">Permission set *(Read Permission is required to access any of the modules below)</mat-label>
 
             <mat-accordion>
                 <div *ngFor="let role of modulesAndActions">
