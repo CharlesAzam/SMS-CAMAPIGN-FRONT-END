@@ -80,7 +80,7 @@
             <mat-tab label="Packages">
                 <div style="margin: 25px;">
                     <table mat-table style="width: 100%;" *ngIf="packageDataSource.data.length>0"
-                        [dataSource]="packageDataSource" class="mat-elevation-z8">
+                        [dataSource]="packageDataSource" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -148,7 +148,7 @@
             <mat-tab label="Seasons">
                 <div style="margin: 25px;">
                     <table mat-table style="width: 100%;" *ngIf="seasonDataSource.data.length > 0"
-                        [dataSource]="seasonDataSource" class="mat-elevation-z8">
+                        [dataSource]="seasonDataSource" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -216,7 +216,7 @@
             <mat-tab label="Sub Videos">
 
                 <div style="margin: 25px;" *ngIf="videoDataSource.data.length > 0">
-                    <table mat-table style="width: 100%;" [dataSource]="videoDataSource" class="mat-elevation-z8">
+                    <table mat-table style="width: 100%;" [dataSource]="videoDataSource" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -280,7 +280,7 @@
             </mat-tab>
             <mat-tab label="Recharge History">
                 <div style="margin: 25px;" *ngIf="rechargeDataSource.data.length > 0">
-                    <table mat-table style="width: 100%;" [dataSource]="rechargeDataSource" class="mat-elevation-z8">
+                    <table mat-table style="width: 100%;" [dataSource]="rechargeDataSource" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -289,35 +289,24 @@
                                 {{(paginator.pageIndex*paginator.pageSize)+i+1}}
                         </ng-container>
 
-                        <ng-container matColumnDef="subId">
+                        <ng-container matColumnDef="transactionToken">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Token </th>
-                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.transactionToken}} </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="packageName">
+                        <ng-container matColumnDef="transactionReference">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Reference </th>
-                            <td mat-cell *matCellDef="let element"> {{element.packageName}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.transactionReference}} </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="fromDate">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> IOS Product Identifier </th>
-                            <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
-                        </ng-container>
-
-
-                        <ng-container matColumnDef="toDate">
+                        <ng-container matColumnDef="transactionDate">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Type </th>
-                            <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="couponCode">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Amount</th>
-                            <td mat-cell *matCellDef="let element"> {{element.couponCode}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.transactionDate | date}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="paidAmount">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Date</th>
-                            <td mat-cell *matCellDef="let element"> {{element.paidAmount | currency:'TZS'}} </td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Amount</th>
+                            <td mat-cell *matCellDef="let element"> {{element.amount | currency:'TZS'}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="status">
@@ -339,7 +328,7 @@
 
             <mat-tab label="Wallet Transaction">
                 <div style="margin: 25px;" *ngIf="walletDataSource.data.length > 0">
-                    <table mat-table style="width: 100%;" [dataSource]="walletDataSource" class="mat-elevation-z8">
+                    <table mat-table style="width: 100%;" [dataSource]="walletDataSource" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -393,7 +382,7 @@
             </mat-tab>
             <mat-tab label="Smart Cards">
                 <div style="margin: 25px;" *ngIf="smartCardDataSource.data.length>0">
-                    <table mat-table style="width: 100%;" [dataSource]="smartCardDataSource" class="mat-elevation-z8">
+                    <table mat-table style="width: 100%;" [dataSource]="smartCardDataSource" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
