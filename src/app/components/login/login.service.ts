@@ -36,23 +36,11 @@ export class AuthenticationService {
         if (user.userInfo.isSuperAdmin) {
             return true;
         } else {
-            // user.accessList.find(element => {
-            //     console.log('element', element.module.toLowerCase())
-            //     console.log('module name', moduleName.toLowerCase())
-            //     if (moduleName.toLowerCase().includes(element.module.toLowerCase())) {
-            //         // console.log(moduleName)
-            //         return true;
-            //     }
-            //     else {
-            //         return false
-
-            //     }
-            // });
-            // // if () {
-            // //     return true;
-            // // } else {
-            // //     return false;
-            // // }
+            const result = user.accessList.find(object=> object.module.toLowerCase() === moduleName.toLowerCase());
+            if(result)
+                return true;
+            else
+                return false;
         }
     }
 
