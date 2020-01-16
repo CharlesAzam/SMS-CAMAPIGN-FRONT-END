@@ -49,7 +49,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
             .afterClosed()
             .subscribe(result => {
                 if (result) {
-                    this.adminService.deleteUser(row).subscribe((response: any) => {
+                    this.adminService.deleteRole(row).subscribe((response: any) => {
                         if (response.status === 200) {
                             this.getRoles();
                         }
