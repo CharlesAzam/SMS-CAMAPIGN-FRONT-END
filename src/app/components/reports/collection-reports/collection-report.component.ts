@@ -61,6 +61,7 @@ export class CollectionReportComponent implements OnInit {
   mobile = new FormControl('')
   protected _onDestroy = new Subject<void>();
   filter: SupportFilter;
+  count: number;
 
   method: any;
   country: any;
@@ -99,11 +100,14 @@ export class CollectionReportComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       if (params) {
         this.filter = {}
+        this.country = undefined;
+        this.method = undefined;
         this.type = params.get('type');
         this.displayedColumns = [];
         this.datasource = new MatTableDataSource<any>([]);
         if (this.type === 'summary') {
           this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
+          this.getSummaryCount();
           this.getCollectionSummary(
             this.filter,
             1,
@@ -112,6 +116,7 @@ export class CollectionReportComponent implements OnInit {
         } else {
           this.datasource = new MatTableDataSource<any>([]);
           this.displayedColumns = ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+          this.getDetailedCount();
           this.getDetailedReport(this.filter, 1, 10);
         }
       }
@@ -238,6 +243,24 @@ export class CollectionReportComponent implements OnInit {
     this.reportService.getDetailedCollection(filter).subscribe((response: any) => {
       if (response.status === 200) {
         this.datasource = response.data;
+      }
+    }, error => console.error(error))
+  }
+
+  getDetailedCount() {
+    let filter: SupportFilter = {}
+    this.reportService.getDetailedCollection(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.count = response.count;
+      }
+    }, error => console.error(error))
+  }
+
+  getSummaryCount() {
+    let filter: SupportFilter = {}
+    this.reportService.getCollectionSummary(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.count = response.count;
       }
     }, error => console.error(error))
   }
