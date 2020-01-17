@@ -1,11 +1,12 @@
 <div class="container">
     <mat-card style="margin-top: 30px;">
         <h2>Add Role</h2>
-        <form #roleForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+        <form (ngSubmit)="onSubmit()">
             <hr>
             <div class="form-group">
                 <mat-form-field class="input-layouts">
-                    <input matInput name="name" placeholder="Enter name" [(ngModel)]="roleModel.roleName">
+                    <input matInput name="name" placeholder="Enter name" [formControl]="roleName" required>
+                    <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
                 </mat-form-field>
             </div>
             <mat-label style="margin-bottom: 20px;">Permission set *(Read Permission is required to access any of the modules below)</mat-label>
@@ -34,7 +35,7 @@
 
             </mat-accordion>
             <div>
-                <button [disabled]="roleForm.invalid" mat-raised-button type="submit">Create Role</button>
+                <button mat-raised-button [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 ">Create Role</button>
             </div>
 
         </form>
