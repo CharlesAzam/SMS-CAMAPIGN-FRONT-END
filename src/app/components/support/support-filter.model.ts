@@ -11,5 +11,7 @@ export class SupportFilter {
     pageIndex?: number
     pageSize?: number
     sortby?: string
-    sortorder?:string
+    sortorder?: string
+    type?: string
+
 }

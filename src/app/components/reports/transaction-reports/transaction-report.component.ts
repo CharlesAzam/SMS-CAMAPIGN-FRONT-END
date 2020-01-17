@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
+import { SupportFilter } from '../../support/support-filter.model';
+import { ReportService } from '../reports.service';
+import * as moment from 'moment';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'transaction-report',
@@ -13,13 +17,16 @@ export class TransactionReportComponent implements OnInit {
 
   filterMethodCtrl = new FormControl('');
   filterCountryCtrl = new FormControl('');
-  from = new FormControl('');
-  to = new FormControl('');
+  range = new FormControl('');
+
   mobile = new FormControl('')
   protected _onDestroy = new Subject<void>();
 
+  filter: SupportFilter;
+
   method: any;
   country: any;
+  count: number;
 
 
   countries: any[] = [];
@@ -28,22 +35,19 @@ export class TransactionReportComponent implements OnInit {
     { label: 'This Week', id: 'week' },
     { label: 'This Month', id: 'month' },
     { label: 'Date Range', id: 'range' },
-    { label: 'Mobile Number', id: 'mobile' }
   ]
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
-  displayedColumns: string[] = ['No', 'openingBalance', 'amountReceived', 'smartCardTransfer', 'subscriptionPurchase', 'moviePurchase', 'tvSeriesPurchase', 'closingBalance']
+  displayedColumns: string[] = ['No', 'date', 'openingBalance', 'amountReceived', 'subscriptionPurchase', 'videoPurchase', 'tvSeriesPurchase', 'closingBalance', 'smartCardTransfer']
 
-  constructor(private countryService: CountryService) { }
+  constructor(private countryService: CountryService, private reportService: ReportService) { }
+
+  datasource = new MatTableDataSource<any>([]);
 
   ngOnInit() {
-    this.getCountries();
-    this.filterCountryCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterCountry();
-      })
+    this.filter = {}
+    this.getTransactionCount(this.filter)
     this.filteredMethods.next(this.methods.slice());
     this.filterMethodCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -51,6 +55,28 @@ export class TransactionReportComponent implements OnInit {
         this.filterMethod();
       })
   }
+
+  ngAfterViewInit(): void {
+    // let pageIndex = this.paginator.pageIndex + 1
+    this.filter = {};
+
+    this.paginator.page
+      .pipe(
+        startWith(null),
+        tap(() =>
+          this.getTransactions(
+            this.filter,
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize
+          )
+        )
+      )
+      .subscribe();
+
+  }
+  @ViewChild(MatPaginator, { static: false })
+  paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
 
   getCountries() {
@@ -63,26 +89,7 @@ export class TransactionReportComponent implements OnInit {
       error => console.error(error));
   }
 
-  filterCountry() {
-    if (!this.countries)
-      return;
 
-    let search = this.filterCountryCtrl.value;
-    if (!search) {
-      this.filteredCountries.next(this.countries.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredCountries.next(
-      this.countries.filter(cont =>
-        cont.country ?
-          cont.country.toLowerCase().indexOf(search) > -1 :
-          ''
-      )
-    )
-  }
 
   filterMethod() {
     if (!this.methods)
@@ -106,14 +113,59 @@ export class TransactionReportComponent implements OnInit {
   }
 
   search() {
-    console.log('Selected Country', this.country);
-    console.log('Selected Method', this.method);
+    this.filter = {};
 
-    if (this.method === 'week') {
-
+    if (this.country) {
+      this.filter.country = this.country;
     }
+    if (this.method === "week") {
+      this.filter.week = true;
+    }
+
+    if (this.method === "month") {
+      this.filter.month = true;
+    }
+
+    if (this.method === "today") {
+      this.filter.today = moment().format("YYYY-MM-DD");
+    }
+
+    if (this.method === "range") {
+      this.filter.from = moment(this.range.value.begin).format("YYYY-MM-DD");
+      this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
+    }
+    this.getTransactionCount(this.filter)
+    this.getTransactions(this.filter);
+  }
+
+  getTransactions(filter: SupportFilter, pageIndex?, pageSize?) {
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
+    this.reportService.getTransactions(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.datasource = response.data;
+      }
+    }, error => console.error(error))
+  }
+
+  getTransactionCount(filter: SupportFilter) {
+    delete filter.pageIndex;
+    delete filter.pageSize;
+    this.reportService.getTransactions(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.count = response.count;
+      }
+    }, error => console.error(error))
   }
 
 
+  resetFilters() {
+    this.filter = {};
+    this.country = undefined;
+    this.method = undefined;
+    this.getTransactionCount(this.filter)
+    this.getTransactions(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
+
+  }
 
 }

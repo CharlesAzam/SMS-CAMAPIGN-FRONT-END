@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
+import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { ReportService } from '../reports.service';
+import { SupportFilter } from '../../support/support-filter.model';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-report',
@@ -11,16 +16,57 @@ import { CountryService } from 'src/app/services/coutry.service';
 })
 export class CollectionReportComponent implements OnInit {
 
+  ngAfterViewInit(): void {
+    // let pageIndex = this.paginator.pageIndex + 1
+    this.filter = {};
+
+    if (this.type === 'summary') {
+      this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
+      this.paginator.page
+        .pipe(
+          startWith(null),
+          tap(() =>
+            this.getCollectionSummary(
+              this.filter,
+              this.paginator.pageIndex + 1,
+              this.paginator.pageSize
+            )
+          )
+        )
+        .subscribe();
+    } else {
+      this.displayedColumns = ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+      this.paginator.page
+        .pipe(
+          startWith(null),
+          tap(() =>
+            this.getDetailedReport(
+              this.filter,
+              this.paginator.pageIndex + 1,
+              this.paginator.pageSize
+            )
+          )
+        )
+        .subscribe();
+    }
+
+  }
+  @ViewChild(MatPaginator, { static: false })
+  paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   filterMethodCtrl = new FormControl('');
   filterCountryCtrl = new FormControl('');
-  from = new FormControl('');
-  to = new FormControl('');
+  range = new FormControl("");
   mobile = new FormControl('')
   protected _onDestroy = new Subject<void>();
+  filter: SupportFilter;
 
   method: any;
   country: any;
   isMobile: boolean = false;
+
+  type: string = "";
 
   displayedColumns: string[] = []
 
@@ -32,23 +78,59 @@ export class CollectionReportComponent implements OnInit {
     { label: 'This Month', id: 'month' },
     { label: 'Date Range', id: 'range' },
     { label: 'Mobile Number', id: 'mobile' }
-  ]
+  ];
+
+  summaryMethods: any[] = [
+    { label: 'Today', id: 'today' },
+    { label: 'This Week', id: 'week' },
+    { label: 'This Month', id: 'month' },
+    { label: 'Date Range', id: 'range' },
+  ];
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredDetailedMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
-  constructor(private countryService: CountryService) { }
+  datasource = new MatTableDataSource<any>([]);
+
+
+  constructor(private countryService: CountryService, private reportService: ReportService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      if (params) {
+        this.filter = {}
+        this.type = params.get('type');
+        this.displayedColumns = [];
+        this.datasource = new MatTableDataSource<any>([]);
+        if (this.type === 'summary') {
+          this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
+          this.getCollectionSummary(
+            this.filter,
+            1,
+            10
+          )
+        } else {
+          this.datasource = new MatTableDataSource<any>([]);
+          this.displayedColumns = ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+          this.getDetailedReport(this.filter, 1, 10);
+        }
+      }
+    })
     this.getCountries();
-    this.displayedColumns = this.method !== 'mobile'
-      ? ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount']
-      : ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountReceived', 'customerBalance']
+
     this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterCountry();
       })
-    this.filteredMethods.next(this.methods.slice());
+    this.filteredMethods.next(this.summaryMethods.slice());
+    this.filterMethodCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterMethod();
+      })
+
+    this.filteredDetailedMethods.next(this.methods.slice());
     this.filterMethodCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
@@ -110,14 +192,63 @@ export class CollectionReportComponent implements OnInit {
   }
 
   search() {
-    console.log('Selected Country', this.country);
-    console.log('Selected Method', this.method);
+    this.filter = {};
 
-    if (this.method === 'week') {
-
+    if (this.country) {
+      this.filter.country = this.country;
     }
+    if (this.method === "week") {
+      this.filter.week = true;
+    }
+
+    if (this.method === "month") {
+      this.filter.month = true;
+    }
+
+    if (this.method === "today") {
+      this.filter.today = moment().format("YYYY-MM-DD");
+    }
+
+    if (this.method === "mobile") {
+      this.filter.mobile = this.mobile.value;
+    }
+
+    if (this.method === "range") {
+      this.filter.from = moment(this.range.value.begin).format("YYYY-MM-DD");
+      this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
+    }
+
+    this.getCollectionSummary(this.filter);
+
   }
 
+  getCollectionSummary(filter: SupportFilter, pageIndex?, pageSize?) {
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
+    this.reportService.getCollectionSummary(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.datasource = response.data;
+      }
+    }, error => console.error(error))
+  }
+
+  getDetailedReport(filter: SupportFilter, pageIndex?, pageSize?) {
+    filter.pageIndex = pageIndex;
+    filter.pageSize = pageSize;
+    this.reportService.getDetailedCollection(filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.datasource = response.data;
+      }
+    }, error => console.error(error))
+  }
+
+  resetFilters() {
+    this.filter = {};
+    this.country = undefined;
+    this.method = undefined;
+    this.type === 'summary' ? this.getCollectionSummary(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
+      : this.getDetailedReport(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
+  }
 
 
 }

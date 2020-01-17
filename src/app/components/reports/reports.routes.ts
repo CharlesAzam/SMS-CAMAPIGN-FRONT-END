@@ -18,7 +18,7 @@ export const REPORT_ROUTES: Routes = [
     component: TransactionReportComponent
   },
   {
-    path: 'collections',
+    path: 'collections/:type',
     component: CollectionReportComponent
   },
 ]
