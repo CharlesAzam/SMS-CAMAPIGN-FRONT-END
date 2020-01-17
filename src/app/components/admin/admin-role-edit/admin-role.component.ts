@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { Admin } from '../admin';
 import { AdminService } from '../admin.service';
 import { Role } from '../Role';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'admin-edit-role',
@@ -15,12 +15,12 @@ import { NgForm } from '@angular/forms';
 export class RoleEditComponent implements OnInit {
 
     roleModel = new Role();
+    roleName = new FormControl('', [Validators.required]);
     selectedModulesAndActions: any[] = [];
 
-    modulesAndActions: any[] = [
-    ]
+    modulesAndActions: any[] = []
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private roleService: AdminService) { }
+    constructor(private router: Router, private roleService: AdminService) { }
 
     ngOnInit() {
         this.getModulesAndActions();
@@ -62,11 +62,12 @@ export class RoleEditComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log(this.selectedModulesAndActions.length)
+        this.roleModel.roleName = this.roleName.value;
         this.roleService.createRole(this.roleModel).subscribe((response: any) => {
-            console.log(response)
             if (response.status === 200)
                 this.router.navigate(['home/admin/roles'])
-        });
+        }, error => console.log(error));
     }
 
 }
