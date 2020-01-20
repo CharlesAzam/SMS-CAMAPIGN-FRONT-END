@@ -17,33 +17,32 @@ import * as moment from "moment";
 export class CollectionReportComponent implements OnInit {
 
   ngAfterViewInit(): void {
-    // let pageIndex = this.paginator.pageIndex + 1
     this.filter = {};
 
     if (this.type === 'summary') {
       this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
-      this.paginator.page
+      this.summaryPaginator.page
         .pipe(
           startWith(null),
           tap(() =>
             this.getCollectionSummary(
               this.filter,
-              this.paginator.pageIndex + 1,
-              this.paginator.pageSize
+              this.summaryPaginator.pageIndex + 1,
+              this.summaryPaginator.pageSize
             )
           )
         )
         .subscribe();
     } else {
-      this.displayedColumns = ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
-      this.paginator.page
+      this.displayedColumns = ['No', 'date', 'country', 'customerNumber', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+      this.detailedPaginator.page
         .pipe(
           startWith(null),
           tap(() =>
             this.getDetailedReport(
               this.filter,
-              this.paginator.pageIndex + 1,
-              this.paginator.pageSize
+              this.detailedPaginator.pageIndex + 1,
+              this.detailedPaginator.pageSize
             )
           )
         )
@@ -51,8 +50,12 @@ export class CollectionReportComponent implements OnInit {
     }
 
   }
-  @ViewChild(MatPaginator, { static: false })
-  paginator: MatPaginator;
+  @ViewChild('summaryPaginator', { static: false, read: MatPaginator })
+  summaryPaginator: MatPaginator;
+
+  @ViewChild('detailedPaginator', { static: false, read: MatPaginator })
+  detailedPaginator: MatPaginator;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   filterMethodCtrl = new FormControl('');
@@ -104,10 +107,11 @@ export class CollectionReportComponent implements OnInit {
         this.method = undefined;
         this.type = params.get('type');
         this.displayedColumns = [];
-        this.datasource = new MatTableDataSource<any>([]);
         if (this.type === 'summary') {
+          this.datasource = new MatTableDataSource<any>([]);
+          // this.datasource.paginator = this.paginator;
           this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
-          this.getSummaryCount();
+          this.getSummaryCount(this.filter);
           this.getCollectionSummary(
             this.filter,
             1,
@@ -115,8 +119,9 @@ export class CollectionReportComponent implements OnInit {
           )
         } else {
           this.datasource = new MatTableDataSource<any>([]);
-          this.displayedColumns = ['No', 'date', 'country', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
-          this.getDetailedCount();
+          // this.datasource.paginator = this.paginator;
+          this.displayedColumns = ['No', 'date', 'country', 'customerNumber', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+          this.getDetailedCount(this.filter);
           this.getDetailedReport(this.filter, 1, 10);
         }
       }
@@ -223,7 +228,18 @@ export class CollectionReportComponent implements OnInit {
       this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
     }
 
-    this.getCollectionSummary(this.filter);
+
+    if (this.type === 'summary') {
+      this.summaryPaginator.firstPage();
+      this.getSummaryCount(this.filter);
+      this.getCollectionSummary(this.filter, this.summaryPaginator.pageIndex + 1, this.summaryPaginator.pageSize);
+    }
+    else {
+      this.detailedPaginator.firstPage();
+      this.getDetailedCount(this.filter)
+      this.getDetailedReport(this.filter, this.detailedPaginator.pageIndex + 1, this.detailedPaginator.pageSize)
+
+    }
 
   }
 
@@ -233,6 +249,8 @@ export class CollectionReportComponent implements OnInit {
     this.reportService.getCollectionSummary(filter).subscribe((response: any) => {
       if (response.status === 200) {
         this.datasource = response.data;
+      }
+      if (response.status === 204) {
       }
     }, error => console.error(error))
   }
@@ -244,11 +262,12 @@ export class CollectionReportComponent implements OnInit {
       if (response.status === 200) {
         this.datasource = response.data;
       }
+      if (response.status === 204) {
+      }
     }, error => console.error(error))
   }
 
-  getDetailedCount() {
-    let filter: SupportFilter = {}
+  getDetailedCount(filter: SupportFilter) {
     this.reportService.getDetailedCollection(filter).subscribe((response: any) => {
       if (response.status === 200) {
         this.count = response.count;
@@ -256,8 +275,7 @@ export class CollectionReportComponent implements OnInit {
     }, error => console.error(error))
   }
 
-  getSummaryCount() {
-    let filter: SupportFilter = {}
+  getSummaryCount(filter: SupportFilter) {
     this.reportService.getCollectionSummary(filter).subscribe((response: any) => {
       if (response.status === 200) {
         this.count = response.count;
@@ -266,12 +284,35 @@ export class CollectionReportComponent implements OnInit {
   }
 
   resetFilters() {
+    if (this.type === 'summary')
+      this.summaryPaginator.firstPage();
+    else
+      this.detailedPaginator.firstPage();
+
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
-    this.type === 'summary' ? this.getCollectionSummary(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
-      : this.getDetailedReport(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize)
+    this.type === 'summary' ? this.getCollectionSummary(this.filter, this.summaryPaginator.pageIndex + 1, this.summaryPaginator.pageSize)
+      : this.getDetailedReport(this.filter, this.detailedPaginator.pageIndex + 1, this.detailedPaginator.pageSize)
   }
 
+  generateExcel() {
+    if (this.filter.pageIndex)
+      delete this.filter.pageIndex;
+    if (this.filter.pageSize)
+      delete this.filter.pageSize;
+    if (this.type === 'summary')
+      this.reportService.getCollectionSummary(this.filter).subscribe((response: any) => {
+        if (response.status === 200) {
+          this.reportService.exportFileToCsv(response.data, 'COLLECTION SUMMARY REPORT', `collection_summary_report_${moment().format()}`);
+        }
+      }, error => console.error(error))
+    else
+    this.reportService.getDetailedCollection(this.filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.reportService.exportFileToCsv(response.data, 'DETAILED COLLECTION REPORT', `collection_detailed_report_${moment().format()}`);
+      }
+    }, error => console.error(error))
+  }
 
 }

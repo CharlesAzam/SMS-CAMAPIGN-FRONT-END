@@ -14,19 +14,20 @@ export class ReportService {
     constructor(private http: HttpClient) {
     }
 
-    exportFileToCsv(data: any) {
+    exportFileToCsv(data: any[], title?: string, filename?: string) {
         const options = {
             fieldSeparator: ',',
             quoteStrings: '"',
             decimalSeparator: '.',
             showLabels: true,
             showTitle: true,
-            title: 'My Awesome CSV',
+            title: title,
             useTextFile: false,
             useBom: true,
+            filename: filename,
             useKeysAsHeaders: true,
         };
-
+        console.log(title)
         const csvExporter = new ExportToCsv(options);
         csvExporter.generateCsv(data);
     }

@@ -79,18 +79,27 @@
 
 
         <div class="row" style="margin: 10px;">
-            <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
-                (click)="search()">Search</button>
-            <button color='danger' mat-raised-button (click)="resetFilters()">Reset</button>
+            <div class="col-md-6 text-left">
+                <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
+                    (click)="search()">Search</button>
+                <button color='danger' mat-raised-button (click)="resetFilters()">Reset</button>
+            </div>
+            <div class="col-md-6 text-right">
+                <button style="margin-right: 5px;" mat-raised-button color="accent" [disabled]="datasource.data" type="submit" (click)="generateExcel()">
+                    <mat-icon>attachment</mat-icon>
+                    Export Excel
+                </button>
+            </div>
         </div>
-        <div>
+
+        <div *ngIf="type === 'summary'">
             <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="No">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
                     <td mat-cell *matCellDef="let element; let i= index">
-                        {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                        {{(summaryPaginator.pageIndex*summaryPaginator.pageSize)+i+1}}
                 </ng-container>
 
                 <ng-container matColumnDef="date">
@@ -131,7 +140,7 @@
 
                 <ng-container matColumnDef="customerNumber">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Number</th>
-                    <td mat-cell *matCellDef="let element"> {{element.customerNumber}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="walletNumber">
@@ -153,7 +162,82 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+            <mat-paginator #summaryPaginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+            </mat-paginator>
+
+        </div>
+
+        <div *ngIf="type === 'detailed'">
+            <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="No">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                    <td mat-cell *matCellDef="let element; let i= index">
+                        {{(detailedPaginator.pageIndex*detailedPaginator.pageSize)+i+1}}
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="country">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+                    <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="gateway">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Gateway</th>
+                    <td mat-cell *matCellDef="let element"> {{element.gateway}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="operator">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Operator</th>
+                    <td mat-cell *matCellDef="let element"> {{element.operator}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="currency">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency</th>
+                    <td mat-cell *matCellDef="let element"> {{element.currency}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+                    <td mat-cell *matCellDef="let element"> {{element.amount | currency:'':''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="customerName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="customerNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Number</th>
+                    <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="walletNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Wallet Number</th>
+                    <td mat-cell *matCellDef="let element"> {{element.walletNumber}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="amountRecieved">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Recieved</th>
+                    <td mat-cell *matCellDef="let element"> {{element.amountReceived | currency:'':''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="customerBalance">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Balance</th>
+                    <td mat-cell *matCellDef="let element"> {{element.customerBalance | currency:'':''}} </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator #detailedPaginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
             </mat-paginator>
 
         </div>
