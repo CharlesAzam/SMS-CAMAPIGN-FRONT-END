@@ -74,7 +74,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
   constructor(
     private countryService: CountryService,
     private supportService: SupportService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getUserCount();
@@ -104,6 +104,15 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
       },
       error => console.error(error)
     );
+  }
+
+  trimString(string: String) {
+
+    return string && string.length > 20 ? string.substr(0, 20) + '...' : string;
+  }
+
+  showToolTip(index: number, columnName: string) {
+    return this.users[index][columnName];
   }
 
   getUsers(supportFilter?: SupportFilter, pageIndex?, pageSize?) {
@@ -202,7 +211,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
-    this.getUsers(this.filter, this.paginator.pageIndex+1, this.paginator.pageSize);
+    this.getUsers(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 
   sortData(data) {

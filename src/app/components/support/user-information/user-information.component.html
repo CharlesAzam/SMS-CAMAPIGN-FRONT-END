@@ -90,17 +90,22 @@
 
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-                    <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+                    <td mat-cell [matTooltip]="showToolTip(i, 'email')" [matTooltipShowDelay]="1000"
+                        *matCellDef="let element;  let i = index">{{ trimString(element.email) }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="firstName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
-                    <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+                    <td mat-cell [matTooltip]="showToolTip(i, 'firstName')" [matTooltipShowDelay]="1000"
+                        *matCellDef="let element;  let i = index">
+                        {{ trimString(element.firstName) }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="lastName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
-                    <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+                    <td mat-cell [matTooltip]="showToolTip(i, 'lastName')" [matTooltipShowDelay]="1000"
+                        *matCellDef="let element;  let i = index">
+                        {{ trimString(element.lastName )}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="smartCard">

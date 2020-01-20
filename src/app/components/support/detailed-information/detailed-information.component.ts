@@ -111,57 +111,57 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
 
   selectTab(event) {
     // setTimeout(() => {
-      switch (event) {
-        case 0:
-          this.getBasicInformation()
-          break;
+    switch (event) {
+      case 0:
+        this.getBasicInformation()
+        break;
 
-        case 1:
-          this.getPackageCount()
-          this.packagePaginator.page.pipe(
-            startWith(null),
-            tap(() => this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize))).subscribe();
-          break;
+      case 1:
+        this.getPackageCount()
+        this.packagePaginator.page.pipe(
+          startWith(null),
+          tap(() => this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize))).subscribe();
+        break;
 
-        case 2:
-          this.getSeasonCount()
-          console.log(this.seasonPaginator);
-          this.seasonPaginator.page.pipe(
-            startWith(null),
-            tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
-          break;
+      case 2:
+        this.getSeasonCount()
+        console.log(this.seasonPaginator);
+        this.seasonPaginator.page.pipe(
+          startWith(null),
+          tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
+        break;
 
-        case 3:
-          this.getVideoCount()
-          console.log(this.videoPaginator);
-          this.datasource.paginator = this.videoPaginator;
-          this.videoPaginator.page.pipe(
-            startWith(null),
-            tap(() => this.getVideoInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize))).subscribe();
-          break;
+      case 3:
+        this.getVideoCount()
+        console.log(this.videoPaginator);
+        this.datasource.paginator = this.videoPaginator;
+        this.videoPaginator.page.pipe(
+          startWith(null),
+          tap(() => this.getVideoInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize))).subscribe();
+        break;
 
-        case 4:
-          this.getRehargeHistoryCount();
-          this.rechargePaginator.page.pipe(
-            startWith(null),
-            tap(() => this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize))).subscribe();
-          this.rechargeDataSource.paginator = this.rechargePaginator
-          break;
+      case 4:
+        this.getRehargeHistoryCount();
+        this.rechargePaginator.page.pipe(
+          startWith(null),
+          tap(() => this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize))).subscribe();
+        this.rechargeDataSource.paginator = this.rechargePaginator
+        break;
 
-        case 5:
-          this.getWalletCount()
-          this.walletPaginator.page.pipe(
-            startWith(null),
-            tap(() => this.getWalletInformation(this.walletPaginator.pageIndex + 1, this.walletPaginator.pageSize))).subscribe();
-          break;
+      case 5:
+        this.getWalletCount()
+        this.walletPaginator.page.pipe(
+          startWith(null),
+          tap(() => this.getWalletInformation(this.walletPaginator.pageIndex + 1, this.walletPaginator.pageSize))).subscribe();
+        break;
 
-        case 6:
-          this.getSmartCardInformation()
-          break;
+      case 6:
+        this.getSmartCardInformation()
+        break;
 
-        default:
-          break;
-      }
+      default:
+        break;
+    }
     // });
   }
 
