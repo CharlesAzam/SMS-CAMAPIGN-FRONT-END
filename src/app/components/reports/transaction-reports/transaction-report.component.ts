@@ -168,4 +168,17 @@ export class TransactionReportComponent implements OnInit {
 
   }
 
+  generateExcel() {
+    if (this.filter.pageIndex)
+      delete this.filter.pageIndex;
+    if (this.filter.pageSize)
+      delete this.filter.pageSize;
+
+    this.reportService.getTransactions(this.filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.reportService.exportFileToCsv(response.data, 'TRANSACTION REPORT', `transaction_report_${moment().format()}`);
+      }
+    }, error => console.error(error))
+  }
+
 }

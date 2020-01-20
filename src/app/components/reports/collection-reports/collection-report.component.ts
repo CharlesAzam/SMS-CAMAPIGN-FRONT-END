@@ -17,7 +17,6 @@ import * as moment from "moment";
 export class CollectionReportComponent implements OnInit {
 
   ngAfterViewInit(): void {
-    // let pageIndex = this.paginator.pageIndex + 1
     this.filter = {};
 
     if (this.type === 'summary') {
@@ -297,5 +296,23 @@ export class CollectionReportComponent implements OnInit {
       : this.getDetailedReport(this.filter, this.detailedPaginator.pageIndex + 1, this.detailedPaginator.pageSize)
   }
 
+  generateExcel() {
+    if (this.filter.pageIndex)
+      delete this.filter.pageIndex;
+    if (this.filter.pageSize)
+      delete this.filter.pageSize;
+    if (this.type === 'summary')
+      this.reportService.getCollectionSummary(this.filter).subscribe((response: any) => {
+        if (response.status === 200) {
+          this.reportService.exportFileToCsv(response.data, 'COLLECTION SUMMARY REPORT', `collection_summary_report_${moment().format()}`);
+        }
+      }, error => console.error(error))
+    else
+    this.reportService.getDetailedCollection(this.filter).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.reportService.exportFileToCsv(response.data, 'DETAILED COLLECTION REPORT', `collection_detailed_report_${moment().format()}`);
+      }
+    }, error => console.error(error))
+  }
 
 }
