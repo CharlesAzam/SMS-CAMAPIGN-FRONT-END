@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil, filter, startWith, tap } from 'rxjs/operators';
@@ -14,10 +14,29 @@ import * as moment from 'moment';
   templateUrl: './detailed-information.component.html',
   styleUrls: ['./detailed-information.component.css']
 })
-export class DetailedInformationComponent implements OnInit {
+export class DetailedInformationComponent implements OnInit, AfterViewInit {
+  ngAfterViewInit(): void {
+    this.rechargeDataSource.paginator = this.rechargePaginator;
+    this.walletDataSource.paginator = this.walletPaginator;
+    this.seasonDataSource.paginator = this.seasonPaginator;
+    this.packageDataSource.paginator = this.packagePaginator;
+    this.videoDataSource.paginator = this.videoPaginator;
+  }
 
-  @ViewChild(MatPaginator, { static: false })
-  paginator: MatPaginator
+  @ViewChild('walletPaginator', { static: true, read: MatPaginator })
+  walletPaginator: MatPaginator
+
+  @ViewChild('rechargePaginator', { static: true, read: MatPaginator })
+  rechargePaginator: MatPaginator;
+
+  @ViewChild('packagePaginator', { static: true, read: MatPaginator })
+  packagePaginator: MatPaginator
+
+  @ViewChild('videoPaginator', { static: true, read: MatPaginator })
+  videoPaginator: MatPaginator
+
+  @ViewChild('seasonPaginator', { static: true, read: MatPaginator })
+  seasonPaginator: MatPaginator
 
   filterMethodCtrl = new FormControl('');
   filterCountryCtrl = new FormControl('');
@@ -57,6 +76,7 @@ export class DetailedInformationComponent implements OnInit {
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
+
   displayedColumns: string[] = ['No', 'phone', 'email', 'firstName', 'lastName', 'smartCard', 'walletAmount', 'createdOn', 'country', 'status'];
   packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId', 'status'];
   videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId', 'status'];
@@ -87,6 +107,9 @@ export class DetailedInformationComponent implements OnInit {
 
   ngOnInit() {
     this.getBasicInformation()
+    
+
+
   }
 
   selectTab(event) {
@@ -97,38 +120,39 @@ export class DetailedInformationComponent implements OnInit {
 
       case 1:
         this.getPackageCount()
-        this.paginator.page.pipe(
+        this.packagePaginator.page.pipe(
           startWith(null),
-          tap(() => this.getPackageInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+          tap(() => this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize))).subscribe();
         break;
 
       case 2:
         this.getSeasonCount()
         this.getSeasonInformation()
-        this.paginator.page.pipe(
+        this.seasonPaginator.page.pipe(
           startWith(null),
-          tap(() => this.getSeasonInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+          tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
         break;
 
       case 3:
         this.getVideoCount()
-        this.paginator.page.pipe(
+        this.videoPaginator.page.pipe(
           startWith(null),
-          tap(() => this.getVideoInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+          tap(() => this.getVideoInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize))).subscribe();
         break;
 
       case 4:
         this.getRehargeHistoryCount();
-        this.paginator.page.pipe(
+        this.rechargePaginator.page.pipe(
           startWith(null),
-          tap(() => this.getRechargeHistory(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+          tap(() => this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize))).subscribe();
+          this.rechargeDataSource.paginator = this.rechargePaginator
         break;
 
       case 5:
         this.getWalletCount()
-        this.paginator.page.pipe(
+        this.walletPaginator.page.pipe(
           startWith(null),
-          tap(() => this.getWalletInformation(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+          tap(() => this.getWalletInformation(this.walletPaginator.pageIndex + 1, this.walletPaginator.pageSize))).subscribe();
         break;
 
       case 6:
@@ -226,6 +250,7 @@ export class DetailedInformationComponent implements OnInit {
     filter.userId = this.userId;
     filter.pageIndex = pageIndex;
     filter.pageSize = pageSize;
+    console.log(filter)
     this.supportService.getRechargeInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.rechargeInfo = response.data;

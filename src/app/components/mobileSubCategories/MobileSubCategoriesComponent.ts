@@ -7,6 +7,7 @@ import { startWith, tap } from "rxjs/operators";
 import { MatPaginator, MatDialog } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../login/login.service';
 @Component({
   selector: "app-mobile-sub-categories-component",
   templateUrl: "./MobileSubCategoriesComponent.html",
@@ -18,7 +19,8 @@ export class MobileSubCategoriesComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private subCategoryService: SubCategoriesService,
     private languageService: LanguageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private checkPermissionService: AuthenticationService,
   ) {}
 
   languages: any[] = [];

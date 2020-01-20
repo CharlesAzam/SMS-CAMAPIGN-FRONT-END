@@ -22,31 +22,42 @@ export class AuthenticationService {
     login(username, password) {
         return this.http.post<any>(`${API.BASE_URL}/cms/login`, { username, password })
             .pipe(map(user => {
-                console.log("user====>", user)
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                // user.
+                // user.userInfo
+                user.accessList.length > 0 ? user.accessList = this.orderAccessList(user.accessList) : user.accessList = {};
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
             }));
     }
 
-    isModuleAllowed(moduleName: string) {
+    isModuleAllowed(moduleName: string, action?: string) {
         let user = this.currentUserValue;
-        if (user.userInfo.isSuperAdmin) {
-            return true;
+        if (action) {
+            return user.accessList[moduleName.toLowerCase()].permissions.includes(action.toLowerCase())
         } else {
-            const result = user.accessList.find(object=> object.module.toLowerCase() === moduleName.toLowerCase());
-            if(result)
-                return true;
-            else
-                return false;
+            return user.accessList[moduleName.toLowerCase()] ? true : false;
         }
     }
 
     logout() {
-        // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    orderAccessList(access: any[]) {
+        return access.reduce((accumulator, currentValue) => {
+            if (accumulator[currentValue.module.toLowerCase()]) {
+                accumulator[currentValue.module.toLowerCase()]['permissions'].push(currentValue.action.toLowerCase());
+                return accumulator;
+            }
+            else {
+                let permissions = [];
+                permissions.push(currentValue.action.toLowerCase());
+                let permission = { permissions: permissions }
+                accumulator[currentValue.module.toLowerCase()] = permission
+                return accumulator;
+            }
+        })
+
     }
 }

@@ -54,10 +54,10 @@
         <!-- <a mat-list-item routerLink="program">Program</a> -->
         <a mat-list-item *ngIf="isModulePermitted('package')" routerLink="package">Package</a>
         <a mat-list-item *ngIf="isModulePermitted('content')" routerLink="content">Content</a>
-        <a mat-list-item routerLink="video-library">Video Library</a>
+        <a mat-list-item *ngIf="isModulePermitted('cdn')" routerLink="video-library">Video Library</a>
       </div>
 
-      <mat-list-item (click)="showReports = !showReports" class="parent">
+      <mat-list-item *ngIf="isModulePermitted('Reports-Portal')" (click)="showReports = !showReports" class="parent">
         <mat-icon color="primary" style="margin-right: 5px;">bar_chart</mat-icon>
         <span class="full-width" *ngIf="isExpanded || isShowing">Reports</span>
         <mat-icon class="menu-button" color="primary" [ngClass]="{ rotated: showReports }"
@@ -81,7 +81,7 @@
         <a mat-list-item routerLink="reports/transactions">Transaction Reports</a>
       </div>
 
-      <mat-list-item (click)="showSupport = !showSupport" class="parent">
+      <mat-list-item *ngIf="isModulePermitted('Customer-Portal')" (click)="showSupport = !showSupport" class="parent">
         <mat-icon color="primary" style="margin-right: 5px;">people</mat-icon>
         <span class="full-width" *ngIf="isExpanded || isShowing">Support</span>
         <mat-icon class="menu-button" color="primary" [ngClass]="{ rotated: showSupport }"

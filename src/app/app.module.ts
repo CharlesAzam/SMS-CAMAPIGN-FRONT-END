@@ -17,7 +17,6 @@ import { CouponModule } from "../app/components/coupon/coupon.module";
 import { CreateCategoryComponent } from "./components/mobileCategory/mobileCategory.component";
 import { CardComponentComponent } from "./components/card-component/card-component.component";
 import { SideNavComponent } from "./components/side-nav/side-nav.component";
-import { CreateTagsComponent } from "./components/newsTags/newsTagForm/newsTagForm.component";
 import { ProductModule } from "../app/components/product/product.module";
 import { VideoLibraryModule } from "../app/components/video-library/video-library.module";
 import { BannerModule } from "../app/components/banner/banner.module";
@@ -27,7 +26,6 @@ import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.compone
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
 import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/MobileSubCategoriesComponent";
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
-import { NewsTagComponent } from "./components/newsTags/news-tag/news-tag.component";
 import { LanguageService } from "./services/language.service";
 import { CountryService } from "./services/coutry.service";
 import { ProgramModule } from "./components/programs/program.module";
@@ -57,13 +55,11 @@ import { CategoriesService } from './services/categories.service';
     CreateCategoryComponent,
     CardComponentComponent,
     SideNavComponent,
-    CreateTagsComponent,
     CategoryFormComponent,
     MobileTagsComponent,
     MobileTagFormComponent,
     MobileSubCategoriesComponent,
     MobileSubCategoriesFormComponent,
-    NewsTagComponent,
     LeagueComponent,
     LeaguelistComponent,
     // TopnavComponent

@@ -12,6 +12,7 @@ import {
 import { Router } from "@angular/router";
 import { tap, startWith } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../../login/login.service';
 
 @Component({
   selector: "package",
@@ -50,7 +51,8 @@ export class PackageListComponent implements OnInit, AfterViewInit {
   constructor(
     private packageService: PackageService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {

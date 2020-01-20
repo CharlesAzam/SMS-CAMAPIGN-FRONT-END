@@ -10,6 +10,7 @@ import {
 } from "@angular/material";
 import { startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../../login/login.service';
 
 @Component({
   selector: "banner",
@@ -46,7 +47,8 @@ export class BannerListComponent {
 
   constructor(
     private bannerService: BannerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authenticationService: AuthenticationService
   ) {}
 
   delete(row) {

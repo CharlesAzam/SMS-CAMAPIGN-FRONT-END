@@ -1,7 +1,4 @@
-<mat-tab-group
-  (selectedTabChange)="onTabChanged($event);"
-  *ngIf="languages.length > 0"
->
+<mat-tab-group (selectedTabChange)="onTabChanged($event);" *ngIf="languages.length > 0">
   <mat-tab label="{{language.name}}" *ngFor="let language of languages">
     <div class="container">
       <mat-card style="margin-top: 30px;">
@@ -14,19 +11,11 @@
         <mat-card style="margin-top: 30px;">
           <div>
             <mat-form-field style="width: 83%;">
-              <input
-                matInput
-                (keyup)="applyFilter($event.target.value)"
-                placeholder="Filter"
-              />
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
             </mat-form-field>
 
-            <button
-              mat-raised-button
-              color="primary"
-              style="margin-left: 23px;"
-              [routerLink]="['../subCategoryForm/new']"
-            >
+            <button *ngIf="checkPermissionService.isModuleAllowed('subCategory','create')" mat-raised-button
+              color="primary" style="margin-left: 23px;" [routerLink]="['../subCategoryForm/new']">
               Create Sub Category
             </button>
           </div>
@@ -63,21 +52,12 @@
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef>Action</th>
               <td mat-cell *matCellDef="let row">
-                <mat-icon
-                  aria-hidden="false"
-                  (click)="deleteCategory(row)"
-                  style="cursor: pointer;"
-                  aria-label="Example home icon"
-                  >delete
+                <mat-icon (click)="deleteCategory(row)" style="cursor: pointer;"
+                  *ngIf="checkPermissionService.isModuleAllowed('subCategory','delete')">delete
                 </mat-icon>
                 <span style=" margin-right: 20px;margin-left: 20px;"></span>
-                <mat-icon
-                  aria-hidden="false"
-                  [routerLink]="['../subCategoryForm', row._id]"
-                  style="cursor: pointer;"
-                  aria-label="Example home icon"
-                  >edit</mat-icon
-                >
+                <mat-icon *ngIf="checkPermissionService.isModuleAllowed('subCategory','update')" [routerLink]="['../subCategoryForm', row._id]" style="cursor: pointer;">
+                  edit</mat-icon>
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -85,13 +65,8 @@
           </table>
 
           <!-- <div class="table-paginator-style"> -->
-          <mat-paginator
-            [length]="count"
-            [pageSize]="10"
-            class="table-paginator-style"
-            [pageSizeOptions]="[10, 20]"
-            showFirstLastButtons
-          >
+          <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]"
+            showFirstLastButtons>
           </mat-paginator>
           <!-- </div> -->
         </mat-card>

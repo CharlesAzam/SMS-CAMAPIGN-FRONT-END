@@ -5,13 +5,11 @@ import { DashboardComponent } from "./components/homepage/dashboard/dashboard.co
 import { LoginComponent } from "./components/login/login.component";
 import { CreateCategoryComponent } from "./components/mobileCategory/mobileCategory.component";
 import { SideNavComponent } from "./components/side-nav/side-nav.component";
-import { CreateTagsComponent } from "./components/newsTags/newsTagForm/newsTagForm.component";
 import { CategoryFormComponent } from "./components/mobileCategory/mobile category form/category-form.component";
 import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.component";
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
 import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/MobileSubCategoriesComponent";
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
-import { NewsTagComponent } from "./components/newsTags/news-tag/news-tag.component";
 
 
 import { LeagueComponent } from "./components/league/league-form/league.component";
@@ -97,16 +95,6 @@ const routes: Routes = [
       {
         path: "subCategoryForm/:id",
         component: MobileSubCategoriesFormComponent, canActivate: [AuthGuard],
-
-      },
-      {
-        path: "NewsTags",
-        component: NewsTagComponent, canActivate: [AuthGuard],
-
-      },
-      {
-        path: "NewsTagsForms",
-        component: CreateTagsComponent, canActivate: [AuthGuard],
 
       },
       {

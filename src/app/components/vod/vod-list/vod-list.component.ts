@@ -22,6 +22,7 @@ import { FormControl, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { map, startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../../login/login.service';
 @Component({
   selector: "vod",
   templateUrl: "vod-list.component.html"
@@ -100,7 +101,7 @@ export class VodListComponent implements OnInit {
     "status",
     "action"
   ];
-  constructor(private vodService: VodService, private dialog: MatDialog) {}
+  constructor(private vodService: VodService, private dialog: MatDialog, private authenticationService: AuthenticationService) {}
 
   search(): void {
     // this.vodService.load(this.filter);
@@ -170,7 +171,6 @@ export class ContentDialog {
   ) {}
 
   onSelectedCategoryForm(formType) {
-    console.log(formType);
     this.router.navigate(["home/content/content", formType]);
     this.dialogRef.close();
   }

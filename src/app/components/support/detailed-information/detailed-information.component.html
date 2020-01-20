@@ -135,7 +135,7 @@
                         <tr mat-header-row *matHeaderRowDef="packageDisplayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: packageDisplayedColumns;"></tr>
                     </table>
-                    <mat-paginator [length]="packageCount" [pageSize]="10" class="table-paginator-style"
+                    <mat-paginator #packagePaginator [length]="packageCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
                     <div *ngIf="packageDataSource.data.length === 0">
@@ -203,7 +203,7 @@
                         <tr mat-row *matRowDef="let row; columns: seasonDisplayedColumns;"></tr>
                     </table>
 
-                    <mat-paginator [length]="seasonCount" [pageSize]="10" class="table-paginator-style"
+                    <mat-paginator #seasonPaginator [length]="seasonCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
 
@@ -269,7 +269,7 @@
                         <tr mat-header-row *matHeaderRowDef="videoDisplayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: videoDisplayedColumns;"></tr>
                     </table>
-                    <mat-paginator [length]="videoCount" [pageSize]="10" class="table-paginator-style"
+                    <mat-paginator #videoPaginator [length]="videoCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
                 </div>
@@ -317,7 +317,7 @@
                         <tr mat-header-row *matHeaderRowDef="rechargeHistoryColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: rechargeHistoryColumns;"></tr>
                     </table>
-                    <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                    <mat-paginator #rechargePaginator [length]="rechargeHistoryCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
                 </div>
@@ -371,7 +371,7 @@
                         <tr mat-header-row *matHeaderRowDef="walletTransactionColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: walletTransactionColumns;"></tr>
                     </table>
-                    <mat-paginator [length]="walletCount" [pageSize]="10" class="table-paginator-style"
+                    <mat-paginator #walletPaginator [length]="walletCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
                 </div>
