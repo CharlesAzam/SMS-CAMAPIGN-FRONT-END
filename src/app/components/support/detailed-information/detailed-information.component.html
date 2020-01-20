@@ -2,7 +2,8 @@
     <mat-card>
         <div class="header">
             <button mat-button routerLink="../../../support/user-information">Back to User list</button>
-            <h2 class="title" *ngIf="basicInfo">Detailed User Information: {{basicInfo.firstName}} {{basicInfo.lastName}}</h2>
+            <h2 class="title" *ngIf="basicInfo">Detailed User Information: {{basicInfo.firstName}}
+                {{basicInfo.lastName}}</h2>
         </div>
         <div class="content">
 
@@ -135,15 +136,15 @@
                         <tr mat-header-row *matHeaderRowDef="packageDisplayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: packageDisplayedColumns;"></tr>
                     </table>
-                    <mat-paginator #packagePaginator [length]="packageCount" [pageSize]="10" class="table-paginator-style"
-                        [pageSizeOptions]="[10, 20]">
-                    </mat-paginator>
+
                     <div *ngIf="packageDataSource.data.length === 0">
                         No Package information available
                     </div>
 
+                    <mat-paginator #packagePaginator [length]="packageCount" [pageSize]="10"
+                        class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+                    </mat-paginator>
                 </div>
-
             </mat-tab>
             <mat-tab label="Seasons">
                 <div style="margin: 25px;">
@@ -203,20 +204,20 @@
                         <tr mat-row *matRowDef="let row; columns: seasonDisplayedColumns;"></tr>
                     </table>
 
-                    <mat-paginator #seasonPaginator [length]="seasonCount" [pageSize]="10" class="table-paginator-style"
-                        [pageSizeOptions]="[10, 20]">
-                    </mat-paginator>
-
                     <div *ngIf="seasonDataSource.data.length === 0">
                         Season information not available
                     </div>
+
+                    <mat-paginator #seasonPaginator [length]="seasonCount" [pageSize]="10" class="table-paginator-style"
+                        [pageSizeOptions]="[10, 20]">
+                    </mat-paginator>
                 </div>
-
             </mat-tab>
-            <mat-tab label="Sub Videos">
+            <mat-tab label="Subscribed Videos">
 
-                <div style="margin: 25px;" *ngIf="videoDataSource.data.length > 0">
-                    <table mat-table style="width: 100%;" [dataSource]="videoDataSource" class="mat-elevation-z8" matSort>
+                <div style="margin: 25px;">
+                    <table mat-table style="width: 100%;" [dataSource]="videoDataSource"
+                        *ngIf="videoDataSource.data.length > 0" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -269,18 +270,22 @@
                         <tr mat-header-row *matHeaderRowDef="videoDisplayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: videoDisplayedColumns;"></tr>
                     </table>
+
                     <mat-paginator #videoPaginator [length]="videoCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
+
+                    <div *ngIf="videoDataSource.data.length === 0">
+                        No Subscribed video information
+                    </div>
                 </div>
 
-                <div *ngIf="videoDataSource.data.length === 0">
-                    No Subscribed video information
-                </div>
+
             </mat-tab>
             <mat-tab label="Recharge History">
-                <div style="margin: 25px;" *ngIf="rechargeDataSource.data.length > 0">
-                    <table mat-table style="width: 100%;" [dataSource]="rechargeDataSource" class="mat-elevation-z8" matSort>
+                <div style="margin: 25px;">
+                    <table mat-table style="width: 100%;" [dataSource]="rechargeDataSource"
+                        *ngIf="rechargeDataSource.data.length > 0" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -317,18 +322,19 @@
                         <tr mat-header-row *matHeaderRowDef="rechargeHistoryColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: rechargeHistoryColumns;"></tr>
                     </table>
-                    <mat-paginator #rechargePaginator [length]="rechargeHistoryCount" [pageSize]="10" class="table-paginator-style"
-                        [pageSizeOptions]="[10, 20]">
+                    <mat-paginator #rechargePaginator [length]="rechargeHistoryCount" [pageSize]="10"
+                        class="table-paginator-style" [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
+                    <div *ngIf="rechargeDataSource.data.length === 0">
+                        No recharge history
+                    </div>
                 </div>
-                <div *ngIf="rechargeDataSource.data.length === 0">
-                    No recharge history
-                </div>
-            </mat-tab>
 
+            </mat-tab>
             <mat-tab label="Wallet Transaction">
-                <div style="margin: 25px;" *ngIf="walletDataSource.data.length > 0">
-                    <table mat-table style="width: 100%;" [dataSource]="walletDataSource" class="mat-elevation-z8" matSort>
+                <div style="margin: 25px;">
+                    <table mat-table style="width: 100%;" [dataSource]="walletDataSource"
+                        *ngIf="walletDataSource.data.length > 0" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -371,18 +377,22 @@
                         <tr mat-header-row *matHeaderRowDef="walletTransactionColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: walletTransactionColumns;"></tr>
                     </table>
+
+                    <div *ngIf="walletDataSource.data.length === 0">
+                        No Wallet Information available
+                    </div>
+
                     <mat-paginator #walletPaginator [length]="walletCount" [pageSize]="10" class="table-paginator-style"
                         [pageSizeOptions]="[10, 20]">
                     </mat-paginator>
                 </div>
 
-                <div *ngIf="walletDataSource.data.length === 0">
-                    No Wallet Information available
-                </div>
+
             </mat-tab>
             <mat-tab label="Smart Cards">
-                <div style="margin: 25px;" *ngIf="smartCardDataSource.data.length>0">
-                    <table mat-table style="width: 100%;" [dataSource]="smartCardDataSource" class="mat-elevation-z8" matSort>
+                <div style="margin: 25px;">
+                    <table mat-table style="width: 100%;" [dataSource]="smartCardDataSource"
+                        *ngIf="smartCardDataSource.data.length>0" class="mat-elevation-z8" matSort>
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="No">
@@ -410,9 +420,7 @@
                         <tr mat-header-row *matHeaderRowDef="smartCardColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: smartCardColumns;"></tr>
                     </table>
-                    <!-- <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style"
-                        [pageSizeOptions]="[10, 20]">
-                    </mat-paginator> -->
+
                 </div>
                 <div *ngIf="smartCardDataSource.data.length === 0">
                     No smart card information available
