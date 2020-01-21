@@ -10,6 +10,10 @@ export class CanActivateViaAuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         let data = route.data['moduleData'] as Array<string>;
 
-        return this.authService.isModuleAllowed(data[0], data[1]);
+        if (data.length > 1)
+            return this.authService.isModuleAllowed(data[0]);
+        else
+            return this.authService.isModuleAllowed(data[0], data[1]);
+
     }
 }

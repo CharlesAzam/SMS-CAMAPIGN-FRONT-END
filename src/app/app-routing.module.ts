@@ -86,7 +86,7 @@ const routes: Routes = [
         path: "reports",
         loadChildren: "./components/reports/reports.module#ReportsModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['reports-portal', 'read'] }
+        data: { moduleData: ['reports-portal'] }
       },
       {
         path: "support",
