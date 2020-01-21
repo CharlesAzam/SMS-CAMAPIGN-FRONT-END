@@ -33,7 +33,10 @@ export class AuthenticationService {
     isModuleAllowed(moduleName: string, action?: string) {
         let user = this.currentUserValue;
         if (action) {
-            return user.accessList[moduleName.toLowerCase()].permissions.includes(action.toLowerCase())
+            if (user.accessList[moduleName.toLowerCase()])
+                return user.accessList[moduleName.toLowerCase()].permissions.includes(action.toLowerCase())
+            else
+                return false;
         } else {
             return user.accessList[moduleName.toLowerCase()] ? true : false;
         }

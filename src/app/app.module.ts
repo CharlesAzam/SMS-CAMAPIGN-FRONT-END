@@ -44,6 +44,7 @@ import { SupportModule } from "./components/support/support.module";
 import { WarningDialog } from "./components/warning-dialog/dialog-warning";
 import { TicketDescriptionDialog } from './components/ticket-description/dialog-ticket-description';
 import { CategoriesService } from './services/categories.service';
+import { CanActivateViaAuthGuard } from './guards/PermissionGuard';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -97,6 +98,7 @@ import { CategoriesService } from './services/categories.service';
     CountryService,
     LeagueService,
     CategoriesService,
+    CanActivateViaAuthGuard,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

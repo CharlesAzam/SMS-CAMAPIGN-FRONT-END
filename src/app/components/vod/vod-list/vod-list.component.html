@@ -7,39 +7,21 @@
   <mat-card style="margin-top: 30px;">
     <mat-form-field>
       <mat-label>Type</mat-label>
-      <mat-select
-        (selectionChange)="getContentType($event)"
-        [(ngModel)]="selectedType"
-      >
-        <mat-option *ngFor="let type of types" [value]="type"
-          >{{ type }}
+      <mat-select (selectionChange)="getContentType($event)" [(ngModel)]="selectedType">
+        <mat-option *ngFor="let type of permittedTypes" [value]="type">{{ type }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <div>
       <mat-form-field style="width: 86%;">
-        <input
-          matInput
-          (keyup)="applyFilter($event.target.value)"
-          placeholder="Filter"
-        />
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
       </mat-form-field>
 
-      <button
-        mat-raised-button
-        color="primary"
-        style="margin-left: 23px;"
-        (click)="openDialog()"
-      >
+      <button mat-raised-button color="primary" style="margin-left: 23px;" (click)="openDialog()">
         Create Content
       </button>
     </div>
-    <table
-      mat-table
-      style="width: 100%;"
-      [dataSource]="dataSource"
-      class="mat-elevation-z8"
-    >
+    <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
       <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
@@ -81,20 +63,11 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <mat-icon
-            aria-hidden="false"
-            style="cursor: pointer;"
-            (click)="deleteContent(row)"
-            aria-label="Example home icon"
-            >delete</mat-icon
-          >
+          <mat-icon aria-hidden="false" style="cursor: pointer;" (click)="deleteContent(row)"
+            *ngIf="authenticationService.isModuleAllowed(selectedType, 'delete')">delete</mat-icon>
           <span style="margin-left: 20px;"></span>
-          <mat-icon
-            aria-hidden="false"
-            style="cursor: pointer;"
-            [routerLink]="['../content', row._id]"
-            aria-label="Example home icon"
-            >edit
+          <mat-icon aria-hidden="false" style="cursor: pointer;" [routerLink]="['../content', row._id]"
+            *ngIf="authenticationService.isModuleAllowed(selectedType, 'update')">edit
           </mat-icon>
         </td>
       </ng-container>
@@ -104,13 +77,8 @@
     </table>
 
     <!-- <mat-paginator [pageSizeOptions]="[10, 20, 20]" showFirstLastButtons></mat-paginator> -->
-    <mat-paginator
-      [length]="count"
-      [pageSize]="10"
-      class="table-paginator-style"
-      [pageSizeOptions]="[10, 20, 50]"
-      showFirstLastButtons
-    >
+    <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20, 50]"
+      showFirstLastButtons>
     </mat-paginator>
   </mat-card>
 </div>

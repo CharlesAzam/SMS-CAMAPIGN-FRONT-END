@@ -125,7 +125,6 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
 
       case 2:
         this.getSeasonCount()
-        console.log(this.seasonPaginator);
         this.seasonPaginator.page.pipe(
           startWith(null),
           tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
@@ -133,7 +132,6 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
 
       case 3:
         this.getVideoCount()
-        console.log(this.videoPaginator);
         this.datasource.paginator = this.videoPaginator;
         this.videoPaginator.page.pipe(
           startWith(null),
