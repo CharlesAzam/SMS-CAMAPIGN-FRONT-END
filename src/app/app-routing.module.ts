@@ -110,7 +110,7 @@ const routes: Routes = [
         path: "admin",
         loadChildren:
           "./components/admin/admin.module#AdminModule",
-        canActivate: [AuthGuard, CanActivateViaAuthGuard],
+        canActivate: [AuthGuard],
       }
     ]
   }
