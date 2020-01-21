@@ -3,11 +3,12 @@ import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil, filter, startWith, tap } from 'rxjs/operators';
 import { CountryService } from 'src/app/services/coutry.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { SupportService } from '../support.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupportFilter } from '../support-filter.model';
 import * as moment from 'moment';
+import { WarningDialog } from '../../warning-dialog/dialog-warning';
 
 @Component({
   selector: 'detailed-information',
@@ -78,10 +79,10 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
 
 
   displayedColumns: string[] = ['No', 'phone', 'email', 'firstName', 'lastName', 'smartCard', 'walletAmount', 'createdOn', 'country', 'status'];
-  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId', 'status'];
-  videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId', 'status'];
-  seasonDisplayedColumns: string[] = ['subId', 'title', 'series', 'startDate', 'endDate', 'amount', 'walletTransId', 'status'];
-  rechargeHistoryColumns: string[] = ['transactionToken', 'transactionReference', 'transactionDate', 'paidAmount', 'status'];
+  packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId', 'status', 'actions'];
+  videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId', 'status', 'actions'];
+  seasonDisplayedColumns: string[] = ['subId', 'title', 'series', 'startDate', 'endDate', 'amount', 'walletTransId', 'status', 'actions'];
+  rechargeHistoryColumns: string[] = ['transactionToken', 'transactionReference', 'transactionDate', 'paidAmount', 'status', 'actions'];
   redeemedCouponsColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode'];
   walletTransactionColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'status'];
   smartCardColumns: string[] = ['fullName', 'smartCardNo',];
@@ -99,7 +100,8 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
   constructor(
     private supportService: SupportService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog) {
     this.activatedRoute.params.subscribe((params: any) => {
       this.userId = params.id;
     })
@@ -164,11 +166,85 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
   }
 
   getStatus(startDate, endDate) {
-    if (moment(endDate).diff(moment(startDate)) > 0) {
+    if (moment(endDate).diff(moment()) > 0) {
       return 'ACTIVE';
     } else {
       return 'EXPIRED'
     }
+  }
+
+  cancelSubscription(row, type) {
+    let data: any;
+    switch (type) {
+      case 'package':
+        data = { userId: this.userId, Id: row.packageId, type: type, startDate: row.startDate, endDate: row.endDate }
+        this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Cancel Subscription', message: 'Are you sure you want to cancel this subscription?' } })
+        .afterClosed()
+        .subscribe((result) => {
+          if (result) {
+            this.supportService.cancelSubscription(data).subscribe((response: any) => {
+              if (response.status === 200) {
+                this.getPackageInformation(this.packagePaginator.pageIndex+1, this.packagePaginator.pageSize)
+              }
+            }, error => console.error(error))
+          }
+        });
+        break;
+
+      case 'season':
+        data = { userId: this.userId, Id: row.seasonId, type: type, startDate: row.startDate, endDate: row.endDate }
+        this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Cancel Subscription', message: 'Are you sure you want to cancel this subscription?' } })
+        .afterClosed()
+        .subscribe((result) => {
+          if (result) {
+            this.supportService.cancelSubscription(data).subscribe((response: any) => {
+              if (response.status === 200) {
+                this.getSeasonInformation(this.seasonPaginator.pageIndex+1, this.seasonPaginator.pageSize)
+              }
+            }, error => console.error(error))
+          }
+        });
+        break;
+
+      case 'content':
+        data = { userId: this.userId, Id: row.contentId, type: type, startDate: row.startDate, endDate: row.endDate }
+        this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Cancel Subscription', message: 'Are you sure you want to cancel this subscription?' } })
+        .afterClosed()
+        .subscribe((result) => {
+          if (result) {
+            this.supportService.cancelSubscription(data).subscribe((response: any) => {
+              if (response.status === 200) {
+                this.getSeasonInformation(this.videoPaginator.pageIndex+1, this.videoPaginator.pageSize)
+              }
+            }, error => console.error(error))
+          }
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    
+  }
+
+  refundMoney(row) {
+    let data: any = {
+      transactionToken: row.transactionToken,
+      transactionReference: row.transactionReference,
+      userId: this.userId
+    }
+    this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Refund Money', message: `Are you sure you want to refund TZS${row.amount} ` } })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.supportService.refundMoney(data).subscribe((response: any) => {
+            if (response.status === 200) {
+              this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize)
+            }
+          }, error => console.error(error))
+        }
+      });
   }
 
   getBasicInformation() {
@@ -249,7 +325,6 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
     filter.userId = this.userId;
     filter.pageIndex = pageIndex;
     filter.pageSize = pageSize;
-    console.log(filter)
     this.supportService.getRechargeInformation(filter).subscribe((response: any) => {
       if (response.code === 200) {
         this.rechargeInfo = response.data;
