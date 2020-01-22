@@ -45,6 +45,7 @@ import { WarningDialog } from "./components/warning-dialog/dialog-warning";
 import { TicketDescriptionDialog } from './components/ticket-description/dialog-ticket-description';
 import { CategoriesService } from './services/categories.service';
 import { CanActivateViaAuthGuard } from './guards/PermissionGuard';
+import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({

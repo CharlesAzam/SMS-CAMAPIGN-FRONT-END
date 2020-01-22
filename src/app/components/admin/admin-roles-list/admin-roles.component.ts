@@ -61,7 +61,8 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     getRoles(pageNumber?, size?) {
         this.adminService.listRoles(pageNumber, size).subscribe((response: any) => {
             if (response.status === 200) {
-                this.dataSource = response.data;
+                this.dataSource = new MatTableDataSource<any>(response.data); 
+                this.count = response.data.length
             }
         }, error => this.displayErrorDialog(error));
     }

@@ -1,0 +1,8 @@
+<md-input-container class="admin-form">
+  <input md-input placeholder="Block Title" nfNoSpaces [(ngModel)]="block.title" id="block-{{ block.id }}-input-name" name="title"
+    #title="ngModel">
+  <md-hint [ngStyle]="{'color': 'red'}" align="start" *ngIf="!title.valid && !title.pristine">Title is required.</md-hint>
+</md-input-container>
+
+
+Be sure to include ref to directive in module declarations array.
