@@ -76,8 +76,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <!-- <mat-paginator [pageSizeOptions]="[10, 20, 20]" showFirstLastButtons></mat-paginator> -->
-    <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20, 50]"
+    <mat-paginator [length]="count" [pageSize]="100" class="table-paginator-style" [pageSizeOptions]="[100, 200]"
       showFirstLastButtons>
     </mat-paginator>
   </mat-card>
