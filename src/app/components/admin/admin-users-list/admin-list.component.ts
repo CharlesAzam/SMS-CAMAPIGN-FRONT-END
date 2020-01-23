@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AdminFilter } from '../admin-filter';
 import { AdminService } from '../admin.service';
-import { Admin } from '../admin';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
 import { startWith, tap } from 'rxjs/operators';
 import { WarningDialog } from '../../warning-dialog/dialog-warning';
 
@@ -14,15 +10,15 @@ import { WarningDialog } from '../../warning-dialog/dialog-warning';
     templateUrl: 'admin-list.component.html',
     styleUrls: ['./user-list.component.css']
 })
-export class AdminUsersListComponent implements OnInit, AfterViewInit {
-    ngAfterViewInit(): void {
-        // let pageIndex = this.paginator.pageIndex + 1
+export class AdminUsersListComponent implements OnInit {
+    // ngAfterViewInit(): void {
+    //     // let pageIndex = this.paginator.pageIndex + 1
 
-        this.paginator.page.pipe(
-            startWith(null),
-            tap(() => this.getUserList(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
-    }
-    @ViewChild(MatPaginator, { static: false })
+    //     this.paginator.page.pipe(
+    //         startWith(null),
+    //         tap(() => this.getUserList(this.paginator.pageIndex + 1, this.paginator.pageSize))).subscribe();
+    // }
+    @ViewChild(MatPaginator, { static: true })
     paginator: MatPaginator
 
     constructor(
@@ -38,13 +34,16 @@ export class AdminUsersListComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.getUserList();
+        this.dataSource.paginator = this.paginator;
+
     }
 
     getUserList(pageIndex?, pageSize?) {
         this.adminService.listUsers(pageIndex, pageSize).subscribe((response: any) => {
-            console.log(response)
             if (response.status === 200) {
-                this.dataSource = response.data
+                this.dataSource = new MatTableDataSource<any>(response.data);
+                this.count = response.data.length;
             }
         }, error => console.log(error));
     }

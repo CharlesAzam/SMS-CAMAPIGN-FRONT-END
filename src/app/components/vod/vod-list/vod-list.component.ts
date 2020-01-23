@@ -22,6 +22,7 @@ import { FormControl, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { map, startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../../login/login.service';
 @Component({
   selector: "vod",
   templateUrl: "vod-list.component.html"
@@ -31,8 +32,9 @@ export class VodListComponent implements OnInit {
   count: number;
 
   types: string[] = ["VOD", "NEWS", "RADIO"];
+  permittedTypes: string[] = [];
 
-  selectedType: string = this.types[0];
+  selectedType: string = this.permittedTypes[0];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -56,7 +58,7 @@ export class VodListComponent implements OnInit {
   paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.selectedType = this.types[0];
+    this.selectedType = this.permittedTypes[0];
     this.getContentCount(this.selectedType);
 
     this.dataSource.paginator = this.paginator;
@@ -100,7 +102,12 @@ export class VodListComponent implements OnInit {
     "status",
     "action"
   ];
-  constructor(private vodService: VodService, private dialog: MatDialog) {}
+  constructor(private vodService: VodService, private dialog: MatDialog, private authenticationService: AuthenticationService) {
+    this.types.forEach((type) => {
+      if (this.authenticationService.isModuleAllowed(type, 'read'))
+        this.permittedTypes.push(type);
+    })
+  }
 
   search(): void {
     // this.vodService.load(this.filter);
@@ -161,16 +168,24 @@ export class ContentDialog {
 
   categories: any[] = ["VOD", "NEWS", "RADIO"];
 
+  permittedCategories: any[] = [];
+
   vodTypes: any[] = ["VIDEOONDEMAND", "LIVETV", "SERIES"];
 
   constructor(
     public dialogRef: MatDialogRef<ContentDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+
+    this.categories.forEach((category) => {
+      if (authenticationService.isModuleAllowed(category, 'create'))
+        this.permittedCategories.push(category);
+    })
+  }
 
   onSelectedCategoryForm(formType) {
-    console.log(formType);
     this.router.navigate(["home/content/content", formType]);
     this.dialogRef.close();
   }

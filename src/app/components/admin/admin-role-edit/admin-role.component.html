@@ -5,7 +5,7 @@
             <hr>
             <div class="form-group">
                 <mat-form-field class="input-layouts">
-                    <input matInput name="name" placeholder="Enter name" [formControl]="roleName" required>
+                    <input matInput name="name" placeholder="Enter name" (keydown.space)="$event.preventDefault()"   [formControl]="roleName" required>
                     <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
                 </mat-form-field>
             </div>

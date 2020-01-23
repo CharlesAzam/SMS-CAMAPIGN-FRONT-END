@@ -246,4 +246,14 @@ export class SupportService {
       { headers }
     );
   }
+
+  cancelSubscription(data) {
+    let url = API.BASE_URL + "/cms/cancelSubscription";
+    return this.http.post(url, data);
+  }
+
+  refundMoney(data) {
+    let url = API.BASE_URL + "/cms/refundMoney";
+    return this.http.post(url, data);
+  }
 }

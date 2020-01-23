@@ -12,7 +12,7 @@
     <mat-card style="margin-top: 30px;">
       <div>
         <mat-form-field style="width: 85.5%;">
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          <input matInput (keyup)="applyFilter($event.target.value)"  placeholder="Filter">
         </mat-form-field>
 
         <button mat-raised-button color="primary" style="margin-left: 23px;" [routerLink]="['../role','new']">
@@ -53,10 +53,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-      <!-- <div class="table-paginator-style"> -->
-      <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
+      <mat-paginator [length]="count"  class="table-paginator-style" >
       </mat-paginator>
-      <!-- </div> -->
     </mat-card>
   </div>
 </div>

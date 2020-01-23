@@ -11,8 +11,8 @@ import { AdminUsersListComponent } from './admin-users-list/admin-list.component
 import { RoleEditComponent } from './admin-role-edit/admin-role.component';
 import { RoleListComponent } from './admin-roles-list/admin-roles.component';
 import { CheckBoxComponent } from './checkbox.component';
-import { WarningDialog } from '../warning-dialog/dialog-warning';
-import { MatDialog } from '@angular/material';
+
+import { NoWhitespaceDirective } from 'src/app/validators/no-whitespace.directive';
 
 @NgModule({
   imports: [
@@ -27,6 +27,7 @@ import { MatDialog } from '@angular/material';
     AdminEditComponent,
     AdminUsersListComponent,
     RoleEditComponent,
+    NoWhitespaceDirective,
     RoleListComponent,
   ],
   providers: [

@@ -6,6 +6,7 @@ import { MatPaginator, MatDialog } from "@angular/material";
 import { startWith, tap } from "rxjs/operators";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../login/login.service';
 @Component({
   selector: "app-create-category",
   templateUrl: "./mobileCategory.html",
@@ -54,6 +55,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private categoryService: CategoriesService,
     private languageService: LanguageService,
+    private checkPermissionService: AuthenticationService,
     private dialog: MatDialog
   ) {}
 

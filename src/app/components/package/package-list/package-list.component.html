@@ -21,6 +21,7 @@
         color="primary"
         style="margin-left: 23px;"
         [routerLink]="['../package', 'new']"
+        *ngIf="authenticationService.isModuleAllowed('package', 'create')"
       >
         Create Package
       </button>
@@ -98,7 +99,7 @@
             aria-hidden="false"
             style="cursor: pointer;"
             (click)="removePackage(row)"
-            aria-label="Example home icon"
+            *ngIf="authenticationService.isModuleAllowed('package', 'delete')"
             >delete</mat-icon
           >
           <span style="margin-left: 20px;"></span>
@@ -106,7 +107,7 @@
             aria-hidden="false"
             style="cursor: pointer;"
             [routerLink]="['../package', row._id]"
-            aria-label="Example home icon"
+            *ngIf="authenticationService.isModuleAllowed('package', 'update')"
             >edit
           </mat-icon>
         </td>

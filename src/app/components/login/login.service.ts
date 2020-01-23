@@ -22,43 +22,45 @@ export class AuthenticationService {
     login(username, password) {
         return this.http.post<any>(`${API.BASE_URL}/cms/login`, { username, password })
             .pipe(map(user => {
-                console.log("user====>", user)
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                // user.
+                // user.userInfo
+                user.accessList.length > 0 ? user.accessList = this.orderAccessList(user.accessList) : user.accessList = {};
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
             }));
     }
 
-    isModuleAllowed(moduleName: string) {
+    isModuleAllowed(moduleName: string, action?: string) {
         let user = this.currentUserValue;
-        if (user.userInfo.isSuperAdmin) {
-            return true;
+        if (action) {
+            if (user.accessList[moduleName.toLowerCase()])
+                return user.accessList[moduleName.toLowerCase()].permissions.includes(action.toLowerCase())
+            else
+                return false;
         } else {
-            // user.accessList.find(element => {
-            //     console.log('element', element.module.toLowerCase())
-            //     console.log('module name', moduleName.toLowerCase())
-            //     if (moduleName.toLowerCase().includes(element.module.toLowerCase())) {
-            //         // console.log(moduleName)
-            //         return true;
-            //     }
-            //     else {
-            //         return false
-
-            //     }
-            // });
-            // // if () {
-            // //     return true;
-            // // } else {
-            // //     return false;
-            // // }
+            return user.accessList[moduleName.toLowerCase()] ? true : false;
         }
     }
 
     logout() {
-        // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    orderAccessList(access: any[]) {
+        return access.reduce((accumulator, currentValue) => {
+            if (accumulator[currentValue.module.toLowerCase()]) {
+                accumulator[currentValue.module.toLowerCase()]['permissions'].push(currentValue.action.toLowerCase());
+                return accumulator;
+            }
+            else {
+                let permissions = [];
+                permissions.push(currentValue.action.toLowerCase());
+                let permission = { permissions: permissions }
+                accumulator[currentValue.module.toLowerCase()] = permission
+                return accumulator;
+            }
+        })
+
     }
 }
