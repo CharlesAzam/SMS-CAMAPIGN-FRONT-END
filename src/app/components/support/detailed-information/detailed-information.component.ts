@@ -177,68 +177,68 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
     let data: any;
     switch (type) {
       case 'package':
-        data = { userId: this.userId, Id: row.packageId, type: type, startDate: row.startDate, endDate: row.endDate }
+        data = { userId: this.userId, Id: row.packageId, type: type, startDate: row.startDate, endDate: row.endDate, data: row }
         this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Cancel Subscription', message: 'Are you sure you want to cancel this subscription?' } })
-        .afterClosed()
-        .subscribe((result) => {
-          if (result) {
-            this.supportService.cancelSubscription(data).subscribe((response: any) => {
-              if (response.status === 200) {
-                this.getPackageInformation(this.packagePaginator.pageIndex+1, this.packagePaginator.pageSize)
-              }
-            }, error => console.error(error))
-          }
-        });
+          .afterClosed()
+          .subscribe((result) => {
+            if (result) {
+              this.supportService.cancelSubscriptionReq(data).subscribe((response: any) => {
+                if (response.status === 200) {
+                  this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize)
+                }
+              }, error => console.error(error))
+            }
+          });
         break;
 
       case 'season':
-        data = { userId: this.userId, Id: row.seasonId, type: type, startDate: row.startDate, endDate: row.endDate }
+        data = { userId: this.userId, Id: row.seasonId, type: type, startDate: row.startDate, endDate: row.endDate, data: row }
         this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Cancel Subscription', message: 'Are you sure you want to cancel this subscription?' } })
-        .afterClosed()
-        .subscribe((result) => {
-          if (result) {
-            this.supportService.cancelSubscription(data).subscribe((response: any) => {
-              if (response.status === 200) {
-                this.getSeasonInformation(this.seasonPaginator.pageIndex+1, this.seasonPaginator.pageSize)
-              }
-            }, error => console.error(error))
-          }
-        });
+          .afterClosed()
+          .subscribe((result) => {
+            if (result) {
+              this.supportService.cancelSubscriptionReq(data).subscribe((response: any) => {
+                if (response.status === 200) {
+                  this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize)
+                }
+              }, error => console.error(error))
+            }
+          });
         break;
 
       case 'content':
-        data = { userId: this.userId, Id: row.contentId, type: type, startDate: row.startDate, endDate: row.endDate }
+        data = { userId: this.userId, Id: row.contentId, type: type, startDate: row.startDate, endDate: row.endDate, data: row }
         this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Cancel Subscription', message: 'Are you sure you want to cancel this subscription?' } })
-        .afterClosed()
-        .subscribe((result) => {
-          if (result) {
-            this.supportService.cancelSubscription(data).subscribe((response: any) => {
-              if (response.status === 200) {
-                this.getSeasonInformation(this.videoPaginator.pageIndex+1, this.videoPaginator.pageSize)
-              }
-            }, error => console.error(error))
-          }
-        });
+          .afterClosed()
+          .subscribe((result) => {
+            if (result) {
+              this.supportService.cancelSubscriptionReq(data).subscribe((response: any) => {
+                if (response.status === 200) {
+                  this.getSeasonInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize)
+                }
+              }, error => console.error(error))
+            }
+          });
         break;
 
       default:
         break;
     }
 
-    
+
   }
 
   refundMoney(row) {
     let data: any = {
       transactionToken: row.transactionToken,
       transactionReference: row.transactionReference,
-      userId: this.userId
+      userId: this.userId, data: row
     }
     this.dialog.open(WarningDialog, { width: "400px", data: { title: 'Refund Money', message: `Are you sure you want to refund TZS${row.amount} ` } })
       .afterClosed()
       .subscribe((result) => {
         if (result) {
-          this.supportService.refundMoney(data).subscribe((response: any) => {
+          this.supportService.refundMoneyReq(data).subscribe((response: any) => {
             if (response.status === 200) {
               this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize)
             }
