@@ -134,7 +134,6 @@ export class VodEditComponent implements OnInit {
     ]
 
     ngOnInit() {
-
         this.getCountries();
         // this.getSubCategories();
         this.getLanguages();
@@ -207,10 +206,13 @@ export class VodEditComponent implements OnInit {
                     this.vodService.findById(params.id).subscribe((response: any) => {
                         if (response.status === 200) {
                             this.vod = response.data[0];
-                            console.log('Alll Data=', this.vod);
                             this.getCategories(this.vod.contentType);
                             this.imageUrl = this.vod.imageThumb;
                             if (this.vod.contentType === 'VOD') {
+                                this.getChannels();
+                                this.getPackages();
+                                this.getTags();
+                                this.getCDNLibrary();
                                 switch (this.vod.vodType) {
                                     case "VIDEO":
                                         this.formType = "Video On Demand"
@@ -338,6 +340,10 @@ export class VodEditComponent implements OnInit {
                                         break;
                                 }
                             } else if (this.vod.contentType === 'RADIO') {
+                                this.getChannels();
+                                this.getPackages();
+                                this.getTags();
+                                this.getCDNLibrary()
                                 this.formType = 'Radio';
                                 this.contentType = 'RADIO';
                                 this.isRadioForm = !this.isRadioForm
@@ -373,6 +379,7 @@ export class VodEditComponent implements OnInit {
                                 })
 
                             } else if (this.vod.contentType === 'NEWS') {
+                                this.getTags();
                                 this.formType = 'News'
                                 this.contentType = 'NEWS';
                                 this.initializeNewsForm()
