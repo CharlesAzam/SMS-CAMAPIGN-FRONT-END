@@ -7,6 +7,7 @@ import { startWith, tap } from "rxjs/operators";
 import { MatPaginator, MatDialog } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
+import { AuthenticationService } from '../login/login.service';
 
 export class mobileTagFilter {
   name: string = "";
@@ -60,7 +61,8 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private tagService: MobileTagsService,
     private languageService: LanguageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authenticationService: AuthenticationService
   ) {}
   TagModel: MobileTags = new MobileTags();
   displayedColumns: string[] = ["id", "name", "type", "action"];

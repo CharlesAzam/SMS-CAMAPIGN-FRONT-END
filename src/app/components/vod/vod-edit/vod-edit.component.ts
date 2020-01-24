@@ -125,7 +125,7 @@ export class VodEditComponent implements OnInit {
     seasons: any[] = [];
     images: string[] = []
     allSelected = false;
-    @ViewChild('countrySelection',null) countrySelection: MatSelect;
+    @ViewChild('countrySelection', null) countrySelection: MatSelect;
 
     vodTypes: string[] = [
         "VIDEO",
@@ -134,18 +134,17 @@ export class VodEditComponent implements OnInit {
     ]
 
     ngOnInit() {
-
         this.getCountries();
         // this.getSubCategories();
-        this.getChannels();
-        this.getPackages();
-        this.getTags();
         this.getLanguages();
-        this.getCDNLibrary();
 
         this.route.params.subscribe((params: any) => {
             switch (params.id) {
                 case "RADIO":
+                    this.getChannels();
+                    this.getPackages();
+                    this.getTags();
+                    this.getCDNLibrary()
                     this.formType = 'Radio';
                     this.contentType = 'RADIO';
                     this.isRadioForm = !this.isRadioForm;
@@ -154,6 +153,10 @@ export class VodEditComponent implements OnInit {
 
                     break;
                 case "SERIES":
+                    this.getChannels();
+                    this.getPackages();
+                    this.getTags();
+                    this.getCDNLibrary();
                     this.formType = 'Series';
                     this.contentType = 'VOD';
                     this.vodType = "SERIES";
@@ -163,6 +166,7 @@ export class VodEditComponent implements OnInit {
 
                     break;
                 case "NEWS":
+                    this.getTags();
                     this.formType = 'News'
                     this.contentType = 'NEWS';
                     this.isNewsForm = !this.isNewsForm;
@@ -172,6 +176,10 @@ export class VodEditComponent implements OnInit {
                     break;
 
                 case "VIDEOONDEMAND":
+                    this.getChannels();
+                    this.getPackages();
+                    this.getTags();
+                    this.getCDNLibrary();
                     this.formType = "Video On Demand"
                     this.contentType = 'VOD';
                     this.vodType = "VIDEO";
@@ -181,6 +189,10 @@ export class VodEditComponent implements OnInit {
                     break;
 
                 case "LIVETV":
+                    this.getChannels();
+                    this.getPackages();
+                    this.getTags();
+                    this.getCDNLibrary();
                     this.formType = "Live TV"
                     this.contentType = 'VOD';
                     this.vodType = "LIVETV";
@@ -194,10 +206,13 @@ export class VodEditComponent implements OnInit {
                     this.vodService.findById(params.id).subscribe((response: any) => {
                         if (response.status === 200) {
                             this.vod = response.data[0];
-                            console.log('Alll Data=',this.vod);
                             this.getCategories(this.vod.contentType);
                             this.imageUrl = this.vod.imageThumb;
                             if (this.vod.contentType === 'VOD') {
+                                this.getChannels();
+                                this.getPackages();
+                                this.getTags();
+                                this.getCDNLibrary();
                                 switch (this.vod.vodType) {
                                     case "VIDEO":
                                         this.formType = "Video On Demand"
@@ -215,7 +230,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',
+                                            country: this.vod.country ? this.vod.country.map((country) => { if (country._id != 0) return country._id }) : '',
 
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
@@ -257,7 +272,7 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',
+                                            country: this.vod.country ? this.vod.country.map((country) => { if (country._id != 0) return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -297,10 +312,10 @@ export class VodEditComponent implements OnInit {
                                             starring: this.vod.starring ? this.vod.starring : '',
                                             director: this.vod.director ? this.vod.director : '',
                                             categories: this.vod.categories ? this.vod.categories.map((categor) => { return categor._id }) : '',
-                                            country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',                                            
+                                            country: this.vod.country ? this.vod.country.map((country) => { if (country._id != 0) return country._id }) : '',
                                             subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                             language: this.vod.language ? this.vod.language : [],
-                                            referenceChannelID: parseInt(this.vod.referenceChannelID,10)? parseInt(this.vod.referenceChannelID,10): '',
+                                            referenceChannelID: parseInt(this.vod.referenceChannelID, 10) ? parseInt(this.vod.referenceChannelID, 10) : '',
                                             isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
                                             price: {
                                                 price: this.vod.priceDetail[0] ? this.vod.priceDetail[0].price : '',
@@ -325,6 +340,10 @@ export class VodEditComponent implements OnInit {
                                         break;
                                 }
                             } else if (this.vod.contentType === 'RADIO') {
+                                this.getChannels();
+                                this.getPackages();
+                                this.getTags();
+                                this.getCDNLibrary()
                                 this.formType = 'Radio';
                                 this.contentType = 'RADIO';
                                 this.isRadioForm = !this.isRadioForm
@@ -338,7 +357,7 @@ export class VodEditComponent implements OnInit {
                                     starring: this.vod.starring ? this.vod.starring : '',
                                     director: this.vod.director ? this.vod.director : '',
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
-                                    country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',                                    
+                                    country: this.vod.country ? this.vod.country.map((country) => { if (country._id != 0) return country._id }) : '',
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     language: this.vod.language ? this.vod.language : [],
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -360,6 +379,7 @@ export class VodEditComponent implements OnInit {
                                 })
 
                             } else if (this.vod.contentType === 'NEWS') {
+                                this.getTags();
                                 this.formType = 'News'
                                 this.contentType = 'NEWS';
                                 this.initializeNewsForm()
@@ -370,7 +390,7 @@ export class VodEditComponent implements OnInit {
                                     title: this.vod.title ? this.vod.title : '',
                                     description: this.vod.description ? this.vod.description : '',
                                     tags: this.vod.tags ? this.vod.tags : [],
-                                    country: this.vod.country ? this.vod.country.map((country) => { if(country._id!=0) return country._id }) : '',                                    
+                                    country: this.vod.country ? this.vod.country.map((country) => { if (country._id != 0) return country._id }) : '',
                                     categories: this.vod.categories.map((categor) => categor._id) ? this.vod.categories.map((categor) => categor._id) : '',
                                     subCategories: this.vod.subCategories ? this.vod.subCategories.map((subs) => subs._id) : '',
                                     isFree: String(this.vod.isFree) ? String(this.vod.isFree) : '',
@@ -415,10 +435,10 @@ export class VodEditComponent implements OnInit {
             })
 
         this.filterCountryCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-            this.filterCountry();
-        })
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterCountry();
+            })
     }
 
 
@@ -429,21 +449,21 @@ export class VodEditComponent implements OnInit {
     }
     toggleAllSelection() {
         this.allSelected = !this.allSelected;  // to control select-unselect
-        
+
         if (this.allSelected) {
-          this.countrySelection.options.forEach( (item : MatOption) => {
-            if(item.value !=0){
-                console.log("item",item)
-                item.select()
-            } else {
-                item.deselect()
-            }
+            this.countrySelection.options.forEach((item: MatOption) => {
+                if (item.value != 0) {
+                    console.log("item", item)
+                    item.select()
+                } else {
+                    item.deselect()
+                }
             });
-          console.log("this.countrySelection",this.countrySelection.options)
+            console.log("this.countrySelection", this.countrySelection.options)
         } else {
-          this.countrySelection.options.forEach( (item : MatOption) => {item.deselect()});
+            this.countrySelection.options.forEach((item: MatOption) => { item.deselect() });
         }
-      }
+    }
     uploadFileToActivity() {
         this.isUploading = true;
         this.vodService.uploadUrl(this.fileToUpload).subscribe((response: any) => {
@@ -529,13 +549,13 @@ export class VodEditComponent implements OnInit {
             if (response.status === 200) {
                 const tmpArr = [];
                 const currentSelection = this.contentForm.controls.subCategories;
-                this.subCategorie = response.data.map((sub)=>{
-                   if(currentSelection.value.indexOf(sub._id) >= 0){
-                    tmpArr.push(sub._id);
-                   }
-                   return sub;
-                });        
-                this.contentForm.patchValue({subCategories :tmpArr}); 
+                this.subCategorie = response.data.map((sub) => {
+                    if (currentSelection.value.indexOf(sub._id) >= 0) {
+                        tmpArr.push(sub._id);
+                    }
+                    return sub;
+                });
+                this.contentForm.patchValue({ subCategories: tmpArr });
                 this.filteredSubCategories.next(this.subCategorie)
             }
         },
@@ -551,15 +571,15 @@ export class VodEditComponent implements OnInit {
             error => console.error(error));
     }
 
-    getChannels(){
+    getChannels() {
         this.vodService.getChannels()
-        .subscribe((response: any) => {
+            .subscribe((response: any) => {
                 this.channels = response.data;
-                
-        },
-        error=>{
-            console.log(error);
-        })
+
+            },
+                error => {
+                    console.log(error);
+                })
     }
 
     getLanguages() {
@@ -573,10 +593,10 @@ export class VodEditComponent implements OnInit {
 
     getCountries() {
         this.countryService.list().subscribe((response: any) => {
-          if (response.status === 200) {
+            if (response.status === 200) {
                 this.countries = response.data;
                 this.filteredCountries.next(this.countries.slice())
-         }
+            }
         },
             error => console.error(error));
     }
@@ -690,7 +710,7 @@ export class VodEditComponent implements OnInit {
 
 
     openDialog(i?) {
-       const index = i;
+        const index = i;
         const dialogRef = this.dialog.open(AddSeasonsDialog, {
             width: '800px',
             data: String(index) !== 'undefined' ? this.seasons[index] : null
@@ -731,7 +751,7 @@ export class VodEditComponent implements OnInit {
 
     removeSeason(index) {
         if (confirm("Are you sure to remove this Season?")) {
-         this.seasons.splice(index, 1);
+            this.seasons.splice(index, 1);
         }
     }
 

@@ -13,5 +13,5 @@ export class SupportFilter {
     sortby?: string
     sortorder?: string
     type?: string
-
+    smartCard?: string
 }

@@ -6,6 +6,7 @@ import { Admin } from '../admin';
 import { AdminService } from '../admin.service';
 import { Role } from '../Role';
 import { NgForm, FormControl, Validators } from '@angular/forms';
+import { NoWhitespaceValidator } from 'src/app/validators/no-whitespace.validator';
 
 @Component({
     selector: 'admin-edit-role',
@@ -15,7 +16,7 @@ import { NgForm, FormControl, Validators } from '@angular/forms';
 export class RoleEditComponent implements OnInit {
 
     roleModel = new Role();
-    roleName = new FormControl('', [Validators.required]);
+    roleName = new FormControl('', [Validators.required, NoWhitespaceValidator() ]);
     selectedModulesAndActions: any[] = [];
 
     modulesAndActions: any[] = []
@@ -62,8 +63,8 @@ export class RoleEditComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.selectedModulesAndActions.length)
         this.roleModel.roleName = this.roleName.value;
+        
         this.roleService.createRole(this.roleModel).subscribe((response: any) => {
             if (response.status === 200)
                 this.router.navigate(['home/admin/roles'])

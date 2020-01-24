@@ -23,6 +23,7 @@
             </mat-form-field>
 
             <button
+            *ngIf="authenticationService.isModuleAllowed('tag','create')"
               mat-raised-button
               color="primary"
               style="margin-left: 23px;"
@@ -56,7 +57,7 @@
                   aria-hidden="false"
                   style="cursor: pointer;"
                   (click)="deleteCategory(row)"
-                  aria-label="Example home icon"
+                  *ngIf="authenticationService.isModuleAllowed('tag','delete')"
                   >delete
                 </mat-icon>
                 <span style=" margin-right: 20px;margin-left: 20px;"></span>
@@ -64,7 +65,7 @@
                   aria-hidden="false"
                   style="cursor: pointer;"
                   [routerLink]="['../MobileTagForm', row._id]"
-                  aria-label="Example home icon"
+                  *ngIf="authenticationService.isModuleAllowed('tag','update')"
                   >edit</mat-icon
                 >
               </td>

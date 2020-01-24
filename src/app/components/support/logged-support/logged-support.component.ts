@@ -9,6 +9,7 @@ import { SupportService } from "../support.service";
 import { MatTableDataSource, MatPaginator, MatDialog, MatSort } from "@angular/material";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
 import { TicketDescriptionDialog } from "../../ticket-description/dialog-ticket-description";
+import { AuthenticationService } from '../../login/login.service';
 
 @Component({
   selector: "logged-support",
@@ -88,7 +89,8 @@ export class LoggedSupportComponent implements OnInit {
   constructor(
     private countryService: CountryService,
     private supportService: SupportService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {

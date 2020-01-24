@@ -43,6 +43,8 @@ export class SupportService {
 
     if (filter.sortby) params.sortby = filter.sortby;
 
+    if (filter.smartCard) params.smartCard = filter.smartCard;
+
     if (params) return this.http.get<any[]>(url, { params, headers });
     return this.http.get<any>(url, { headers });
   }
@@ -245,5 +247,15 @@ export class SupportService {
       },
       { headers }
     );
+  }
+
+  cancelSubscriptionReq(data) {
+    let url = API.BASE_URL + "/cms/cancelSubscriptionReq";
+    return this.http.post(url, data);
+  }
+
+  refundMoneyReq(data) {
+    let url = API.BASE_URL + "/cms/refundMoneyReq";
+    return this.http.post(url, data);
   }
 }

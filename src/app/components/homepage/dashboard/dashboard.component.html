@@ -1,8 +1,17 @@
 <div class="container">
-  <div class="row ">
-    <div class="col-sm-1 col-md-4" *ngFor="let category of categories">
-      <app-card-component Image_src={{category.ImageSrc}}   card_title={{category.name}} notification_count={{category.notification}}></app-card-component>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card style="padding: 50px;">
+        <img mat-card-image src="assets/user.svg" alt="Administrator">
+      </mat-card>
     </div>
-  </div>
 
+    <div class="col-md-8">
+      <mat-card>
+        <mat-card-title> USERNAME: {{userDetails.username.toUpperCase()}} </mat-card-title>
+        <mat-card-subtitle>Role: {{userDetails.roles[0]}} </mat-card-subtitle>
+      </mat-card>
+    </div>
+
+  </div>
 </div>

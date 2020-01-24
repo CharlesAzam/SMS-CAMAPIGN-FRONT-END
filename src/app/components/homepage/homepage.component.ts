@@ -75,7 +75,7 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(["movies"], { relativeTo: this.activatedRoute });
   }
 
-  isModulePermitted(moduleName: string) {
-    this.authService.isModuleAllowed(moduleName);
+  isModulePermitted(moduleName: string) : boolean{
+    return this.authService.isModuleAllowed(moduleName);
   }
 }
