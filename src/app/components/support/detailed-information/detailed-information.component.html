@@ -140,7 +140,7 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
                             <td mat-cell *matCellDef="let element"> 
-                                <button mat-raised-button color="warn" [disabled]="getStatus(element.startDate, element.endDate) !== 'ACTIVE'" (click)="cancelSubscription(element, 'package')">REQUEST CANCELLATION</button>
+                                <button mat-raised-button color="warn" [disabled]="getStatus(element.startDate, element.endDate) !== 'ACTIVE' || element.remorse" (click)="cancelSubscription(element, 'package')">REQUEST CANCELLATION</button>
                             </td>
                         </ng-container>
 
@@ -215,7 +215,7 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
                             <td mat-cell *matCellDef="let element"> 
-                                <button mat-raised-button color="warn" [disabled]="getStatus(element.startDate, element.endDate) !== 'ACTIVE'" (click)="cancelSubscription(element, 'season')">REQUEST CANCELLATION</button>
+                                <button mat-raised-button color="warn" [disabled]="getStatus(element.startDate, element.endDate) !== 'ACTIVE' || element.remorse" (click)="cancelSubscription(element, 'season')">REQUEST CANCELLATION</button>
                             </td>
                         </ng-container>
 
@@ -290,7 +290,7 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
                             <td mat-cell *matCellDef="let element"> 
-                                <button mat-raised-button color="warn" [disabled]="getStatus(element.startDate, element.endDate) !== 'ACTIVE'" (click)="cancelSubscription(element, 'content')">REQUEST CANCELLATION</button>
+                                <button mat-raised-button color="warn" [disabled]="getStatus(element.startDate, element.endDate) !== 'ACTIVE' || element.remorse" (click)="cancelSubscription(element, 'content')">REQUEST CANCELLATION</button>
                             </td>
                         </ng-container>
 
