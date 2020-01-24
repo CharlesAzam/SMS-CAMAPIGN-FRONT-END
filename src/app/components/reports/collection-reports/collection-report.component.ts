@@ -1,26 +1,32 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil, startWith, tap } from 'rxjs/operators';
-import { CountryService } from 'src/app/services/coutry.service';
-import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { ReportService } from '../reports.service';
-import { SupportFilter } from '../../support/support-filter.model';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { ReplaySubject, Subject } from "rxjs";
+import { takeUntil, startWith, tap } from "rxjs/operators";
+import { CountryService } from "src/app/services/coutry.service";
+import { ActivatedRoute } from "@angular/router";
+import { MatTableDataSource, MatPaginator, MatSort } from "@angular/material";
+import { ReportService } from "../reports.service";
+import { SupportFilter } from "../../support/support-filter.model";
 import * as moment from "moment";
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './collection-report.component.html',
-  styleUrls: ['./collection-report.component.css']
+  selector: "app-report",
+  templateUrl: "./collection-report.component.html",
+  styleUrls: ["./collection-report.component.css"]
 })
 export class CollectionReportComponent implements OnInit {
-
   ngAfterViewInit(): void {
     this.filter = {};
 
-    if (this.type === 'summary') {
-      this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
+    if (this.type === "summary") {
+      this.displayedColumns = [
+        "No",
+        "date",
+        "country",
+        "gateway",
+        "currency",
+        "amount"
+      ];
       this.summaryPaginator.page
         .pipe(
           startWith(null),
@@ -34,7 +40,17 @@ export class CollectionReportComponent implements OnInit {
         )
         .subscribe();
     } else {
-      this.displayedColumns = ['No', 'date', 'country', 'customerNumber', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+      this.displayedColumns = [
+        "No",
+        "date",
+        "country",
+        "customerNumber",
+        "customerName",
+        "walletNumber",
+        "gateway",
+        "operator",
+        "amountRecieved"
+      ];
       this.detailedPaginator.page
         .pipe(
           startWith(null),
@@ -48,20 +64,19 @@ export class CollectionReportComponent implements OnInit {
         )
         .subscribe();
     }
-
   }
-  @ViewChild('summaryPaginator', { static: false, read: MatPaginator })
+  @ViewChild("summaryPaginator", { static: false, read: MatPaginator })
   summaryPaginator: MatPaginator;
 
-  @ViewChild('detailedPaginator', { static: false, read: MatPaginator })
+  @ViewChild("detailedPaginator", { static: false, read: MatPaginator })
   detailedPaginator: MatPaginator;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  filterMethodCtrl = new FormControl('');
-  filterCountryCtrl = new FormControl('');
+  filterMethodCtrl = new FormControl("");
+  filterCountryCtrl = new FormControl("");
   range = new FormControl("");
-  mobile = new FormControl('')
+  mobile = new FormControl("");
   protected _onDestroy = new Subject<void>();
   filter: SupportFilter;
   count: number;
@@ -72,23 +87,22 @@ export class CollectionReportComponent implements OnInit {
 
   type: string = "";
 
-  displayedColumns: string[] = []
-
+  displayedColumns: string[] = [];
 
   countries: any[] = [];
   methods: any[] = [
-    { label: 'Today', id: 'today' },
-    { label: 'This Week', id: 'week' },
-    { label: 'This Month', id: 'month' },
-    { label: 'Date Range', id: 'range' },
-    { label: 'Mobile Number', id: 'mobile' }
+    { label: "Today", id: "today" },
+    { label: "This Week", id: "week" },
+    { label: "This Month", id: "month" },
+    { label: "Date Range", id: "range" },
+    { label: "Mobile Number", id: "mobile" }
   ];
 
   summaryMethods: any[] = [
-    { label: 'Today', id: 'today' },
-    { label: 'This Week', id: 'week' },
-    { label: 'This Month', id: 'month' },
-    { label: 'Date Range', id: 'range' },
+    { label: "Today", id: "today" },
+    { label: "This Week", id: "week" },
+    { label: "This Month", id: "month" },
+    { label: "Date Range", id: "range" }
   ];
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -96,72 +110,88 @@ export class CollectionReportComponent implements OnInit {
 
   datasource = new MatTableDataSource<any>([]);
 
-
-  constructor(private countryService: CountryService, private reportService: ReportService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private countryService: CountryService,
+    private reportService: ReportService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((params) => {
+    this.activatedRoute.paramMap.subscribe(params => {
       if (params) {
-        this.filter = {}
+        this.filter = {};
         this.country = undefined;
         this.method = undefined;
-        this.type = params.get('type');
+        this.type = params.get("type");
         this.displayedColumns = [];
-        if (this.type === 'summary') {
+        if (this.type === "summary") {
           this.datasource = new MatTableDataSource<any>([]);
           // this.datasource.paginator = this.paginator;
-          this.displayedColumns = ['No', 'date', 'country', 'gateway', 'operator', 'currency', 'amount'];
+          this.displayedColumns = [
+            "No",
+            "date",
+            "country",
+            "gateway",
+            "currency",
+            "amount"
+          ];
           this.getSummaryCount(this.filter);
-          this.getCollectionSummary(
-            this.filter,
-            1,
-            10
-          )
+          this.getCollectionSummary(this.filter, 1, 10);
         } else {
           this.datasource = new MatTableDataSource<any>([]);
           // this.datasource.paginator = this.paginator;
-          this.displayedColumns = ['No', 'date', 'country', 'customerNumber', 'customerName', 'walletNumber', 'amountRecieved', 'customerBalance'];
+          this.displayedColumns = [
+            "No",
+            "date",
+            "country",
+            "customerNumber",
+            "customerName",
+            "walletNumber",
+            "gateway",
+            "operator",
+            "amountRecieved"
+          ];
           this.getDetailedCount(this.filter);
           this.getDetailedReport(this.filter, 1, 10);
         }
       }
-    })
+    });
     this.getCountries();
 
     this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterCountry();
-      })
+      });
     this.filteredMethods.next(this.summaryMethods.slice());
     this.filterMethodCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterMethod();
-      })
+      });
 
     this.filteredDetailedMethods.next(this.methods.slice());
     this.filterMethodCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterMethod();
-      })
+      });
   }
 
-
   getCountries() {
-    this.countryService.list().subscribe((response: any) => {
-      if (response.status === 200) {
-        this.countries = response.data;
-        this.filteredCountries.next(this.countries.slice())
-      }
-    },
-      error => console.error(error));
+    this.countryService.list().subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          this.countries = response.data;
+          this.filteredCountries.next(this.countries.slice());
+        }
+      },
+      error => console.error(error)
+    );
   }
 
   filterCountry() {
-    if (!this.countries)
-      return;
+    if (!this.countries) return;
 
     let search = this.filterCountryCtrl.value;
     if (!search) {
@@ -173,16 +203,13 @@ export class CollectionReportComponent implements OnInit {
 
     this.filteredCountries.next(
       this.countries.filter(cont =>
-        cont.country ?
-          cont.country.toLowerCase().indexOf(search) > -1 :
-          ''
+        cont.country ? cont.country.toLowerCase().indexOf(search) > -1 : ""
       )
-    )
+    );
   }
 
   filterMethod() {
-    if (!this.methods)
-      return;
+    if (!this.methods) return;
 
     let search = this.filterMethodCtrl.value;
     if (!search) {
@@ -194,11 +221,9 @@ export class CollectionReportComponent implements OnInit {
 
     this.filteredMethods.next(
       this.methods.filter(cont =>
-        cont ?
-          cont.label.toLowerCase().indexOf(search) > -1 :
-          ''
+        cont ? cont.label.toLowerCase().indexOf(search) > -1 : ""
       )
-    )
+    );
   }
 
   search() {
@@ -228,91 +253,125 @@ export class CollectionReportComponent implements OnInit {
       this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
     }
 
-
-    if (this.type === 'summary') {
+    if (this.type === "summary") {
       this.summaryPaginator.firstPage();
       this.getSummaryCount(this.filter);
-      this.getCollectionSummary(this.filter, this.summaryPaginator.pageIndex + 1, this.summaryPaginator.pageSize);
-    }
-    else {
+      this.getCollectionSummary(
+        this.filter,
+        this.summaryPaginator.pageIndex + 1,
+        this.summaryPaginator.pageSize
+      );
+    } else {
       this.detailedPaginator.firstPage();
-      this.getDetailedCount(this.filter)
-      this.getDetailedReport(this.filter, this.detailedPaginator.pageIndex + 1, this.detailedPaginator.pageSize)
-
+      this.getDetailedCount(this.filter);
+      this.getDetailedReport(
+        this.filter,
+        this.detailedPaginator.pageIndex + 1,
+        this.detailedPaginator.pageSize
+      );
     }
-
   }
 
   getCollectionSummary(filter: SupportFilter, pageIndex?, pageSize?) {
     filter.pageIndex = pageIndex;
     filter.pageSize = pageSize;
-    this.reportService.getCollectionSummary(filter).subscribe((response: any) => {
-      if (response.status === 200) {
-        this.datasource = response.data;
-      }
-      if (response.status === 204) {
-      }
-    }, error => console.error(error))
+    this.reportService.getCollectionSummary(filter).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          this.datasource = response.data;
+        }
+        if (response.status === 204) {
+        }
+      },
+      error => console.error(error)
+    );
   }
 
   getDetailedReport(filter: SupportFilter, pageIndex?, pageSize?) {
     filter.pageIndex = pageIndex;
     filter.pageSize = pageSize;
-    this.reportService.getDetailedCollection(filter).subscribe((response: any) => {
-      if (response.status === 200) {
-        this.datasource = response.data;
-      }
-      if (response.status === 204) {
-      }
-    }, error => console.error(error))
+    this.reportService.getDetailedCollection(filter).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          this.datasource = response.data;
+        }
+        if (response.status === 204) {
+        }
+      },
+      error => console.error(error)
+    );
   }
 
   getDetailedCount(filter: SupportFilter) {
-    this.reportService.getDetailedCollection(filter).subscribe((response: any) => {
-      if (response.status === 200) {
-        this.count = response.count;
-      }
-    }, error => console.error(error))
+    this.reportService.getDetailedCollection(filter).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          this.count = response.count;
+        }
+      },
+      error => console.error(error)
+    );
   }
 
   getSummaryCount(filter: SupportFilter) {
-    this.reportService.getCollectionSummary(filter).subscribe((response: any) => {
-      if (response.status === 200) {
-        this.count = response.count;
-      }
-    }, error => console.error(error))
+    this.reportService.getCollectionSummary(filter).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          this.count = response.count;
+        }
+      },
+      error => console.error(error)
+    );
   }
 
   resetFilters() {
-    if (this.type === 'summary')
-      this.summaryPaginator.firstPage();
-    else
-      this.detailedPaginator.firstPage();
+    if (this.type === "summary") this.summaryPaginator.firstPage();
+    else this.detailedPaginator.firstPage();
 
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
-    this.type === 'summary' ? this.getCollectionSummary(this.filter, this.summaryPaginator.pageIndex + 1, this.summaryPaginator.pageSize)
-      : this.getDetailedReport(this.filter, this.detailedPaginator.pageIndex + 1, this.detailedPaginator.pageSize)
+    this.type === "summary"
+      ? this.getCollectionSummary(
+          this.filter,
+          this.summaryPaginator.pageIndex + 1,
+          this.summaryPaginator.pageSize
+        )
+      : this.getDetailedReport(
+          this.filter,
+          this.detailedPaginator.pageIndex + 1,
+          this.detailedPaginator.pageSize
+        );
   }
 
   generateExcel() {
-    if (this.filter.pageIndex)
-      delete this.filter.pageIndex;
-    if (this.filter.pageSize)
-      delete this.filter.pageSize;
-    if (this.type === 'summary')
-      this.reportService.getCollectionSummary(this.filter).subscribe((response: any) => {
-        if (response.status === 200) {
-          this.reportService.exportFileToCsv(response.data, 'COLLECTION SUMMARY REPORT', `collection_summary_report_${moment().format()}`);
-        }
-      }, error => console.error(error))
+    if (this.filter.pageIndex) delete this.filter.pageIndex;
+    if (this.filter.pageSize) delete this.filter.pageSize;
+    if (this.type === "summary")
+      this.reportService.getCollectionSummary(this.filter).subscribe(
+        (response: any) => {
+          if (response.status === 200) {
+            this.reportService.exportFileToCsv(
+              response.data,
+              "COLLECTION SUMMARY REPORT",
+              `collection_summary_report_${moment().format()}`
+            );
+          }
+        },
+        error => console.error(error)
+      );
     else
-    this.reportService.getDetailedCollection(this.filter).subscribe((response: any) => {
-      if (response.status === 200) {
-        this.reportService.exportFileToCsv(response.data, 'DETAILED COLLECTION REPORT', `collection_detailed_report_${moment().format()}`);
-      }
-    }, error => console.error(error))
+      this.reportService.getDetailedCollection(this.filter).subscribe(
+        (response: any) => {
+          if (response.status === 200) {
+            this.reportService.exportFileToCsv(
+              response.data,
+              "DETAILED COLLECTION REPORT",
+              `collection_detailed_report_${moment().format()}`
+            );
+          }
+        },
+        error => console.error(error)
+      );
   }
-
 }
