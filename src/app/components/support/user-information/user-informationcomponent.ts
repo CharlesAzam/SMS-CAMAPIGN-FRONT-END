@@ -37,6 +37,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
   filterCountryCtrl = new FormControl("");
   range = new FormControl("");
   mobile = new FormControl("");
+  smartCard = new FormControl("");
   protected _onDestroy = new Subject<void>();
 
   method: any;
@@ -51,7 +52,8 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     { label: "This Week", id: "week" },
     { label: "This Month", id: "month" },
     { label: "Date Range", id: "range" },
-    { label: "Mobile Number", id: "mobile" }
+    { label: "Mobile Number", id: "mobile" },
+    // { label: "Smart Card", id: "smartCard" }
   ];
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -188,6 +190,10 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
       this.filter.mobile = this.mobile.value;
     }
 
+    if(this.method === "smartCard"){
+      this.filter.smartCard = this.smartCard.value + '';
+    }
+
     if (this.method === "range") {
       this.filter.from = moment(this.range.value.begin).format("YYYY-MM-DD");
       this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
@@ -211,6 +217,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
+    this.smartCard = undefined;
     this.getUsers(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 

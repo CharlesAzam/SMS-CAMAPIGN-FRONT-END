@@ -8,6 +8,7 @@ import { REPORT_ROUTES } from './reports.routes';
 import { UserReportComponet } from './user-reports/user-report.component';
 import { TransactionReportComponent } from './transaction-reports/transaction-report.component';
 import { CollectionReportComponent } from './collection-reports/collection-report.component';
+import { RequestsComponent } from './requests/requests.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
   declarations: [
     UserReportComponet,
     TransactionReportComponent,
-    CollectionReportComponent
+    CollectionReportComponent,
+    RequestsComponent
   ],
   providers: [
     ReportService

@@ -80,7 +80,7 @@ const routes: Routes = [
         path: "MobileTags",
         component: MobileTagsComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['tags', 'read'] }
+        data: { moduleData: ['tag', 'read'] }
       },
       {
         path: "reports",
@@ -98,7 +98,7 @@ const routes: Routes = [
         path: "MobileTagForm/:id",
         component: MobileTagFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['tags', 'create'] }
+        data: { moduleData: ['tag', 'create'] }
       },
       {
         path: "CategoryForm/:id",

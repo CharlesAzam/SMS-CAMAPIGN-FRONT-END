@@ -1,7 +1,5 @@
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API } from 'src/environments/environment';
 import { ExportToCsv } from 'export-to-csv';
@@ -188,5 +186,22 @@ export class ReportService {
 
         return this.http.get(url, { params, headers });
     }
+
+    getCancellationRequests(subscriptionType: string) {
+        let url = API.BASE_URL + '/cms/reports/' + subscriptionType;
+        return this.http.get(url);
+    }
+
+    cancelSubscription(data) {
+        let url = API.BASE_URL + "/cms/cancelSubscription";
+        return this.http.post(url, data);
+    }
+
+    refundMoney(data) {
+        let url = API.BASE_URL + "/cms/refundMoney";
+        return this.http.post(url, data);
+    }
+
+
 }
 
