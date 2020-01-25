@@ -187,9 +187,16 @@ export class ReportService {
         return this.http.get(url, { params, headers });
     }
 
-    getCancellationRequests(subscriptionType: string) {
+    getCancellationRequests(filter: SupportFilter, subscriptionType: string) {
+
+        let params: any = {};
+        if (filter.type) params.type = filter.type;
+
+
+        if (filter.pageSize) params.size = filter.pageSize;
+        if (filter.pageIndex) params.pageNumber = filter.pageIndex;
         let url = API.BASE_URL + '/cms/reports/' + subscriptionType;
-        return this.http.get(url);
+        return this.http.get(url, { params });
     }
 
     cancelSubscription(data) {
@@ -200,6 +207,31 @@ export class ReportService {
     refundMoney(data) {
         let url = API.BASE_URL + "/cms/refundMoney";
         return this.http.post(url, data);
+    }
+
+
+    getPackageCount() {
+        let url = API.BASE_URL + "/cms/confirm-package";
+        let headers = new HttpHeaders().set("Accept", "application/json");
+        return this.http.get<any>(url, { headers });
+    }
+
+    getRechargeHistoryCount() {
+        let url = API.BASE_URL + "/cms/confirm-recharge";
+        let headers = new HttpHeaders().set("Accept", "application/json");
+        return this.http.get<any>(url, { headers });
+    }
+
+    getVideoCount() {
+        let url = API.BASE_URL + "/cms/confirm-content";
+        let headers = new HttpHeaders().set("Accept", "application/json");
+        return this.http.get<any>(url, { headers });
+    }
+
+    getSeasonCount() {
+        let url = API.BASE_URL + "/cms/confirm-season";
+        let headers = new HttpHeaders().set("Accept", "application/json");
+        return this.http.get<any>(url, { headers });
     }
 
 

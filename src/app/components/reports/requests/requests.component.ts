@@ -98,6 +98,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 1:
+                this.getRehargeHistoryCount();
                 this.rechargePaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize))).subscribe();
@@ -112,6 +113,7 @@ export class RequestsComponent implements AfterViewInit {
     selectTab(event) {
         switch (event) {
             case 0:
+                this.getPackageCount();
                 this.packagePaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize))).subscribe();
@@ -119,6 +121,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 1:
+                this.getSeasonCount();
                 this.seasonPaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
@@ -126,6 +129,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 2:
+                this.getVideoCount();
                 this.videoPaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getVideoInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize))).subscribe();
@@ -143,7 +147,7 @@ export class RequestsComponent implements AfterViewInit {
         filter.pageIndex = pageIndex;
         filter.pageSize = pageSize;
 
-        this.reportService.getCancellationRequests('confirm-recharge').subscribe((response: any) => {
+        this.reportService.getCancellationRequests(filter, 'confirm-recharge').subscribe((response: any) => {
             if (response.status === 200) {
                 this.rechargeInfo = response.data;
                 this.rechargeDataSource = new MatTableDataSource<any>(this.rechargeInfo);
@@ -154,7 +158,7 @@ export class RequestsComponent implements AfterViewInit {
     }
 
     getRehargeHistoryCount() {
-        this.supportService.getRechargeHistoryCount(this.userId).subscribe((response: any) => {
+        this.reportService.getRechargeHistoryCount().subscribe((response: any) => {
             if (response.success) {
                 this.rechargeHistoryCount = response.count;
             }
@@ -236,7 +240,6 @@ export class RequestsComponent implements AfterViewInit {
 
     getPackageInformation(pageIndex?, pageSize?) {
         let filter: SupportFilter = {};
-        filter.userId = this.userId;
         filter.pageIndex = pageIndex;
         filter.pageSize = pageSize;
         // this.supportService.getPackageInformation(filter).subscribe((response: any) => {
@@ -246,7 +249,7 @@ export class RequestsComponent implements AfterViewInit {
         //     }
         // }, error => console.log(error))
 
-        this.reportService.getCancellationRequests('confirm-package').subscribe((response: any) => {
+        this.reportService.getCancellationRequests(filter, 'confirm-package').subscribe((response: any) => {
             if (response.status === 200) {
                 this.packageInfo = response.data;
                 this.packageDataSource = new MatTableDataSource<any>(this.packageInfo);
@@ -257,11 +260,10 @@ export class RequestsComponent implements AfterViewInit {
 
     getSeasonInformation(pageIndex?, pageSize?) {
         let filter: SupportFilter = {};
-        filter.userId = this.userId;
         filter.pageIndex = pageIndex;
         filter.pageSize = pageSize;
 
-        this.reportService.getCancellationRequests('confirm-season').subscribe((response: any) => {
+        this.reportService.getCancellationRequests(filter, 'confirm-season').subscribe((response: any) => {
             if (response.status === 200) {
                 this.seasonInfo = response.data;
                 this.seasonDataSource = new MatTableDataSource<any>(this.seasonInfo);
@@ -273,11 +275,10 @@ export class RequestsComponent implements AfterViewInit {
 
     getVideoInformation(pageIndex?, pageSize?) {
         let filter: SupportFilter = {};
-        filter.userId = this.userId;
         filter.pageIndex = pageIndex;
         filter.pageSize = pageSize;
 
-        this.reportService.getCancellationRequests('confirm-content').subscribe((response: any) => {
+        this.reportService.getCancellationRequests(filter, 'confirm-content').subscribe((response: any) => {
             if (response.status === 200) {
                 this.videoInfo = response.data;
                 this.videoDataSource = new MatTableDataSource<any>(this.videoInfo);
@@ -290,7 +291,7 @@ export class RequestsComponent implements AfterViewInit {
 
 
     getPackageCount() {
-        this.supportService.getPackageCount(this.userId).subscribe((response: any) => {
+        this.reportService.getPackageCount().subscribe((response: any) => {
             if (response.success) {
                 this.packageCount = response.count;
             }
@@ -298,7 +299,7 @@ export class RequestsComponent implements AfterViewInit {
     }
 
     getVideoCount() {
-        this.supportService.getVideoCount(this.userId).subscribe((response: any) => {
+        this.reportService.getVideoCount().subscribe((response: any) => {
             if (response.success) {
                 this.videoCount = response.count;
             }
@@ -306,7 +307,7 @@ export class RequestsComponent implements AfterViewInit {
     }
 
     getSeasonCount() {
-        this.supportService.getSeasonCount(this.userId).subscribe((response: any) => {
+        this.reportService.getSeasonCount().subscribe((response: any) => {
             if (response.success) {
                 this.seasonCount = response.count;
             }
