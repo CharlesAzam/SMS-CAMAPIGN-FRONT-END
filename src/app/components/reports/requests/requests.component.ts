@@ -98,7 +98,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 1:
-                this.getRehargeHistoryCount();
+                // this.getRehargeHistoryCount();
                 this.rechargePaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize))).subscribe();
@@ -113,7 +113,7 @@ export class RequestsComponent implements AfterViewInit {
     selectTab(event) {
         switch (event) {
             case 0:
-                this.getPackageCount();
+                // this.getPackageCount();
                 this.packagePaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize))).subscribe();
@@ -121,7 +121,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 1:
-                this.getSeasonCount();
+                // this.getSeasonCount();
                 this.seasonPaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
@@ -129,7 +129,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 2:
-                this.getVideoCount();
+                // this.getVideoCount();
                 this.videoPaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getVideoInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize))).subscribe();
