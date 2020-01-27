@@ -53,7 +53,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     { label: "This Month", id: "month" },
     { label: "Date Range", id: "range" },
     { label: "Mobile Number", id: "mobile" },
-    // { label: "Smart Card", id: "smartCard" }
+    { label: "Smart Card", id: "smartCard" }
   ];
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -218,6 +218,8 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     this.country = undefined;
     this.method = undefined;
     this.smartCard = undefined;
+    this.paginator.firstPage();
+    
     this.getUsers(this.filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 
@@ -226,6 +228,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
     if (data.direction !== "") {
       filter.sortby = data.active;
       filter.sortorder = data.direction;
+      this.paginator.firstPage();
       this.getUsers(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
     } else {
       this.getUsers(filter, this.paginator.pageIndex + 1, this.paginator.pageSize);
