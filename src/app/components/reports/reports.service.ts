@@ -211,25 +211,25 @@ export class ReportService {
 
 
     getPackageCount() {
-        let url = API.BASE_URL + "/cms/confirm-package";
+        let url = API.BASE_URL + "/cms/reports/confirm-package";
         let headers = new HttpHeaders().set("Accept", "application/json");
         return this.http.get<any>(url, { headers });
     }
 
     getRechargeHistoryCount() {
-        let url = API.BASE_URL + "/cms/confirm-recharge";
+        let url = API.BASE_URL + "/cms/reports/confirm-recharge";
         let headers = new HttpHeaders().set("Accept", "application/json");
         return this.http.get<any>(url, { headers });
     }
 
     getVideoCount() {
-        let url = API.BASE_URL + "/cms/confirm-content";
+        let url = API.BASE_URL + "/cms/reports/confirm-content";
         let headers = new HttpHeaders().set("Accept", "application/json");
         return this.http.get<any>(url, { headers });
     }
 
     getSeasonCount() {
-        let url = API.BASE_URL + "/cms/confirm-season";
+        let url = API.BASE_URL + "/cms/reports/confirm-season";
         let headers = new HttpHeaders().set("Accept", "application/json");
         return this.http.get<any>(url, { headers });
     }
