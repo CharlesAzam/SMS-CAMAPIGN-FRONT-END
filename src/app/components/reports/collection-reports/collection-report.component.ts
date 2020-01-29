@@ -49,6 +49,7 @@ export class CollectionReportComponent implements OnInit {
         "walletNumber",
         "gateway",
         "operator",
+        'txnReferenceNumber',
         "amountRecieved"
       ];
       this.detailedPaginator.page
@@ -148,6 +149,7 @@ export class CollectionReportComponent implements OnInit {
             "customerName",
             "walletNumber",
             "gateway",
+            'txnReferenceNumber',
             "operator",
             "amountRecieved"
           ];
