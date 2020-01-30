@@ -16,31 +16,6 @@ import { WarningDialog } from '../../warning-dialog/dialog-warning';
     styleUrls: ["./requests.component.css"]
 })
 export class RequestsComponent implements AfterViewInit {
-
-    //   filterMethodCtrl = new FormControl('');
-    //   filterCountryCtrl = new FormControl('');
-    //   range = new FormControl('');
-
-    //   mobile = new FormControl('')
-    //   protected _onDestroy = new Subject<void>();
-
-    //   filter: SupportFilter;
-
-    //   method: any;
-    //   country: any;
-    //   count: number;
-
-
-    //   countries: any[] = [];
-    //   methods: any[] = [
-    //     { label: 'Today', id: 'today' },
-    //     { label: 'This Week', id: 'week' },
-    //     { label: 'This Month', id: 'month' },
-    //     { label: 'Date Range', id: 'range' },
-    //   ]
-    //   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
-    //   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
-
     packageInfo: any;
     seasonInfo: any;
     videoInfo: any;
@@ -98,7 +73,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 1:
-                // this.getRehargeHistoryCount();
+                this.getRehargeHistoryCount();
                 this.rechargePaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getRechargeHistory(this.rechargePaginator.pageIndex + 1, this.rechargePaginator.pageSize))).subscribe();
@@ -113,7 +88,7 @@ export class RequestsComponent implements AfterViewInit {
     selectTab(event) {
         switch (event) {
             case 0:
-                // this.getPackageCount();
+                this.getPackageCount();
                 this.packagePaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getPackageInformation(this.packagePaginator.pageIndex + 1, this.packagePaginator.pageSize))).subscribe();
@@ -121,7 +96,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 1:
-                // this.getSeasonCount();
+                this.getSeasonCount();
                 this.seasonPaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getSeasonInformation(this.seasonPaginator.pageIndex + 1, this.seasonPaginator.pageSize))).subscribe();
@@ -129,7 +104,7 @@ export class RequestsComponent implements AfterViewInit {
                 break;
 
             case 2:
-                // this.getVideoCount();
+                this.getVideoCount();
                 this.videoPaginator.page.pipe(
                     startWith(null),
                     tap(() => this.getVideoInformation(this.videoPaginator.pageIndex + 1, this.videoPaginator.pageSize))).subscribe();

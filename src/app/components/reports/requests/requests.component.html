@@ -463,7 +463,7 @@
                     <tr mat-header-row *matHeaderRowDef="rechargeHistoryColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: rechargeHistoryColumns;"></tr>
                 </table>
-                <mat-paginator #rechargePaginator [length]="count" [pageSize]="10" class="table-paginator-style"
+                <mat-paginator #rechargePaginator [length]="rechargeHistoryCount" [pageSize]="10" class="table-paginator-style"
                     [pageSizeOptions]="[10, 20]" showFirstLastButtons>
                 </mat-paginator>
             </mat-card>
