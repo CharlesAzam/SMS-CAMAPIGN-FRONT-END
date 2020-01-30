@@ -82,7 +82,7 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
   packageDisplayedColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'paidAmount', 'walletTransId', 'status', 'actions'];
   videoDisplayedColumns: string[] = ['title', 'price', 'subscribedFrom', 'startDate', 'endDate', 'walletId', 'status', 'actions'];
   seasonDisplayedColumns: string[] = ['subId', 'title', 'series', 'startDate', 'endDate', 'amount', 'walletTransId', 'status', 'actions'];
-  rechargeHistoryColumns: string[] = ['transactionToken', 'transactionReference', 'transactionDate', 'paidAmount', 'status', 'actions'];
+  rechargeHistoryColumns: string[] = ['transactionToken', 'transactionReference', 'transactionDate', 'paidAmount', 'status'];
   redeemedCouponsColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode'];
   walletTransactionColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'status'];
   smartCardColumns: string[] = ['fullName', 'smartCardNo',];

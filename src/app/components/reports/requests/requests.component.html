@@ -321,7 +321,7 @@
         </div>
 
     </mat-tab>
-    <mat-tab label="Refunds">
+    <mat-tab label="Refunds" *ngIf="false">
         <div style="margin-top: 30px; margin-left: 40px; margin-right: 40px;">
             <mat-card>
                 <div class="header">
@@ -334,60 +334,8 @@
 
             <mat-card style="margin-top: 10px;">
                 <div class="row" style="margin: 10px;">
-                    <!-- <div class="col-md-12">
-                        <div class="form-group">
-                            <mat-form-field style="width: 100%;">
-                                <mat-label>Search Method</mat-label>
-                                <mat-select [(value)]="method" required>
-                                    <ngx-mat-select-search [formControl]="filterMethodCtrl"
-                                        [noEntriesFoundLabel]="'Method not found'"
-                                        [placeholderLabel]="'Find method...'">
-                                    </ngx-mat-select-search>
-                                    <mat-option *ngFor="let method of filteredMethods | async" [value]="method.id">
-                                        {{method.label}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div> -->
-
-
-                    <!-- <div class="col-md-6" *ngIf="method === 'mobile'">
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Mobile number" type="number" [formControl]="mobile">
-                        </mat-form-field>
-                    </div> -->
-
-
-                    <!-- <div class="form-group" *ngIf="method === 'range'">
-                        <div class="col-md-6">
-                            <mat-form-field style="width: 100%;">
-                                <input matInput placeholder="Choose a range" [satDatepicker]="picker"
-                                    [formControl]="range" [value]="date" />
-                                <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                            </mat-form-field>
-                        </div>
-                    </div> -->
+                   
                 </div>
-
-
-
-                <!-- <div class="row" style="margin: 10px;">
-                    <div class="col-md-6 text-left">
-                        <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
-                            (click)="search()">Search</button>
-                        <button color='danger' mat-raised-button (click)="resetFilters()">Reset</button>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button style="margin-right: 5px;" mat-raised-button color="accent" type="submit"
-                            [disabled]="datasource.data" (click)="generateExcel()">
-                            <mat-icon>attachment</mat-icon>
-                            Export Excel
-                        </button>
-                    </div>
-                </div> -->
-
 
                 <table mat-table style="width: 100%;" [dataSource]="rechargeDataSource"
                     class="mat-elevation-z8" matSort>
