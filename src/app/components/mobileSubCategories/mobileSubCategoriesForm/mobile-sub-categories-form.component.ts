@@ -66,7 +66,7 @@ export class MobileSubCategoriesFormComponent implements OnInit {
       if (params.id !== 'new') {
         this.subCategoryService.findById(params.id).subscribe((response: any) => {
           if (response.status === 200) {
-            this.subCategoryModel = response.data[0];
+            this.subCategoryModel = response.data;
             this.subCategoryForm.setValue({
               name: this.subCategoryModel.name ? this.subCategoryModel.name : '',
               type: this.subCategoryModel.type ? this.subCategoryModel.type : '',
