@@ -81,7 +81,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
           (response: any) => {
             if (response.status === 200) {
               console.log(response.data);
-              this.categoryModel = response.data[0];
+              this.categoryModel = response.data;
               this.categoryForm.setValue({
                 name: this.categoryModel.name ? this.categoryModel.name : "",
                 language: this.categoryModel.language
