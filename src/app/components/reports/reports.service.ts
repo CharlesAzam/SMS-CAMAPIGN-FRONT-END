@@ -1,239 +1,238 @@
-
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { API } from 'src/environments/environment';
-import { ExportToCsv } from 'export-to-csv';
-import { SupportFilter } from '../support/support-filter.model';
-
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { API } from "src/environments/environment";
+import { ExportToCsv } from "export-to-csv";
+import { SupportFilter } from "../support/support-filter.model";
 
 @Injectable()
 export class ReportService {
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) {
+  exportFileToCsv(data: any[], title?: string, filename?: string) {
+    const options = {
+      fieldSeparator: ",",
+      quoteStrings: '"',
+      decimalSeparator: ".",
+      showLabels: true,
+      showTitle: true,
+      title: title,
+      useTextFile: false,
+      useBom: true,
+      filename: filename,
+      useKeysAsHeaders: true
+    };
+    console.log(title);
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(data);
+  }
+
+  getReport(options: any) {
+    let url = "";
+    if (options) {
     }
+    this.http.get(url, { params: options });
+  }
 
-    exportFileToCsv(data: any[], title?: string, filename?: string) {
-        const options = {
-            fieldSeparator: ',',
-            quoteStrings: '"',
-            decimalSeparator: '.',
-            showLabels: true,
-            showTitle: true,
-            title: title,
-            useTextFile: false,
-            useBom: true,
-            filename: filename,
-            useKeysAsHeaders: true,
-        };
-        console.log(title)
-        const csvExporter = new ExportToCsv(options);
-        csvExporter.generateCsv(data);
-    }
+  getCollectionSummary(filter?: SupportFilter) {
+    let url = API.BASE_URL + "/cms/reports/summary?type=COLL_SUM";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-    getReport(options: any) {
+    let params: any = {};
 
-        let url = "";
-        if (options) {
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        }
-        this.http.get(url, { params: options });
-    }
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-    getCollectionSummary(filter?: SupportFilter) {
-        let url = API.BASE_URL + '/cms/reports/summary?type=COLL_SUM';
-        let headers = new HttpHeaders().set("Accept", "application/json");
+    if (filter.mobile) params.mobile = filter.mobile;
 
-        let params: any = {};
+    if (filter.email) params.email = filter.email;
 
+    if (filter.from) params.from = filter.from;
 
-        if (filter.pageSize) params.size = filter.pageSize;
+    if (filter.to) params.to = filter.to;
 
-        if (filter.pageIndex) params.pageNumber = filter.pageIndex;
+    if (filter.today) params.today = filter.today;
 
-        if (filter.mobile) params.mobile = filter.mobile;
+    if (filter.week) params.week = true;
 
-        if (filter.email) params.email = filter.email;
+    if (filter.month) params.month = true;
 
-        if (filter.from) params.from = filter.from;
+    if (filter.userId) params.userId = filter.userId;
 
-        if (filter.to) params.to = filter.to;
+    if (filter.sortorder) params.sortorder = filter.sortorder;
 
-        if (filter.today) params.today = filter.today;
+    if (filter.sortby) params.sortby = filter.sortby;
 
-        if (filter.week) params.week = true;
+    if (filter.country) params.country = filter.country;
+    return this.http.get(url, { params, headers });
+  }
 
-        if (filter.month) params.month = true;
+  getDetailedCollection(filter?: SupportFilter) {
+    let url = API.BASE_URL + "/cms/reports/summary?type=COLL_DET";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (filter.userId) params.userId = filter.userId;
+    let params: any = {};
 
-        if (filter.sortorder) params.sortorder = filter.sortorder;
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        if (filter.sortby) params.sortby = filter.sortby;
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-        if (filter.country) params.country = filter.country;
-        return this.http.get(url, { params, headers });
-    }
+    if (filter.mobile) params.mobile = filter.mobile;
 
-    getDetailedCollection(filter?: SupportFilter) {
-        let url = API.BASE_URL + '/cms/reports/summary?type=COLL_DET';
-        let headers = new HttpHeaders().set("Accept", "application/json");
+    if (filter.email) params.email = filter.email;
 
-        let params: any = {};
+    if (filter.from) params.from = filter.from;
 
+    if (filter.to) params.to = filter.to;
 
-        if (filter.pageSize) params.size = filter.pageSize;
+    if (filter.today) params.today = filter.today;
 
-        if (filter.pageIndex) params.pageNumber = filter.pageIndex;
+    if (filter.week) params.week = true;
 
-        if (filter.mobile) params.mobile = filter.mobile;
+    if (filter.month) params.month = true;
 
-        if (filter.email) params.email = filter.email;
+    if (filter.userId) params.userId = filter.userId;
 
-        if (filter.from) params.from = filter.from;
+    if (filter.sortorder) params.sortorder = filter.sortorder;
 
-        if (filter.to) params.to = filter.to;
+    if (filter.sortby) params.sortby = filter.sortby;
 
-        if (filter.today) params.today = filter.today;
+    if (filter.country) params.country = filter.country;
+    return this.http.get(url, { params, headers });
+  }
 
-        if (filter.week) params.week = true;
+  getCollectionSummaryCount() {}
 
-        if (filter.month) params.month = true;
+  getTransactions(filter?: SupportFilter) {
+    let url = API.BASE_URL + "/cms/reports/summary?type=TRNCS_SUM";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (filter.userId) params.userId = filter.userId;
+    let params: any = {};
 
-        if (filter.sortorder) params.sortorder = filter.sortorder;
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        if (filter.sortby) params.sortby = filter.sortby;
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-        if (filter.country) params.country = filter.country;
-        return this.http.get(url, { params, headers });
-    }
+    if (filter.mobile) params.mobile = filter.mobile;
 
-    getCollectionSummaryCount() {
+    if (filter.email) params.email = filter.email;
 
-    }
+    if (filter.from) params.from = filter.from;
 
-    getTransactions(filter?: SupportFilter) {
-        let url = API.BASE_URL + '/cms/reports/summary?type=TRNCS_SUM';
-        let headers = new HttpHeaders().set("Accept", "application/json");
+    if (filter.to) params.to = filter.to;
 
-        let params: any = {};
+    if (filter.today) params.today = filter.today;
 
+    if (filter.week) params.week = true;
 
-        if (filter.pageSize) params.size = filter.pageSize;
+    if (filter.month) params.month = true;
 
-        if (filter.pageIndex) params.pageNumber = filter.pageIndex;
+    if (filter.userId) params.userId = filter.userId;
 
-        if (filter.mobile) params.mobile = filter.mobile;
+    if (filter.sortorder) params.sortorder = filter.sortorder;
 
-        if (filter.email) params.email = filter.email;
+    if (filter.sortby) params.sortby = filter.sortby;
 
-        if (filter.from) params.from = filter.from;
+    if (filter.country) params.country = filter.country;
+    return this.http.get(url, { params, headers });
+  }
 
-        if (filter.to) params.to = filter.to;
+  getUserReports(filter?: SupportFilter) {
+    let url = API.BASE_URL + "/cms/reports/summary";
+    let headers = new HttpHeaders().set("Accept", "application/json");
 
-        if (filter.today) params.today = filter.today;
+    let params: any = {};
+    if (filter.type) params.type = filter.type;
 
-        if (filter.week) params.week = true;
+    if (filter.pageSize) params.size = filter.pageSize;
 
-        if (filter.month) params.month = true;
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
 
-        if (filter.userId) params.userId = filter.userId;
+    if (filter.mobile) params.mobile = filter.mobile;
 
-        if (filter.sortorder) params.sortorder = filter.sortorder;
+    if (filter.email) params.email = filter.email;
 
-        if (filter.sortby) params.sortby = filter.sortby;
+    if (filter.from) params.from = filter.from;
 
-        if (filter.country) params.country = filter.country;
-        return this.http.get(url, { params, headers });
-    }
+    if (filter.to) params.to = filter.to;
 
-    getUserReports(filter?: SupportFilter) {
-        let url = API.BASE_URL + '/cms/reports/summary';
-        let headers = new HttpHeaders().set("Accept", "application/json");
+    if (filter.today) params.today = filter.today;
 
-        let params: any = {};
-        if (filter.type) params.type = filter.type;
+    if (filter.week) params.week = true;
 
+    if (filter.month) params.month = true;
 
-        if (filter.pageSize) params.size = filter.pageSize;
+    if (filter.userId) params.userId = filter.userId;
 
-        if (filter.pageIndex) params.pageNumber = filter.pageIndex;
+    if (filter.sortorder) params.sortorder = filter.sortorder;
 
-        if (filter.mobile) params.mobile = filter.mobile;
+    if (filter.sortby) params.sortby = filter.sortby;
 
-        if (filter.email) params.email = filter.email;
+    if (filter.country) params.country = filter.country;
 
-        if (filter.from) params.from = filter.from;
+    return this.http.get(url, { params, headers });
+  }
 
-        if (filter.to) params.to = filter.to;
+  getCancellationRequests(filter: SupportFilter, subscriptionType: string) {
+    let params: any = {};
+    if (filter.type) params.type = filter.type;
 
-        if (filter.today) params.today = filter.today;
+    if (filter.pageSize) params.size = filter.pageSize;
+    if (filter.pageIndex) params.pageNumber = filter.pageIndex;
+    let url = API.BASE_URL + "/cms/reports/" + subscriptionType;
+    return this.http.get(url, { params });
+  }
 
-        if (filter.week) params.week = true;
+  cancelSubscription(data) {
+    let url = API.BASE_URL + "/cms/cancelSubscription";
+    return this.http.post(url, data);
+  }
 
-        if (filter.month) params.month = true;
+  refundMoney(data) {
+    let url = API.BASE_URL + "/cms/refundMoney";
+    return this.http.post(url, data);
+  }
 
-        if (filter.userId) params.userId = filter.userId;
+  getPackageCount() {
+    let url = API.BASE_URL + "/cms/reports/confirm-package";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.sortorder) params.sortorder = filter.sortorder;
+  getRechargeHistoryCount() {
+    let url = API.BASE_URL + "/cms/reports/confirm-recharge";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.sortby) params.sortby = filter.sortby;
+  getVideoCount() {
+    let url = API.BASE_URL + "/cms/reports/confirm-content";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
-        if (filter.country) params.country = filter.country;
+  getSeasonCount() {
+    let url = API.BASE_URL + "/cms/reports/confirm-season";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.get<any>(url, { headers });
+  }
 
+  getSubscriptionReport(filter) {
+    let url = API.BASE_URL + "/cms/reports/summary";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    let params: any = {};
+    if (filter.type) params.type = filter.type;
 
+    if (filter.from) params.from = filter.from;
 
-        return this.http.get(url, { params, headers });
-    }
+    if (filter.to) params.to = filter.to;
 
-    getCancellationRequests(filter: SupportFilter, subscriptionType: string) {
+    if (filter.today) params.today = filter.today;
 
-        let params: any = {};
-        if (filter.type) params.type = filter.type;
+    if (filter.week) params.week = true;
 
+    if (filter.month) params.month = true;
 
-        if (filter.pageSize) params.size = filter.pageSize;
-        if (filter.pageIndex) params.pageNumber = filter.pageIndex;
-        let url = API.BASE_URL + '/cms/reports/' + subscriptionType;
-        return this.http.get(url, { params });
-    }
-
-    cancelSubscription(data) {
-        let url = API.BASE_URL + "/cms/cancelSubscription";
-        return this.http.post(url, data);
-    }
-
-    refundMoney(data) {
-        let url = API.BASE_URL + "/cms/refundMoney";
-        return this.http.post(url, data);
-    }
-
-
-    getPackageCount() {
-        let url = API.BASE_URL + "/cms/reports/confirm-package";
-        let headers = new HttpHeaders().set("Accept", "application/json");
-        return this.http.get<any>(url, { headers });
-    }
-
-    getRechargeHistoryCount() {
-        let url = API.BASE_URL + "/cms/reports/confirm-recharge";
-        let headers = new HttpHeaders().set("Accept", "application/json");
-        return this.http.get<any>(url, { headers });
-    }
-
-    getVideoCount() {
-        let url = API.BASE_URL + "/cms/reports/confirm-content";
-        let headers = new HttpHeaders().set("Accept", "application/json");
-        return this.http.get<any>(url, { headers });
-    }
-
-    getSeasonCount() {
-        let url = API.BASE_URL + "/cms/reports/confirm-season";
-        let headers = new HttpHeaders().set("Accept", "application/json");
-        return this.http.get<any>(url, { headers });
-    }
-
-
+    return this.http.get<any>(url, { headers, params});
+  }
 }
-

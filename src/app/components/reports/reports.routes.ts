@@ -3,6 +3,7 @@ import { UserReportComponet } from './user-reports/user-report.component';
 import { TransactionReportComponent } from './transaction-reports/transaction-report.component';
 import { CollectionReportComponent } from './collection-reports/collection-report.component';
 import { RequestsComponent } from './requests/requests.component';
+import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 
 export const REPORT_ROUTES: Routes = [
   {
@@ -25,5 +26,9 @@ export const REPORT_ROUTES: Routes = [
   {
     path: 'requests',
     component: RequestsComponent
+  },
+  {
+    path: 'subscriptions',
+    component: SubscriptionReportComponent
   }
 ]

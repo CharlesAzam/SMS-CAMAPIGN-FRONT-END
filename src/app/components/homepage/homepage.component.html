@@ -80,6 +80,7 @@
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-user-reports')" routerLink="reports">Users Reports</a>
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/transactions">Transaction Reports</a>
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/requests">Requests</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/subscriptions">Subscription Reports</a>
       </div>
 
       <mat-list-item *ngIf="isModulePermitted('Customer-Portal') || isModulePermitted('customer-support')" (click)="showSupport = !showSupport" class="parent">
