@@ -1,29 +1,23 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { API } from "src/environments/environment";
-import { ExportToCsv } from "export-to-csv";
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 import { SupportFilter } from "../support/support-filter.model";
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Injectable()
 export class ReportService {
   constructor(private http: HttpClient) {}
 
   exportFileToCsv(data: any[], title?: string, filename?: string) {
-    const options = {
-      fieldSeparator: ",",
-      quoteStrings: '"',
-      decimalSeparator: ".",
-      showLabels: true,
-      showTitle: true,
-      title: title,
-      useTextFile: false,
-      useBom: true,
-      filename: filename,
-      useKeysAsHeaders: true
-    };
-    console.log(title);
-    const csvExporter = new ExportToCsv(options);
-    csvExporter.generateCsv(data);
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    console.log('worksheet',worksheet);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    this.saveAsExcelFile(excelBuffer, filename);
   }
 
   getReport(options: any) {
@@ -234,5 +228,12 @@ export class ReportService {
     if (filter.month) params.month = true;
 
     return this.http.get<any>(url, { headers, params});
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }

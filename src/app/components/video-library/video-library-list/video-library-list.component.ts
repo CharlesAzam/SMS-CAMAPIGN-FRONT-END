@@ -41,7 +41,7 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
   selectedVideoLibrary: VideoLibrary;
   dataSource = new MatTableDataSource<VideoLibrary>([]);
 
-  displayedColumns: string[] = ["id", "title", "streamURL", "action"];
+  displayedColumns: string[] = ["id", "title", "action"];
   count: number;
 
   constructor(
