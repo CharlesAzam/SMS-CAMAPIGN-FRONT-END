@@ -9,11 +9,11 @@ import * as moment from "moment";
 import { MatTableDataSource, MatPaginator, MatSort } from "@angular/material";
 
 @Component({
-  selector: "subscription-report",
-  templateUrl: "./subscription-report.component.html",
-  styleUrls: ["./subscription-report.component.css"]
+  selector: "invoice-report",
+  templateUrl: "./invoice-report.component.html",
+  styleUrls: ["./invoice-report.component.css"]
 })
-export class SubscriptionReportComponent implements OnInit {
+export class InvoiceReportComponent implements OnInit {
   filterMethodCtrl = new FormControl("");
   filterTypesCtrl = new FormControl("");
   range = new FormControl("");
@@ -35,24 +35,7 @@ export class SubscriptionReportComponent implements OnInit {
     { label: "Date Range", id: "range" }
   ];
 
-  types: any[] = [
-    { label: "Package Subscription", id: "PACKAGE_SUBSCRIPTION_REPORTS" },
-    { label: "Content Subscription", id: "CONTENT_SUBSCRIPTION_REPORTS" }
-  ];
-  filteredTypes: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
-
-  displayedColumns: string[] = [
-    "No",
-    "date",
-    "openingBalance",
-    "amountReceived",
-    "subscriptionPurchase",
-    "videoPurchase",
-    "tvSeriesPurchase",
-    "closingBalance",
-    "smartCardTransfer"
-  ];
 
   constructor(private reportService: ReportService) {}
 
@@ -60,19 +43,11 @@ export class SubscriptionReportComponent implements OnInit {
 
   ngOnInit() {
     this.filter = {};
-    // this.getTransactionCount(this.filter)
     this.filteredMethods.next(this.methods.slice());
     this.filterMethodCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterMethod();
-      });
-
-    this.filteredTypes.next(this.types.slice());
-    this.filterTypesCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterType();
       });
   }
 
@@ -94,30 +69,9 @@ export class SubscriptionReportComponent implements OnInit {
     );
   }
 
-  filterType() {
-    if (!this.types) return;
-
-    let search = this.filterTypesCtrl.value;
-    if (!search) {
-      this.filteredTypes.next(this.types.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredTypes.next(
-      this.types.filter(cont =>
-        cont ? cont.label.toLowerCase().indexOf(search) > -1 : ""
-      )
-    );
-  }
-
   search() {
     this.filter = {};
 
-    if (this.type) {
-      this.filter.type = this.type;
-    }
     if (this.method === "week") {
       this.filter.week = true;
     }
@@ -135,25 +89,24 @@ export class SubscriptionReportComponent implements OnInit {
       this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
     }
 
-    this.getSubscriptionsReports(this.filter);
+    this.getInvoiceReport(this.filter);
   }
 
   isGenerateDisabled() {
-    return this.type === undefined ? true : false;
+    return this.method === undefined ? true : false;
   }
 
-  getSubscriptionsReports(filter: SupportFilter) {
-    this.reportService.getSubscriptionReport(filter).subscribe(
+  getInvoiceReport(filter: SupportFilter) {
+    this.reportService.getInvoiceReport(filter).subscribe(
       (response: any) => {
         if (response.status === 200) {
           this.datasource = response.data;
-          let array = response.data.map(info => info.data);
-          console.log(array)
-          this.reportService.exportFileToCsv(
-            array[0],
-            "SUBSCRIPTION REPORT",
-            `${this.filter.type} ${moment().format()}`
-          );
+          if (response.data.length > 0)
+            this.reportService.exportFileToCsv(
+              response.data,
+              "INVOICE REPORT",
+              `INVOICE REPORT ${moment().format()}`
+            );
         }
       },
       error => console.error(error)

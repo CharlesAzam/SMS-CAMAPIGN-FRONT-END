@@ -10,6 +10,7 @@ import { TransactionReportComponent } from './transaction-reports/transaction-re
 import { CollectionReportComponent } from './collection-reports/collection-report.component';
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
+import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SubscriptionReportComponent } from './subscription-reports/subscription
     TransactionReportComponent,
     CollectionReportComponent,
     RequestsComponent,
-    SubscriptionReportComponent
+    SubscriptionReportComponent,
+    InvoiceReportComponent
   ],
   providers: [
     ReportService

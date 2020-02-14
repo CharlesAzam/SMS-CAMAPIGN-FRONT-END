@@ -230,6 +230,24 @@ export class ReportService {
     return this.http.get<any>(url, { headers, params});
   }
 
+  getInvoiceReport(filter) {
+    let url = API.BASE_URL + "/cms/reports/invoice";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    let params: any = {};
+
+    if (filter.from) params.from = filter.from;
+
+    if (filter.to) params.to = filter.to;
+
+    if (filter.today) params.today = filter.today;
+
+    if (filter.week) params.week = true;
+
+    if (filter.month) params.month = true;
+
+    return this.http.get<any>(url, { headers, params});
+  }
+
   private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE
