@@ -1,4 +1,5 @@
 export class VideoLibrary {
     title: string;
-    streamURL: string; 
+    streamURLIos: string; 
+    streamURLAndroid: string;
 }

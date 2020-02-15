@@ -3,7 +3,6 @@ import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { API } from "src/environments/environment";
-import { ExportToCsv } from "export-to-csv";
 import { SupportFilter } from "./support-filter.model";
 // import { userInfo } from "os";
 
@@ -125,13 +124,6 @@ export class SupportService {
 
     return this.http.get<any>(url, { headers });
   }
-
-  // getRechargeHistory(filter: SupportFilter) {
-  //     let url = API.BASE_URL + '/cms/customer-portal/recharge/' + filter.userId;
-  //     let headers = new HttpHeaders().set('Accept', 'application/json');
-
-  //     return this.http.get<any>(url, { headers });
-  // }
 
   getUserCount() {
     let url = API.BASE_URL + "/cms/customer-portal/users-count";

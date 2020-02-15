@@ -17,9 +17,15 @@
                         </mat-form-field>
 
                         <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Stream URL" [(ngModel)]="videoLibrary.streamURL"
-                                name="streamURL" #streamURL="ngModel" required>
-                            <mat-error *ngIf="streamURL.invalid">Video library streamURL can not be empty</mat-error>
+                            <input matInput placeholder="Stream URL Android" [(ngModel)]="videoLibrary.streamURLAndroid"
+                                name="streamURLAndroid" #streamURLAndroid="ngModel" required>
+                            <mat-error *ngIf="streamURLAndroid.invalid">Video library streamURL Android can not be empty</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Stream URL IOS" [(ngModel)]="videoLibrary.streamURLIos"
+                                name="streamURL" #streamURLIos="ngModel" required>
+                            <mat-error *ngIf="streamURLIos.invalid">Video library streamURL IOS can not be empty</mat-error>
                         </mat-form-field>
 
                         <div class="form-group">
