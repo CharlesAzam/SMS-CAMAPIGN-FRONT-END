@@ -48,7 +48,7 @@ export class BannerListComponent {
   constructor(
     private bannerService: BannerService,
     private dialog: MatDialog,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {}
 
   delete(row) {

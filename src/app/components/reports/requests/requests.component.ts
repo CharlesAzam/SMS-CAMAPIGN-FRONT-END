@@ -21,6 +21,8 @@ export class RequestsComponent implements AfterViewInit {
     videoInfo: any;
     rechargeInfo: any;
 
+    selectedTab;
+
     userId: string;
 
     packageCount: number;

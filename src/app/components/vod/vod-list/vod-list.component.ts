@@ -102,7 +102,7 @@ export class VodListComponent implements OnInit {
     "status",
     "action"
   ];
-  constructor(private vodService: VodService, private dialog: MatDialog, private authenticationService: AuthenticationService) {
+  constructor(private vodService: VodService, private dialog: MatDialog, public authenticationService: AuthenticationService) {
     this.types.forEach((type) => {
       if (this.authenticationService.isModuleAllowed(type, 'read'))
         this.permittedTypes.push(type);

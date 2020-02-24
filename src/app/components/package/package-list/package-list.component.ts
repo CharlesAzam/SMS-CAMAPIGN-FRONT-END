@@ -52,7 +52,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     private packageService: PackageService,
     private dialog: MatDialog,
     private router: Router,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -84,7 +84,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  removePackage(row, index) {
+  removePackage(row, index?) {
     this.dialog
       .open(WarningDialog, {
         width: "400px",

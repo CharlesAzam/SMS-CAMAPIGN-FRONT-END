@@ -4,7 +4,6 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from "./components/homepage/dashboard/dashboard.component";
 import { LoginComponent } from "./components/login/login.component";
 import { CreateCategoryComponent } from "./components/mobileCategory/mobileCategory.component";
-import { SideNavComponent } from "./components/side-nav/side-nav.component";
 import { CategoryFormComponent } from "./components/mobileCategory/mobile category form/category-form.component";
 import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.component";
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
@@ -12,8 +11,6 @@ import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/M
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
 
 
-import { LeagueComponent } from "./components/league/league-form/league.component";
-import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { CanActivateViaAuthGuard } from './guards/PermissionGuard';
 

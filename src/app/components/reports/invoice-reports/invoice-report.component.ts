@@ -101,6 +101,7 @@ export class InvoiceReportComponent implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           this.datasource = response.data;
+
           if (response.data.length > 0)
             this.reportService.exportFileToCsv(
               response.data,

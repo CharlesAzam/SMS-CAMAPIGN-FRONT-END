@@ -75,7 +75,7 @@
 
         <div class="submenu" [ngClass]="{ expanded: showCollection }" *ngIf="isShowing || isExpanded">
           <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-collection-summary')" routerLink="reports/collections/summary">Summary</a>
-          <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-collection-detailed')" routerLink="reports/collections/detailed">Detailed</a>
+          <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-collection-summary')" routerLink="reports/collections/detailed">Detailed</a>
         </div>
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-user-reports')" routerLink="reports">Users Reports</a>
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/transactions">Transaction Reports</a>
