@@ -12,6 +12,6 @@ export class Package {
     countryDetail: any;
     noOfDays: string;
     status: boolean = false;
-    price: string | Object;
+    price: any[]
     currency: string;
 }

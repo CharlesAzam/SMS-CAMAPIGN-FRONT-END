@@ -11,4 +11,8 @@ export class CountryService {
     list() {
         return this.http.get<any>(API.BASE_URL + '/cms/country-list').pipe(map((response: any) => response));
     }
+
+    regions() {
+        return this.http.get<any>(API.BASE_URL + '/cms/region-list').pipe(map((response: any) => response));
+    }
 }

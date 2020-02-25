@@ -6,7 +6,6 @@ export const environment = {
   production: false
 };
 export const API = {
-  // BASE_URL: "http://34.245.88.152:3004"
   BASE_URL: "http://localhost:3002",
 };
 /*

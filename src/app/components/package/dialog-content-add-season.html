@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Add Price List</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="packageForm">
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Package Name" formControlName="packageName" required />
+    </mat-form-field>
+
+    <div class="form-group">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currency" required>
+          <mat-option *ngFor="let currenc of currencies" [value]="currenc"
+            >{{currenc}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field style="width: 100%;">
+        <input
+          matInput
+          placeholder="Price"
+          formControlName="price"
+          type="number"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%;">
+        <input
+          matInput
+          placeholder="Number of Days"
+          formControlName="noOfDays"
+          type="number"
+          required
+        />
+        <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+      </mat-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="packageForm.invalid"
+    [mat-dialog-close]="getData()"
+    cdkFocusInitial
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
