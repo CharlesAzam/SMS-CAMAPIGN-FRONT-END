@@ -210,7 +210,7 @@ export class PackageEditComponent implements OnInit {
 
 @Component({
     selector: "dialog-content-type",
-    templateUrl: "../dialog-content-add-season.html"
+    templateUrl: "../dialog-content-add-price.html"
   })
   export class AddPricesDialog {
     packageForm = new FormGroup({
