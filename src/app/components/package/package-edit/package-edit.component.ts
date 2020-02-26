@@ -220,6 +220,7 @@ export class PackageEditComponent implements OnInit {
 export class AddPricesDialog {
   packageForm = new FormGroup({
     packageName: new FormControl(""),
+    packageDescription: new FormControl(""),
     price: new FormControl(""),
     currency: new FormControl(""),
     noOfDays: new FormControl("")
@@ -239,6 +240,7 @@ export class AddPricesDialog {
       this.editPackageObject = data;
       this.packageForm.setValue({
         packageName: data.packageName ? data.packageName : "",
+        packageDescription: data.packageDescription ? data.packageDescription : "",
         currency: data.currency ? data.currency : "",
         noOfDays: data.noOfDays? data.noOfDays : "",
         price: data.price? data.price: ""
