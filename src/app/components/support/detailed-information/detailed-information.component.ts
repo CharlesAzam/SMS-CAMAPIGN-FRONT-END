@@ -85,7 +85,7 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
   rechargeHistoryColumns: string[] = ['transactionToken', 'transactionReference', 'transactionDate', 'paidAmount', 'status'];
   redeemedCouponsColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode'];
   walletTransactionColumns: string[] = ['subId', 'packageName', 'fromDate', 'toDate', 'couponCode', 'status'];
-  smartCardColumns: string[] = ['fullName', 'smartCardNo',];
+  smartCardColumns: string[] = ['fullName', 'smartCardNo', 'actions',];
 
 
   datasource = new MatTableDataSource<any>([]);
