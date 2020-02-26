@@ -453,7 +453,7 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
                             <td mat-cell *matCellDef="let element"> 
-                                <button mat-raised-button color="warn" (click)="removeSmartcard(element, 'package')" [disabled]="element.smartCard === ''">REMOVE SMARTCARD</button>
+                                <button mat-raised-button *ngIf="isSmartCardDeletionAllowed()" color="warn" (click)="removeSmartcard(element.smartCard)" [disabled]="element.smartCard === ''">REMOVE SMARTCARD</button>
                             </td>
                         </ng-container>
 
