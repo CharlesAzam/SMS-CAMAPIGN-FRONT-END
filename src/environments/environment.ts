@@ -6,8 +6,8 @@ export const environment = {
   production: false
 };
 export const API = {
-  // BASE_URL: "http://52.208.244.143:3002"
-  BASE_URL: "https://azamtvmax.azamtv.co.tz",
+  BASE_URL: "http://34.245.88.152:3002"
+  // BASE_URL: "https://azamtvmax.azamtv.co.tz",
   // BASE_URL: "http://localhost:3002",
 };
 /*
