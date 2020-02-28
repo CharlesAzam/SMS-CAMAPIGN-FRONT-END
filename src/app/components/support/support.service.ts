@@ -8,7 +8,7 @@ import { SupportFilter } from "./support-filter.model";
 
 @Injectable()
 export class SupportService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUsers(filter: SupportFilter, pageIndex?, pageSize?) {
     let url = API.BASE_URL + "/cms/customer-portal/users";
@@ -194,6 +194,13 @@ export class SupportService {
     let url = API.BASE_URL + "/cms/customer-portal/season-count/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
+  }
+
+  removeSmartcard(userId: string, smartCardNumber: string) {
+    let url =
+      API.BASE_URL + `/cms/customer-portal/smartcards/${userId}/${smartCardNumber}`;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.delete<any>(url, { headers });
   }
 
   getSupportCount(filter: SupportFilter) {
