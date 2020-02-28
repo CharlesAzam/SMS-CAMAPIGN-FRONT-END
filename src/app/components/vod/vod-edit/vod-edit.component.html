@@ -1516,6 +1516,20 @@
                 </mat-form-field>
               </div>
 
+              <mat-form-field style="width: 100%;">
+                <mat-label>Country Origin</mat-label>
+                <mat-select 
+                    formControlName="countryOrigin" required>
+                    <ngx-mat-select-search [formControl]="filterOriginCountryCtrl"
+                        [noEntriesFoundLabel]="'Country not found'"
+                        [placeholderLabel]="'Find Country...'">
+                    </ngx-mat-select-search>
+                    <mat-option *ngFor="let count of filteredOriginCountry | async" [value]="count.country">
+                        {{count.country}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
                   <mat-label>Region</mat-label>

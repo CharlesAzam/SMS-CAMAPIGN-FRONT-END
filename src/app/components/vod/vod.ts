@@ -9,6 +9,7 @@ export class Vod {
     categories: any[];
     region: any[];
     country: any[];
+    countryOrigin: string;
     subCategories: any[];
     language: any[];
     isFree: boolean = false;
