@@ -13,14 +13,10 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { DashboardComponent } from "./components/homepage/dashboard/dashboard.component";
 import { VodModule } from "../app/components/vod/vod.module";
 import { PackageModule } from "../app/components/package/package.module";
-import { CouponModule } from "../app/components/coupon/coupon.module";
 import { CreateCategoryComponent } from "./components/mobileCategory/mobileCategory.component";
-import { CardComponentComponent } from "./components/card-component/card-component.component";
-import { SideNavComponent } from "./components/side-nav/side-nav.component";
-import { ProductModule } from "../app/components/product/product.module";
+
 import { VideoLibraryModule } from "../app/components/video-library/video-library.module";
 import { BannerModule } from "../app/components/banner/banner.module";
-import { SelectionModel } from "@angular/cdk/collections";
 import { CategoryFormComponent } from "./components/mobileCategory/mobile category form/category-form.component";
 import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.component";
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
@@ -29,8 +25,6 @@ import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategori
 import { LanguageService } from "./services/language.service";
 import { CountryService } from "./services/coutry.service";
 import { ProgramModule } from "./components/programs/program.module";
-import { LeagueComponent } from "./components/league/league-form/league.component";
-import { LeaguelistComponent } from "./components/league/league-list/leaguelist.component";
 import { MatInputModule } from "@angular/material";
 import { LeagueService } from "./services/league.service";
 import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
@@ -55,16 +49,12 @@ import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
     HomepageComponent,
     DashboardComponent,
     CreateCategoryComponent,
-    CardComponentComponent,
-    SideNavComponent,
     CategoryFormComponent,
     MobileTagsComponent,
     MobileTagFormComponent,
     MobileSubCategoriesComponent,
     MobileSubCategoriesFormComponent,
-    LeagueComponent,
-    LeaguelistComponent,
-    // TopnavComponent
+
     ErrorDialog,
     WarningDialog,
     TicketDescriptionDialog
@@ -78,12 +68,9 @@ import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
     HttpClientModule,
     MaterialModule,
     BrowserAnimationsModule,
-    // CategoriesModule,
     VodModule,
     PackageModule,
     NgxMatSelectSearchModule,
-    CouponModule,
-    ProductModule,
     VideoLibraryModule,
     BannerModule,
     EditorModule,

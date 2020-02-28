@@ -90,7 +90,7 @@ export class LoggedSupportComponent implements OnInit {
     private countryService: CountryService,
     private supportService: SupportService,
     private dialog: MatDialog,
-    private authService: AuthenticationService
+    public authService: AuthenticationService
   ) { }
 
   ngOnInit() {

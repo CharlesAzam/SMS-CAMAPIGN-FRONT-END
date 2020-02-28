@@ -14,7 +14,9 @@ export class HomepageComponent implements OnInit {
   showMobile: boolean = false;
   showReports: boolean = false;
   isShowing = false;
-  userInfo = {};
+  userInfo = {
+    isSuperAdmin: false
+  };
   showSupport: boolean = false;
   showCollection: boolean = false;
 
@@ -75,7 +77,7 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(["movies"], { relativeTo: this.activatedRoute });
   }
 
-  isModulePermitted(moduleName: string) : boolean{
-    return this.authService.isModuleAllowed(moduleName);
+  isModulePermitted(moduleName: string, action?: string) : boolean{
+    return this.authService.isModuleAllowed(moduleName, action);
   }
 }

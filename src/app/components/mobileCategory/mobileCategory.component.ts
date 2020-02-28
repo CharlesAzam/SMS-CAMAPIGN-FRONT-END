@@ -55,7 +55,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private categoryService: CategoriesService,
     private languageService: LanguageService,
-    private checkPermissionService: AuthenticationService,
+    public checkPermissionService: AuthenticationService,
     private dialog: MatDialog
   ) {}
 

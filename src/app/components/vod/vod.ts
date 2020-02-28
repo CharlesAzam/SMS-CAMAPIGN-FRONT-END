@@ -7,6 +7,7 @@ export class Vod {
     starring: string;
     director: string;
     categories: any[];
+    region: any[];
     country: any[];
     countryOrigin: string;
     subCategories: any[];

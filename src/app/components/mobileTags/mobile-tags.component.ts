@@ -62,7 +62,7 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
     private tagService: MobileTagsService,
     private languageService: LanguageService,
     private dialog: MatDialog,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {}
   TagModel: MobileTags = new MobileTags();
   displayedColumns: string[] = ["id", "name", "type", "action"];

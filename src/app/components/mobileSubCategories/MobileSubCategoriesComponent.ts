@@ -20,7 +20,7 @@ export class MobileSubCategoriesComponent implements OnInit {
     private subCategoryService: SubCategoriesService,
     private languageService: LanguageService,
     private dialog: MatDialog,
-    private checkPermissionService: AuthenticationService,
+    public checkPermissionService: AuthenticationService,
   ) {}
 
   languages: any[] = [];
