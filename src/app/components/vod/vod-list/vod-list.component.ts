@@ -33,6 +33,8 @@ export class VodListComponent implements OnInit {
 
   types: string[] = ["VOD", "NEWS", "RADIO"];
   permittedTypes: string[] = [];
+  searchTimeout = null;
+  filterText: string;
 
   selectedType: string = this.permittedTypes[0];
 
@@ -86,8 +88,8 @@ export class VodListComponent implements OnInit {
     });
   }
 
-  getData(type, page, size) {
-    this.vodService.find(type, page, size).subscribe((response: any) => {
+  getData(type, page, size, filterText?) {
+    this.vodService.find(type, page, size, this.filterText).subscribe((response: any) => {
       if (response.status === 200) {
         this.dataSource = new MatTableDataSource<any>(response.data);
       }
@@ -145,7 +147,17 @@ export class VodListComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterText = filterValue.trim().toLowerCase();
+
+    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.getData(
+        this.selectedType,
+        1,
+        this.paginator.pageSize,
+        filterValue.trim().toLowerCase(),
+      );
+    }, 500);
   }
 
   getContentCount(contentType) {
