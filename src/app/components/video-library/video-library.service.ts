@@ -29,29 +29,22 @@ export class VideoLibraryService {
   //     )
   // }
 
-  find(index?, size?): Observable<VideoLibrary[]> {
-    let url = API.BASE_URL + "/cms/cdn-list?filter=true";
+  find(index?, size?, filter?): Observable<VideoLibrary[]> {
+    let url = API.BASE_URL + "/cms/cdn-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
-
-    console.log(size);
-    console.log(index);
 
     if (index || size) {
       let params = {
         pageNumber: index,
         size: size
       };
+      if (filter) {
+        params["filter"] = filter;
+      }
       return this.http.get<any>(url, { params, headers });
     }
     return this.http.get<any>(url, { headers });
   }
-
-  // find(): Observable<VideoLibrary[]> {
-  //     let url = API_URL;
-  //     let headers = new HttpHeaders()
-  //                         .set('Accept', 'application/json');
-  //     return this.http.get<VideoLibrary[]>(url, {headers});
-  // }
 
   save(entity: VideoLibrary): Observable<VideoLibrary> {
     let url = API.BASE_URL + "/cms/cdn/create";
