@@ -47,8 +47,7 @@ export class VodService {
         )
     }
 
-    find(route: String, pageNumber?: string, size?: string, filter?: VodFilter): Observable<Vod[]> {
-        console.log(route)
+    find(route: String, pageNumber?: string, size?: string, filter?: string): Observable<Vod[]> {
         let url = API.BASE_URL + '/cms/content/' + route;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -58,6 +57,9 @@ export class VodService {
                 "pageNumber": pageNumber,
                 "size": size
             };
+            if(filter){
+                params['filter'] = filter;
+            }
             return this.http.get<any[]>(url, { params, headers });
         }
 
