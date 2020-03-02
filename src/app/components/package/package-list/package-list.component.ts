@@ -38,12 +38,16 @@ export class PackageListComponent implements OnInit, AfterViewInit {
   paginator: MatPaginator;
 
   count: number;
+  filterText: string;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   filter = new PackageFilter();
   selectedPackage: Package;
   planInfo = null;
+
+  searchTimeout = null;
+
 
   dataSource = new MatTableDataSource<any>([]);
 
@@ -62,8 +66,9 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     // this.dataSource.sort = this.sort;
   }
 
-  getPackageList(index, size) {
-    this.packageService.findPackageList(index, size).subscribe(
+  getPackageList(index, size, filterText?) {
+    if(this.filterText) filterText = this.filterText;
+    this.packageService.findPackageList(index, size, filterText).subscribe(
       response => {
         this.dataSource = response.data;
       },
@@ -126,6 +131,14 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     this.selectedPackage = selected;
   }
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterText = filterValue;
+    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.getPackageList(
+        1,
+        this.paginator.pageSize,
+        this.filterText.trim().toLowerCase(),
+      );
+    }, 500);
   }
 }

@@ -38,7 +38,7 @@ export class PackageService {
         return this.http.get<any>(url, { headers })
     }
 
-    findPackageList(pageNumber?, size?) {
+    findPackageList(pageNumber?, size?, filter?) {
         let url = API.BASE_URL + '/cms/package-list'
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -48,6 +48,11 @@ export class PackageService {
                 "pageNumber": pageNumber,
                 "size": size
             };
+
+            if(filter){
+                params['filter'] = filter;
+            }
+
             return this.http.get<any>(url, { params, headers })
         }
         return this.http.get<any>(url, { headers })
