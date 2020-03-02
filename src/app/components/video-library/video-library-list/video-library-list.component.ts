@@ -38,11 +38,13 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
   }
 
   filter = new VideoLibraryFilter();
+  filterText: string;
   selectedVideoLibrary: VideoLibrary;
   dataSource = new MatTableDataSource<VideoLibrary>([]);
 
   displayedColumns: string[] = ["id", "title", "action"];
   count: number;
+  searchTimeout = null;
 
   constructor(
     private videoLibraryService: VideoLibraryService,
@@ -82,8 +84,8 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getVideoLibrary(index, size) {
-    this.videoLibraryService.find(index, size).subscribe(
+  getVideoLibrary(index, size, filterValue?) {
+    this.videoLibraryService.find(index, size, this.filterText).subscribe(
       (response: any) => {
         if (response.status === 200) {
           this.dataSource = new MatTableDataSource<any>(response.data);
@@ -93,16 +95,16 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  // search(): void {
-  //     this.videoLibraryService.load(this.filter);
-  // }
-
   select(selected: VideoLibrary): void {
     this.selectedVideoLibrary = selected;
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterText = filterValue.trim().toLowerCase();
+    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.getVideoLibrary(1, this.paginator.pageSize, this.filterText);
+    }, 500);
   }
 
   getCount() {
