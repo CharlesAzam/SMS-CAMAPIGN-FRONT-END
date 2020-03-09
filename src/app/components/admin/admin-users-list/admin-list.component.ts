@@ -25,7 +25,7 @@ export class AdminUsersListComponent implements OnInit {
         private dialog: MatDialog,
         private adminService: AdminService) { }
 
-    displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
+    displayedColumns: string[] = ['position','name','Role','Status', 'symbol'];
     count: number
     dataSource = new MatTableDataSource<any>([]);
 
@@ -68,6 +68,29 @@ export class AdminUsersListComponent implements OnInit {
                     }, error => console.log(error));
                 }
             });
+
+    }
+
+    editUser(row) {
+        console.log("Editing Role"+JSON.stringify(row))
+        // this.dialog
+        //     .open(WarningDialog, {
+        //         width: "400px",
+        //         data: {
+        //             title: "Warning",
+        //             message: `Are you sure want to delete ${row.username} `
+        //         }
+        //     })
+        //     .afterClosed()
+        //     .subscribe(result => {
+        //         if (result) {
+        //             this.adminService.deleteUser(row._id).subscribe((response: any) => {
+        //                 if (response.status === 200) {
+        //                     this.getUserList();
+        //                 }
+        //             }, error => console.log(error));
+        //         }
+        //     });
 
     }
 
