@@ -37,6 +37,11 @@ export class RoleListComponent implements OnInit, AfterViewInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    //Function to edit role 
+    editRole(row){
+        console.log("Editing user role "+JSON.stringify(row));
+    }
+
     deleteRole(row) {
         this.dialog
             .open(WarningDialog, {
