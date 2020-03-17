@@ -96,6 +96,14 @@ export class AdminService {
     return this.http.put<any>(url, data, { headers });
   }
 
+  getRolePermission (roleName: string){
+    
+    let url = API.BASE_URL + `/cms/list-role-permisson/${roleName}`;
+    console.log("Role Name from get role oermission "+roleName)
+    console.log("URL" +url)
+    return this.http.get(url);
+  }
+
   getCount() {
     let url = API.BASE_URL + `/cms/count/cdn`;
     return this.http.get(url);
