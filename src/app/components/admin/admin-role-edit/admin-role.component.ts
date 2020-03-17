@@ -21,6 +21,9 @@ export class RoleEditComponent implements OnInit {
     showEdit=null;
     selectedModulesAndActions: any[] = [];
 
+    @Input () heading: String=null;
+    @Input () placeHolderValue: String=null;
+
     modulesAndActions: any[] = []
 
     constructor(private router: Router, private roleService: AdminService) { }
