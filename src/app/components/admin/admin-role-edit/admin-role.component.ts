@@ -25,6 +25,30 @@ export class RoleEditComponent implements OnInit {
     @Input () placeHolderValue: String=null;
 
     modulesAndActions: any[] = []
+    previousUrl: string;
+    constructor(private router: Router, private roleService: AdminService,private activatedRoute : ActivatedRoute) {
+        this.activatedRoute.url.subscribe(url =>{
+            if(url[1].path!='new'){
+                this.showCreate=false
+                this.showEdit=true
+                this.heading="Edit";
+                this.placeHolderValue="Edting role name"
+                const  Role=JSON.stringify(url[1].path).toString()
+                const  l=Role.length
+                let ch1=Role.charAt(0)
+                let ch2=Role.charAt(l-1)
+                let roleName=Role.slice(1,l-1)
+                  
+                // console.log("Calling service to populate and edit current role")
+                this.roleName.setValue(roleName)
+                this.roleService.getRolePermission(roleName).subscribe((response: any) => {
+                    if (response.status === 200)
+                        console.log("Response Data")
+                        // console.log(response.data)
+                        //this.getModulesAndActions2
+                        this.modulesAndActions=response.data
+                        console.log(this.modulesAndActions)
+                }, error => console.log(error))
 
     constructor(private router: Router, private roleService: AdminService) { }
 
