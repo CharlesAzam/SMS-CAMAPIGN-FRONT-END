@@ -16,7 +16,9 @@ import { NoWhitespaceValidator } from 'src/app/validators/no-whitespace.validato
 export class RoleEditComponent implements OnInit {
 
     roleModel = new Role();
-    roleName = new FormControl('', [Validators.required, NoWhitespaceValidator() ]);
+    roleName = new FormControl('', [Validators.required, NoWhitespaceValidator()]);
+    showCreate=null
+    showEdit=null;
     selectedModulesAndActions: any[] = [];
 
     modulesAndActions: any[] = []
