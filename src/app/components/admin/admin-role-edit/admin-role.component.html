@@ -1,43 +1,137 @@
 <div class="container">
+
     <mat-card style="margin-top: 30px;">
-        <h2>Add Role</h2>
+
+        <h2>{{heading}} Role</h2>
+
         <form (ngSubmit)="onSubmit()">
+
             <hr>
+
             <div class="form-group">
+
                 <mat-form-field class="input-layouts">
-                    <input matInput name="name" placeholder="Enter name" (keydown.space)="$event.preventDefault()"   [formControl]="roleName" required>
-                    <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
+
+                    <input matInput name="name" placeholder="{{placeHolderValue}}" (keydown.space)="$event.preventDefault()"  [formControl]="roleName" required>
+
+            
+
+        <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
+
                 </mat-form-field>
+
             </div>
+
             <mat-label style="margin-bottom: 20px;">Permission set *(Read Permission is required to access any of the modules below)</mat-label>
 
+
+
             <mat-accordion>
-                <div *ngFor="let role of modulesAndActions">
-                    <mat-expansion-panel style="margin-bottom: 20px;">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{role.module}}
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
 
-                        <div *ngFor="let action of role.actions">
-                            <!-- <mat-form-field> -->
-                            <custom-checkbox [module]="role.module" [action]="action"
-                                (saveSelection)="savePermissionSet($event)">{{action}}</custom-checkbox>
-                            <!-- </mat-form-field> -->
-                        </div>
+                    <!--Create Form start-->
 
-                    </mat-expansion-panel>
-                </div>
+                    <div *ngIf="showCreate">
+
+                    <div *ngFor="let role of modulesAndActions">
+
+                        <mat-expansion-panel style="margin-bottom: 20px;">
+
+                            <mat-expansion-panel-header>
+
+                                <mat-panel-title>
+
+                                    {{role.module}}
+
+                                </mat-panel-title>
+
+                                <mat-panel-description>
+
+                                    <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
+
+                                </mat-panel-description>
+
+                            </mat-expansion-panel-header>
+
+                    
+
+                            <div *ngFor="let action of moduleAndActions ">
+
+                                <!-- <mat-form-field> -->
+
+                                <custom-checkbox [module]="role.module" [action]="action"
+
+                                    (saveSelection)="savePermissionSet($event)">{{action}}</custom-checkbox>
+
+                                <!-- </mat-form-field> -->
+
+                            </div>
+
+                        </mat-expansion-panel>
+
+                    </div>
+
+                    </div>
+
+                    <!--Create Form end-->
+
+                    
+
+                    <!--Edit Form start-->
+
+                    <div *ngIf="showEdit">
+
+                    <div *ngFor="let role of modulesAndActions | keyvalue">
+
+                        <mat-expansion-panel style="margin-bottom: 20px;">
+
+                            <mat-expansion-panel-header>
+
+                                <mat-panel-title>
+
+                                    {{role.key}}
+
+                                </mat-panel-title>
+
+                                <mat-panel-description>
+
+                                    <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
+
+                                </mat-panel-description>
+
+                            </mat-expansion-panel-header>
+
+                            <div *ngFor="let action of moduleAndActions | keyvalue">
+
+                                <!-- <mat-form-field> -->
+
+                                <custom-checkbox [module]="role.module" [action]="action"
+
+                                    (saveSelection)="savePermissionSet($event)">{{action}}</custom-checkbox>
+
+                                <!-- </mat-form-field> -->
+
+                            </div>
+
+                        </mat-expansion-panel>
+
+                    </div>
+
+                    </div>
+
+                    <!--Edit Form start-->
 
             </mat-accordion>
+
             <div>
+
                 <button mat-raised-button [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 ">Create Role</button>
+
             </div>
 
+
+
         </form>
+
     </mat-card>
+
 </div>
