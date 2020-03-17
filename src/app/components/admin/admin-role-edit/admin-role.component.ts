@@ -49,9 +49,17 @@ export class RoleEditComponent implements OnInit {
                         this.modulesAndActions=response.data
                         console.log(this.modulesAndActions)
                 }, error => console.log(error))
-
-    constructor(private router: Router, private roleService: AdminService) { }
-
+             
+            }else{
+                this.showCreate=true
+                this.showEdit=false
+                this.heading="Add";
+                this.placeHolderValue="Enter name"
+                // console.log("This is the current route \n" +JSON.stringify(url[1].path));
+                // console.log("Calling service to populate and create new role")
+                this.getModulesAndActions();
+            }
+            
     ngOnInit() {
         this.getModulesAndActions();
     }
