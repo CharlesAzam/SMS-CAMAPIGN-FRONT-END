@@ -47,6 +47,9 @@
           <td mat-cell *matCellDef="let row">
             <mat-icon aria-hidden="false" (click)="deleteRole(row)" style="cursor: pointer;">delete
             </mat-icon>
+            <span style=" margin-right: 20px;margin-left: 20px;"></span>
+            <mat-icon aria-hidden="false"  style="cursor: pointer;" [routerLink]="['../role', row]">edit
+            </mat-icon>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
