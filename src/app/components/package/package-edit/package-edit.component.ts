@@ -251,8 +251,11 @@ export class AddPricesDialog {
 
   getData() {
     if (this.editPackageObject !== null) {
-      Object.assign(this.editPackageObject, this.packageForm.value);
-      return this.editPackageObject;
+      // this.packageForm.value['packageDescription'] = this.packageForm.value['desc'];
+      // Object.assign(this.editPackageObject, this.packageForm.value);
+      // return this.editPackageObject;
+      return this.packageForm.value;
+
     } else {
       return this.packageForm.value;
     }

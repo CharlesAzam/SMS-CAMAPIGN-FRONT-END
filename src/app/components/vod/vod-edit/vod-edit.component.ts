@@ -55,6 +55,8 @@ export class VodEditComponent implements OnInit {
 
   contentForm = new FormGroup({});
 
+  priceArray: any[] = [];
+
   id: string;
   vod: Vod;
   errors: string;
@@ -290,6 +292,7 @@ export class VodEditComponent implements OnInit {
                       //  packageID: this.vod.packageID ? this.vod.packageID : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
+                    this.priceArray = this.vod.priceDetail;
 
                     break;
 
@@ -368,6 +371,7 @@ export class VodEditComponent implements OnInit {
                       //  packageID: this.vod.packageID ? this.vod.packageID : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
+                    this.priceArray = this.vod.priceDetail;
 
                     break;
 
@@ -449,6 +453,7 @@ export class VodEditComponent implements OnInit {
                       //  packageID: this.vod.packageID ? this.vod.packageID : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
+                    this.priceArray = this.vod.priceDetail;
 
                     break;
 
@@ -519,6 +524,7 @@ export class VodEditComponent implements OnInit {
                   // packageID: this.vod.packageID ? this.vod.packageID : '',
                   createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                 });
+                this.priceArray = this.vod.priceDetail;
               } else if (this.vod.contentType === "NEWS") {
                 this.getTags();
                 this.formType = "News";
@@ -666,9 +672,15 @@ export class VodEditComponent implements OnInit {
         season: this.seasons
       };
     }
+
+    if(this.priceArray.length > 0) {
+      this.contentForm.value['price'] = this.priceArray;
+    }
+
     if (this.isNewsForm) {
       this.contentForm.value["images"] = this.images;
     }
+
     if (this.vod) {
       Object.assign(this.vod, this.contentForm.value);
 
@@ -962,6 +974,25 @@ export class VodEditComponent implements OnInit {
     });
   }
 
+  openPriceDialog(i?) {
+    const index = i;
+    const dialogRef = this.dialog.open(AddPricesDialog, {
+      width: "800px",
+      data: String(index) !== "undefined" ? this.priceArray[index] : null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        if (String(index) !== "undefined") {
+          this.priceArray[index] = result;
+        } else {
+          this.priceArray.push(result);
+        }
+      }
+    });
+  }
+
   openImagesDialog() {
     const dialogRef = this.dialog.open(AddMultipleImages, {
       width: "800px",
@@ -998,6 +1029,12 @@ export class VodEditComponent implements OnInit {
       }
     }
     return data;
+  }
+
+  removePrice(index) {
+    if (confirm("Are you sure to remove this price Object?")) {
+      this.priceArray.splice(index, 1);
+    }
   }
 
   initializeSeriesForm() {
@@ -1333,6 +1370,51 @@ export class AddMultipleImages {
   removeImage(index) {
     if (confirm("Are you sure to remove this File?")) {
       this.images.splice(index, 1);
+    }
+  }
+}
+
+@Component({
+  selector: "dialog-content-type",
+  templateUrl: "../dialog-content-add-price.html"
+})
+export class AddPricesDialog {
+  priceForm = new FormGroup({
+    title: new FormControl(""),
+    description: new FormControl(""),
+    price: new FormControl(""),
+    currency: new FormControl(""),
+    noOfDays: new FormControl("")
+  });
+  episode: any[] = [];
+  currencies: any[] = ["TZS", "USD"];
+  editPackageObject: Object = null;
+
+  constructor(
+    public dialogRef: MatDialogRef<AddPricesDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
+    console.log(data);
+    if (data) {
+      this.editPackageObject = data;
+      this.priceForm.setValue({
+        title: data.title ? data.title : "",
+        description: data.description ? data.description : "",
+        currency: data.currency ? data.currency : "",
+        noOfDays: data.noOfDays ? data.noOfDays : "",
+        price: data.price ? data.price : ""
+      });
+      this.episode = data.episode;
+    }
+  }
+
+  getData() {
+    if (this.editPackageObject !== null) {
+      return this.priceForm.value;
+    } else {
+      return this.priceForm.value;
     }
   }
 }
