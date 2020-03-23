@@ -167,6 +167,36 @@ export class RoleEditComponent implements OnInit {
         this.roleModel.moduleAndActions = this.selectedModulesAndActions;
     }
 
+    updateModuleAction(moduleName,action){
+        var Rolename=this.RoleName
+        this.roleService.updateSinglePermission(Rolename,moduleName,action).subscribe((response: any) => {
+            console.log("response result" +JSON.stringify(response))
+            console.log("------------------")
+            //
+            if (response.status === 200){
+                console.log(`Module ${module} Added.`)
+                //console.log(JSON.stringify(this.permissionByModule,null,2))
+                //return this.permissionByModule[0]=this.permissions=response.data.actions;
+                let rolename=this.RoleName
+                this.router.navigateByUrl(`role/${rolename}`, { skipLocationChange: true }).then(() => {
+                    this.router.navigate(['../role',`${rolename}`]);
+                });
+                //return response.actions
+               
+            }else if(response.status!=200){
+                //error => console.log('error', error);
+                alert(`${module}` + " already added!")
+            
+            }
+                
+
+        },
+
+            error => console.log('error', error)); 
+    }
+
+    
+
     onSubmit() {
         console.log("OnSubmit..")
         this.roleModel.roleName = this.roleName.value;
