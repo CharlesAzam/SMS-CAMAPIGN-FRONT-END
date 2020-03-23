@@ -7,6 +7,7 @@ import { AdminService } from '../admin.service';
 import { Role } from '../Role';
 import { NgForm, FormControl, Validators } from '@angular/forms';
 import { NoWhitespaceValidator } from 'src/app/validators/no-whitespace.validator';
+import { element } from 'protractor';
 
 @Component({
     selector: 'admin-edit-role',
@@ -22,12 +23,13 @@ export class RoleEditComponent implements OnInit {
     permissions=[]
     selectedModulesAndActions: any[] = [];
     modulesAndActions: any[] = [];
-
+     
     @Input() heading: String = null;
     @Input() placeHolderValue: String = null;
     @Input() permissionByModule: any[]=[];
     @Input() AllRolePermissions: any[] = [];
     @Input() RoleName: string;
+    @Input() EmptyStringMsg :String=null
  
    
     previousUrl: string;
@@ -56,7 +58,7 @@ export class RoleEditComponent implements OnInit {
                     console.log(response.data)
 
                     Object.keys(response.data).forEach((key) => {
-                    console.log("Iterator function "+key)
+                   // console.log("Iterator function "+key)
                         arr.push({
                             module: key,
                             actions: response.data[key],
@@ -64,7 +66,7 @@ export class RoleEditComponent implements OnInit {
                     });
 
                     this.modulesAndActions = arr;
-                    console.log("iterator function value \n "+JSON.stringify(this.modulesAndActions,null,2));
+                    // console.log("iterator function value \n "+JSON.stringify(this.modulesAndActions,null,2));
                     this.getModulesAndActionsUpdate();
                 }, error => console.log(error))
 
@@ -109,13 +111,20 @@ export class RoleEditComponent implements OnInit {
     
 
     fetchModulePermssion(module: string){
-        console.log("fetchModulePermssion function "+module)
+        // console.log("fetchModulePermssion function "+module)
         this.roleService.getModulePermission(module).subscribe((response: any) => {
+            // console.log("response result" +JSON.stringify(response))
+            // console.log("------------------")
+            //
             if (response.status === 200){
-                 console.log("Module Permission Result")
-                console.log(JSON.stringify(this.permissionByModule,null,2))
+                //  console.log("Module Permission Result")
+                // console.log(JSON.stringify(this.permissionByModule,null,2))
                 return this.permissionByModule[0]=this.permissions=response.data.actions;
                
+            }else if(response.status!=200){
+                error => console.log('error', error);
+                alert(`${module}` + " has not been assigned any permission")
+            
             }
                 
 
@@ -164,13 +173,83 @@ export class RoleEditComponent implements OnInit {
         error => console.log('error', error));
     }
 
+    pushSinglePermission(param,param2){
+        let pushPermission=JSON.stringify(param);
+        const l = pushPermission.length
+        let permission =pushPermission.slice(1, l - 1)
+         console.log("Adding permission "+permission+" module "+param2)
+         for(let i=0 ; i<this.modulesAndActions.length;i++){
+           if(this.modulesAndActions[i].module==param2){
+              console.log(`Match found pushing ${param}`+" "+ "to module "+JSON.stringify(this.modulesAndActions[i],null,2))
+              for(let i=0 ; i<this.modulesAndActions[i].actions.length;i++){                
+                    if(this.modulesAndActions[i].actions[i]!=param){   
+                        console.log(`pushing permission ${param} in`+this.modulesAndActions[i].actions)
+                        this.modulesAndActions[i].actions.push(param)
+                        /*push permission to db here*/
+                        
+                        
+                    }else{
+                        this.modulesAndActions[i].actions.pop()
+                        let   index= this.modulesAndActions[i].actions.indexOf(this.modulesAndActions[i].actions[i]);
+                        console.log(`Duplicate permission `+this.modulesAndActions[i].actions[i]+` at index ${index}`)
+                        console.log(`Removing duplicate permission `+this.modulesAndActions[i].actions[i]+` at index ${index}`)
+                       
+
+                    }
+                
+              }
+             
+
+              //this.modulesAndActions.push(pushPermission) 
+           }
+         }
+       
+    }
+
+    addModule(module,action){
+
+        let rolename=this.RoleName
+        this.roleService.AddSingleModule(rolename,module,action).subscribe((response: any) => {
+            console.log("response result" +JSON.stringify(response))
+            console.log("------------------")
+            //
+            if (response.status === 200){
+                console.log(`Module ${module} Added.`)
+                //console.log(JSON.stringify(this.permissionByModule,null,2))
+                //return this.permissionByModule[0]=this.permissions=response.data.actions;
+                let rolename=this.RoleName
+                this.router.navigateByUrl(`role/${rolename}`, { skipLocationChange: true }).then(() => {
+                    this.router.navigate(['../role',`${rolename}`]);
+                });
+                //return response.actions
+               
+            }else if(response.status!=200){
+                //error => console.log('error', error);
+                alert(`${module}` + " already added!")
+            
+            }
+                
+
+        },
+
+            error => console.log('error', error));
+        
+        
+    
+      }
+
+
 
     savePermissionSet(event) {
+        console.log("event status \n"+JSON.stringify(event,null,2))
         if (event.state) {
             console.log("Current event state")
             console.log(event.state)
             console.log("-------------------")
-            console.log(event.module)
+            console.log("event module "+event.module)
+            console.log("event action "+event.action)
+            console.log("-------------------")
+            console.log("-------------------")
             if (this.selectedModulesAndActions.find(modAndActions => modAndActions.module === event.module))
                 this.selectedModulesAndActions.map((modAndAction) => {
                     if (modAndAction.module === event.module) {
