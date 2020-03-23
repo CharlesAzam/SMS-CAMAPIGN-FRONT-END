@@ -66,7 +66,7 @@ export class AdminService {
     return this.http.post<Role>(url, data, { headers });
   }
 
-
+  
   createUser(entity: Admin): Observable<Admin> {
     let url = API.BASE_URL + '/cms/create-cms-user';
     let headers = new HttpHeaders()
@@ -105,10 +105,35 @@ export class AdminService {
   }
 
   getModulePermission (moduleName: string){
+    // console.log("Role Name from get role oermission "+moduleName)
     let url = API.BASE_URL + `/cms/get-module-permission/${moduleName}`;
-    console.log("Role Name from get role oermission "+moduleName)
-    console.log("URL" +url)
+    // console.log("URL" +url)
+    // console.log(this.http.get(url))
     return this.http.get(url);
+  }
+
+  RemoveSingleModule(roleName,moduleName){
+     // console.log("Role Name from get role oermission "+moduleName)
+     let url = API.BASE_URL + `/cms/role-name-remove-module/${roleName}/${moduleName}`;
+      console.log("URL \n" +url)
+     // console.log(this.http.get(url))
+     return this.http.get(url);
+  }
+
+  AddSingleModule(roleName,moduleName,actions){
+     // console.log("Role Name from get role oermission "+moduleName)
+     let url = API.BASE_URL + `/cms/role-name-add-module-actions/${roleName}/${moduleName}/${actions}`;
+      console.log("URL \n" +url)
+     // console.log(this.http.get(url))
+     return this.http.get(url);
+  }
+
+  updateSinglePermission(roleName,moduleName,action){
+    let url = API.BASE_URL + `/cms/role-name-assign-module-permission/${roleName}/${moduleName}/${action}`;
+    console.log("URL \n" +url)
+   // console.log(this.http.get(url))
+   return this.http.get(url);
+
   }
 
   getCount() {
