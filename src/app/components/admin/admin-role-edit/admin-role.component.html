@@ -82,7 +82,7 @@
                     <!--Input test field start-->
                     <h2>{{heading}} Role</h2>
                     <hr>
-            <form (ngSubmit)="onSubmitUpdate()">
+            <form>
                     <div class="form-group">
         
                         <mat-form-field class="input-layouts">
@@ -103,7 +103,7 @@
                     <!--Input textfirld end-->
                     <div *ngFor="let role of modulesAndActions">
 
-                        <mat-expansion-panel style="margin-bottom: 20px;">
+                        <mat-expansion-panel style=" margin-bottom: 20px;">
 
                             <mat-expansion-panel-header>
 
@@ -111,7 +111,7 @@
                                     {{role.module}} 
                                 </mat-panel-title>
                                 
-                                    <button style="margin-right: 25px !important;" mat-raised-button color="warn"> REMOVE MODULE</button>
+                                    <button style="margin-right: 25px !important;" (click)="removeModule(role.module)" mat-raised-button color="warn"> REMOVE MODULE</button>
                                     
                                 
                                
@@ -123,20 +123,20 @@
                              <div style="flex-direction: row; margin-bottom: 30px;">      
                                 <div style="float: left;" *ngFor="let action of role.actions; index as i ">   
                                     <custom-checkbox [module]="role.module" [action]="action" 
-                                        (saveSelection)="savePermissionSet($event)" (click)="fetchModulePermssion(role.module)" >{{action}}           
+                                        (click)="removeModulePermission($event)"  (click)="fetchModulePermssion(role.module)" >{{action}}           
                                     </custom-checkbox>   
                                 </div>
                                 <div style="float: right;" *ngFor="let permission of permissions; index as i ">
-                                    <button mat-raised-button>{{permission}}</button> 
+                                    <button mat-raised-button (click)="pushSinglePermission(permission,role.module)" value="permission">{{permission}}</button> 
                                 </div>
                              </div>
-                             <button mat-raised-button>UPDATE {{role.module | uppercase}}</button> 
+                             <button mat-raised-button (click)="updateSingleModule(role.module)">UPDATE {{role.module | uppercase}}</button> 
 
                         </mat-expansion-panel>
                     </div>
                     <div>
                         <button mat-raised-button
-                            [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 ">{{heading}} Role</button>
+                            [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 " (click)="onSubmitUpdate()">{{heading}} Role</button>
                     </div>
                 </form>
                 </div>
@@ -153,7 +153,7 @@
                             <mat-panel-title>
                                 {{role.module}}
                             </mat-panel-title>
-                            <button style="margin-right: 25px !important;" mat-raised-button color="accent">ADD MODULE TO ROLE {{RoleName|uppercase}}  </button>
+                            <button style="margin-right: 25px !important;" mat-raised-button color="accent"  (click)="addModule(role.module,role.actions)">ADD MODULE TO ROLE {{RoleName|uppercase}}  </button>
                             <mat-panel-description>
                                 <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
                             </mat-panel-description>
