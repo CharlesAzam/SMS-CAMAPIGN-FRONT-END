@@ -177,7 +177,10 @@ export class RoleEditComponent implements OnInit {
             console.log("Error message from on submit \n"+ JSON.stringify(error,null,2))
         });
     }
-
+    removeModulePermission(event){
+        console.log("Remove Module Permission")
+    }
+    //Called by edit Role Button For Bulk editing 
     onSubmitUpdate(){
         this.roleModel.roleName = this.roleName.value;
         console.log("Update Role name to " + this.roleModel.roleName)
