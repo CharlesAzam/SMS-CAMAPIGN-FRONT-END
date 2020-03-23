@@ -135,6 +135,34 @@ export class RoleEditComponent implements OnInit {
        }
     }
 
+    removeModule(param){
+        let rolename=this.RoleName
+        let module=param;
+        console.log("Removing module "+ module+ ` for role name ${rolename}`);
+        //this.modulesAndActions.po
+        this.roleService.RemoveSingleModule(rolename,module).subscribe((response: any) => {
+            console.log("response result" +JSON.stringify(response))
+            console.log("------------------")
+            //
+            if (response.status === 200){
+                let rolename=this.RoleName
+                console.log(`Module ${module} removed.`)
+                console.log(JSON.stringify(this.permissionByModule,null,2))
+                this.router.navigateByUrl(`roles`, { skipLocationChange: true }).then(() => {
+                    this.router.navigate(['../role',`${rolename}`]);
+                }); 
+                //return this.permissionByModule[0]=this.permissions=response.data.actions;
+               
+            }else if(response.status!=200){
+                //error => console.log('error', error);
+                alert(`${module}` + " not removed!")
+            
+            }
+                
+
+        },
+        error => console.log('error', error));
+    }
 
 
     savePermissionSet(event) {
