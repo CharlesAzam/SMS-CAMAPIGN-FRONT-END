@@ -53,7 +53,7 @@
             <mat-icon aria-hidden="false" (click)="removeUser(row)" style="cursor: pointer;">delete
             </mat-icon>
             <span style=" margin-right: 20px;margin-left: 20px;"></span>
-            <mat-icon aria-hidden="false" (click)="editUser(row)" style="cursor: pointer;">edit
+            <mat-icon aria-hidden="false" (click)="editUser(row)" [routerLink]="['../users',row]" style="cursor: pointer;">edit
             </mat-icon>
           </td>
         </ng-container>
