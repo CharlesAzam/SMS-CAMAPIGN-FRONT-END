@@ -49,4 +49,15 @@ export class AdminEditComponent implements OnInit {
         }, error => console.log('error', error));
     }
 
+    onUpdate() {
+       
+        console.log("This is the user form data tobe updated \n"+this.userForm.value)
+        this.adminService.UpdateUserDetail(this.userId,this.userForm.value).subscribe((response: any) => {
+            if (response.status === 200) {
+                //console.log("Response server side \n"+JSON.stringify(response,null,2))
+                this.router.navigate(['home/admin/users'])
+            }
+        }, error => console.log('error', error));
+    }
+
 }
