@@ -314,13 +314,47 @@ export class RoleEditComponent implements OnInit {
             console.log("Error message from on submit \n"+ JSON.stringify(error,null,2))
         });
     }
-    removeModulePermission(event){
-        console.log("Remove Module Permission")
+    
+    removeModulePermission(module,action){
+        var Rolename=this.RoleName
+        console.log("Remove Module Permission "+action+" module "+module )
+        this.roleService.deleteSinglePermission(Rolename,module,action).subscribe((response: any) => {
+            console.log("response result" +JSON.stringify(response))
+            console.log("------------------")
+            //
+            if (response.status === 200){
+                console.log(`Module ${module} Added.`)
+                //console.log(JSON.stringify(this.permissionByModule,null,2))
+                //return this.permissionByModule[0]=this.permissions=response.data.actions;
+                let rolename=this.RoleName
+                this.router.navigateByUrl(`role/${rolename}`, { skipLocationChange: true }).then(() => {
+                    this.router.navigate(['../role',`${rolename}`]);
+                });
+                //return response.actions
+               
+            }else if(response.status!=200){
+                //error => console.log('error', error);
+                alert(`${module}` + " already added!")
+            
+            }
+                
+
+        },
+
+            error => console.log('error', error)); 
     }
     //Called by edit Role Button For Bulk editing 
     onSubmitUpdate(){
-        this.roleModel.roleName = this.roleName.value;
-        console.log("Update Role name to " + this.roleModel.roleName)
+        var oldRoleName=this.RoleName
+        var newRoleName=this.roleModel.roleName = this.roleName.value;
+        console.log("Update Role name to " +newRoleName +" from "+oldRoleName)
+        this.roleService.UpdateRoleName(oldRoleName,newRoleName).subscribe((response: any) => {
+            if (response.status === 200)
+                this.router.navigate(['home/admin/roles'])
+        }, (error) => {
+            alert("Error updating role name \n"+error)
+            console.log("Error message from on submit \n"+ JSON.stringify(error,null,2))
+        });
     }
 
 }
