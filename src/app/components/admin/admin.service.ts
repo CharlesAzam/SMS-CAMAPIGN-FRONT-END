@@ -152,6 +152,13 @@ export class AdminService {
 
   }
 
+  UpdateUserDetail(userId,data){
+    let url = API.BASE_URL + `/cms/edit-user/${userId}`;
+    console.log("URL \n" +url)
+   // console.log(this.http.get(url))
+   return this.http.post(url,data);
+  }
+
   getCount() {
     let url = API.BASE_URL + `/cms/count/cdn`;
     return this.http.get(url);
