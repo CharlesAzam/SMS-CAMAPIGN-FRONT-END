@@ -123,20 +123,20 @@
                              <div style="flex-direction: row; margin-bottom: 30px;">      
                                 <div style="float: left;" *ngFor="let action of role.actions; index as i ">   
                                     <custom-checkbox [module]="role.module" [action]="action" 
-                                        (click)="removeModulePermission($event)"  (click)="fetchModulePermssion(role.module)" >{{action}}           
+                                        (click)="removeModulePermission(role.module,action)"  >{{action}}           
                                     </custom-checkbox>   
                                 </div>
                                 <div style="float: right;" *ngFor="let permission of permissions; index as i ">
                                     <button mat-raised-button (click)="pushSinglePermission(permission,role.module)" value="permission">{{permission}}</button> 
                                 </div>
                              </div>
-                             <button mat-raised-button (click)="updateSingleModule(role.module)">UPDATE {{role.module | uppercase}}</button> 
+                             <button mat-raised-button (click)="fetchModulePermssion(role.module)">SHOW PERMISSION FOR {{role.module | uppercase}}</button> 
 
                         </mat-expansion-panel>
                     </div>
                     <div>
                         <button mat-raised-button
-                            [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 " (click)="onSubmitUpdate()">{{heading}} Role</button>
+                            [disabled]="roleName.invalid" (click)="onSubmitUpdate()">{{heading}} role name</button>
                     </div>
                 </form>
                 </div>
