@@ -184,8 +184,9 @@ export class RoleEditComponent implements OnInit {
               for(let i=0 ; i<this.modulesAndActions[i].actions.length;i++){                
                     if(this.modulesAndActions[i].actions[i]!=param){   
                         console.log(`pushing permission ${param} in`+this.modulesAndActions[i].actions)
-                        this.modulesAndActions[i].actions.push(param)
+                        //this.modulesAndActions[i].actions.push(param)
                         /*push permission to db here*/
+                        this.updateModuleAction(param2,permission)
                         
                         
                     }else{
@@ -314,7 +315,7 @@ export class RoleEditComponent implements OnInit {
             console.log("Error message from on submit \n"+ JSON.stringify(error,null,2))
         });
     }
-    
+
     removeModulePermission(module,action){
         var Rolename=this.RoleName
         console.log("Remove Module Permission "+action+" module "+module )
