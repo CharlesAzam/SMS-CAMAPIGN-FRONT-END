@@ -136,6 +136,22 @@ export class AdminService {
 
   }
 
+  deleteSinglePermission(roleName,moduleName,action){
+    let url = API.BASE_URL + `/cms/role-name-delete-module-permission/${roleName}/${moduleName}/${action}`;
+    console.log("URL \n" +url)
+   // console.log(this.http.get(url))
+   return this.http.get(url);
+
+  }
+
+  UpdateRoleName(oldRoleName,newRoleName){
+    let url = API.BASE_URL + `/cms/update-role-name/${oldRoleName}/${newRoleName}`;
+    console.log("URL \n" +url)
+   // console.log(this.http.get(url))
+   return this.http.get(url);
+
+  }
+
   getCount() {
     let url = API.BASE_URL + `/cms/count/cdn`;
     return this.http.get(url);
