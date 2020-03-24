@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AdminService } from '../admin.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { startWith, tap } from 'rxjs/operators';
 import { WarningDialog } from '../../warning-dialog/dialog-warning';
@@ -22,6 +23,8 @@ export class AdminUsersListComponent implements OnInit {
     paginator: MatPaginator
 
     constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private dialog: MatDialog,
         private adminService: AdminService) { }
 
@@ -72,26 +75,13 @@ export class AdminUsersListComponent implements OnInit {
     }
 
     editUser(row) {
-        console.log("Editing Role"+JSON.stringify(row))
-        // this.dialog
-        //     .open(WarningDialog, {
-        //         width: "400px",
-        //         data: {
-        //             title: "Warning",
-        //             message: `Are you sure want to delete ${row.username} `
-        //         }
-        //     })
-        //     .afterClosed()
-        //     .subscribe(result => {
-        //         if (result) {
-        //             this.adminService.deleteUser(row._id).subscribe((response: any) => {
-        //                 if (response.status === 200) {
-        //                     this.getUserList();
-        //                 }
-        //             }, error => console.log(error));
-        //         }
-        //     });
-
+        let id=JSON.stringify(row._id)
+        let l =id.length
+        let userId=id.slice(1,l-1)
+        console.log("JSON user ID \n"+id)
+        console.log("Trimed User ID \n"+userId)
+        this.router.navigate([`../users/${userId}`])
+        
     }
 
 }

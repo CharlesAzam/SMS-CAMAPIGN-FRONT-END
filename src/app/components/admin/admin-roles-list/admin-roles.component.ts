@@ -40,6 +40,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     //Function to edit role 
     editRole(row){
         console.log("Editing user role "+JSON.stringify(row));
+        this.router.navigate(['../role',`${row}`])
     }
 
     deleteRole(row) {

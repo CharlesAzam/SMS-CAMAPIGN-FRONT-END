@@ -16,6 +16,11 @@ export class AdminEditComponent implements OnInit {
     createUserModel = new Admin();
     roles = [];
     hide = true;
+    showCreate = null
+    showEdit = null;
+    userId=null
+    @Input() heading: String = null;
+    @Input() placeHolderValue: String = null;
 
     userForm = new FormGroup({
         username: new FormControl('', [Validators.required]),
@@ -23,8 +28,35 @@ export class AdminEditComponent implements OnInit {
         roles: new FormControl('', [Validators.required])
     })
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private adminService: AdminService) { }
-
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private adminService: AdminService) {
+     //Add form Routing Logic and processing
+     this.activatedRoute.url.subscribe(url => {
+        if (url[1].path != 'new') {
+            this.showCreate = false
+            this.showEdit = true
+            this.heading = "Edit";
+            //this.placeHolderValue = "Edting role name"
+            console.log("This is the URL \n"+JSON.stringify(url,null,2))
+            const id= JSON.stringify(url[1].path,null,2)
+            let l =id.length
+            let userId=id.slice(1,l-1)
+           
+            this.userId=userId;
+            console.log("userId "+userId)
+            
+        } else {
+            this.showCreate = true
+            this.showEdit = false
+            this.heading = "Add";
+            //this.placeHolderValue = "Enter name"
+           
+            // console.log("This is the current route \n" +JSON.stringify(url[1].path));
+            // console.log("Calling service to populate and create new role")
+           
+        }
+    
+    });
+}
     ngOnInit() {
         this.getRoles();
     }
