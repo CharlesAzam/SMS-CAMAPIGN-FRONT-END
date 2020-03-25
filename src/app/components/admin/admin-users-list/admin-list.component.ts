@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { startWith, tap } from 'rxjs/operators';
 import { WarningDialog } from '../../warning-dialog/dialog-warning';
+import * as moment from 'moment'
 
 
 @Component({
@@ -28,7 +29,7 @@ export class AdminUsersListComponent implements OnInit {
         private dialog: MatDialog,
         private adminService: AdminService) { }
 
-    displayedColumns: string[] = ['position','name','Role','Status', 'symbol'];
+    displayedColumns: string[] = ['position','name','Role','Created','Updated','Status','symbol'];
     count: number
     dataSource = new MatTableDataSource<any>([]);
 
@@ -40,6 +41,11 @@ export class AdminUsersListComponent implements OnInit {
         this.getUserList();
         this.dataSource.paginator = this.paginator;
 
+    }
+
+    DateFormatter(param){
+        let date=param;
+        return moment(date).format('MM/DD/YYYY h:mm A');
     }
 
     getUserList(pageIndex?, pageSize?) {
