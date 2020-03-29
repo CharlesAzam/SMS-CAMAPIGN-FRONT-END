@@ -6,6 +6,7 @@ import { Admin } from '../admin';
 import { AdminService } from '../admin.service';
 import { Role } from '../Role';
 import { NgForm, FormControl, Validators } from '@angular/forms';
+import {TooltipPosition} from '@angular/material/tooltip';
 import { NoWhitespaceValidator } from 'src/app/validators/no-whitespace.validator';
 import { element } from 'protractor';
 
@@ -164,7 +165,7 @@ export class RoleEditComponent implements OnInit {
                
             }else if(response.status!=200){
                 //error => console.log('error', error);
-                alert(`${module}` + " not removed!")
+                alert(`${module}` + " could not be removed!")
             
             }
                 
@@ -174,28 +175,39 @@ export class RoleEditComponent implements OnInit {
     }
 
     pushSinglePermission(param,param2){
+        let arrPemHolder=[];
         let pushPermission=JSON.stringify(param);
         const l = pushPermission.length
         let permission =pushPermission.slice(1, l - 1)
          console.log("Adding permission "+permission+" module "+param2)
          for(let i=0 ; i<this.modulesAndActions.length;i++){
+           console.log(`#######################################`)
+           console.log(`permision array \n`+ JSON.stringify(this.permissionByModule[i],null,2))
+           console.log(`#######################################`)
            if(this.modulesAndActions[i].module==param2){
-              console.log(`Match found pushing ${param}`+" "+ "to module "+JSON.stringify(this.modulesAndActions[i],null,2))
-              for(let i=0 ; i<this.modulesAndActions[i].actions.length;i++){                
-                    if(this.modulesAndActions[i].actions[i]!=param){   
-                        console.log(`pushing permission ${param} in`+this.modulesAndActions[i].actions)
-                        //this.modulesAndActions[i].actions.push(param)
-                        /*push permission to db here*/
-                        this.updateModuleAction(param2,permission)
-                        
-                        
-                    }else{
-                        this.modulesAndActions[i].actions.pop()
-                        let   index= this.modulesAndActions[i].actions.indexOf(this.modulesAndActions[i].actions[i]);
-                        console.log(`Duplicate permission `+this.modulesAndActions[i].actions[i]+` at index ${index}`)
-                        console.log(`Removing duplicate permission `+this.modulesAndActions[i].actions[i]+` at index ${index}`)
-                       
+              console.log(`Match found pushing ${param}`+" "+ "to module \n"+JSON.stringify(this.modulesAndActions[i],null,2))
+              arrPemHolder[0]=this.modulesAndActions[i].actions;
 
+              console.log("arrPem values ==> " +arrPemHolder)
+
+              console.log(`----------------------------------------`)
+              for(let i=0 ; i<this.modulesAndActions[i].actions.length;i++){     
+                    console.log(`cheking permission ${param} in array `+this.modulesAndActions[i].actions) 
+                    const found= arrPemHolder[0].find(item=>item==param)  
+                    console.log("found permisiion "+found);       
+                    if(found == null){   
+                        console.log(`pushing permission ${param} in`+this.modulesAndActions[i].actions)
+                        /*push permission to db here*/
+                         this.updateModuleAction(param2,permission)
+                        
+                        
+                    }else if(found!=null){
+                        alert(`Permission ${param} is already present!.`)
+                        //this.modulesAndActions[i].actions.pop()
+                        // let   index= this.modulesAndActions[i].actions.indexOf(this.modulesAndActions[i].actions[i]);
+                         console.log(`Duplicate permission `+this.modulesAndActions[i].actions[i])//+` at index ${index}`)
+                         return;
+                        // console.log(`Removing duplicate permission `+this.modulesAndActions[i].actions[i]+` at index ${index}`)
                     }
                 
               }
@@ -335,7 +347,8 @@ export class RoleEditComponent implements OnInit {
                
             }else if(response.status!=200){
                 //error => console.log('error', error);
-                alert(`${module}` + " already added!")
+                alert(`${action}` + " already removed! from "+`${module}`)
+                window.location.reload();
             
             }
                 
