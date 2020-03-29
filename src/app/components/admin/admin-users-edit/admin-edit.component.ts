@@ -36,13 +36,30 @@ export class AdminEditComponent implements OnInit {
             this.showEdit = true
             this.heading = "Edit";
             //this.placeHolderValue = "Edting role name"
-            console.log("This is the URL \n"+JSON.stringify(url,null,2))
+           // console.log("This is the URL \n"+JSON.stringify(url,null,2))
             const id= JSON.stringify(url[1].path,null,2)
             let l =id.length
             let userId=id.slice(1,l-1)
            
             this.userId=userId;
-            console.log("userId "+userId)
+
+            url[1].parameters.username;
+            let m=url[1].parameters.username.length
+            let userName=url[1].parameters.username.slice(0,m)
+            this.placeHolderValue=userName;
+
+            url[1].parameters.roles
+            let n=url[1].parameters.roles.length
+            let userRole=url[1].parameters.roles.slice(0,n)
+            this.userForm.setValue({username:userName,password:null,roles:userRole})
+            // console.log("userId "+userId)
+            // console.log("Paramtere params \n"+JSON.stringify(url[1].parameters,null,2))
+            // console.log("Paramtere params name :"+JSON.stringify(url[1].parameters.username,null,2))
+            // console.log("Paramtere params roles :"+JSON.stringify(url[1].parameters.roles,null,2))
+
+            // console.log("userName :"+userName)
+            // console.log("userRoles :"+userRole)
+          
             
         } else {
             this.showCreate = true

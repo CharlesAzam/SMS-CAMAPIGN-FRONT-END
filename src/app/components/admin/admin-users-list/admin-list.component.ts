@@ -86,7 +86,7 @@ export class AdminUsersListComponent implements OnInit {
         let userId=id.slice(1,l-1)
         console.log("JSON user ID \n"+id)
         console.log("Trimed User ID \n"+userId)
-        this.router.navigate([`../users/${userId}`])
+        this.router.navigate([`../users/${userId}`,row])
         
     }
 
