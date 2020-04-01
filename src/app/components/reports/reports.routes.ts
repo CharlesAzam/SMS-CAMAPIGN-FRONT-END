@@ -5,6 +5,7 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
+import { RevenueReportComponent } from './revenue-recognition/revenue-recognition-report.component';
 
 export const REPORT_ROUTES: Routes = [
   {
@@ -35,5 +36,9 @@ export const REPORT_ROUTES: Routes = [
   {
     path: 'invoices',
     component: InvoiceReportComponent
+  },
+  {
+    path: 'revenue',
+    component: RevenueReportComponent
   }
 ]
