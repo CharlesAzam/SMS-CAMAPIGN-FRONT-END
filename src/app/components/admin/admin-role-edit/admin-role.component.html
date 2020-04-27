@@ -121,7 +121,7 @@
                                 </mat-panel-title>
 
                                 <button style="margin-right: 25px !important;" (click)="removeModule(role.module)"
-                                    mat-raised-button color="warn"> REMOVE MODULE</button>
+                                    mat-raised-button color="warn" [routerLink]="['admin/roles']"> REMOVE MODULE</button>
 
 
 
@@ -167,7 +167,7 @@
                             {{role.module}}
                         </mat-panel-title>
                         <button style="margin-right: 25px !important;" mat-raised-button color="accent"
-                            (click)="addModule(role.module,role.actions)">ADD MODULE TO ROLE {{RoleName|uppercase}}
+                            (click)="addModule(role.module,role.actions)" [routerLink]="['admin/roles']">ADD MODULE TO ROLE {{RoleName|uppercase}}
                         </button>
                         <mat-panel-description>
                             <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
