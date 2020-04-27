@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap, filter } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of ,Observable,from} from 'rxjs';
 import { Admin } from '../admin';
 import { AdminService } from '../admin.service';
 import { Role } from '../Role';
@@ -56,7 +56,8 @@ export class RoleEditComponent implements OnInit {
                     // console.log(response.data)
                     //this.getModulesAndActions2
                     let arr = [];
-                    console.log(response.data)
+                    let moduleArr=[];
+                    //console.log(response.data)
 
                     Object.keys(response.data).forEach((key) => {
                    // console.log("Iterator function "+key)
@@ -67,8 +68,14 @@ export class RoleEditComponent implements OnInit {
                     });
 
                     this.modulesAndActions = arr;
-                    // console.log("iterator function value \n "+JSON.stringify(this.modulesAndActions,null,2));
-                    this.getModulesAndActionsUpdate();
+                   // console.log('Filter module list \n')
+                    this.modulesAndActions.forEach((c)=>{
+                       // console.log(c.module)
+                        moduleArr.push(c.module)
+                    });
+
+                    console.log('Filter module \n',moduleArr)
+                    this.getModulesAndActionsUpdate(moduleArr);
                 }, error => console.log(error))
 
             } else {
@@ -101,12 +108,31 @@ export class RoleEditComponent implements OnInit {
             error => console.log('error', error));
     }
 
-    getModulesAndActionsUpdate() {
+    getModulesAndActionsUpdate(x) {
         this.roleService.getModulesAndActions().subscribe((response: any) => {
             if (response.status === 200)
                 this.AllRolePermissions = response.data;
-        },
+                let arr1_copy=[]
+                arr1_copy=this.AllRolePermissions;
+                let arr2=[];
+                arr2=x,
+                
+                //Filter All permissions based on selected roles
+                arr2.forEach((element1)=>{
+        
+                    arr1_copy.forEach((element2,index)=>{
+                        //console.log(`element2 at ${JSON.stringify(element2.module,null,2)} at ${index}`)
+                        if (element1==element2.module) {
+                          //  console.log(`Match found for ${JSON.stringify(element2,null,2)} at ${index} \n`)
+                            this.AllRolePermissions.splice(index,1)
+                        }else{
+                            return
+                        }
+                    })
 
+                })
+                //console.log(`final result ${JSON.stringify(this.AllRolePermissions,null,2)} \n`)       
+        },
             error => console.log('error', error));
     }
     
