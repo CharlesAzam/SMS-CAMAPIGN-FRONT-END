@@ -1,12 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-//import { map, switchMap, filter } from 'rxjs/operators';
-//import { of, Observable, from } from 'rxjs';
-//import { Admin } from '../admin';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin.service';
 import { Role } from '../Role';
-import { NgForm, FormControl, Validators } from '@angular/forms';
-import { TooltipPosition } from '@angular/material/tooltip';
+import { FormControl, Validators } from '@angular/forms';
 import { NoWhitespaceValidator } from 'src/app/validators/no-whitespace.validator';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleEditDialogComponent } from '../admin-role-edit-dialog/role-edit-dialog/role-edit-dialog.component'
@@ -33,13 +29,13 @@ export class RoleEditComponent implements OnInit {
     @Input() AllRolePermissions: any[] = [];
     @Input() RoleName: string;
     @Input() EmptyStringMsg: String = null
-    @Input() Checked: boolean= true;
+    @Input() Checked: boolean = true;
 
 
     previousUrl: string;
-    constructor(private router: Router, private roleService: AdminService, private activatedRoute: ActivatedRoute,public dialog: MatDialog) {
+    constructor(private router: Router, private roleService: AdminService, private activatedRoute: ActivatedRoute, public dialog: MatDialog) {
         this.router.events.subscribe((event) => {
-          //  console.log("Router events \n", event)
+            //  console.log("Router events \n", event)
             // if (event instanceof NavigationEnd) {
             //    // Trick the Router into believing it's last link wasn't previously loaded
             //    this.router.navigated = false;
@@ -94,8 +90,7 @@ export class RoleEditComponent implements OnInit {
                 this.showEdit = false
                 this.heading = "Add";
                 this.placeHolderValue = "Enter name"
-                // console.log("This is the current route \n" +JSON.stringify(url[1].path));
-                // console.log("Calling service to populate and create new role")
+
                 this.getModulesAndActions();
             }
 
@@ -142,9 +137,7 @@ export class RoleEditComponent implements OnInit {
                     })
 
                 })
-            //console.log(`final result ${JSON.stringify(this.AllRolePermissions,null,2)} \n`)       
-                //console.log(`final result ${JSON.stringify(this.AllRolePermissions,null,2)} \n`)       
-            //console.log(`final result ${JSON.stringify(this.AllRolePermissions,null,2)} \n`)       
+
         },
             error => console.log('error', error));
     }
@@ -163,8 +156,8 @@ export class RoleEditComponent implements OnInit {
 
             } else if (response.status != 200) {
                 error => console.log('error', error);
-                
-                let message=`${module} has not been assigned any permission`
+
+                let message = `${module} has not been assigned any permission`
                 this.openDialog(message)
 
             }
@@ -175,26 +168,14 @@ export class RoleEditComponent implements OnInit {
             error => console.log('error', error));
     }
 
-    AddPermission(event) {
-        if (event.state) {
-            console.log("Add permission Current event state")
-            console.log(event.state)
-            console.log("-------------------")
-            //console.log(event.mod)
-        } else {
 
-        }
-    }
 
     removeModule(param) {
         let rolename = this.RoleName
         let module = param;
-        console.log("Removing module " + module + ` for role name ${rolename}`);
-        //this.modulesAndActions.po
+
         this.roleService.RemoveSingleModule(rolename, module).subscribe((response: any) => {
-            console.log("response result" + JSON.stringify(response))
-            console.log("------------------")
-            //
+
             if (response.status === 200) {
                 let rolename = this.RoleName
                 console.log(`Module ${module} removed.`)
@@ -205,8 +186,8 @@ export class RoleEditComponent implements OnInit {
                 //return this.permissionByModule[0]=this.permissions=response.data.actions;
 
             } else if (response.status != 200) {
-                //error => console.log('error', error);
-                let message=`${module}` + " could not be removed!"
+                error => console.log('error', error);
+                let message = `${module}` + " could not be removed!"
                 this.openDialog(message)
 
             }
@@ -221,43 +202,36 @@ export class RoleEditComponent implements OnInit {
         let pushPermission = JSON.stringify(param);
         const l = pushPermission.length
         let permission = pushPermission.slice(1, l - 1)
-        console.log("Adding permission " + permission + " module " + param2)
+
         for (let i = 0; i < this.modulesAndActions.length; i++) {
-            console.log(`#######################################`)
-            console.log(`permision array \n` + JSON.stringify(this.permissionByModule[i], null, 2))
-            console.log(`#######################################`)
+
             if (this.modulesAndActions[i].module == param2) {
                 console.log(`Match found pushing ${param}` + " " + "to module \n" + JSON.stringify(this.modulesAndActions[i], null, 2))
                 arrPemHolder[0] = this.modulesAndActions[i].actions;
 
-                console.log("arrPem values ==> " + arrPemHolder)
-
-                console.log(`----------------------------------------`)
                 for (let i = 0; i < this.modulesAndActions[i].actions.length; i++) {
-                    console.log(`cheking permission ${param} in array ` + this.modulesAndActions[i].actions)
+                    /*Check permission on array*/
                     const found = arrPemHolder[0].find(item => item == param)
-                    console.log("found permisiion " + found);
+                    //console.log("found permisiion " + found);
                     if (found == null) {
-                        console.log(`pushing permission ${param} in` + this.modulesAndActions[i].actions)
+
                         /*push permission to db here*/
                         this.updateModuleAction(param2, permission)
 
 
                     } else if (found != null) {
-                        alert(`Permission ${param} is already present!.`)
-                        //this.modulesAndActions[i].actions.pop()
-                        // let   index= this.modulesAndActions[i].actions.indexOf(this.modulesAndActions[i].actions[i]);
-                        console.log(`Duplicate permission ` + this.modulesAndActions[i].actions[i])//+` at index ${index}`)
+                        /*Check duplicate permission*/
+                        let message = `Permission ${param} is already present!.`
+                        this.openDialog(message)
+
                         return;
-                        // console.log(`Removing duplicate permission `+this.modulesAndActions[i].actions[i]+` at index ${index}`)
+
                     }
 
                 }
 
 
-                //this.modulesAndActions.push(pushPermission) 
-              //this.modulesAndActions.push(pushPermission) 
-                //this.modulesAndActions.push(pushPermission) 
+
             }
         }
 
@@ -267,23 +241,19 @@ export class RoleEditComponent implements OnInit {
 
         let rolename = this.RoleName
         this.roleService.AddSingleModule(rolename, module, action).subscribe((response: any) => {
-            console.log("response result" + JSON.stringify(response))
-            console.log("------------------")
+            //console.log("response result" + JSON.stringify(response))
+            //console.log("------------------")
             //
             if (response.status === 200) {
-                console.log(`Module ${module} Added.`)
-                //console.log(JSON.stringify(this.permissionByModule,null,2))
-                //return this.permissionByModule[0]=this.permissions=response.data.actions;
-                //let rolename=this.RoleName
+                //console.log(`Module ${module} Added.`)
+
                 this.router.navigate([this.router.url])
 
-                //console.log('this url --> ', this.router.url)
-                // location.reload(); 
-                //return response.actions
+
 
             } else if (response.status != 200) {
                 //error => console.log('error', error);
-                let message=`${module} already added!`
+                let message = `${module} already added!`
                 this.openDialog(message)
 
             }
@@ -302,13 +272,7 @@ export class RoleEditComponent implements OnInit {
     savePermissionSet(event) {
         console.log("event status \n" + JSON.stringify(event, null, 2))
         if (event.state) {
-            // console.log("Current event state")
-            // console.log(event.state)
-            // console.log("-------------------")
-            // console.log("event module " + event.module)
-            // console.log("event action " + event.action)
-            // console.log("-------------------")
-            // console.log("-------------------")
+
             if (this.selectedModulesAndActions.find(modAndActions => modAndActions.module === event.module))
                 this.selectedModulesAndActions.map((modAndAction) => {
                     if (modAndAction.module === event.module) {
@@ -336,22 +300,19 @@ export class RoleEditComponent implements OnInit {
     updateModuleAction(moduleName, action) {
         var Rolename = this.RoleName
         this.roleService.updateSinglePermission(Rolename, moduleName, action).subscribe((response: any) => {
-            console.log("response result" + JSON.stringify(response))
-            console.log("------------------")
+            // console.log("response result" + JSON.stringify(response))
+            // console.log("------------------")
             //
             if (response.status === 200) {
-               // console.log(`Module ${module} Added.`)
-                //console.log(JSON.stringify(this.permissionByModule,null,2))
-                //return this.permissionByModule[0]=this.permissions=response.data.actions;
-                let rolename = this.RoleName
-                //this.router.navigateByUrl(`role/${rolename}`, { skipLocationChange: true }).then(() => {
-                    this.router.navigate([this.router.url]);
-                //});
-                //return response.actions
+
+
+                this.router.navigate([this.router.url]);
 
             } else if (response.status != 200) {
+                let module=moduleName
                 //error => console.log('error', error);
-              //  alert(`${module}` + " already added!")
+                let message = `${module} already added!`
+                this.openDialog(message)
 
             }
 
@@ -362,7 +323,7 @@ export class RoleEditComponent implements OnInit {
     }
 
 
- onSubmit() {
+    onSubmit() {
         console.log("OnSubmit..")
         this.roleModel.roleName = this.roleName.value;
         this.roleService.createRole(this.roleModel).subscribe((response: any) => {
@@ -374,70 +335,61 @@ export class RoleEditComponent implements OnInit {
     }
 
     openDialog(message) {
-        const dialogRef = this.dialog.open(RoleEditDialogComponent,{
-          data:{
-            message: `${message}`,
-            buttonText: {
-              ok: 'ok',
-              cancel: 'cancel'
+        const dialogRef = this.dialog.open(RoleEditDialogComponent, {
+            data: {
+                message: `${message}`,
+                buttonText: {
+                    ok: 'ok',
+                    cancel: 'cancel'
+                }
             }
-          }
-        })}
+        })
+    }
 
-    
 
-    
-    removeModulePermission(module, action,actions) {
+
+
+    removeModulePermission(module, action, actions) {
         var Rolename = this.RoleName
-        let ac=[]
-        ac=actions;
+        let ac = []
+        ac = actions;
 
-        console.log('array of actions ',ac);
-        let permissions=ac.length-1;
+        console.log('array of actions ', ac);
+        let permissions = ac.length - 1;
         console.log(`permission present ${permissions}`)
         console.log("Remove Module Permission " + action + " module " + module)
 
-            if(permissions==1)
-            {
-               // console.log(`permission present ${permissions}`)
-               let message=`Deleting permission ${action} will result in module being removed ?`;
-               this.openDialog(message)
-              
+        if (permissions == 1) {
+            // console.log(`permission present ${permissions}`)
+            let message = `Deleting permission ${action} will result in module being removed ?`;
+            this.openDialog(message)
+
+        }
+        this.roleService.deleteSinglePermission(Rolename, module, action).subscribe((response: any) => {
+
+            if (response.status === 200) {
+
+                this.router.navigate([this.router.url]);
+
+
+            } else if (response.status != 200) {
+                //error => console.log('error', error);
+                //alert(`${action}` + " already removed! from " + `${module}`)
+                let message = `${action} already removed from ${module}!`
+                this.openDialog(message)
+                this.router.navigate([this.router.url]);
+
             }
-            this.roleService.deleteSinglePermission(Rolename, module, action).subscribe((response: any) => {
-               // console.log("response result" + JSON.stringify(response))
-                //console.log("------------------")
-                //
-                if (response.status === 200) {
-                    //console.log(`Module ${module} Added.`)
-                    //console.log(JSON.stringify(this.permissionByModule,null,2))
-                    //return this.permissionByModule[0]=this.permissions=response.data.actions;
-                    //this.router.navigateByUrl(`role/${rolename}`, { skipLocationChange: true }).then(() => {
-                        this.router.navigate([this.router.url]);
-                    // });
-                    //return response.actions
-    
-                } else if (response.status != 200) {
-                    //error => console.log('error', error);
-                    //alert(`${action}` + " already removed! from " + `${module}`)
-                    let message=`${action} already removed from ${module}!`
-                    this.openDialog(message)
-                    this.router.navigate([this.router.url]);
-    
-                }
-    
-    
-            },
-    
-                error => console.log('error', error));
-        // }else{
-        //     //Open Dialog
-        //     this.openDialog;
-        // }
-      
+
+
+        },
+
+            error => console.log('error', error));
+
+
     }
 
-    
+
     //Called by edit Role Button For Bulk editing 
     onSubmitUpdate() {
         var oldRoleName = this.RoleName
@@ -447,7 +399,7 @@ export class RoleEditComponent implements OnInit {
             if (response.status === 200)
                 this.router.navigate(['home/admin/roles'])
         }, (error) => {
-            let message=` Error updating role name \n" + ${error}`
+            let message = ` Error updating role name \n" + ${error}`
             this.openDialog(message)
             console.log("Error message from on submit \n" + JSON.stringify(error, null, 2))
         });
