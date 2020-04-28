@@ -99,8 +99,8 @@ export class AdminService {
   getRolePermission (roleName: string){
     
     let url = API.BASE_URL + `/cms/list-role-permisson/${roleName}`;
-    console.log("Role Name from get role oermission "+roleName)
-    console.log("URL" +url)
+    // console.log("Role Name from get role oermission "+roleName)
+    // console.log("URL" +url)
     return this.http.get(url);
   }
 
@@ -115,7 +115,7 @@ export class AdminService {
   RemoveSingleModule(roleName,moduleName){
      // console.log("Role Name from get role oermission "+moduleName)
      let url = API.BASE_URL + `/cms/role-name-remove-module/${roleName}/${moduleName}`;
-      console.log("URL \n" +url)
+     // console.log("URL \n" +url)
      // console.log(this.http.get(url))
      return this.http.get(url);
   }
@@ -123,14 +123,14 @@ export class AdminService {
   AddSingleModule(roleName,moduleName,actions){
      // console.log("Role Name from get role oermission "+moduleName)
      let url = API.BASE_URL + `/cms/role-name-add-module-actions/${roleName}/${moduleName}/${actions}`;
-      console.log("URL \n" +url)
+     // console.log("URL \n" +url)
      // console.log(this.http.get(url))
      return this.http.get(url);
   }
 
   updateSinglePermission(roleName,moduleName,action){
     let url = API.BASE_URL + `/cms/role-name-assign-module-permission/${roleName}/${moduleName}/${action}`;
-    console.log("URL \n" +url)
+    //console.log("URL \n" +url)
    // console.log(this.http.get(url))
    return this.http.get(url);
 
@@ -138,7 +138,7 @@ export class AdminService {
 
   deleteSinglePermission(roleName,moduleName,action){
     let url = API.BASE_URL + `/cms/role-name-delete-module-permission/${roleName}/${moduleName}/${action}`;
-    console.log("URL \n" +url)
+    //console.log("URL \n" +url)
    // console.log(this.http.get(url))
    return this.http.get(url);
 
@@ -146,7 +146,7 @@ export class AdminService {
 
   UpdateRoleName(oldRoleName,newRoleName){
     let url = API.BASE_URL + `/cms/update-role-name/${oldRoleName}/${newRoleName}`;
-    console.log("URL \n" +url)
+    //console.log("URL \n" +url)
    // console.log(this.http.get(url))
    return this.http.get(url);
 
@@ -154,7 +154,7 @@ export class AdminService {
 
   UpdateUserDetail(userId,data){
     let url = API.BASE_URL + `/cms/edit-user/${userId}`;
-    console.log("URL \n" +url)
+    //console.log("URL \n" +url)
    // console.log(this.http.get(url))
    return this.http.post(url,data);
   }
