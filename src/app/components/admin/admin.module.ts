@@ -14,6 +14,7 @@ import { CheckBoxComponent } from './checkbox.component';
 import { CheckBoxComponent2 } from './checkbox.component-2'
 
 import { NoWhitespaceDirective } from 'src/app/validators/no-whitespace.directive';
+import { RoleEditDialogComponent } from './admin-role-edit-dialog/role-edit-dialog/role-edit-dialog.component';
 
 @NgModule({
   imports: [
@@ -31,11 +32,13 @@ import { NoWhitespaceDirective } from 'src/app/validators/no-whitespace.directiv
     RoleEditComponent,
     NoWhitespaceDirective,
     RoleListComponent,
+    RoleEditDialogComponent,
   ],
   providers: [
     AdminService
   ],
   entryComponents:[
+    RoleEditDialogComponent
   ],
   exports: [
   ]
