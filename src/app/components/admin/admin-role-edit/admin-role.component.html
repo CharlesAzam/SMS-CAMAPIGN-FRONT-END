@@ -136,9 +136,9 @@
                                     Also note removing all permission has the same effect removing a module
                                 </mat-error>
                                 <div style="float: left;" *ngFor="let action of role.actions; index as i ">
-                                    <custom-checkbox [module]="role.module" [action]="action"
-                                        (click)="removeModulePermission(role.module,action)">{{action}}
-                                    </custom-checkbox>
+                                    <custom-checkbox-2 [module]="role.module" [action]="action"
+                                        (click)="removeModulePermission(role.module,action,role.actions)">{{action}}
+                                    </custom-checkbox-2>
                                 </div>
                                 <div style="float: right; margin-left: 10px;" *ngFor="let permission of permissions; index as i ">
                                     <button mat-raised-button (click)="pushSinglePermission(permission,role.module)"

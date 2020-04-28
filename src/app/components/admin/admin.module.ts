@@ -11,6 +11,7 @@ import { AdminUsersListComponent } from './admin-users-list/admin-list.component
 import { RoleEditComponent } from './admin-role-edit/admin-role.component';
 import { RoleListComponent } from './admin-roles-list/admin-roles.component';
 import { CheckBoxComponent } from './checkbox.component';
+import { CheckBoxComponent2 } from './checkbox.component-2'
 
 import { NoWhitespaceDirective } from 'src/app/validators/no-whitespace.directive';
 
@@ -23,6 +24,7 @@ import { NoWhitespaceDirective } from 'src/app/validators/no-whitespace.directiv
     RouterModule.forChild(ADMIN_ROUTES)
   ],
   declarations: [
+    CheckBoxComponent2,
     CheckBoxComponent,
     AdminEditComponent,
     AdminUsersListComponent,
