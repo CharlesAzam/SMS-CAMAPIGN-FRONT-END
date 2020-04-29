@@ -24,7 +24,7 @@ export class AdminEditComponent implements OnInit {
 
     userForm = new FormGroup({
         username: new FormControl('', [Validators.required]),
-        password: new FormControl('', [Validators.required]),
+        //password: new FormControl('', [Validators.]),
         roles: new FormControl('', [Validators.required])
     })
 
@@ -51,7 +51,7 @@ export class AdminEditComponent implements OnInit {
             url[1].parameters.roles
             let n=url[1].parameters.roles.length
             let userRole=url[1].parameters.roles.slice(0,n)
-            this.userForm.setValue({username:userName,password:null,roles:userRole})
+            this.userForm.setValue({username:userName,roles:userRole})
             // console.log("userId "+userId)
             // console.log("Paramtere params \n"+JSON.stringify(url[1].parameters,null,2))
             // console.log("Paramtere params name :"+JSON.stringify(url[1].parameters.username,null,2))
