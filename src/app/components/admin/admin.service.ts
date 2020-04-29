@@ -146,6 +146,7 @@ export class AdminService {
   }
 
   UpdateUserDetail(userId, data) {
+    console.log(data)
     let url = API.BASE_URL + `/cms/edit-user/${userId}`;
 
     return this.http.post(url, data);
