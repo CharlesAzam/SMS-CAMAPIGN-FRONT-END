@@ -1,0 +1,168 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <mat-card style="margin-top: 30px;">
+        <div class="header">
+          <h1 class="title">TV Guide Detail</h1>
+          <hr />
+        </div>
+        <div class="content">
+          <p *ngIf="errors">{{ errors }}</p>
+
+          <form [formGroup]="guideForm" (ngSubmit)="save()">
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Name"
+                formControlName="name"
+                required
+              />
+              <!-- <mat-error *ngIf="bannerForm.name.invalid">Name can not be empty</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Description"
+                formControlName="description"
+                required
+              />
+              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Sub Title"
+                formControlName="subtitle"
+                required
+              />
+              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+            </mat-form-field>
+            <div>
+              <mat-form-field style="width: 100%;">
+                <mat-label>Type</mat-label>
+                <mat-select
+                  (selectionChange)="getTypeOfGuide($event)"
+                  formControlName="type"
+                >
+                  <mat-option *ngFor="let typ of types" [value]="typ"
+                    >{{ typ }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <mat-form-field *ngIf="type == 'vod'" style="width: 100%;">
+              <mat-label>Content</mat-label>
+              <mat-select formControlName="content" required>
+                <ngx-mat-select-search
+                  [formControl]="filterContentCtrl"
+                  [noEntriesFoundLabel]="'Content not found'"
+                  [placeholderLabel]="'Find Content...'"
+                >
+                </ngx-mat-select-search>
+                <mat-option
+                  *ngFor="let cont of filteredContent | async"
+                  [value]="cont._id"
+                >
+                  {{ cont.title }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="type == 'package'" style="width: 100%;">
+              <input matInput placeholder="Link" formControlName="URL" />
+              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Priority"
+                type="number"
+                formControlName="priority"
+                required
+              />
+              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <mat-label>Category</mat-label>
+              <mat-select formControlName="categories">
+                <ngx-mat-select-search
+                  [formControl]="filterCategoriesCtrl"
+                  [noEntriesFoundLabel]="'Category not found'"
+                  [placeholderLabel]="'Find Category...'"
+                >
+                </ngx-mat-select-search>
+                <mat-option
+                  *ngFor="let category of filteredCategories | async"
+                  [value]="category._id"
+                >
+                  {{ category.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- <mat-form-field style="width: 100%;">
+                            <mat-label>Sub Categories</mat-label>
+                            <mat-select formControlName="subCategories">
+                                <ngx-mat-select-search [formControl]="filterSubCategoryCtrl"
+                                    [noEntriesFoundLabel]="'Sub Category not found'"
+                                    [placeholderLabel]="'Find Sub Category...'">
+                                </ngx-mat-select-search>
+                                <mat-option *ngFor="let sub of filteredSubCategories | async" [value]="sub._id">
+                                    {{sub.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+
+            <div class="form-group">
+              <label for="Decription"
+                >{{ guideModel ? "Change" : "Upload" }} Image:</label
+              >
+              <input
+                (change)="handelImageChange($event.target.files)"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                placeholder="Enter Upload image thumb"
+              />
+            </div>
+            <mat-spinner *ngIf="isUploading"></mat-spinner>
+
+            <div class="form-group" *ngIf="imageUrl">
+              <img src="{{ imageUrl }}" width="100" height="100" />
+            </div>
+
+            <div class="form-group">
+              <mat-label>Status</mat-label>
+              <mat-button-toggle-group
+                appearance="legacy"
+                name="fontStyle"
+                aria-label="Font Style"
+                formControlName="status"
+                style="margin-left: 10px;"
+                required
+              >
+                <mat-button-toggle value="true">ACTIVE</mat-button-toggle>
+                <mat-button-toggle value="false">INACTIVE</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+
+            <div class="form-group">
+              <button
+                color="primary"
+                mat-raised-button
+                [disabled]="guideForm.invalid"
+                class="btn btn-default"
+              >
+                {{ guideModel ? "Update" : "Save" }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
