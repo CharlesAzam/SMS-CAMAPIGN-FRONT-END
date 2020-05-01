@@ -83,6 +83,8 @@
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/subscriptions">Subscription Reports</a>
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/invoices">Invoice Reports</a>
         <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/revenue">Revenue Reports</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/vendors">Vendor Configuration</a>
+
       </div>
 
       <mat-list-item *ngIf="isModulePermitted('Customer-Portal') || isModulePermitted('customer-support')" (click)="showSupport = !showSupport" class="parent">
