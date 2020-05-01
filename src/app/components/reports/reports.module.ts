@@ -11,6 +11,7 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
+import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { InvoiceReportComponent } from './invoice-reports/invoice-report.compone
     UserReportComponet,
     TransactionReportComponent,
     CollectionReportComponent,
+    DetailedCollectionReportComponent,
     RequestsComponent,
     SubscriptionReportComponent,
     InvoiceReportComponent

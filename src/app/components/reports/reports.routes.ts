@@ -5,6 +5,7 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
+import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 
 export const REPORT_ROUTES: Routes = [
   {
@@ -21,8 +22,12 @@ export const REPORT_ROUTES: Routes = [
     component: TransactionReportComponent
   },
   {
-    path: 'collections/:type',
+    path: 'collections/summary',
     component: CollectionReportComponent
+  },
+  {
+    path: 'collections/detailed',
+    component: DetailedCollectionReportComponent
   },
   {
     path: 'requests',
