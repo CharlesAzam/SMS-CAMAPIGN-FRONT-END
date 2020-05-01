@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Add Vendor</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="vendorForm">
+    <!-- Users -->
+    <div class="form-group">
+      <mat-form-field style="width: 100%;">
+        <mat-label>User</mat-label>
+        <mat-select formControlName="user" required>
+          <ngx-mat-select-search
+            [formControl]="filterUsersCtrl"
+            [noEntriesFoundLabel]="'User not found'"
+            [placeholderLabel]="'Find a User..'"
+          >
+          </ngx-mat-select-search>
+          <mat-option *ngFor="let u of filteredUsers | async" [value]="u"
+            >{{ u.vendorName }} {{ u.email }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+
+    <!-- Report Types -->
+    <div class="form-group">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Report Type</mat-label>
+        <mat-select formControlName="reportType" required multiple>
+          <ngx-mat-select-search
+            [formControl]="filterReportTypeCtrl"
+            [noEntriesFoundLabel]="'Report Type not found'"
+            [placeholderLabel]="'Find Report Type..'"
+          >
+          </ngx-mat-select-search>
+          <mat-option
+            *ngFor="let reportTyp of filteredReportTypes | async"
+            [value]="reportTyp"
+            >{{ reportTyp }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Report Formats -->
+    <div class="form-group">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Report Formats</mat-label>
+        <mat-select formControlName="reportFormat" required multiple>
+          <ngx-mat-select-search
+            [formControl]="filterFormatsCtrl"
+            [noEntriesFoundLabel]="'Report Type not found'"
+            [placeholderLabel]="'Find Report Type..'"
+          >
+          </ngx-mat-select-search>
+          <mat-option
+            *ngFor="let format of filteredFormats | async"
+            [value]="format"
+            >{{ format }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Frequency -->
+    <div class="form-group">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Frequency</mat-label>
+        <mat-select formControlName="frequency" required>
+          <mat-option *ngFor="let freq of frequencies" [value]="freq"
+            >{{ freq }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Header -->
+    <div class="form-group">
+      <mat-form-field style="width: 100%;" required>
+        <input
+          matInput
+          name="header"
+          placeholder="Header (0/50)"
+          formControlName="header"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field style="width: 100%;" required>
+        <mat-label>Body (0/255) </mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="5"
+          cdkAutosizeMaxRows="5"
+        >
+        </textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="vendorForm.invalid"
+    [mat-dialog-close]="getData()"
+    cdkFocusInitial
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
