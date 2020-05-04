@@ -36,10 +36,11 @@ import { AdminModule } from "./components/admin/admin.module";
 import { ReportsModule } from "./components/reports/reports.module";
 import { SupportModule } from "./components/support/support.module";
 import { WarningDialog } from "./components/warning-dialog/dialog-warning";
-import { TicketDescriptionDialog } from './components/ticket-description/dialog-ticket-description';
-import { CategoriesService } from './services/categories.service';
-import { CanActivateViaAuthGuard } from './guards/PermissionGuard';
-import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
+import { TicketDescriptionDialog } from "./components/ticket-description/dialog-ticket-description";
+import { CategoriesService } from "./services/categories.service";
+import { CanActivateViaAuthGuard } from "./guards/PermissionGuard";
+import { NoWhitespaceDirective } from "./validators/no-whitespace.directive";
+import { GuideModule } from "./components/tv-guide/tv-guide.module";
 
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
@@ -57,7 +58,7 @@ import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
 
     ErrorDialog,
     WarningDialog,
-    TicketDescriptionDialog
+    TicketDescriptionDialog,
   ],
   imports: [
     BrowserModule,
@@ -73,14 +74,15 @@ import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
     NgxMatSelectSearchModule,
     VideoLibraryModule,
     BannerModule,
+    GuideModule,
     EditorModule,
     ProgramModule,
     ReactiveFormsModule,
     ReportsModule,
     SupportModule,
-    MatInputModule
+    MatInputModule,
   ],
-  entryComponents: [ErrorDialog, WarningDialog,TicketDescriptionDialog],
+  entryComponents: [ErrorDialog, WarningDialog, TicketDescriptionDialog],
   providers: [
     LanguageService,
     CountryService,
@@ -89,8 +91,8 @@ import { NoWhitespaceDirective } from './validators/no-whitespace.directive';
     CanActivateViaAuthGuard,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
