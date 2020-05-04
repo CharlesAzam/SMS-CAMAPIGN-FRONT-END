@@ -6,6 +6,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { NoWhitespaceValidator } from 'src/app/validators/no-whitespace.validator';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleEditDialogComponent } from '../admin-role-edit-dialog/role-edit-dialog/role-edit-dialog.component'
+import { element } from 'protractor';
 
 
 @Component({
@@ -344,6 +345,21 @@ export class RoleEditComponent implements OnInit {
                 }
             }
         })
+
+        return dialogRef;
+    }
+
+    openDialogPermission(message){
+        const dialogRef = this.dialog.open(RoleEditDialogComponent, {
+            data: {
+                message: `${message}`,
+                buttonText: {
+                    ok: 'ok',
+                    cancel: 'cancel'
+                }
+            }
+        })
+      return dialogRef;
     }
 
 
@@ -361,31 +377,65 @@ export class RoleEditComponent implements OnInit {
 
         if (permissions == 1) {
             // console.log(`permission present ${permissions}`)
-            let message = `Deleting permission ${action} will result in module being removed ?`;
+            let message = `Deleting permission "${action}" will result in module "${module}" having ${permissions}`;
+            this.openDialog(message).beforeClose().subscribe((element)=>{
+                if(element){
+                    console.log(`${permissions} permission left delete `,element)
+                    this.roleService.deleteSinglePermission(Rolename, module, action).subscribe( (response: any) => {
+   
+                        if (response.status === 200) {
+            
+                            this.router.navigate([this.router.url]);
+            
+            
+                        } else if (response.status != 200) {
+                            //error => console.log('error', error);
+                            //alert(`${action}` + " already removed! from " + `${module}`)
+                            let message = `${action} already removed from ${module}!`
+                            this.openDialog(message)
+                            this.router.navigate([this.router.url]);
+            
+                        }
+                    },
+            
+                        error => console.log('error', error));
+                }else{
+                    return
+                }    
+            })
+
+        }else if (permissions == 0){
+            let message = `Warning a module ${module} can not be saved with ${permissions} permission!\n.`;
             this.openDialog(message)
-
+        }else{
+            this.openDialogPermission(`Are sure you want to remove persmission ${action}`).beforeClose().subscribe ((element)=>{
+             
+                if(element){
+                 console.log('Removing permission ',element)
+                 this.roleService.deleteSinglePermission(Rolename, module, action).subscribe( (response: any) => {
+   
+                   if (response.status === 200) {
+       
+                       this.router.navigate([this.router.url]);
+       
+       
+                   } else if (response.status != 200) {
+                       //error => console.log('error', error);
+                       //alert(`${action}` + " already removed! from " + `${module}`)
+                       let message = `${action} already removed from ${module}!`
+                       this.openDialog(message)
+                       this.router.navigate([this.router.url]);
+       
+                   }
+               },
+       
+                   error => console.log('error', error));
+                }else{
+                 console.log("Not removing permission ",element)
+                 return;
+                }
+           })
         }
-        this.roleService.deleteSinglePermission(Rolename, module, action).subscribe((response: any) => {
-
-            if (response.status === 200) {
-
-                this.router.navigate([this.router.url]);
-
-
-            } else if (response.status != 200) {
-                //error => console.log('error', error);
-                //alert(`${action}` + " already removed! from " + `${module}`)
-                let message = `${action} already removed from ${module}!`
-                this.openDialog(message)
-                this.router.navigate([this.router.url]);
-
-            }
-
-
-        },
-
-            error => console.log('error', error));
-
 
     }
 
