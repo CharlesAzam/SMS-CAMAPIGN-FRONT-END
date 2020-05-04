@@ -40,8 +40,9 @@ export class GuideListComponent {
   displayedColumns: string[] = [
     "No",
     "name",
-    "description",
-    "status",
+    "synopsis",
+    "duration",
+    "time",
     "action",
   ];
 

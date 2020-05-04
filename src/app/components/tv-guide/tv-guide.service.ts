@@ -13,7 +13,7 @@ export class GuideService {
   guideList: Guide[] = [];
 
   findById(id: string): Observable<Guide> {
-    let url = API.BASE_URL + `/cms/banner/${id}`;
+    let url = API.BASE_URL + `/cms/program/${id}`;
 
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<Guide>(url, { headers });
@@ -41,7 +41,7 @@ export class GuideService {
   }
 
   find(pageIndex?, pageSize?): Observable<Guide[]> {
-    let url = API.BASE_URL + "/cms/banner-list";
+    let url = API.BASE_URL + "/cms/program-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     if (pageIndex || pageSize) {
@@ -55,25 +55,25 @@ export class GuideService {
   }
 
   delete(id: string) {
-    let url = API.BASE_URL + `/cms/banner/${id}/`;
+    let url = API.BASE_URL + `/cms/program/${id}/`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.delete<any>(url, { headers });
   }
 
   update(data: Guide) {
-    let url = API.BASE_URL + `/cms/banner/${data._id}/update`;
+    let url = API.BASE_URL + `/cms/program/${data._id}/update`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.put<any>(url, data, { headers });
   }
 
   save(entity: Guide): Observable<Guide> {
-    let url = API.BASE_URL + "/cms/banner/create";
+    let url = API.BASE_URL + "/cms/program/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<Guide>(url, entity, { headers });
   }
 
   getCount() {
-    let url = API.BASE_URL + `/cms/count/banners`;
+    let url = API.BASE_URL + `/cms/count/programs`;
     return this.http.get(url);
   }
 }

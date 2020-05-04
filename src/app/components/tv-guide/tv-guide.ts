@@ -1,16 +1,18 @@
 export class Guide {
   _id: string;
+  channel: number;
+  date: string;
+  time: string;
+  date_time_in_gmt: string;
+  end_date_time_in_gmt: string;
+  duration: string;
   name: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  content: any;
-  URL: String;
-  priority: number;
-  categories: any;
-  subCategories: any;
+  synopsis: string;
   type: string;
-  contents: string;
-  status: boolean;
-  isDeleted: boolean;
+  image: string;
+  laligalive: string;
+  tags: string;
+  program_type: string;
+  re_run: string;
+  re_run_date_time_gmt: string;
 }

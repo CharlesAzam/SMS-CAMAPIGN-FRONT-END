@@ -55,7 +55,7 @@ const routes: Routes = [
         path: "tv-guide",
         loadChildren: "./components/tv-guide/tv-guide.module#GuideModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ["banner"] },
+        data: { moduleData: ["Program"] },
       },
       {
         path: "category",

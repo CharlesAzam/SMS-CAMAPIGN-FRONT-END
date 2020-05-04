@@ -38,32 +38,37 @@ export class GuideEditComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
 
   guideForm = new FormGroup({
-    name: new FormControl("", [Validators.required]),
-    description: new FormControl("", [Validators.required]),
-    subtitle: new FormControl("", [Validators.required]),
-    type: new FormControl("", [Validators.required]),
-    content: new FormControl(""),
-    priority: new FormControl("", [Validators.required]),
-    URL: new FormControl(""),
-    categories: new FormControl("", [Validators.required]),
+    channel: new FormControl("", [Validators.required]),
+    date: new FormControl("", [Validators.required]),
+    time: new FormControl("", [Validators.required]),
+    date_time_in_gmt: new FormControl("", [Validators.required]),
+    end_date_time_in_gmt: new FormControl(""),
+    duration: new FormControl("", [Validators.required]),
+    name: new FormControl(""),
+    synopsis: new FormControl("", [Validators.required]),
     //  subCategories: new FormControl('', [Validators.required]),
     image: new FormControl(""),
-    status: new FormControl("", [Validators.required]),
+    type: new FormControl("", [Validators.required]),
+    laligalive: new FormControl("", [Validators.required]),
+    tags: new FormControl("", [Validators.required]),
+    program_type: new FormControl("", [Validators.required]),
+    re_run: new FormControl("", [Validators.required]),
+    re_run_date_time_gmt: new FormControl("", [Validators.required]),
   });
 
   constructor(
     private route: ActivatedRoute,
     private guideService: GuideService,
-    private categoryService: CategoriesService,
-    private subCategoryService: SubCategoriesService,
-    private contentService: VodService,
+    // private categoryService: CategoriesService,
+    // private subCategoryService: SubCategoriesService,
+    // private contentService: VodService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.getCategories();
-    this.getSubCategories();
-    this.getContent();
+    // this.getCategories();
+    // this.getSubCategories();
+    // this.getContent();
 
     this.route.params.subscribe((params) => {
       if (params.id !== "new") {
@@ -71,28 +76,40 @@ export class GuideEditComponent implements OnInit {
           (response: any) => {
             if (response.status === 200) {
               this.guideModel = response.data[0];
+              console.log("this.guidemOdel", this.guideModel);
               this.type = this.guideModel.type ? this.guideModel.type : "";
               this.imageUrl = this.guideModel.image;
               this.guideForm.setValue({
                 name: this.guideModel.name ? this.guideModel.name : "",
                 type: this.guideModel.type ? this.guideModel.type : "",
-                description: this.guideModel.description
-                  ? this.guideModel.description
-                  : "",
-                status: String(this.guideModel.status)
-                  ? String(this.guideModel.status)
+                channel: this.guideModel.channel ? this.guideModel.channel : "",
+                date: String(this.guideModel.date)
+                  ? String(this.guideModel.date)
                   : "",
                 image: this.guideModel.image ? this.guideModel.image : "",
-                content: this.guideModel.content ? this.guideModel.content : "",
-                subtitle: this.guideModel.subtitle
-                  ? this.guideModel.subtitle
+                time: this.guideModel.time ? this.guideModel.time : "",
+                date_time_in_gmt: this.guideModel.date_time_in_gmt
+                  ? this.guideModel.date_time_in_gmt
                   : "",
-                priority: this.guideModel.priority
-                  ? this.guideModel.priority
+                end_date_time_in_gmt: this.guideModel.end_date_time_in_gmt
+                  ? this.guideModel.end_date_time_in_gmt
                   : "",
-                URL: this.guideModel.URL ? this.guideModel.URL : "",
-                categories: this.guideModel.categories._id
-                  ? this.guideModel.categories._id
+                synopsis: this.guideModel.synopsis
+                  ? this.guideModel.synopsis
+                  : "",
+                laligalive: this.guideModel.laligalive
+                  ? this.guideModel.laligalive
+                  : "",
+                tags: this.guideModel.tags ? this.guideModel.tags : "",
+                program_type: this.guideModel.program_type
+                  ? this.guideModel.program_type
+                  : "",
+                re_run: this.guideModel.re_run ? this.guideModel.re_run : "",
+                re_run_date_time_gmt: this.guideModel.re_run_date_time_gmt
+                  ? this.guideModel.re_run_date_time_gmt
+                  : "",
+                duration: this.guideModel.duration
+                  ? this.guideModel.duration
                   : "",
                 /* subCategories: this.bannerModel.subCategories
                   ? this.bannerModel.subCategories
@@ -104,86 +121,6 @@ export class GuideEditComponent implements OnInit {
         );
       }
     });
-
-    this.filterCategoriesCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterCategories();
-      });
-
-    this.filterContentCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterContent();
-      });
-
-    this.filterSubCategoryCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterSubCategories();
-      });
-  }
-
-  getTypeOfGuide(event) {
-    if (event.value === "vod") {
-      this.guideForm.get("content").setValidators([Validators.required]);
-      this.guideForm.get("URL").setValidators([]);
-    } else {
-      this.guideForm.get("content").setValidators([]);
-      this.guideForm.get("URL").setValidators([Validators.required]);
-    }
-    this.guideForm.get("content").updateValueAndValidity();
-    this.guideForm.get("URL").updateValueAndValidity();
-    this.type = event.value;
-  }
-  filterCategories() {
-    if (!this.categorys) return;
-
-    let search: string = this.filterCategoriesCtrl.value;
-    if (!search) {
-      this.filteredCategories.next(this.categorys.slice());
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredCategories.next(
-      this.categorys.filter(
-        (category) => category.name.toLowerCase().indexOf(search) > -1
-      )
-    );
-  }
-
-  filterSubCategories() {
-    if (!this.subs) return;
-
-    let search: string = this.filterSubCategoryCtrl.value;
-    if (!search) {
-      this.filteredSubCategories.next(this.subs.slice());
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredSubCategories.next(
-      this.subs.filter((sub) => sub.name.toLowerCase().indexOf(search) > -1)
-    );
-  }
-
-  filterContent() {
-    if (!this.content) return;
-
-    let search = this.filterContentCtrl.value;
-    if (!search) {
-      this.filteredContent.next(this.content.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.filteredContent.next(
-      this.content.filter((cont) =>
-        cont.title ? cont.title.toLowerCase().indexOf(search) > -1 : ""
-      )
-    );
   }
 
   back() {
@@ -233,41 +170,5 @@ export class GuideEditComponent implements OnInit {
         }
       );
     }
-  }
-
-  getCategories() {
-    this.categoryService.find().subscribe(
-      (response: any) => {
-        if (response.status === 200) {
-          this.categorys = response.data;
-          this.filteredCategories.next(this.categorys.slice());
-        }
-      },
-      (error) => console.error(error)
-    );
-  }
-
-  getSubCategories() {
-    this.subCategoryService.find().subscribe(
-      (response: any) => {
-        if (response.status === 200) {
-          this.subs = response.data;
-          this.filteredSubCategories.next(this.subs.slice());
-        }
-      },
-      (error) => console.error(error)
-    );
-  }
-
-  getContent() {
-    this.contentService.find("vod").subscribe(
-      (response: any) => {
-        if (response.status === 200) {
-          this.content = response.data;
-          this.filteredContent.next(this.content.slice());
-        }
-      },
-      (error) => console.error(error)
-    );
   }
 }
