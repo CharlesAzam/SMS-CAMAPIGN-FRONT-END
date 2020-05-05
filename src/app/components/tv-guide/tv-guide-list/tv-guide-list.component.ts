@@ -37,14 +37,7 @@ export class GuideListComponent {
   dataSource = new MatTableDataSource<Guide>([]);
   count: number;
 
-  displayedColumns: string[] = [
-    "No",
-    "name",
-    "synopsis",
-    "duration",
-    "time",
-    "action",
-  ];
+  displayedColumns: string[] = ["No", "name", "startTime", "endTime", "action"];
 
   constructor(
     private guideService: GuideService,
