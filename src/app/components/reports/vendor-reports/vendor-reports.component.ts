@@ -11,7 +11,8 @@ import {
 } from "@angular/material";
 import { Router } from "@angular/router";
 import { VendorDialogComponent } from "../dialog-vendor-details/vendor-dialog.component";
-import { WarningDialog } from '../../warning-dialog/dialog-warning';
+import { WarningDialog } from "../../warning-dialog/dialog-warning";
+import { startWith, tap } from "rxjs/operators";
 
 @Component({
   selector: "vendor-reports",
@@ -23,6 +24,7 @@ export class VendorReportConfigComponent implements OnInit {
     "No",
     "vendorName",
     "email",
+    "companyName",
     "reportType",
     "frequency",
     "actions",
@@ -37,60 +39,75 @@ export class VendorReportConfigComponent implements OnInit {
 
   datasource = new MatTableDataSource<any>([]);
   vendorConfigurationList: any[] = [];
+  count: number;
 
   ngOnInit() {
-    this.getVendorInformation();
+    // this.getVendorInformation();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.paginator.page
+      .pipe(
+        startWith(null),
+        tap(() =>
+          this.getVendorInformation(
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize
+          )
+        )
+      )
+      .subscribe();
+  }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   search() {}
 
-  openDialog(data) {
+  openDialog(data = null) {
     const dialogRef = this.dialog.open(VendorDialogComponent, {
       width: "800px",
-      data: null,
+      data,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result);
+        this.getVendorInformation(this.paginator.pageIndex + 1,
+          this.paginator.pageSize);
       }
     });
   }
 
-  getVendorInformation() {
+  getVendorInformation(page, size) {
     this.reportService
-      .getVendorConfigurationList()
+      .getVendorConfigurationList(page, size)
       .subscribe((response: any) => {
         if (response.success) {
           this.vendorConfigurationList = response.data;
           this.datasource = response.data;
+          this.count = response.count;
         }
       });
   }
 
-  deleteVendorConfiguration(row){
+  deleteVendorConfiguration(row) {
     this.dialog
       .open(WarningDialog, {
         width: "400px",
         data: {
           title: "Warning",
-          message: `Are you sure want to delete this configuration`
-        }
+          message: `Are you sure want to delete this configuration`,
+        },
       })
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.reportService.delete(row._id).subscribe(
             (response: any) => {
-              if (response.status === 200)
-                this.getVendorInformation();
+              if (response.status === 200) this.getVendorInformation(this.paginator.pageIndex + 1,
+                this.paginator.pageSize);
             },
-            error => console.error(error)
+            (error) => console.error(error)
           );
         }
       });
