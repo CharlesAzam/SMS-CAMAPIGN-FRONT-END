@@ -22,8 +22,22 @@ export class VendorDialogComponent {
   loading: boolean = false;
   frequencies: String[] = ["DAILY", "WEEKLY", "MONTHLY", "QUATERLY", "YEARLY"];
   users: any[] = [];
-  reportTypes: String[] = ["COLL_SUM", "REG_SUM", "NON_AZAM_USERS"];
-  reportFormats: String[] = ["PDF", "XLSX", "CSV"];
+  reportTypes: String[] = [
+    "REG_SUM",
+    "CNT_REG_SUM",
+    "COLL_SUM",
+    "COLL_DET",
+    "TRNCS_SUM",
+    "REFUND_ACCEPT",
+    "REVENUE_RECOGNITION",
+    "INVOICE",
+    "PACKAGE_SUBSCRIPTION",
+    "PACKAGE_SUBSCRIPTION_AZAM",
+    "PACKAGE_SUBSCRIPTION_NON_AZAM",
+    "CONTENT_SUBSCRIPTION_AZAM",
+    "CONTENT_SUBSCRIPTION_NON_AZAM",
+  ];
+  reportFormats: String[] = ["PDF", "XLSX"];
   vendorStatus: String[] = ["ACTIVE", "SUSPENDED", "DELETED"];
 
   //Vendor Information
