@@ -1,21 +1,30 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { API } from "src/environments/environment";
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 import { SupportFilter } from "../support/support-filter.model";
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
+const EXCEL_TYPE =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+const EXCEL_EXTENSION = ".xlsx";
 
 @Injectable()
 export class ReportService {
   constructor(private http: HttpClient) {}
 
-  exportFileToCsv(data: any[], title?: string, filename?: string) {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    console.log('worksheet',worksheet);
-    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  exportFileToCsv(data: any[], title?: string, filename?: string, headers?) {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {
+      header: headers,
+    });
+    console.log("worksheet", worksheet);
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ["data"],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
     //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
     this.saveAsExcelFile(excelBuffer, filename);
   }
@@ -227,11 +236,11 @@ export class ReportService {
 
     if (filter.month) params.month = true;
 
-    return this.http.get<any>(url, { headers, params});
+    return this.http.get<any>(url, { headers, params });
   }
 
   getInvoiceReport(filter) {
-    let url = API.BASE_URL + "/cms/reports/invoice";
+    let url = API.BASE_URL + "/cms/reports/summary?type=INVOICE";
     let headers = new HttpHeaders().set("Accept", "application/json");
     let params: any = {};
 
@@ -245,13 +254,55 @@ export class ReportService {
 
     if (filter.month) params.month = true;
 
-    return this.http.get<any>(url, { headers, params});
+    return this.http.get<any>(url, { headers, params });
+  }
+
+  getVendorConfigurationList(page, size) {
+    let url = API.BASE_URL + "/cms/channelprovider-list";
+    let params: any = {};
+
+    if (page) params.page = page;
+
+    if (size) params.size = size;
+
+    return this.http.get<any>(url, { params });
+  }
+
+  getVendorConfigurationById(vendorId) {
+    let url = API.BASE_URL + "/cms/channelprovider/" + vendorId;
+    return this.http.get<any>(url);
+  }
+
+  createVendorConfiguration(data) {
+    let url = API.BASE_URL + "/cms/channelprovider/create";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.post<any>(url, data, { headers });
+  }
+
+  updateVendorConfiguration(vendorConfigData: any) {
+    let url =
+      API.BASE_URL + `/cms/channelprovider/${vendorConfigData._id}/update`;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.put<any>(url, vendorConfigData, { headers });
+  }
+
+  delete(vendorConfigId: any) {
+    let url = API.BASE_URL + "/cms/channelprovider/" + vendorConfigId;
+    return this.http.delete<any>(url);
+  }
+
+  getVendorUsers() {
+    let url = API.BASE_URL + "/cms/getChannelProviderUser";
+    return this.http.get<any>(url);
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE
+      type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    FileSaver.saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+    );
   }
 }
