@@ -23,6 +23,7 @@ export class RoleEditComponent implements OnInit {
     permissions = []
     selectedModulesAndActions: any[] = [];
     modulesAndActions: any[] = [];
+    Errormessage=null;
 
     @Input() heading: String = null;
     @Input() placeHolderValue: String = null;
@@ -102,6 +103,26 @@ export class RoleEditComponent implements OnInit {
         //this.getModulesAndActions();
     }
 
+    /*Function to Check if Role module is empty*/
+    CheckButton(){
+        let selectedModule=  this.selectedModulesAndActions
+        let EmptyModulePermission=[]
+        let hasError=null
+        let result={status:null,message:null}
+        selectedModule[0].actions.lenght==null ? console.log(`Selected module ${selectedModule[0].action} has no permission`): '';
+        selectedModule.forEach((item)=>{
+            if(item.actions.length==0){
+                
+                EmptyModulePermission.push(item.module)
+            }
+        })
+
+        this.Errormessage=`Error selected module ${EmptyModulePermission} hav 0 persmission.\n Click Ok to set Permission or Cancel to reset`
+        EmptyModulePermission.length== 0 ? result.status=false : hasError=true
+        console.log(this.Errormessage)
+        return hasError
+        
+    }
     getModulesAndActions() {
         this.roleService.getModulesAndActions().subscribe((response: any) => {
             if (response.status === 200)
@@ -327,13 +348,45 @@ export class RoleEditComponent implements OnInit {
     onSubmit() {
         console.log("OnSubmit..")
         this.roleModel.roleName = this.roleName.value;
-        this.roleService.createRole(this.roleModel).subscribe((response: any) => {
-            if (response.status === 200)
-                this.router.navigate(['home/admin/roles'])
-        }, (error) => {
-            console.log("Error message from on submit \n" + JSON.stringify(error, null, 2))
-        });
+        let ErrorCheck=this.CheckButton();
+        if(ErrorCheck){
+
+            console.log('status ',ErrorCheck)
+            this.openDialogRoleCreate(this.Errormessage).beforeClose().subscribe((element)=>{
+                if(element){
+                   console.log('Ok clicked ',element)
+                }else{
+                    console.log('Cancel clicked ',element)
+                    this.router.navigate([this.router.url]);
+                }
+
+            })
+        }else{
+            console.log('status ',ErrorCheck)
+            //return 
+            this.roleService.createRole(this.roleModel).subscribe((response: any) => {
+                if (response.status === 200)
+                    this.router.navigate(['home/admin/roles'])
+            }, (error) => {
+                console.log("Error message from on submit \n" + JSON.stringify(error, null, 2))
+            });
+        }
+        
     }
+    openDialogRoleCreate(message) {
+        const dialogRef = this.dialog.open(RoleEditDialogComponent, {
+            data: {
+                message: `${message}`,
+                buttonText: {
+                    ok: 'Ok',
+                    cancel: 'cancel'
+                }
+            }
+        })
+
+        return dialogRef;
+    }
+
 
     openDialog(message) {
         const dialogRef = this.dialog.open(RoleEditDialogComponent, {
