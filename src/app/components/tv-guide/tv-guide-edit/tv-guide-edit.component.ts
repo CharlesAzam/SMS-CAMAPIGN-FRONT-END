@@ -42,7 +42,7 @@ export class GuideEditComponent implements OnInit {
     date_time_in_gmt: new FormControl(new Date(), [Validators.required]),
     end_date_time_in_gmt: new FormControl(new Date(), [Validators.required]),
     name: new FormControl("", [Validators.required]),
-    image: new FormControl("", [Validators.required]),
+    image: new FormControl(""),
     type: new FormControl("", [Validators.required]),
     laligalive: new FormControl("", [Validators.required]),
     tags: new FormControl("", [Validators.required]),
