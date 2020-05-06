@@ -25,6 +25,22 @@
       >
         Create Programs
       </button>
+      <input
+        type="file"
+        style="margin-left: 23px;"
+        class="form-control"
+        (change)="uploadedFile($event)"
+        placeholder="Upload file"
+        accept=".csv"
+      />
+      <!-- <button
+        color="accent"
+        mat-raised-button
+        style="margin-left: 23px;"
+        *ngIf="authenticationService.isModuleAllowed('Program', 'create')"
+      >
+        Import Programs
+      </button> -->
     </div>
 
     <table

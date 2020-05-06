@@ -102,6 +102,90 @@ export class GuideListComponent {
     );
   }
 
+  uploadedFile(event) {
+    console.log(event.target.files[0]);
+    this.convertToJson(event.target.files[0]);
+  }
+  checkIfPresnet(model, header) {
+    if (model.length !== header.length) {
+      return false;
+    }
+    let count = 0;
+    for (let index = 0; index < header.length; index++) {
+      if (header.indexOf(model[index]) > -1) {
+        ++count;
+      }
+    }
+    if (count === model.length) {
+      return true;
+    }
+  }
+
+  convertToJson(csv) {
+    let reader = new FileReader();
+    reader.onload = () => {
+      let text: any = reader.result;
+      console.log("CSV: ", text.substring(0, 100) + "...");
+      var lines = text.split("\n");
+
+      var result = [];
+
+      // NOTE: If your columns contain commas in their values, you'll need
+      // to deal with those before doing the next step
+      // (you might convert them to &&& or something, then covert them back later)
+      // jsfiddle showing the issue https://jsfiddle.net/
+      var headers = lines[0].split(",");
+      const model = [
+        "_id",
+        "channel",
+        "date_time_in_gmt",
+        "end_date_time_in_gmt",
+        "name",
+        "type",
+        "image",
+        "laligalive",
+        "tags",
+        "program_type",
+      ];
+      console.log("hihhihi", this.checkIfPresnet(model, headers));
+      if (!this.checkIfPresnet(model, headers)) {
+        return null;
+      }
+      for (var i = 1; i < lines.length; i++) {
+        if (lines[i]) {
+          var obj = {};
+          var currentline = lines[i].split(",");
+          console.log("CSV==============>", currentline);
+          for (var j = 0; j < headers.length; j++) {
+            obj[headers[j]] = currentline[j];
+          }
+
+          result.push(obj);
+        }
+      }
+      console.log("type of ", typeof result);
+      this.guideService.bulkUpload(result).subscribe(
+        (response: any) => {
+          if (response.success) {
+            console.log("success");
+          } else {
+            console.log("failed");
+          }
+        },
+        (err: any) => {
+          console.error(err);
+        }
+      );
+      console.log("final-------", result);
+      //return result; //JavaScript object
+      return JSON.stringify(result); //JSON
+
+      //convert text to json here
+      //var json = this.csvJSON(text);
+    };
+    reader.readAsText(csv);
+  }
+
   getCount() {
     this.guideService.getCount().subscribe(
       (response: any) => {
