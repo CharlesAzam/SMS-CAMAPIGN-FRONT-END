@@ -1,0 +1,49 @@
+{
+    "title": "Banner",
+    "entity": "banner",
+    "api": {
+        "url": "API.BASE_URLapi/vod"
+    },
+    "filter": [
+        "name"
+    ],
+    "fields": [
+        {
+            "name": "id",
+            "label": "id",
+            "isId": true,
+            "readOnly": true,
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "label": "Description",
+            "type": "string"
+        },
+        {
+            "name": "image",
+            "label": "Image",
+            "type": "string"
+        },
+        {
+            "name": "priority",
+            "label": "priority",
+            "type": "number"
+        },
+        {
+            "name": "status",
+            "label": "Status",
+            "type": "boolean"
+        },
+        {
+            "name": "isDeleted",
+            "label": "Is Deleted",
+            "type": "boolean"
+        }
+    ]
+}
