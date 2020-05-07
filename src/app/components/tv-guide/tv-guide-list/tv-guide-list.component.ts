@@ -136,7 +136,6 @@ export class GuideListComponent {
       // jsfiddle showing the issue https://jsfiddle.net/
       var headers = lines[0].split(",");
       const model = [
-        "_id",
         "channel",
         "date_time_in_gmt",
         "end_date_time_in_gmt",
