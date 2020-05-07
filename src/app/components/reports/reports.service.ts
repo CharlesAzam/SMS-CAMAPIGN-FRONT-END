@@ -231,7 +231,7 @@ export class ReportService {
   }
 
   getInvoiceReport(filter) {
-    let url = API.BASE_URL + "/cms/reports/invoice";
+    let url = API.BASE_URL + "/cms/reports/summary?type=INVOICE";
     let headers = new HttpHeaders().set("Accept", "application/json");
     let params: any = {};
 
