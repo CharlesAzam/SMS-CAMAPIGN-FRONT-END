@@ -117,7 +117,7 @@ export class RoleEditComponent implements OnInit {
             }
         })
 
-        this.Errormessage=`Error selected module ${EmptyModulePermission} contains 0 persmission.\n Click Ok to set Permission or Cancel to reset`
+        this.Errormessage=`Error selected module ${EmptyModulePermission} contains 0 persmission.\n A module must contain at least one read permission, Click Ok to set Permission or Cancel to reset`
         EmptyModulePermission.length== 0 ? result.status=false : hasError=true
         console.log(this.Errormessage)
         return hasError
