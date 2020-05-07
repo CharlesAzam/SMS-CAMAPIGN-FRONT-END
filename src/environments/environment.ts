@@ -7,7 +7,7 @@ export const environment = {
 };
 export const API = {
  // BASE_URL: "http://127.0.0.1:3000",
-  BASE_URL: "http://34.245.88.152:3000",
+  BASE_URL: "http://34.245.88.152:3005",
 };
 /*
  * For easier debugging in development mode, you can import the following file
