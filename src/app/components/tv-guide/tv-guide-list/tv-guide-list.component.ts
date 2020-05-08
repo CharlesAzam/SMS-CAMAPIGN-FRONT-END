@@ -165,7 +165,7 @@ export class GuideListComponent {
       console.log("type of ", typeof result);
       this.guideService.bulkUpload(result).subscribe(
         (response: any) => {
-          this.guideService.find();
+          this.getGuides(this.paginator.pageIndex + 1, this.paginator.pageSize);
           if (response.success) {
             console.log("success");
           } else {
