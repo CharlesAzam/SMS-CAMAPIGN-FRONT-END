@@ -72,8 +72,10 @@ export class VendorReportConfigComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getVendorInformation(this.paginator.pageIndex + 1,
-          this.paginator.pageSize);
+        this.getVendorInformation(
+          this.paginator.pageIndex + 1,
+          this.paginator.pageSize
+        );
       }
     });
   }
@@ -104,8 +106,11 @@ export class VendorReportConfigComponent implements OnInit {
         if (result) {
           this.reportService.delete(row._id).subscribe(
             (response: any) => {
-              if (response.status === 200) this.getVendorInformation(this.paginator.pageIndex + 1,
-                this.paginator.pageSize);
+              if (response.status === 200)
+                this.getVendorInformation(
+                  this.paginator.pageIndex + 1,
+                  this.paginator.pageSize
+                );
             },
             (error) => console.error(error)
           );

@@ -123,7 +123,7 @@ export class VendorDialogComponent {
         frequency: data.frequency,
         reportType: data.reportType,
         header: data.header,
-        body: data.header,
+        body: data.body,
         reportFormat: data.reportFormat[0],
         email: data.email,
         username: data.username,
@@ -165,7 +165,7 @@ export class VendorDialogComponent {
       vendor["email"] = vendor.user.vendorEmail;
       vendor["username"] = vendor.user.username;
       vendor["companyName"] = vendor.user.vendorCompanyName;
-      vendor["reportFormat"] = this.vendorForm.value["reportFormat"];
+      vendor["reportFormat"] = [this.vendorForm.value["reportFormat"]];
       delete vendor.user;
       this.reportService
         .createVendorConfiguration(vendor)
