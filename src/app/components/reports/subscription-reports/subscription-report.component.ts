@@ -36,8 +36,10 @@ export class SubscriptionReportComponent implements OnInit {
   ];
 
   types: any[] = [
-    { label: "Package Subscription", id: "PACKAGE_SUBSCRIPTION_REPORTS" },
-    { label: "Content Subscription", id: "CONTENT_SUBSCRIPTION_REPORTS" }
+    { label: "Package Subscription (Azam Users)", id: "PACKAGE_SUBSCRIPTION_AZAM"},
+    { label: "Content Subscription (Azam Users)", id: "CONTENT_SUBSCRIPTION_AZAM" },
+    { label: "Package Subscription (Non Azam Users)", id: "PACKAGE_SUBSCRIPTION_NON_AZAM" },
+    { label: "Content Subscription (Non Azam Users)", id: "CONTENT_SUBSCRIPTION_NON_AZAM" }
   ];
   filteredTypes: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -147,10 +149,9 @@ export class SubscriptionReportComponent implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           this.datasource = response.data;
-          let array = response.data.map(info => info.data);
-          console.log(array)
+        
           this.reportService.exportFileToCsv(
-            array[0],
+            response.data,
             "SUBSCRIPTION REPORT",
             `${this.filter.type} ${moment().format()}`
           );

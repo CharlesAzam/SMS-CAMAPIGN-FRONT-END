@@ -1,7 +1,7 @@
-<div class="container" style="margin-top: 30px;">
+<div  style="margin-top: 30px; margin-left: 30px; margin-right: 30px;">
     <mat-card>
         <div class="header">
-            <h2 class="title">User Reports</h2>
+            <h2 class="title">Revenue Recognition Reports</h2>
         </div>
         <div class="content">
 
@@ -9,8 +9,8 @@
     </mat-card>
 
     <mat-card style="margin-top: 10px;">
-        <div class="row" style="margin: 10px;">
-            <div class="col-md-6">
+        <!-- <div class="row" style="margin: 10px;">
+            <div class="col-md-12">
                 <div class="form-group">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Search Method</mat-label>
@@ -20,21 +20,6 @@
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let method of filteredMethods | async" [value]="method.id">
                                 {{method.label}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <mat-form-field style="width: 100%;">
-                        <mat-label>Country</mat-label>
-                        <mat-select [(value)]="country" required>
-                            <ngx-mat-select-search [formControl]="filterCountryCtrl"
-                                [noEntriesFoundLabel]="'Country not found'" [placeholderLabel]="'Find Country...'">
-                            </ngx-mat-select-search>
-                            <mat-option *ngFor="let country of filteredCountries | async" [value]="country.country">
-                                {{country.country}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -59,15 +44,15 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
         <div class="row" style="margin: 10px;">
             <div class="col-md-6 text-left">
-                <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
+                <!-- <button color='primary' style="margin-right: 5px;" mat-raised-button type="submit"
                     (click)="search()">Search</button>
-                <button color='danger' mat-raised-button (click)="resetFilters()">Reset</button>
+                <button color='danger' mat-raised-button (click)="resetFilters()">Reset</button> -->
             </div>
             <div class="col-md-6 text-right">
                 <button style="margin-right: 5px;" mat-raised-button color="accent" type="submit" [disabled]="datasource.data" (click)="generateExcel()">
@@ -77,7 +62,8 @@
             </div>
         </div>
 
-        <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8" matSort>
+
+        <table mat-table style="width: 100%;" [dataSource]="datasource" class="mat-elevation-z8">
 
             <!-- Position Column -->
             <ng-container matColumnDef="No">
@@ -91,35 +77,39 @@
                 <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="customers">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> New Customers </th>
-                <td mat-cell *matCellDef="let element"> {{element.newUsers}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="azamUsers">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Azam Users </th>
-                <td mat-cell *matCellDef="let element"> {{element.azamUsers}} </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="nonAzamUsers">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Non Azam Users </th>
-                <td mat-cell *matCellDef="let element"> {{element.nonAzamUsers}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="openingBalance">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Opening Balance</th>
-                <td mat-cell *matCellDef="let element"> {{element.openingBalance}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="closingBalance">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Closing Balance</th>
-                <td mat-cell *matCellDef="let element"> {{element.closingBalance}} </td>
-            </ng-container>
-
             <ng-container matColumnDef="country">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
                 <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="currency">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency</th>
+                <td mat-cell *matCellDef="let element"> {{element.currency }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="revenue">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+                <td mat-cell *matCellDef="let element"> {{element.revenue | currency:'':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="defferedRevenue">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Deffered Revenue</th>
+                <td mat-cell *matCellDef="let element"> {{element.defferedRevenue | currency:'':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gross">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Gross</th>
+                <td mat-cell *matCellDef="let element"> {{element.gross | currency:'':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="vat">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>VAT</th>
+                <td mat-cell *matCellDef="let element"> {{element.vat | currency:'':''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="net">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Net Revenue</th>
+                <td mat-cell *matCellDef="let element"> {{element.net | currency:'':''}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -127,6 +117,5 @@
         </table>
         <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]">
         </mat-paginator>
-
     </mat-card>
 </div>

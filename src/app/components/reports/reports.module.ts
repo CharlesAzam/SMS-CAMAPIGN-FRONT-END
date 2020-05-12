@@ -12,6 +12,7 @@ import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
 import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
+import { RevenueReportComponent } from './revenue-recognition/revenue-recognition-report.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { DetailedCollectionReportComponent } from './detailed-collection-reports
     DetailedCollectionReportComponent,
     RequestsComponent,
     SubscriptionReportComponent,
-    InvoiceReportComponent
+    InvoiceReportComponent,
+    RevenueReportComponent
   ],
   providers: [
     ReportService
