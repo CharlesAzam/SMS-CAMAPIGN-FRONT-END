@@ -11,6 +11,7 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
+import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 import { RevenueReportComponent } from './revenue-recognition/revenue-recognition-report.component';
 
 
@@ -26,6 +27,7 @@ import { RevenueReportComponent } from './revenue-recognition/revenue-recognitio
     UserReportComponet,
     TransactionReportComponent,
     CollectionReportComponent,
+    DetailedCollectionReportComponent,
     RequestsComponent,
     SubscriptionReportComponent,
     InvoiceReportComponent,
