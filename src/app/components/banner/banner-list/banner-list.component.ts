@@ -6,25 +6,30 @@ import {
   MatSort,
   MatPaginator,
   MatTableDataSource,
-  MatDialog
+  MatDialog,
 } from "@angular/material";
 import { startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
-import { AuthenticationService } from '../../login/login.service';
+import { AuthenticationService } from "../../login/login.service";
 
 @Component({
   selector: "banner",
-  templateUrl: "banner-list.component.html"
+  templateUrl: "banner-list.component.html",
 })
 export class BannerListComponent {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  searchTimeout = null;
 
   ngAfterViewInit(): void {
     this.paginator.page
       .pipe(
         startWith(null),
         tap(() =>
-          this.getBanners(this.paginator.pageIndex + 1, this.paginator.pageSize)
+          this.getBanners(
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize,
+            ""
+          )
         )
       )
       .subscribe();
@@ -42,7 +47,7 @@ export class BannerListComponent {
     "name",
     "description",
     "status",
-    "action"
+    "action",
   ];
 
   constructor(
@@ -57,31 +62,29 @@ export class BannerListComponent {
         width: "400px",
         data: {
           title: "Warning",
-          message: `Are you sure want to delete ${row.name} banner`
-        }
+          message: `Are you sure want to delete ${row.name} banner`,
+        },
       })
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.bannerService.delete(row._id).subscribe(
             (response: any) => {
               if (response.status === 200) {
                 this.getBanners(
                   this.paginator.pageIndex + 1,
-                  this.paginator.pageSize
+                  this.paginator.pageSize,
+                  ""
                 );
               }
             },
-            error => console.error(error)
+            (error) => console.error(error)
           );
         }
       });
   }
 
   ngOnInit() {
-    this.getCount();
-    // this.getBanners(this.paginator.pageIndex, this.paginator.pageSize);
-    // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
@@ -94,17 +97,25 @@ export class BannerListComponent {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.getBanners(
+        this.paginator.pageIndex + 1,
+        this.paginator.pageSize,
+        filterValue
+      );
+    }, 500);
   }
 
-  getBanners(index, size) {
-    this.bannerService.find(index, size).subscribe(
+  getBanners(index, size, filter) {
+    this.bannerService.find(index, size, filter).subscribe(
       (response: any) => {
         if (response.status === 200) {
           this.dataSource = new MatTableDataSource(response.data);
+          this.count = response.count;
         }
       },
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }
 
@@ -117,7 +128,7 @@ export class BannerListComponent {
           console.log(this.count);
         }
       },
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }
 }
