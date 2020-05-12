@@ -192,7 +192,17 @@ export class RevenueReportComponent implements OnInit {
           this.reportService.exportFileToCsv(
             response.data,
             "REVENUE RECOGNITION REPORT",
-            `revenue_recognition_${moment().format()}`
+            `revenue_recognition_${moment().format()}`,
+            [
+              'date',
+              'country',
+              'currency',
+              'gross',
+              'vat',
+              'vat',
+              'net',
+              'revenue'
+            ]
           );
         }
       },

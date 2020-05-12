@@ -5,8 +5,9 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
-import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 import { RevenueReportComponent } from './revenue-recognition/revenue-recognition-report.component';
+import { VendorReportConfigComponent } from './vendor-reports/vendor-reports.component';
+import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 
 export const REPORT_ROUTES: Routes = [
   {
@@ -45,5 +46,9 @@ export const REPORT_ROUTES: Routes = [
   {
     path: 'revenue',
     component: RevenueReportComponent
+  },
+  {
+    path: 'vendors',
+    component: VendorReportConfigComponent
   }
 ]
