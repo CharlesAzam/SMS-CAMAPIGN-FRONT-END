@@ -7,7 +7,7 @@ import { startWith, tap } from "rxjs/operators";
 import { MatPaginator, MatDialog } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
-import { AuthenticationService } from '../login/login.service';
+import { AuthenticationService } from "../login/login.service";
 
 export class mobileTagFilter {
   name: string = "";
@@ -16,10 +16,13 @@ export class mobileTagFilter {
 @Component({
   selector: "app-mobile-tags",
   templateUrl: "./mobile-tags.component.html",
-  styleUrls: ["./mobile-tags.component.css"]
+  styleUrls: ["./mobile-tags.component.css"],
 })
 export class MobileTagsComponent implements OnInit, AfterViewInit {
   selectedLanguageId: string;
+  tags: any[] = [];
+  searchTimeout = null;
+  filterText: string = "";
 
   ngAfterViewInit(): void {
     // let pageIndex = this.paginator.pageIndex + 1
@@ -39,18 +42,18 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
                       this.getTags(
                         this.selectedLanguageId,
                         this.paginator.pageIndex + 1,
-                        this.paginator.pageSize
+                        this.paginator.pageSize,
                       )
                     )
                   )
                   .subscribe();
               }
             },
-            error => console.log(error)
+            (error) => console.log(error)
           );
         }
       },
-      error => console.log(error)
+      (error) => console.log(error)
     );
   }
   @ViewChild(MatPaginator, { static: false })
@@ -80,11 +83,11 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
         width: "400px",
         data: {
           title: "Warning",
-          message: `Are you sure want to delete ${row.name} tag`
-        }
+          message: `Are you sure want to delete ${row.name} tag`,
+        },
       })
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.tagService.delete(row._id).subscribe(
             (result: any) => {
@@ -93,11 +96,11 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
                 this.getTags(
                   this.selectedLanguageId,
                   this.paginator.pageIndex + 1,
-                  this.paginator.pageSize
+                  this.paginator.pageSize,
                 );
               }
             },
-            error => console.log(error)
+            (error) => console.log(error)
           );
         }
       });
@@ -112,18 +115,30 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
   }
 
   getTags(language, pageIndex, size) {
-    this.tagService.find(pageIndex, size, language).subscribe(
+    this.tagService.find(pageIndex, size, language, this.filterText).subscribe(
       (result: any) => {
         if (result.status == 200) {
           this.datasource = result.data;
+          this.tags = result.data;
+          this.count = result.count;
         }
       },
-      error => console.log(error)
+      (error) => console.log(error)
     );
   }
 
   applyFilter(filterValue: string) {
-    this.datasource.filter = filterValue.trim().toLowerCase();
+    if (filterValue.trim().length >= 3 || filterValue.length < this.filterText.length) {
+      this.filterText = filterValue;
+      if (this.searchTimeout) clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.getTags(
+          this.selectedLanguageId,
+          1,
+          this.paginator.pageSize
+        );
+      }, 500);
+    }
   }
 
   onTabChanged(event) {
@@ -137,7 +152,7 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
           this.getTags(this.selectedLanguageId, 1, 10);
         }
       },
-      error => console.log(error)
+      (error) => console.log(error)
     );
   }
 

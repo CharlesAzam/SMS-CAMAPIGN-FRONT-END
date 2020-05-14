@@ -19,6 +19,7 @@ import { AuthenticationService } from "../../login/login.service";
 export class BannerListComponent {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   searchTimeout = null;
+  filterText: string = "";
 
   ngAfterViewInit(): void {
     this.paginator.page
@@ -27,8 +28,7 @@ export class BannerListComponent {
         tap(() =>
           this.getBanners(
             this.paginator.pageIndex + 1,
-            this.paginator.pageSize,
-            ""
+            this.paginator.pageSize
           )
         )
       )
@@ -73,8 +73,7 @@ export class BannerListComponent {
               if (response.status === 200) {
                 this.getBanners(
                   this.paginator.pageIndex + 1,
-                  this.paginator.pageSize,
-                  ""
+                  this.paginator.pageSize
                 );
               }
             },
@@ -97,18 +96,23 @@ export class BannerListComponent {
   }
 
   applyFilter(filterValue: string) {
-    if (this.searchTimeout) clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(() => {
-      this.getBanners(
-        this.paginator.pageIndex + 1,
-        this.paginator.pageSize,
-        filterValue
-      );
-    }, 500);
+    if (
+      filterValue.trim().length >= 3 ||
+      filterValue.length < this.filterText.length
+    ) {
+      this.filterText = filterValue;
+      if (this.searchTimeout) clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.getBanners(
+          1,
+          this.paginator.pageSize
+        );
+      }, 500);
+    }
   }
 
-  getBanners(index, size, filter) {
-    this.bannerService.find(index, size, filter).subscribe(
+  getBanners(index, size) {
+    this.bannerService.find(index, size, this.filterText).subscribe(
       (response: any) => {
         if (response.status === 200) {
           this.dataSource = new MatTableDataSource(response.data);

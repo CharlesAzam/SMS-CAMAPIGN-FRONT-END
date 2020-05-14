@@ -201,6 +201,7 @@ export class LoggedSupportComponent implements OnInit {
             this.supportTickets = response.data;
             this.datasource = new MatTableDataSource<any>(this.supportTickets);
           } else if (response.code === 204) {
+            this.getCount(supportFilter);
             this.datasource = new MatTableDataSource<any>([]);
           }
         },

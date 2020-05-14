@@ -32,10 +32,12 @@ export class MobileSubCategoriesComponent implements OnInit {
     "symbol"
   ];
   datasource = new MatTableDataSource<any>([]);
+  subCategories:any[] = [];
   selectedLanguageId: string;
 
   count: number;
   searchTimeout = null;
+  filterText: string = "";
 
   routeToCategoryForm() {
     this.router.navigate(["home/subCategoryForm"]);
@@ -59,8 +61,7 @@ export class MobileSubCategoriesComponent implements OnInit {
                       this.getSubCategories(
                         this.selectedLanguageId,
                         this.paginator.pageIndex + 1,
-                        this.paginator.pageSize,
-                        ""
+                        this.paginator.pageSize
                       )
                     )
                   )
@@ -83,7 +84,7 @@ export class MobileSubCategoriesComponent implements OnInit {
       (response: any) => {
         if (response.success) {
           this.count = response.count;
-          this.getSubCategories(this.selectedLanguageId, 1, 10, "");
+          this.getSubCategories(this.selectedLanguageId, 1, 10);
         }
       },
       error => console.log(error)
@@ -111,8 +112,7 @@ export class MobileSubCategoriesComponent implements OnInit {
               this.getSubCategories(
                 this.selectedLanguageId,
                 this.paginator.pageIndex + 1,
-                this.paginator.pageSize,
-                ""
+                this.paginator.pageSize
               );
             },
             error => console.error(error)
@@ -122,16 +122,28 @@ export class MobileSubCategoriesComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.datasource.filter = filterValue.trim().toLowerCase();
+    if (filterValue.trim().length >= 3 || filterValue.length < this.filterText.length) {
+      this.filterText = filterValue;
+      if (this.searchTimeout) clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.getSubCategories(
+          this.selectedLanguageId,
+          1,
+          this.paginator.pageSize,
+        );
+      }, 500);
+    }
   }
 
-  getSubCategories(language, pageNumber, size, filterText) {
+  getSubCategories(language, pageNumber, size) {
     this.subCategoryService
-      .find(pageNumber, size, language, filterText)
+      .find(pageNumber, size, language, this.filterText)
       .subscribe(
         (result: any) => {
-          if (result.status == 200) {
+          if (result.success) {
             this.datasource = result.data;
+            this.subCategories = result.data;
+            this.count = result.count
           }
         },
         error => console.log(error)
