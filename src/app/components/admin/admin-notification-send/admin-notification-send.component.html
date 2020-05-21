@@ -1,0 +1,34 @@
+<div class="container">
+    <div>
+        <mat-card >
+            <h3>Create Notification for mobile user</h3>
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+                <hr>
+                <div class="form-group">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="title" placeholder="Title(topic)" formControlName="title" required>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field class="input-layouts">
+                        <textarea matInput name="message" placeholder="Message" [rows]="5" formControlName="message" required
+                            ></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label>Select type of push notification message</mat-label>
+                        <mat-select [(value)]="selected">
+                            <mat-option value="priority">Priority(Forced)</mat-option>
+                            <mat-option value="normal">Normal</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <p>Sending : {{selected}}</p>
+                </div>
+                <div>
+                    <button [disabled]="userForm.invalid" mat-raised-button type="submit">Send notification</button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>
