@@ -89,6 +89,7 @@ export class VideoLibraryListComponent implements OnInit, AfterViewInit {
       (response: any) => {
         if (response.status === 200) {
           this.dataSource = new MatTableDataSource<any>(response.data);
+          this.count = response.count;
         }
       },
       error => console.log(error)

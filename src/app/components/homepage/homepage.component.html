@@ -188,51 +188,14 @@
             >Detailed</a
           >
         </div>
-        <a
-          mat-list-item
-          *ngIf="
-            isModulePermitted('Reports-Portal', 'view-all') ||
-            isModulePermitted('Reports-Portal', 'view-user-reports')
-          "
-          routerLink="reports"
-          >Users Reports</a
-        >
-        <a
-          mat-list-item
-          *ngIf="
-            isModulePermitted('Reports-Portal', 'view-all') ||
-            isModulePermitted('Reports-Portal', 'view-transaction-reports')
-          "
-          routerLink="reports/transactions"
-          >Transaction Reports</a
-        >
-        <a
-          mat-list-item
-          *ngIf="
-            isModulePermitted('Reports-Portal', 'view-all') ||
-            isModulePermitted('Reports-Portal', 'view-transaction-reports')
-          "
-          routerLink="reports/requests"
-          >Requests</a
-        >
-        <a
-          mat-list-item
-          *ngIf="
-            isModulePermitted('Reports-Portal', 'view-all') ||
-            isModulePermitted('Reports-Portal', 'view-transaction-reports')
-          "
-          routerLink="reports/subscriptions"
-          >Subscription Reports</a
-        >
-        <a
-          mat-list-item
-          *ngIf="
-            isModulePermitted('Reports-Portal', 'view-all') ||
-            isModulePermitted('Reports-Portal', 'view-transaction-reports')
-          "
-          routerLink="reports/invoices"
-          >Invoice Reports</a
-        >
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-user-reports')" routerLink="reports">Users Reports</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/transactions">Transaction Reports</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/requests">Requests</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/subscriptions">Subscription Reports</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/invoices">Invoice Reports</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/revenue">Revenue Reports</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/revenue-packagewise">Packagewise Revenue</a>
+        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/vendors">Vendor Configuration</a>
       </div>
 
       <mat-list-item

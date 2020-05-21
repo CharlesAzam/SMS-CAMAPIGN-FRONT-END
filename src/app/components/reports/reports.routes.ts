@@ -7,6 +7,8 @@ import { SubscriptionReportComponent } from './subscription-reports/subscription
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
 import { RevenueReportComponent } from './revenue-recognition/revenue-recognition-report.component';
 import { VendorReportConfigComponent } from './vendor-reports/vendor-reports.component';
+import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
+import { PackageWiseRevenueReport } from './package-revenue-recognition/revenue-recognition-report.component';
 
 export const REPORT_ROUTES: Routes = [
   {
@@ -23,8 +25,12 @@ export const REPORT_ROUTES: Routes = [
     component: TransactionReportComponent
   },
   {
-    path: 'collections/:type',
+    path: 'collections/summary',
     component: CollectionReportComponent
+  },
+  {
+    path: 'collections/detailed',
+    component: DetailedCollectionReportComponent
   },
   {
     path: 'requests',
@@ -41,6 +47,10 @@ export const REPORT_ROUTES: Routes = [
   {
     path: 'revenue',
     component: RevenueReportComponent
+  },
+  {
+    path: 'revenue-packagewise',
+    component: PackageWiseRevenueReport
   },
   {
     path: 'vendors',

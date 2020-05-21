@@ -92,6 +92,7 @@ export class VodListComponent implements OnInit {
     this.vodService.find(type, page, size, this.filterText).subscribe((response: any) => {
       if (response.status === 200) {
         this.dataSource = new MatTableDataSource<any>(response.data);
+        this.count = response.count;
       }
     });
   }
