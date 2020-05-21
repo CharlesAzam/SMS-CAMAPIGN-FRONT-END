@@ -74,6 +74,11 @@ export class GuideService {
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<Guide>(url, entity, { headers });
   }
+  bulkUpload(entity: Guide[]): Observable<Guide[]> {
+    let url = API.BASE_URL + "/cms/program-list/create";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.post<Guide[]>(url, entity, { headers });
+  }
 
   getCount() {
     let url = API.BASE_URL + `/cms/count/programs`;

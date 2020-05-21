@@ -15,6 +15,7 @@ export class AdminEditComponent implements OnInit {
   createUserModel = new Admin();
   roles = [];
   hide = true;
+  isVendorRole: boolean;
 
   userForm = new FormGroup({
     username: new FormControl(""),
@@ -49,6 +50,17 @@ export class AdminEditComponent implements OnInit {
     );
   }
 
+  changeRole(event) {
+    if (event.value === "VENDOR_ROLE") {
+      this.isVendorRole = true;
+      this.userForm.setValidators([Validators.required]);
+      this.userForm
+        .get("vendorEmail")
+        .setValidators([Validators.email, validateEmail]);
+      this.userForm.get("vendorEmail").errors;
+    }
+  }
+
   onSubmit() {
     let roleArray = [];
 
@@ -76,7 +88,7 @@ function validateEmail(c: FormControl) {
   let EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return EMAIL_REGEXP.test(c.value)
-    ? null
+    ? checkIfNotCompanyEmail(c)
     : {
         validateEmail: {
           valid: false,
@@ -86,7 +98,7 @@ function validateEmail(c: FormControl) {
 
 function checkIfNotCompanyEmail(c: FormControl) {
   let str = c.value.toLowerCase();
-  if (str.length > 0) {
+  if (str.trim().length > 0) {
     let res = str.split("@");
     let mail = res[1].split(".");
     if (mail[0] == "gmail" || mail[0] == "yahoo") {
