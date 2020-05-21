@@ -15,6 +15,7 @@ import { CheckBoxComponent2 } from './checkbox.component-2'
 
 import { NoWhitespaceDirective } from 'src/app/validators/no-whitespace.directive';
 import { RoleEditDialogComponent } from './admin-role-edit-dialog/role-edit-dialog/role-edit-dialog.component';
+import { AdminNotificationSendComponent } from './admin-notification-send/admin-notification-send.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { RoleEditDialogComponent } from './admin-role-edit-dialog/role-edit-dial
     NoWhitespaceDirective,
     RoleListComponent,
     RoleEditDialogComponent,
+    AdminNotificationSendComponent,
   ],
   providers: [
     AdminService
