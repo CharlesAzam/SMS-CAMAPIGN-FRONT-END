@@ -14,33 +14,37 @@ import * as moment from "moment";
   templateUrl: "./collection-report.component.html",
   styleUrls: ["./collection-report.component.css"],
 })
-export class CollectionReportComponent implements OnInit {
+export class DetailedCollectionReportComponent implements OnInit {
+  displayedColumns: string[] = [
+    "No",
+    "date",
+    "country",
+    "customerNumber",
+    "customerName",
+    "walletNumber",
+    "gateway",
+    "operator",
+    "txnReferenceNumber",
+    "amountRecieved",
+  ];
   ngAfterViewInit(): void {
     this.filter = {};
 
-    this.displayedColumns = [
-      "No",
-      "date",
-      "country",
-      "gateway",
-      "currency",
-      "amount",
-    ];
-    this.summaryPaginator.page
+    this.detailedPaginator.page
       .pipe(
         startWith(null),
         tap(() =>
-          this.getCollectionSummary(
+          this.getDetailedReport(
             this.filter,
-            this.summaryPaginator.pageIndex + 1,
-            this.summaryPaginator.pageSize
+            this.detailedPaginator.pageIndex + 1,
+            this.detailedPaginator.pageSize
           )
         )
       )
       .subscribe();
   }
-  @ViewChild("summaryPaginator", { static: false, read: MatPaginator })
-  summaryPaginator: MatPaginator;
+  @ViewChild("detailedPaginator", { static: false, read: MatPaginator })
+  detailedPaginator: MatPaginator;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -57,8 +61,6 @@ export class CollectionReportComponent implements OnInit {
   isMobile: boolean = false;
 
   type: string = "";
-
-  displayedColumns: string[] = [];
 
   countries: any[] = [];
   methods: any[] = [
@@ -93,18 +95,12 @@ export class CollectionReportComponent implements OnInit {
         this.filter = {};
         this.country = undefined;
         this.method = undefined;
+
         this.datasource = new MatTableDataSource<any>([]);
         // this.datasource.paginator = this.paginator;
-        this.displayedColumns = [
-          "No",
-          "date",
-          "country",
-          "gateway",
-          "currency",
-          "amount",
-        ];
-        this.getSummaryCount(this.filter);
-        this.getCollectionSummary(this.filter, 1, 10);
+
+        this.getDetailedCount(this.filter);
+        this.getDetailedReport(this.filter, 1, 10);
       }
     });
     this.getCountries();
@@ -204,12 +200,12 @@ export class CollectionReportComponent implements OnInit {
       this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
     }
 
-    this.summaryPaginator.firstPage();
-    this.getSummaryCount(this.filter);
-    this.getCollectionSummary(
+    this.detailedPaginator.firstPage();
+    this.getDetailedCount(this.filter);
+    this.getDetailedReport(
       this.filter,
-      this.summaryPaginator.pageIndex + 1,
-      this.summaryPaginator.pageSize
+      this.detailedPaginator.pageIndex + 1,
+      this.detailedPaginator.pageSize
     );
   }
 
@@ -266,28 +262,30 @@ export class CollectionReportComponent implements OnInit {
   }
 
   resetFilters() {
-    this.summaryPaginator.firstPage();
+    this.detailedPaginator.firstPage();
 
     this.filter = {};
     this.country = undefined;
     this.method = undefined;
-    this.getCollectionSummary(
+
+    this.getDetailedReport(
       this.filter,
-      this.summaryPaginator.pageIndex + 1,
-      this.summaryPaginator.pageSize
+      this.detailedPaginator.pageIndex + 1,
+      this.detailedPaginator.pageSize
     );
   }
 
   generateExcel() {
     if (this.filter.pageIndex) delete this.filter.pageIndex;
     if (this.filter.pageSize) delete this.filter.pageSize;
-    this.reportService.getCollectionSummary(this.filter).subscribe(
+
+    this.reportService.getDetailedCollection(this.filter).subscribe(
       (response: any) => {
         if (response.status === 200) {
           this.reportService.exportFileToCsv(
             response.data,
-            "COLLECTION SUMMARY REPORT",
-            `collection_summary_report_${moment().format()}`
+            "DETAILED COLLECTION REPORT",
+            `collection_detailed_report_${moment().format()}`
           );
         }
       },
