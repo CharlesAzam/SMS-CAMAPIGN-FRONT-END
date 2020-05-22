@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationServiceService } from './notification-service.service'
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +13,8 @@ import {notification} from './notification'
 export class AdminNotificationSendComponent implements OnInit {
 
   selected = 'normal'
+  @Input() titleIsEmpty: any;
+  @Input() messageEmpty: any;
   payload = new notification();
 
   constructor(public dialog: MatDialog, private notificationService: NotificationServiceService, ) { }
@@ -22,10 +24,35 @@ export class AdminNotificationSendComponent implements OnInit {
 
 
   userForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    message: new FormControl('', [Validators.required]),
+    title: new FormControl('', [Validators.required,Validators.minLength(4)]),
+    message: new FormControl('', [Validators.required,Validators.minLength(4),Validators.max(200)]),
     type: new FormControl(this.selected)
   })
+
+
+     customValidator(){
+      
+      const title = this.userForm.value.title
+      const message= this.userForm.value.message
+
+      let i: String=title.trim();
+      let titleln: Number=i.length
+      console.log("CustomValidtor length of title : ",titleln)
+
+      let j: String=message.trim();
+      let messageln: Number=i.length
+      console.log("CustomValidtor length of message : ",messageln)
+
+      if(messageln == 0 || titleln == 0){
+        return false;
+      }else{
+        return true;
+      }
+
+
+  }
+
+  
 
   onSubmit() {
     // let roleArray = [];
@@ -38,11 +65,18 @@ export class AdminNotificationSendComponent implements OnInit {
     //     }
     // }, error => console.log('error', error));
 
-    this.openDialogRoleCreate(`Are you sure want send this ${this.selected} push notification`).beforeClose().subscribe((element) => {
+
+   let flag=this.customValidator()
+   if(flag==false){
+     this.titleIsEmpty=1
+     this.messageEmpty=1
+     return
+   }
+    this.openDialogRoleCreate(`Are you sure want send this ${this.selected} push notification`).beforeClose().subscribe ( (element) => {
       if (element) {
         console.log('Ok clicked ', element)
         console.log(this.userForm.value)
-
+    
         this.notificationService.sendNotification(this.userForm.value).subscribe((response: any) => {
           let result=response.data.replace("\\",'')
           let obj=JSON.parse(result);
@@ -52,7 +86,7 @@ export class AdminNotificationSendComponent implements OnInit {
           if (response.status === 200){
             console.log(`response => ${JSON.stringify(response,null,2)}`)
              //Open Dialog and display message
-             this.openDialogRoleCreate(`Notification have been sent. ${success} with 100% success rate`).beforeClose().subscribe ((element) => {
+             this.openDialogRoleCreate(`Notification have been sent. ${success} with 100% success rate`).beforeClose().subscribe( (element) => {
               if (element) {
                   console.log('Check error cause', element)               
               } else {
@@ -61,7 +95,7 @@ export class AdminNotificationSendComponent implements OnInit {
               }
           })
             //this.router.navigate(['home/admin/roles'])
-          }else if(response.status === 400){
+          }else if(response.status!=200){
     
             // console.log('-------------\n',success)
             // console.log('-------------\n',failure)
@@ -83,6 +117,7 @@ export class AdminNotificationSendComponent implements OnInit {
             
             }else{
               alert("Failure Sending notification!")
+              console.log('Error response ',response)
               console.log('-------------\n',failure)
             }
           
