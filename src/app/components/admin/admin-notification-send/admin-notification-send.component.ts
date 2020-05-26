@@ -4,7 +4,7 @@ import { NotificationServiceService } from './notification-service.service'
 import { MatDialog } from '@angular/material/dialog';
 import { RoleEditDialogComponent } from '../admin-role-edit-dialog/role-edit-dialog/role-edit-dialog.component'
 import {notification} from './notification'
-
+import { BannerService } from '../../banner/banner.service'
 @Component({
   selector: 'app-admin-notification-send',
   templateUrl: './admin-notification-send.component.html',
@@ -12,12 +12,15 @@ import {notification} from './notification'
 })
 export class AdminNotificationSendComponent implements OnInit {
 
-  selected = 'normal'
+  selected = 'normal';
+  fileToUpload: any = null;
+  isUploading: boolean = false;
+  imageUrl: string = "";
   @Input() titleIsEmpty: any;
   @Input() messageEmpty: any;
   payload = new notification();
 
-  constructor(public dialog: MatDialog, private notificationService: NotificationServiceService, ) { }
+  constructor(public dialog: MatDialog, private notificationService: NotificationServiceService,private bannerService: BannerService, ) { }
 
   ngOnInit() {
   }
@@ -26,6 +29,7 @@ export class AdminNotificationSendComponent implements OnInit {
   userForm = new FormGroup({
     title: new FormControl('', [Validators.required,Validators.minLength(4)]),
     message: new FormControl('', [Validators.required,Validators.minLength(4),Validators.max(200)]),
+    image: new FormControl(""),
     type: new FormControl(this.selected)
   })
 
@@ -51,7 +55,29 @@ export class AdminNotificationSendComponent implements OnInit {
 
 
   }
+  
+  handelImageChange(files: FileList) {
+    console.log(` this is the file list \n ${JSON.stringify(files,null,2)}`)
+    this.fileToUpload = files.item(0);
+    this.fileToUpload.mimeType = this.fileToUpload.type;
+    this.uploadFileToActivity();
+  }
 
+  uploadFileToActivity() {
+    this.isUploading = true;
+    this.bannerService.uploadUrl(this.fileToUpload).subscribe(
+      (response: any) => {
+        this.isUploading = false;
+        if (response.status == 200 || response.success) {
+          this.imageUrl = response.fileUrl;
+          console.log(`image upload done with url ${this.imageUrl}`,)
+        } else console.log('image upload ',response);
+      },
+      error => {
+        this.isUploading = false;
+      }
+    );
+  }
   
 
   onSubmit() {
@@ -64,6 +90,9 @@ export class AdminNotificationSendComponent implements OnInit {
     //         this.router.navigate(['home/admin/users'])
     //     }
     // }, error => console.log('error', error));
+    this.userForm.value.image=this.imageUrl
+    console.log(`This is \n ${JSON.stringify(this.userForm.value,null,2)} \n file to upload ${JSON.stringify(this.fileToUpload,null,2)}`)
+    //return;
 
 
    let flag=this.customValidator()

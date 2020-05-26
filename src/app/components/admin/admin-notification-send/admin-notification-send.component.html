@@ -1,24 +1,40 @@
 <div class="container">
     <div>
         <mat-card >
-            <h3>Create Notification for mobile user</h3>
+            <h3>CREATE NOTIFICATION FOR MOBILE USER</h3>
             <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
                 <hr>
                 <div class="form-group">
-                    <mat-form-field class="input-layouts">
+                    <mat-form-field  style="width: 100%;" >
                         <input matInput name="title" placeholder="Title(topic)" formControlName="title" required>
                     </mat-form-field>
                     <mat-error *ngIf="titleIsEmpty==1">Sorry empty space in title filed is not allowed</mat-error>
                 </div>
                 <div class="form-group">
-                    <mat-form-field class="input-layouts">
-                        <textarea matInput name="message" placeholder="Message" [rows]="5" formControlName="message" required
+                    <mat-form-field style="width: 100%;">
+                        <textarea matInput name="message"  placeholder="Message" [rows]="5" formControlName="message" required
                             ></textarea>
                     </mat-form-field>
                     <mat-error *ngIf="messageEmpty==1">Sorry empty space in message filed is not allowed</mat-error>
                 </div>
                 <div class="form-group">
-                    <mat-form-field>
+                    <label for="Notification image"
+                      >Image:</label
+                    >
+                    <input
+                      (change)="handelImageChange($event.target.files)"
+                      type="file"
+                      accept="image/*"
+                      class="form-control"
+                      placeholder="Enter Upload image thumb"
+                    />
+                  </div>
+                <div class="form-group">
+                    <img src="{{ imageUrl }}" style="width: 50%; height: 10%;" />
+                </div>
+      
+                <div class="form-group">
+                    <mat-form-field style="width: 100%;">
                         <mat-label>Select type of push notification message</mat-label>
                         <mat-select [(value)]="selected">
                             <mat-option value="priority">Priority(Forced)</mat-option>
