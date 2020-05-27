@@ -4,7 +4,7 @@ import { MobileTags } from "../../models/mobile-tags";
 import { MatTableDataSource } from "@angular/material/table";
 import { MobileTagsService } from "../../../app/services/mobile-tags.service";
 import { startWith, tap } from "rxjs/operators";
-import { MatPaginator, MatDialog } from "@angular/material";
+import { MatPaginator, MatDialog, PageEvent } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
 import { AuthenticationService } from "../login/login.service";
@@ -23,6 +23,8 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
   tags: any[] = [];
   searchTimeout = null;
   filterText: string = "";
+  pageEvent: PageEvent;
+  pageIndex = 0;
 
   ngAfterViewInit(): void {
     // let pageIndex = this.paginator.pageIndex + 1
@@ -142,18 +144,11 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
   }
 
   onTabChanged(event) {
+    this.pageIndex = 0;
     this.selectedLanguageId = this.languages[event.index]._id;
     this.paginator.pageIndex = 0;
     this.datasource = new MatTableDataSource<any>([]);
-    this.getTagCount(this.selectedLanguageId).subscribe(
-      (response: any) => {
-        if (response.success) {
-          this.count = response.count;
-          this.getTags(this.selectedLanguageId, 1, 10);
-        }
-      },
-      (error) => console.log(error)
-    );
+    this.getTags(this.selectedLanguageId, 1, 10);
   }
 
   ngOnInit() {}
@@ -164,5 +159,14 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
 
   getLanguages() {
     return this.languageService.list();
+  }
+
+  getServerData(data) {
+    this.pageIndex = data.pageIndex;
+    this.getTags(
+      this.selectedLanguageId,
+      data.pageIndex + 1,
+      data.pageSize
+    );
   }
 }

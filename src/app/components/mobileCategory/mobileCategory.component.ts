@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { CategoriesService } from "src/app/services/categories.service";
-import { MatPaginator, MatDialog } from "@angular/material";
+import { MatPaginator, MatDialog, PageEvent } from "@angular/material";
 import { startWith, tap } from "rxjs/operators";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
@@ -14,8 +14,11 @@ import { AuthenticationService } from "../login/login.service";
 })
 export class CreateCategoryComponent implements OnInit, AfterViewInit {
   categories: any[] = [];
+  pageEvent: PageEvent;
+  pageIndex = 0;
+
   ngAfterViewInit(): void {
-    // let pageIndex = this.paginator.pageIndex + 1
+    this.datasource.paginator = this.paginator;
     this.getLanguages().subscribe(
       (result: any) => {
         if (result.status === 200) {
@@ -49,7 +52,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator;
   searchTimeout = null;
-  filterText: string= "";
+  filterText: string = "";
 
   constructor(
     private router: Router,
@@ -68,18 +71,11 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   selectedLanguageId: string;
 
   onTabChanged(event) {
+    this.pageIndex = 0;
     this.selectedLanguageId = this.languages[event.index]._id;
-    this.paginator.pageIndex = 0;
     this.datasource = new MatTableDataSource<any>([]);
-    this.getCategoryCount(this.selectedLanguageId).subscribe(
-      (response: any) => {
-        if (response.success) {
-          this.count = response.count;
-          this.getCategories(this.selectedLanguageId, 1, 10);
-        }
-      },
-      (error) => console.log(error)
-    );
+    this.datasource.paginator = this.paginator;
+    this.getCategories(this.selectedLanguageId, 1, 10);
   }
 
   /*Table logic*/
@@ -120,15 +116,14 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue.trim().length >= 3 || filterValue.length < this.filterText.length) {
+    if (
+      filterValue.trim().length >= 3 ||
+      filterValue.length < this.filterText.length
+    ) {
       this.filterText = filterValue;
       if (this.searchTimeout) clearTimeout(this.searchTimeout);
       this.searchTimeout = setTimeout(() => {
-        this.getCategories(
-          this.selectedLanguageId,
-          1,
-          this.paginator.pageSize
-        );
+        this.getCategories(this.selectedLanguageId, 1, this.paginator.pageSize);
       }, 500);
     }
   }
@@ -138,22 +133,32 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   getCategories(language, pageNumber, size) {
-    this.categoryService.find(pageNumber, size, language, this.filterText).subscribe(
-      (result: any) => {
-        if (result.success) {
-          this.datasource = result.data;
-          this.categories = result.data;
-          this.count = result.count;
-        }
-      },
-      (error) => console.log(error)
-    );
+    this.categoryService
+      .find(pageNumber, size, language, this.filterText)
+      .subscribe(
+        (result: any) => {
+          if (result.success) {
+            this.datasource.data = result.data;
+            this.categories = result.data;
+            this.count = result.count;
+          }
+        },
+        (error) => console.log(error)
+      );
   }
 
   getCategoryCount(language) {
     return this.categoryService.getCount(language);
   }
 
+  getServerData(data) {
+    this.pageIndex = data.pageIndex;
+    this.getCategories(
+      this.selectedLanguageId,
+      data.pageIndex + 1,
+      data.pageSize
+    );
+  }
   getLanguages() {
     return this.languageService.list();
   }
