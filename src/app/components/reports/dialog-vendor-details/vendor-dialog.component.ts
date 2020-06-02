@@ -38,7 +38,7 @@ export class VendorDialogComponent {
     "CONTENT_SUBSCRIPTION_NON_AZAM",
   ];
   reportFormats: String[] = ["PDF", "XLSX"];
-  vendorStatus: String[] = ["ACTIVE", "SUSPENDED", "DELETED"];
+  vendorStatus: String[] = ["ACTIVE", "SUSPENDED"];
 
   //Vendor Information
   vendorInformation: Object = null;
