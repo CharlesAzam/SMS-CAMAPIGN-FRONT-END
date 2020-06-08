@@ -6,9 +6,10 @@
                 <hr>
                 <div class="form-group">
                     <mat-form-field  style="width: 100%;" >
-                        <input matInput name="title" placeholder="Title(topic)" formControlName="title" required>
+                        <input matInput name="title" (focus)="onFocus()" placeholder="Title(topic)" formControlName="title" required>
                     </mat-form-field>
-                    <mat-error *ngIf="titleIsEmpty==1">Sorry empty space in title filed is not allowed</mat-error>
+                    <mat-error *ngIf="titleIsEmpty==1">Sorry empty space in title filed is not allowed!</mat-error>
+                    <mat-error *ngIf="singleCharErrorTitle==1">Sorry  title cannot have a single character!</mat-error>
                 </div>
                 <div class="form-group">
                     <mat-form-field style="width: 100%;">
@@ -16,11 +17,13 @@
                             ></textarea>
                     </mat-form-field>
                     <mat-error *ngIf="messageEmpty==1">Sorry empty space in message filed is not allowed</mat-error>
+                    <mat-error *ngIf="singleCharErrorMsg==1">Sorry  message cannot have a single character!</mat-error>
                 </div>
                 <div class="form-group">
                     <label for="Notification image"
                       >Image:</label
                     >
+                    <mat-error *ngIf="fileUploadlimit==1">File upload limit exceeds 1MB</mat-error>
                     <input
                       (change)="handelImageChange($event.target.files)"
                       type="file"
@@ -32,6 +35,7 @@
                 <div class="form-group">
                     <img src="{{ imageUrl }}" style="width: 50%; height: 10%;" />
                 </div>
+
       
                 <div class="form-group">
                     <mat-form-field style="width: 100%;">

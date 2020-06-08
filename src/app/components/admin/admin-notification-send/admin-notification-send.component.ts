@@ -18,6 +18,15 @@ export class AdminNotificationSendComponent implements OnInit {
   imageUrl: string = "";
   @Input() titleIsEmpty: any;
   @Input() messageEmpty: any;
+  @Input() singleCharErrorTitle :any;
+  @Input() singleCharErrorMsg: any;
+  @Input() fileUploadlimit:  any;
+
+ result ={
+    flag:null,
+    type:null,
+  }
+
   payload = new notification();
 
   constructor(public dialog: MatDialog, private notificationService: NotificationServiceService,private bannerService: BannerService, ) { }
@@ -44,12 +53,27 @@ export class AdminNotificationSendComponent implements OnInit {
       console.log("CustomValidtor length of title : ",titleln)
 
       let j: String=message.trim();
-      let messageln: Number=i.length
+      let messageln: Number=j.length
       console.log("CustomValidtor length of message : ",messageln)
 
-      if(messageln == 0 || titleln == 0){
+      if(messageln == 0 ){
+        this.messageEmpty=1
         return false;
-      }else{
+      }else if(titleln == 0){
+        this.titleIsEmpty=1
+        return false
+      }
+       else if(messageln == 1 ){
+
+        console.log(`message = ${messageln} `)
+        this.singleCharErrorMsg=1
+        return false;
+      } else if (titleln == 1){
+         console.log( `titleln =${titleln}`)
+         this.singleCharErrorTitle=1
+         return false;
+      }
+      else{
         return true;
       }
 
@@ -60,7 +84,14 @@ export class AdminNotificationSendComponent implements OnInit {
     console.log(` this is the file list \n ${JSON.stringify(files,null,2)}`)
     this.fileToUpload = files.item(0);
     this.fileToUpload.mimeType = this.fileToUpload.type;
-    this.uploadFileToActivity();
+    console.log("This is the file to upload ",this.fileToUpload.size)
+    if(this.fileToUpload.size>=1000000){
+     this.fileUploadlimit=1
+     return
+    }else{
+      this.uploadFileToActivity();
+    }
+   
   }
 
   uploadFileToActivity() {
@@ -91,14 +122,15 @@ export class AdminNotificationSendComponent implements OnInit {
     //     }
     // }, error => console.log('error', error));
     this.userForm.value.image=this.imageUrl
+    this.userForm.value.type=this.selected
     console.log(`This is \n ${JSON.stringify(this.userForm.value,null,2)} \n file to upload ${JSON.stringify(this.fileToUpload,null,2)}`)
     //return;
 
 
    let flag=this.customValidator()
    if(flag==false){
-     this.titleIsEmpty=1
-     this.messageEmpty=1
+    //  this.titleIsEmpty=1
+    //  this.messageEmpty=1
      return
    }
     this.openDialogRoleCreate(`Are you sure want send this ${this.selected} push notification`).beforeClose().subscribe ( (element) => {
@@ -148,6 +180,7 @@ export class AdminNotificationSendComponent implements OnInit {
               alert("Failure Sending notification!")
               console.log('Error response ',response)
               console.log('-------------\n',failure)
+              
             }
           
             //this.router.navigate(['home/admin/roles'])
