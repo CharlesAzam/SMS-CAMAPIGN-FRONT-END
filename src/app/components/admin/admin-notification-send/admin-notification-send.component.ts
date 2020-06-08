@@ -85,7 +85,7 @@ export class AdminNotificationSendComponent implements OnInit {
     this.fileToUpload = files.item(0);
     this.fileToUpload.mimeType = this.fileToUpload.type;
     console.log("This is the file to upload ",this.fileToUpload.size)
-    if(this.fileToUpload.size>=1000000){
+    if(this.fileToUpload.size>=500000){//Maximum file upload size
      this.fileUploadlimit=1
      return
     }else{
