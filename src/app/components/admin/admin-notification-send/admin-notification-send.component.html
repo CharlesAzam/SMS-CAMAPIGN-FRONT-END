@@ -6,7 +6,7 @@
                 <hr>
                 <div class="form-group">
                     <mat-form-field  style="width: 100%;" >
-                        <input matInput name="title" (focus)="onFocus()" placeholder="Title(topic)" formControlName="title" required>
+                        <input matInput name="title" placeholder="Title(topic)" formControlName="title" required>
                     </mat-form-field>
                     <mat-error *ngIf="titleIsEmpty==1">Sorry empty space in title filed is not allowed!</mat-error>
                     <mat-error *ngIf="singleCharErrorTitle==1">Sorry  title cannot have a single character!</mat-error>
