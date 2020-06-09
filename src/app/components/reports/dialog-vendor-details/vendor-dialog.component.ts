@@ -123,8 +123,8 @@ export class VendorDialogComponent {
         frequency: data.frequency,
         reportType: data.reportType,
         header: data.header,
-        body: data.header,
-        reportFormat: data.reportFormat,
+        body: data.body,
+        reportFormat: data.reportFormat[0],
         email: data.email,
         username: data.username,
         status: data.status,
@@ -137,7 +137,6 @@ export class VendorDialogComponent {
 
   getUsers() {
     this.reportService.getVendorUsers().subscribe((response: any) => {
-      console.log(response);
       if (response.success) {
         this.users = response.data;
         this.filteredUsers.next(this.users);
@@ -150,6 +149,9 @@ export class VendorDialogComponent {
     this.loading = true;
     if (this.vendorInformation) {
       Object.assign(this.vendorInformation, this.vendorForm.value);
+      this.vendorInformation["reportFormat"] = [
+        this.vendorForm.value["reportFormat"],
+      ];
       this.reportService
         .updateVendorConfiguration(this.vendorInformation)
         .subscribe((response: any) => {
@@ -163,6 +165,7 @@ export class VendorDialogComponent {
       vendor["email"] = vendor.user.vendorEmail;
       vendor["username"] = vendor.user.username;
       vendor["companyName"] = vendor.user.vendorCompanyName;
+      vendor["reportFormat"] = [this.vendorForm.value["reportFormat"]];
       delete vendor.user;
       this.reportService
         .createVendorConfiguration(vendor)
