@@ -17,7 +17,11 @@ import { AuthenticationService } from "../../login/login.service";
   templateUrl: "tv-guide-list.component.html",
 })
 export class GuideListComponent {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  searchTimeout = null;
+  filterText: string = "";
+
 
   ngAfterViewInit(): void {
     this.paginator.page
@@ -73,7 +77,7 @@ export class GuideListComponent {
   }
 
   ngOnInit() {
-    this.getCount();
+    // this.getCount();
     // this.getBanners(this.paginator.pageIndex, this.paginator.pageSize);
     // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -88,11 +92,21 @@ export class GuideListComponent {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (filterValue.trim().length >= 3 || filterValue.length < this.filterText.length) {
+      this.filterText = filterValue;
+      if (this.searchTimeout) clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.getGuides(
+          1,
+          this.paginator.pageSize,
+        );
+      }, 500);
+    }
   }
 
   getGuides(index, size) {
-    this.guideService.find(index, size).subscribe(
+    console.log(index);
+    this.guideService.find(index, size, this.filterText).subscribe(
       (response: any) => {
         if (response.status === 200) {
           this.dataSource = new MatTableDataSource(response.data);
@@ -191,11 +205,13 @@ export class GuideListComponent {
       (response: any) => {
         console.log(response);
         if (response.success) {
+          this.dataSource = new MatTableDataSource(response.data);
           this.count = response.count;
-          console.log(this.count);
         }
       },
       (error) => console.error(error)
     );
   }
+
+
 }
