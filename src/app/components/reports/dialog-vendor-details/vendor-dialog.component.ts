@@ -37,7 +37,7 @@ export class VendorDialogComponent {
     "CONTENT_SUBSCRIPTION_AZAM",
     "CONTENT_SUBSCRIPTION_NON_AZAM",
   ];
-  reportFormats: String[] = ["PDF", "XLSX"];
+  reportFormats: String[] = ["XLSX"];
   vendorStatus: String[] = ["ACTIVE", "SUSPENDED"];
 
   //Vendor Information
