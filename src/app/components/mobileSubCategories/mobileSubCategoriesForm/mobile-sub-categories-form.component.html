@@ -66,13 +66,21 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-
+            
             <div class="form-group">
                 <mat-label>Status</mat-label>
                 <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
                     formControlName="status" style="margin-left: 10px;" required>
                     <mat-button-toggle value=true>ACTIVE</mat-button-toggle>
                     <mat-button-toggle value=false>INACTIVE</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div class="form-group">
+                <mat-label>Is continue watching</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="isContinueWatching" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>YES</mat-button-toggle>
+                    <mat-button-toggle value=false>NO</mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
 

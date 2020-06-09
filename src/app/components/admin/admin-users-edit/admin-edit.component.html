@@ -1,152 +1,136 @@
 <div class="container">
-    <!--Create form start-->
-    <div *ngIf="showCreate">
-        <mat-card style="margin-top: 30px;">
-            <h2>{{heading}} user</h2>
-            <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
-                <hr>
-                <div class="form-group">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="username" placeholder="Username" formControlName="username" required>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="password" [type]="hide ? 'password' : 'text'" placeholder="Password"
-                            formControlName="password" required>
-                        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field style="width: 100%;">
-                        <mat-label>Role</mat-label>
-                        <mat-select name="role" formControlName="roles" (selectionChange)="changeRole($event)" required>
-                            <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorName" placeholder="Vendor name" formControlName="vendorName">
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorEmail" placeholder="Vendor Email" formControlName="vendorEmail">
-                        <mat-error *ngIf="userForm.get('vendorEmail').hasError('required')">
-                            Email is <strong>required</strong>
-                          </mat-error>
-                
-                          <mat-error *ngIf="userForm.get('vendorEmail').hasError('email')">
-                            <strong>Invalid</strong> Email
-                          </mat-error>
-                
-                          <mat-error
-                            *ngIf="
-                              userForm.get('vendorEmail').hasError('checkIfNotCompanyEmail')
-                            "
-                          >
-                            <strong>Must</strong> be Company Email
-                          </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorCompanyName" placeholder="Vendor Company Name" formControlName="vendorCompanyName">
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorPhone" placeholder="Vendor Phone Number" formControlName="vendorPhone">
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorWebsite" placeholder="Vendor Address" formControlName="vendorWebsite">
-                    </mat-form-field>
-                </div>
-                <div>
-                    <button [disabled]="userForm.invalid" mat-raised-button type="submit">{{heading}} User</button>
-                </div>
-                
-            </form>
-        </mat-card>
-    </div>
-    <!--Create form end-->
+  <mat-card style="margin-top: 30px;">
+    <h2>Add user</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+      <hr />
+      <div class="form-group">
+        <mat-form-field style="width: 100%;">
+          <mat-label>Role</mat-label>
+          <mat-select
+            name="role"
+            (selectionChange)="changeRole($event)"
+            formControlName="roles"
+            required
+          >
+            <mat-option *ngFor="let role of roles" [value]="role">{{
+              role
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="username"
+            placeholder="Username"
+            formControlName="username"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group" *ngIf="isVendorRole">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="firstName"
+            placeholder="First name"
+            formControlName="firstName"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group" *ngIf="isVendorRole">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="lastName"
+            placeholder="Last name"
+            formControlName="lastName"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group" *ngIf="isVendorRole">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="vendorEmail"
+            placeholder="Vendor Email"
+            formControlName="vendorEmail"
+            required
+          />
+          <mat-error *ngIf="userForm.get('vendorEmail').hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
 
-    <!--Edit form start-->
-    <div *ngIf="showEdit">
-        <mat-card style="margin-top: 30px;">
-            <h2>{{heading}} user</h2>
-            <form [formGroup]="userForm" (ngSubmit)="onUpdate()" novalidate>
-                <hr>
-                <!--In editing we do not change the user name only role and password-->
-                <div class="form-group">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="username" placeholder="Username" formControlName="username" required>
-                    </mat-form-field>
-                </div>
-                <!-- <div class="form-group">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="password" [type]="hide ? 'password' : 'text'" placeholder="Password"
-                            formControlName="password" required>
-                        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </mat-form-field>
-                </div> -->
-                <div class="form-group">
-                    <mat-form-field style="width: 100%;">
-                        <mat-label>Role</mat-label>
-                        <mat-select name="role" formControlName="roles" (selectionChange)="changeRole($event)" required>
-                            <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorName" placeholder="Vendor name" formControlName="vendorName">
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorEmail" placeholder="Vendor Email" formControlName="vendorEmail">
-                        <mat-error *ngIf="userForm.get('vendorEmail').hasError('required')">
-                            Email is <strong>required</strong>
-                          </mat-error>
-                
-                          <mat-error *ngIf="userForm.get('vendorEmail').hasError('email')">
-                            <strong>Invalid</strong> Email
-                          </mat-error>
-                
-                          <mat-error
-                            *ngIf="
-                              userForm.get('vendorEmail').hasError('checkIfNotCompanyEmail')
-                            "
-                          >
-                            <strong>Must</strong> be Company Email
-                          </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorCompanyName" placeholder="Vendor Company Name" formControlName="vendorCompanyName">
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorPhone" placeholder="Vendor Phone Number" formControlName="vendorPhone">
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="isVendorRole">
-                    <mat-form-field class="input-layouts">
-                        <input matInput name="vendorWebsite" placeholder="Vendor Address" formControlName="vendorWebsite">
-                    </mat-form-field>
-                </div>
-                <div>
-                    <button  mat-raised-button type="submit">{{heading}} User</button>
-                </div>
+          <mat-error *ngIf="userForm.get('vendorEmail').hasError('email')">
+            <strong>Invalid</strong> Email
+          </mat-error>
 
-            </form>
-        </mat-card>
-    </div>
-    <!--Edit form end-->
+          <mat-error
+            *ngIf="
+              userForm.get('vendorEmail').hasError('checkIfNotCompanyEmail')
+            "
+          >
+            <strong>Must</strong> be Company Email
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group" *ngIf="isVendorRole">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="vendorCompanyName"
+            placeholder="Vendor Company Name"
+            formControlName="vendorCompanyName"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group" *ngIf="isVendorRole">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="vendorPhone"
+            placeholder="Vendor Phone Number"
+            formControlName="vendorPhone"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group" *ngIf="isVendorRole">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="vendorWebsite"
+            placeholder="Vendor Address"
+            formControlName="vendorWebsite"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="input-layouts">
+          <input
+            matInput
+            name="password"
+            [type]="hide ? 'password' : 'text'"
+            placeholder="Password"
+            formControlName="password"
+            required
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button [disabled]="userForm.invalid" mat-raised-button type="submit">
+          Create User
+        </button>
+      </div>
+    </form>
+  </mat-card>
 </div>

@@ -10,7 +10,7 @@ export class MobileTagsService {
 
   constructor(private http: HttpClient) { }
 
-  find(pageNumber?, size?, language?) {
+  find(pageNumber?, size?, language?, filter?) {
     let url = API.BASE_URL + '/cms/tag-list';
     //let params = { "name": "mimi","type":"low" };
     let headers = new HttpHeaders()
@@ -27,6 +27,10 @@ export class MobileTagsService {
 
     if (size) {
       params.size = size
+    }
+
+    if (filter) {
+      params.filter = filter
     }
 
     if (params) {
