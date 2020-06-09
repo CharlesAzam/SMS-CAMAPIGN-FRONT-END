@@ -22,7 +22,6 @@ export class GuideListComponent {
   searchTimeout = null;
   filterText: string = "";
 
-
   ngAfterViewInit(): void {
     this.paginator.page
       .pipe(
@@ -77,9 +76,9 @@ export class GuideListComponent {
   }
 
   ngOnInit() {
-    // this.getCount();
+    this.getCount();
     // this.getBanners(this.paginator.pageIndex, this.paginator.pageSize);
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
@@ -92,14 +91,14 @@ export class GuideListComponent {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue.trim().length >= 3 || filterValue.length < this.filterText.length) {
+    if (
+      filterValue.trim().length >= 3 ||
+      filterValue.length < this.filterText.length
+    ) {
       this.filterText = filterValue;
       if (this.searchTimeout) clearTimeout(this.searchTimeout);
       this.searchTimeout = setTimeout(() => {
-        this.getGuides(
-          1,
-          this.paginator.pageSize,
-        );
+        this.getGuides(1, this.paginator.pageSize);
       }, 500);
     }
   }
@@ -212,6 +211,4 @@ export class GuideListComponent {
       (error) => console.error(error)
     );
   }
-
-
 }
