@@ -40,15 +40,18 @@ export class GuideService {
     );
   }
 
-  find(pageIndex?, pageSize?): Observable<Guide[]> {
+  find(pageIndex?, pageSize?, filter?): Observable<Guide[]> {
     let url = API.BASE_URL + "/cms/program-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
-    if (pageIndex || pageSize) {
+    if (pageIndex || pageSize || filter) {
       let params = {
         pageNumber: pageIndex,
         size: pageSize,
       };
+      if(filter){
+        params['filter'] = filter;
+      }
       return this.http.get<Guide[]>(url, { params, headers });
     }
     return this.http.get<Guide[]>(url, { headers });
@@ -70,6 +73,11 @@ export class GuideService {
     let url = API.BASE_URL + "/cms/program/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<Guide>(url, entity, { headers });
+  }
+  bulkUpload(entity: Guide[]): Observable<Guide[]> {
+    let url = API.BASE_URL + "/cms/program-list/create";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.post<Guide[]>(url, entity, { headers });
   }
 
   getCount() {

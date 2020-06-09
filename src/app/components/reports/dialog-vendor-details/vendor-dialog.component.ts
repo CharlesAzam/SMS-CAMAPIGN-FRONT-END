@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { ReportService } from "../reports.service";
@@ -11,26 +11,42 @@ import { ReplaySubject } from "rxjs/internal/ReplaySubject";
 })
 export class VendorDialogComponent {
   vendorForm = new FormGroup({
-    user: new FormControl(""),
-    frequency: new FormControl(""),
-    reportType: new FormControl(""),
-    header: new FormControl(""),
-    body: new FormControl(""),
-    reportFormat: new FormControl(""),
+    user: new FormControl("", [Validators.required]),
+    frequency: new FormControl("", [Validators.required]),
+    reportType: new FormControl("", [Validators.required]),
+    header: new FormControl("", [Validators.required]),
+    body: new FormControl("", [Validators.required]),
+    reportFormat: new FormControl("", [Validators.required]),
+    status: new FormControl("", [Validators.required]),
   });
-  frequencies: String[] = ["DAILY","WEEKLY","MONTHLY","QUATERLY","YEARLY"];
+  loading: boolean = false;
+  frequencies: String[] = ["DAILY", "WEEKLY", "MONTHLY", "QUATERLY", "YEARLY"];
   users: any[] = [];
-  reportTypes: String[] = ["COLL_SUM", "REG_SUM", "NON_AZAM_USERS"];
-  reportFormats: String[] = ["PDF", "XLSX", "CSV"];
+  reportTypes: String[] = [
+    "REG_SUM",
+    "CNT_REG_SUM",
+    "COLL_SUM",
+    "COLL_DET",
+    "TRNCS_SUM",
+    "REFUND_ACCEPT",
+    "REVENUE_RECOGNITION",
+    "INVOICE",
+    "PACKAGE_SUBSCRIPTION",
+    "PACKAGE_SUBSCRIPTION_AZAM",
+    "PACKAGE_SUBSCRIPTION_NON_AZAM",
+    "CONTENT_SUBSCRIPTION_AZAM",
+    "CONTENT_SUBSCRIPTION_NON_AZAM",
+  ];
+  reportFormats: String[] = ["PDF", "XLSX"];
+  vendorStatus: String[] = ["ACTIVE", "SUSPENDED"];
 
   //Vendor Information
-  vendorInformation: Object = {};
+  vendorInformation: Object = null;
 
   filterUsersCtrl: FormControl = new FormControl();
   filterFormatsCtrl: FormControl = new FormControl();
   filteredUsers: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredFormats: ReplaySubject<any[]> = new ReplaySubject<any[]>();
-
 
   filterUsers() {
     if (!this.users) return;
@@ -91,29 +107,75 @@ export class VendorDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private reportService: ReportService
   ) {
-    console.log(data);
-    this.getUsers();
     if (data) {
-      this.vendorInformation = data;
+      this.vendorInformation = {};
+      Object.assign(this.vendorInformation, data);
+      this.vendorForm.removeControl("user");
+      this.vendorForm.addControl(
+        "email",
+        new FormControl({ value: "", disabled: true })
+      );
+      this.vendorForm.addControl(
+        "username",
+        new FormControl({ value: "", disabled: true })
+      );
       this.vendorForm.setValue({
-        user: data.user,
         frequency: data.frequency,
         reportType: data.reportType,
+        header: data.header,
+        body: data.body,
+        reportFormat: data.reportFormat[0],
+        email: data.email,
+        username: data.username,
+        status: data.status,
       });
     }
+    this.getUsers();
     this.filteredReportTypes.next(this.reportTypes.slice());
     this.filteredFormats.next(this.reportFormats.slice());
   }
 
   getUsers() {
     this.reportService.getVendorUsers().subscribe((response: any) => {
-      console.log(response);
       if (response.success) {
         this.users = response.data;
+        this.filteredUsers.next(this.users);
       } else {
-        //show warning dialog
       }
     });
+  }
+
+  manageVendor() {
+    this.loading = true;
+    if (this.vendorInformation) {
+      Object.assign(this.vendorInformation, this.vendorForm.value);
+      this.vendorInformation["reportFormat"] = [
+        this.vendorForm.value["reportFormat"],
+      ];
+      this.reportService
+        .updateVendorConfiguration(this.vendorInformation)
+        .subscribe((response: any) => {
+          this.loading = false;
+          if (response.success) {
+            this.dialogRef.close(this.vendorInformation);
+          }
+        });
+    } else {
+      let vendor = this.vendorForm.value;
+      vendor["email"] = vendor.user.vendorEmail;
+      vendor["username"] = vendor.user.username;
+      vendor["companyName"] = vendor.user.vendorCompanyName;
+      vendor["reportFormat"] = [this.vendorForm.value["reportFormat"]];
+      delete vendor.user;
+      this.reportService
+        .createVendorConfiguration(vendor)
+        .subscribe((response: any) => {
+          this.loading = false;
+          if (response.success) {
+            this.dialogRef.close(vendor);
+          }
+        });
+    }
   }
 
   getData() {
