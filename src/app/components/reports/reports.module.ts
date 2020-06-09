@@ -11,6 +11,11 @@ import { CollectionReportComponent } from './collection-reports/collection-repor
 import { RequestsComponent } from './requests/requests.component';
 import { SubscriptionReportComponent } from './subscription-reports/subscription-report.component';
 import { InvoiceReportComponent } from './invoice-reports/invoice-report.component';
+import { RevenueReportComponent } from './revenue-recognition/revenue-recognition-report.component';
+import { VendorReportConfigComponent } from './vendor-reports/vendor-reports.component';
+import { VendorDialogComponent } from './dialog-vendor-details/vendor-dialog.component';
+import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
+import { PackageWiseRevenueReport } from './package-revenue-recognition/revenue-recognition-report.component';
 
 
 @NgModule({
@@ -23,17 +28,22 @@ import { InvoiceReportComponent } from './invoice-reports/invoice-report.compone
   ],
   declarations: [
     UserReportComponet,
+    VendorReportConfigComponent,
     TransactionReportComponent,
     CollectionReportComponent,
+    DetailedCollectionReportComponent,
     RequestsComponent,
     SubscriptionReportComponent,
-    InvoiceReportComponent
+    InvoiceReportComponent,
+    RevenueReportComponent,
+    VendorDialogComponent,
+    PackageWiseRevenueReport
   ],
   providers: [
     ReportService
   ],
   entryComponents: [
-  
+    VendorDialogComponent
   ],
   exports: [
   ]

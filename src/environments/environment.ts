@@ -6,8 +6,7 @@ export const environment = {
   production: false
 };
 export const API = {
- // BASE_URL: "http://127.0.0.1:3000",
-  BASE_URL: "http://34.245.88.152:3005",
+  BASE_URL: "https://azamtvmax.com",
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -16,5 +15,3 @@ export const API = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-  // this.environment.as = 'watch the patriot act';

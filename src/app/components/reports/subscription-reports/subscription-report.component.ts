@@ -11,7 +11,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from "@angular/material";
 @Component({
   selector: "subscription-report",
   templateUrl: "./subscription-report.component.html",
-  styleUrls: ["./subscription-report.component.css"]
+  styleUrls: ["./subscription-report.component.css"],
 })
 export class SubscriptionReportComponent implements OnInit {
   filterMethodCtrl = new FormControl("");
@@ -32,12 +32,42 @@ export class SubscriptionReportComponent implements OnInit {
     { label: "Today", id: "today" },
     { label: "This Week", id: "week" },
     { label: "This Month", id: "month" },
-    { label: "Date Range", id: "range" }
+    { label: "Date Range", id: "range" },
   ];
 
   types: any[] = [
-    { label: "Package Subscription", id: "PACKAGE_SUBSCRIPTION_REPORTS" },
-    { label: "Content Subscription", id: "CONTENT_SUBSCRIPTION_REPORTS" }
+    {
+      label: "Package Subscription (Azam Users)",
+      id: "PACKAGE_SUBSCRIPTION_AZAM",
+    },
+    {
+      label: "Package Subscription (Azam Users Duration is OFF)",
+      id: "PACKAGE_SUBSCRIPTION_AZAM_DURATION",
+    },
+    {
+      label: "Content Subscription (Azam Users)",
+      id: "CONTENT_SUBSCRIPTION_AZAM",
+    },
+    {
+      label: "Content Subscription (zam Users Duration is OFF)",
+      id: "CONTENT_SUBSCRIPTION_AZAM_DURATION",
+    },
+    {
+      label: "Package Subscription (Non Azam Users)",
+      id: "PACKAGE_SUBSCRIPTION_NON_AZAM",
+    },
+    {
+      label: "Package Subscription (Non Azam Users Duration is OFF)",
+      id: "PACKAGE_SUBSCRIPTION_NON_AZAM_DURATION",
+    },
+    {
+      label: "Content Subscription (Non Azam Users)",
+      id: "CONTENT_SUBSCRIPTION_NON_AZAM",
+    }, 
+    {
+      label: "Content Subscription (Non Azam Users Duration is OFF)",
+      id: "CONTENT_SUBSCRIPTION_NON_AZAM_DURATION",
+    },
   ];
   filteredTypes: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredMethods: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -51,7 +81,7 @@ export class SubscriptionReportComponent implements OnInit {
     "videoPurchase",
     "tvSeriesPurchase",
     "closingBalance",
-    "smartCardTransfer"
+    "smartCardTransfer",
   ];
 
   constructor(private reportService: ReportService) {}
@@ -88,7 +118,7 @@ export class SubscriptionReportComponent implements OnInit {
     }
 
     this.filteredMethods.next(
-      this.methods.filter(cont =>
+      this.methods.filter((cont) =>
         cont ? cont.label.toLowerCase().indexOf(search) > -1 : ""
       )
     );
@@ -106,7 +136,7 @@ export class SubscriptionReportComponent implements OnInit {
     }
 
     this.filteredTypes.next(
-      this.types.filter(cont =>
+      this.types.filter((cont) =>
         cont ? cont.label.toLowerCase().indexOf(search) > -1 : ""
       )
     );
@@ -147,16 +177,52 @@ export class SubscriptionReportComponent implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           this.datasource = response.data;
-          let array = response.data.map(info => info.data);
-          console.log(array)
+
           this.reportService.exportFileToCsv(
-            array[0],
+            response.data,
             "SUBSCRIPTION REPORT",
-            `${this.filter.type} ${moment().format()}`
+            `${this.filter.type} ${moment().format()}`,
+            this.filter.type.split("_")[0] === "CONTENT"
+              ? [
+                  "date",
+                  "country",
+                  "contentName",
+                  "category",
+                  "openingBalance",
+                  "newSubscriptions",
+                  "repurchase",
+                  "yesterdayExpiredSubscriptionCount",
+                  "closingBalance",
+                  "currency",
+                  "yesterdayCollectionAmount",
+                  "yesterdayVatAmount",
+                  "yesterdayNetAmount",
+                  "monthlyCollectionAmount",
+                  "monthlyVatAmount",
+                  "monthlyNetAmount",
+                ]
+              : [
+                  "date",
+                  "country",
+                  "packageName",
+                  "openingBalance",
+                  "newSubscriptions",
+                  "repurchase",
+                  "yesterdayExpiredSubscriptionCount",
+                  "closingBalance",
+                  "currency",
+                  "yesterdayCollectionAmount",
+                  "yesterdayVatAmount",
+                  "yesterdayNetAmount",
+                  "monthlyCollectionAmount",
+                  "monthlyVatAmount",
+                  "monthlyNetAmount",
+                  "notMatchedSubscriptions"
+                ]
           );
         }
       },
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }
 

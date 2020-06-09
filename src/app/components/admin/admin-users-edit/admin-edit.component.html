@@ -20,15 +20,55 @@
                 <div class="form-group">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Role</mat-label>
-                        <mat-select name="role" formControlName="roles" required>
+                        <mat-select name="role" formControlName="roles" (selectionChange)="changeRole($event)" required>
                             <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorName" placeholder="Vendor name" formControlName="vendorName">
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorEmail" placeholder="Vendor Email" formControlName="vendorEmail">
+                        <mat-error *ngIf="userForm.get('vendorEmail').hasError('required')">
+                            Email is <strong>required</strong>
+                          </mat-error>
+                
+                          <mat-error *ngIf="userForm.get('vendorEmail').hasError('email')">
+                            <strong>Invalid</strong> Email
+                          </mat-error>
+                
+                          <mat-error
+                            *ngIf="
+                              userForm.get('vendorEmail').hasError('checkIfNotCompanyEmail')
+                            "
+                          >
+                            <strong>Must</strong> be Company Email
+                          </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorCompanyName" placeholder="Vendor Company Name" formControlName="vendorCompanyName">
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorPhone" placeholder="Vendor Phone Number" formControlName="vendorPhone">
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorWebsite" placeholder="Vendor Address" formControlName="vendorWebsite">
                     </mat-form-field>
                 </div>
                 <div>
                     <button [disabled]="userForm.invalid" mat-raised-button type="submit">{{heading}} User</button>
                 </div>
-
+                
             </form>
         </mat-card>
     </div>
@@ -56,9 +96,49 @@
                 <div class="form-group">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Role</mat-label>
-                        <mat-select name="role" formControlName="roles" required>
+                        <mat-select name="role" formControlName="roles" (selectionChange)="changeRole($event)" required>
                             <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorName" placeholder="Vendor name" formControlName="vendorName">
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorEmail" placeholder="Vendor Email" formControlName="vendorEmail">
+                        <mat-error *ngIf="userForm.get('vendorEmail').hasError('required')">
+                            Email is <strong>required</strong>
+                          </mat-error>
+                
+                          <mat-error *ngIf="userForm.get('vendorEmail').hasError('email')">
+                            <strong>Invalid</strong> Email
+                          </mat-error>
+                
+                          <mat-error
+                            *ngIf="
+                              userForm.get('vendorEmail').hasError('checkIfNotCompanyEmail')
+                            "
+                          >
+                            <strong>Must</strong> be Company Email
+                          </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorCompanyName" placeholder="Vendor Company Name" formControlName="vendorCompanyName">
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorPhone" placeholder="Vendor Phone Number" formControlName="vendorPhone">
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="isVendorRole">
+                    <mat-form-field class="input-layouts">
+                        <input matInput name="vendorWebsite" placeholder="Vendor Address" formControlName="vendorWebsite">
                     </mat-form-field>
                 </div>
                 <div>
