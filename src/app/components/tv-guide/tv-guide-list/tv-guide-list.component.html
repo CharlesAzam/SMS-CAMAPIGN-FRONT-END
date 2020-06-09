@@ -21,10 +21,26 @@
         mat-raised-button
         style="margin-left: 23px;"
         [routerLink]="['../tv-guide', 'new']"
-        *ngIf="authenticationService.isModuleAllowed('banner', 'create')"
+        *ngIf="authenticationService.isModuleAllowed('Program', 'create')"
       >
         Create Programs
       </button>
+      <input
+        type="file"
+        style="margin-left: 23px;"
+        class="form-control"
+        (change)="uploadedFile($event)"
+        placeholder="Upload file"
+        accept=".csv"
+      />
+      <!-- <button
+        color="accent"
+        mat-raised-button
+        style="margin-left: 23px;"
+        *ngIf="authenticationService.isModuleAllowed('Program', 'create')"
+      >
+        Import Programs
+      </button> -->
     </div>
 
     <table
@@ -50,25 +66,21 @@
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
 
-      <!-- Category Column -->
-      <ng-container matColumnDef="synopsis">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>synopsis</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.synopsis.substring(0, 30) }} ....
-        </td>
-      </ng-container>
       <!-- Sub Categories Column -->
-
-      <!-- Sub Categories Column -->
-      <ng-container matColumnDef="duration" mat-sort-header>
-        <th mat-header-cell *matHeaderCellDef>duration</th>
-        <td mat-cell *matCellDef="let element">{{ element.duration }}</td>
-      </ng-container>
 
       <!-- Status Column -->
-      <ng-container matColumnDef="time">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>time</th>
-        <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+      <ng-container matColumnDef="startTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start time</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date_time_in_gmt }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="endTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>End time</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.end_date_time_in_gmt }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="action">

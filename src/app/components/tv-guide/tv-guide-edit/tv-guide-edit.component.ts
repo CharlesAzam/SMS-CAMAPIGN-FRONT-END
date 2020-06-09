@@ -39,21 +39,14 @@ export class GuideEditComponent implements OnInit {
 
   guideForm = new FormGroup({
     channel: new FormControl("", [Validators.required]),
-    date: new FormControl("", [Validators.required]),
-    time: new FormControl("", [Validators.required]),
-    date_time_in_gmt: new FormControl("", [Validators.required]),
-    end_date_time_in_gmt: new FormControl(""),
-    duration: new FormControl("", [Validators.required]),
-    name: new FormControl(""),
-    synopsis: new FormControl("", [Validators.required]),
-    //  subCategories: new FormControl('', [Validators.required]),
+    date_time_in_gmt: new FormControl(new Date(), [Validators.required]),
+    end_date_time_in_gmt: new FormControl(new Date(), [Validators.required]),
+    name: new FormControl("", [Validators.required]),
     image: new FormControl(""),
     type: new FormControl("", [Validators.required]),
     laligalive: new FormControl("", [Validators.required]),
     tags: new FormControl("", [Validators.required]),
     program_type: new FormControl("", [Validators.required]),
-    re_run: new FormControl("", [Validators.required]),
-    re_run_date_time_gmt: new FormControl("", [Validators.required]),
   });
 
   constructor(
@@ -83,33 +76,23 @@ export class GuideEditComponent implements OnInit {
                 name: this.guideModel.name ? this.guideModel.name : "",
                 type: this.guideModel.type ? this.guideModel.type : "",
                 channel: this.guideModel.channel ? this.guideModel.channel : "",
-                date: String(this.guideModel.date)
-                  ? String(this.guideModel.date)
-                  : "",
                 image: this.guideModel.image ? this.guideModel.image : "",
-                time: this.guideModel.time ? this.guideModel.time : "",
                 date_time_in_gmt: this.guideModel.date_time_in_gmt
-                  ? this.guideModel.date_time_in_gmt
-                  : "",
+                  ? new Date(this.guideModel.date_time_in_gmt)
+                      .toISOString()
+                      .split(".")[0]
+                  : new Date().toISOString().split(".")[0],
                 end_date_time_in_gmt: this.guideModel.end_date_time_in_gmt
-                  ? this.guideModel.end_date_time_in_gmt
-                  : "",
-                synopsis: this.guideModel.synopsis
-                  ? this.guideModel.synopsis
-                  : "",
+                  ? new Date(this.guideModel.end_date_time_in_gmt)
+                      .toISOString()
+                      .split(".")[0]
+                  : new Date().toISOString().split(".")[0],
                 laligalive: this.guideModel.laligalive
                   ? this.guideModel.laligalive
                   : "",
                 tags: this.guideModel.tags ? this.guideModel.tags : "",
                 program_type: this.guideModel.program_type
                   ? this.guideModel.program_type
-                  : "",
-                re_run: this.guideModel.re_run ? this.guideModel.re_run : "",
-                re_run_date_time_gmt: this.guideModel.re_run_date_time_gmt
-                  ? this.guideModel.re_run_date_time_gmt
-                  : "",
-                duration: this.guideModel.duration
-                  ? this.guideModel.duration
                   : "",
                 /* subCategories: this.bannerModel.subCategories
                   ? this.bannerModel.subCategories

@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
 };
 export const API = {
-  BASE_URL: "https://azamtvmax.com",
+  BASE_URL: "http://34.245.88.152:3002",
 };
 /*
  * For easier debugging in development mode, you can import the following file

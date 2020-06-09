@@ -42,29 +42,8 @@
             <mat-form-field style="width: 100%;">
               <input
                 matInput
-                placeholder="date"
-                type="string"
-                formControlName="date"
-                required
-              />
-              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-            </mat-form-field>
-
-            <mat-form-field style="width: 100%;">
-              <input
-                matInput
-                placeholder="time"
-                type="string"
-                formControlName="time"
-                required
-              />
-              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-            </mat-form-field>
-            <mat-form-field style="width: 100%;">
-              <input
-                matInput
                 placeholder="date_time_in_gmt"
-                type="string"
+                type="datetime-local"
                 formControlName="date_time_in_gmt"
                 required
               />
@@ -74,18 +53,8 @@
               <input
                 matInput
                 placeholder="end_date_time_in_gmt"
-                type="string"
+                type="datetime-local"
                 formControlName="end_date_time_in_gmt"
-                required
-              />
-              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-            </mat-form-field>
-            <mat-form-field style="width: 100%;">
-              <input
-                matInput
-                placeholder="synopsis"
-                type="string"
-                formControlName="synopsis"
                 required
               />
               <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
@@ -120,53 +89,24 @@
               />
               <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
             </mat-form-field>
-            <mat-form-field style="width: 100%;">
-              <input
-                matInput
-                placeholder="duration"
-                type="string"
-                formControlName="duration"
-                required
-              />
-              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-            </mat-form-field>
-            <mat-form-field style="width: 100%;">
-              <input
-                matInput
-                placeholder="re_run"
-                type="string"
-                formControlName="re_run"
-                required
-              />
-              <div class="form-group">
-                <label for="Decription"
-                  >{{ bannerModel ? "Change" : "Upload" }} Image:</label
-                >
-                <input
-                  (change)="handelImageChange($event.target.files)"
-                  type="file"
-                  accept="image/*"
-                  class="form-control"
-                  placeholder="Enter Upload image thumb"
-                />
-              </div>
-              <mat-spinner *ngIf="isUploading"></mat-spinner>
 
-              <div class="form-group" *ngIf="imageUrl">
-                <img src="{{ imageUrl }}" width="100" height="100" />
-              </div>
-              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-            </mat-form-field>
-            <mat-form-field style="width: 100%;">
+            <div class="form-group">
+              <label for="Decription"
+                >{{ bannerModel ? "Change" : "Upload" }} Image:</label
+              >
               <input
-                matInput
-                placeholder="re_run_date_time_gmt"
-                type="string"
-                formControlName="re_run_date_time_gmt"
-                required
+                (change)="handelImageChange($event.target.files)"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                placeholder="Enter Upload image thumb"
               />
-              <!-- <mat-error *ngIf="description.invalid">Description can not be empty</mat-error> -->
-            </mat-form-field>
+            </div>
+            <mat-spinner *ngIf="isUploading"></mat-spinner>
+
+            <div class="form-group" *ngIf="imageUrl">
+              <img src="{{ imageUrl }}" width="100" height="100" />
+            </div>
 
             <div class="form-group">
               <button
