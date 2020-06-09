@@ -134,7 +134,6 @@ export class TransactionReportComponent implements OnInit {
       this.filter.from = moment(this.range.value.begin).format("YYYY-MM-DD");
       this.filter.to = moment(this.range.value.end).format("YYYY-MM-DD");
     }
-    this.getTransactionCount(this.filter)
     this.getTransactions(this.filter);
   }
 
@@ -142,8 +141,9 @@ export class TransactionReportComponent implements OnInit {
     filter.pageIndex = pageIndex;
     filter.pageSize = pageSize;
     this.reportService.getTransactions(filter).subscribe((response: any) => {
-      if (response.status === 200) {
+      if (response.success) {
         this.datasource = response.data;
+        this.count = response.count;
       }
     }, error => console.error(error))
   }

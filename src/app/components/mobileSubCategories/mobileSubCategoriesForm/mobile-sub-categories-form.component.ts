@@ -54,7 +54,8 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     priority: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
     status: new FormControl('', [Validators.required]),
-    parentCatID: new FormControl('', [Validators.required])
+    parentCatID: new FormControl('', [Validators.required]),
+    isContinueWatching: new FormControl('', [Validators.required])
   })
   contents: any[] = []
 
@@ -75,7 +76,8 @@ export class MobileSubCategoriesFormComponent implements OnInit {
               boundingBox: this.subCategoryModel.boundingBox ? this.subCategoryModel.boundingBox : '',
               priority: this.subCategoryModel.priority ? this.subCategoryModel.priority : '',
               language: this.subCategoryModel.language ? this.subCategoryModel.language : '',
-              parentCatID: this.subCategoryModel.parentCatID._id ? this.subCategoryModel.parentCatID._id : ''
+              parentCatID: this.subCategoryModel.parentCatID._id ? this.subCategoryModel.parentCatID._id : '',
+              isContinueWatching:String(this.subCategoryModel.isContinueWatching) ? String(this.subCategoryModel.isContinueWatching)  : ''
             })
           }
         }, error => console.error(error));

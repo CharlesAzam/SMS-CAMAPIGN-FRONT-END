@@ -144,12 +144,12 @@
                     [routerLink]="['../detailed-information', row.userId]" style="cursor: pointer;"></tr>
             </table>
 
+            <div *ngIf="!datasource.data.length">
+                No Record found!
+            </div>
+
             <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]" showFirstLastButtons>
             </mat-paginator>
-        </div>
-
-        <div *ngIf="!datasource.data.length">
-            No Record found!
         </div>
     </mat-card>
 </div>

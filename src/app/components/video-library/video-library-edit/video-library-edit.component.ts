@@ -7,7 +7,7 @@ import { of } from "rxjs";
 
 @Component({
   selector: "video-library-edit",
-  templateUrl: "./video-library-edit.component.html"
+  templateUrl: "./video-library-edit.component.html",
 })
 export class VideoLibraryEditComponent implements OnInit {
   videoLibrary: VideoLibrary;
@@ -21,7 +21,7 @@ export class VideoLibraryEditComponent implements OnInit {
 
   ngOnInit() {
     this.videoLibrary = new VideoLibrary();
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (params.id !== "new") {
         this.videoLibraryService.findById(params.id).subscribe(
           (response: any) => {
@@ -29,43 +29,44 @@ export class VideoLibraryEditComponent implements OnInit {
             let vidLib = {
               title: library.name,
               streamURLAndroid: library.streamURLAndroid,
-              streamURLIos: library.streamURLIos || library.streamURL
+              streamURLIos: library.streamURLIos || library.streamURL,
+              cdnContentID: library.cdnContentID,
             };
             console.log("response=======>", response, "[][][][][]", vidLib);
             this.videoLibrary = vidLib;
             this.errors = "";
           },
-          error => console.error(error)
+          (error) => console.error(error)
         );
       }
     });
   }
 
   save() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (params.id == "new") {
         this.videoLibraryService.save(this.videoLibrary).subscribe(
-          videoLibrary => {
+          (videoLibrary) => {
             console.log("-==-=-=-=-=-=videoLibrary", videoLibrary);
             this.videoLibrary = videoLibrary;
             this.errors = "Save was successful!";
             this.router.navigate(["/home/video-library/video-library"]);
           },
-          err => {
+          (err) => {
             this.errors = "Error saving";
           }
         );
       } else {
         let data = {
           _id: params.id,
-          ...this.videoLibrary
+          ...this.videoLibrary,
         };
-        this.videoLibraryService.update(data).subscribe(videoLibrary => {
+        this.videoLibraryService.update(data).subscribe((videoLibrary) => {
           this.videoLibrary = videoLibrary;
           this.errors = "Update was successful!";
           this.router.navigate(["/home/video-library/video-library"]);
         }),
-          err => {
+          (err) => {
             this.errors = "Error saving";
           };
       }

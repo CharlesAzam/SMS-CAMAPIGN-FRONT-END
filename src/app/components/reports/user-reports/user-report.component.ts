@@ -165,11 +165,9 @@ export class UserReportComponet implements OnInit {
     if (this.country) {
       this.filter.country = this.country;
       this.filter.type = 'CNT_REG_SUM'
-      this.getUserCount(this.filter.type, this.filter.country)
 
     } else {
       this.filter.type = 'REG_SUM'
-      this.getUserCount(this.filter.type)
     }
 
     this.getUserReports(this.filter);
@@ -180,8 +178,9 @@ export class UserReportComponet implements OnInit {
     filter.pageIndex = pageIndex ? pageIndex : this.paginator.pageIndex + 1;
     filter.pageSize = pageSize ? pageSize : this.paginator.pageSize;
     this.reportService.getUserReports(filter).subscribe((response: any) => {
-      if (response.status === 200) {
+      if (response.success) {
         this.datasource = response.data;
+        this.count = response.count;
       }
     }, error => console.error(error))
   }
@@ -191,7 +190,7 @@ export class UserReportComponet implements OnInit {
     filter.type = type;
     filter.country = country;
     this.reportService.getUserReports(filter).subscribe((response: any) => {
-      if (response.status === 200) {
+      if (response.success) {
         this.count = response.count;
       }
     }, error => console.error(error))

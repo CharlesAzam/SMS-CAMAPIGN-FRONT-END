@@ -203,6 +203,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
+      <div *ngIf="count === 0">No records found</div>
+
       <mat-paginator
         #summaryPaginator
         [length]="count"

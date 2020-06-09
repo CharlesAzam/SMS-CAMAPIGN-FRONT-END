@@ -1,41 +1,82 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <mat-card>
-                <div class="header">
-                    <h1 class="title">Video Library Detail</h1>
-                </div>
-                <div class="content">
-                    <p *ngIf="errors">{{ errors }}</p>
-                   
-                    <form  #videoLibraryForm="ngForm">
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Name" [(ngModel)]="videoLibrary.title" name="title"
-                                #title="ngModel" required>
-                            <mat-error *ngIf="title.invalid">Video library id can not be empty</mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Stream URL Android" [(ngModel)]="videoLibrary.streamURLAndroid"
-                                name="streamURLAndroid" #streamURLAndroid="ngModel" required>
-                            <mat-error *ngIf="streamURLAndroid.invalid">Video library streamURL Android can not be empty</mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100%;">
-                            <input matInput placeholder="Stream URL IOS" [(ngModel)]="videoLibrary.streamURLIos"
-                                name="streamURL" #streamURLIos="ngModel" required>
-                            <mat-error *ngIf="streamURLIos.invalid">Video library streamURL IOS can not be empty</mat-error>
-                        </mat-form-field>
-
-                        <div class="form-group">
-                            <button [disabled]="videoLibraryForm.form.invalid" (click)="save()" class="btn btn-default">Save</button>
-                        </div>
-
-                    </form>
-
-                </div>
-            </mat-card>
+  <div class="row">
+    <div class="col">
+      <mat-card>
+        <div class="header">
+          <h1 class="title">Video Library Detail</h1>
         </div>
+        <div class="content">
+          <p *ngIf="errors">{{ errors }}</p>
+
+          <form #videoLibraryForm="ngForm">
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Name"
+                [(ngModel)]="videoLibrary.title"
+                name="title"
+                #title="ngModel"
+                required
+              />
+              <mat-error *ngIf="title.invalid"
+                >Video library id can not be empty</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Stream URL Android"
+                [(ngModel)]="videoLibrary.streamURLAndroid"
+                name="streamURLAndroid"
+                #streamURLAndroid="ngModel"
+                required
+              />
+              <mat-error *ngIf="streamURLAndroid.invalid"
+                >Video library streamURL Android can not be empty</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Stream URL IOS"
+                [(ngModel)]="videoLibrary.streamURLIos"
+                name="streamURL"
+                #streamURLIos="ngModel"
+                required
+              />
+              <mat-error *ngIf="streamURLIos.invalid"
+                >Video library streamURL IOS can not be empty</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <input
+                matInput
+                placeholder="Nagra Content ID"
+                [(ngModel)]="videoLibrary.cdnContentID"
+                name="cdnContentID"
+                #cdnContentID="ngModel"
+                required
+              />
+              <mat-error *ngIf="cdnContentID.invalid"
+                >Video library Content ID can not be empty</mat-error
+              >
+            </mat-form-field>
+
+            <div class="form-group">
+              <button
+                [disabled]="videoLibraryForm.form.invalid"
+                (click)="save()"
+                class="btn btn-default"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
     </div>
+  </div>
 </div>

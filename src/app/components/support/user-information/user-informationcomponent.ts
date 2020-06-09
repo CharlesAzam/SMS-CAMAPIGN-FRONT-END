@@ -79,7 +79,7 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.getUserCount();
+    // this.getUserCount();
     this.datasource.paginator = this.paginator;
 
     this.getCountries();
@@ -122,8 +122,10 @@ export class UserInformationComponent implements OnInit, AfterViewInit {
       (response: any) => {
         if (response.code === 200) {
           this.users = response.data;
+          this.count = response.count;
           this.datasource = new MatTableDataSource<any>(this.users);
         } else if (response.code === 204) {
+          this.count = response.count;
           this.datasource = new MatTableDataSource<any>([]);
         }
       },
