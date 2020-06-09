@@ -189,19 +189,12 @@ export class PackageWiseRevenueReport implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           if (response.data.length > 0) {
-            let array = [];
-            response.data.forEach((element) => {
-              array.push({
-                date: element.date,
-                packageName: element.packageName,
-                revenue: element.revenue,
-              });
-            });
+            
             this.reportService.exportFileToCsv(
-              array,
+              response.data,
               "REVENUE RECOGNITION REPORT",
               `revenue_recognition_${moment().format()}`,
-              ["date", "packageName", "revenue"]
+              ['date']
             );
           }
         }
