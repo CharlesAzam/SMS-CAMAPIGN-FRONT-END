@@ -26,7 +26,7 @@
               mat-raised-button
               color="primary"
               style="margin-left: 23px;"
-              [routerLink]="['../subCategoryForm/new']"
+              [routerLink]="['../subCategoryForm','new',selectedLanguageId]"
             >
               Create Sub Category
             </button>
@@ -78,7 +78,7 @@
                 <span style="margin-right: 20px; margin-left: 20px;"></span>
                 <mat-icon
                   *ngIf="checkPermissionService.isModuleAllowed('subCategory','update')"
-                  [routerLink]="['../subCategoryForm', row._id]"
+                  [routerLink]="['../subCategoryForm', row._id, selectedLanguageId]"
                   style="cursor: pointer;"
                 >
                   edit</mat-icon

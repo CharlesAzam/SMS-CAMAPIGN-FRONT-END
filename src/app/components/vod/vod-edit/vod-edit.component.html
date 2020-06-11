@@ -109,7 +109,7 @@
                       *ngFor="let category of filteredCategories | async"
                       [value]="category._id"
                     >
-                      {{ category.name }}
+                      {{ category.name }} - {{getLanguageName(category.language)}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -481,7 +481,7 @@
                       *ngFor="let category of filteredCategories | async"
                       [value]="category._id"
                     >
-                      {{ category.name }}
+                    {{ category.name }} - {{getLanguageName(category.language)}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -501,7 +501,7 @@
                       *ngFor="let subCategory of filteredSubCategories | async"
                       [value]="subCategory._id"
                     >
-                      {{ subCategory.name }}
+                    {{ subCategory.name }} 
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -830,7 +830,7 @@
                       *ngFor="let category of filteredCategories | async"
                       [value]="category._id"
                     >
-                      {{ category.name }}
+                    {{ category.name }} - {{getLanguageName(category.language)}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -850,7 +850,7 @@
                       *ngFor="let subCategory of filteredSubCategories | async"
                       [value]="subCategory._id"
                     >
-                      {{ subCategory.name }}
+                    {{ subCategory.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -1184,7 +1184,7 @@
                       *ngFor="let category of filteredCategories | async"
                       [value]="category._id"
                     >
-                      {{ category.name }}
+                    {{ category.name }} - {{getLanguageName(category.language)}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -1204,7 +1204,7 @@
                       *ngFor="let subCategory of filteredSubCategories | async"
                       [value]="subCategory._id"
                     >
-                      {{ subCategory.name }}
+                    {{ subCategory.name }} 
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -1490,7 +1490,7 @@
                       *ngFor="let category of filteredCategories | async"
                       [value]="category._id"
                     >
-                      {{ category.name }}
+                    {{ category.name }} - {{getLanguageName(category.language)}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -1510,7 +1510,7 @@
                       *ngFor="let subCategory of filteredSubCategories | async"
                       [value]="subCategory._id"
                     >
-                      {{ subCategory.name }}
+                    {{ subCategory.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

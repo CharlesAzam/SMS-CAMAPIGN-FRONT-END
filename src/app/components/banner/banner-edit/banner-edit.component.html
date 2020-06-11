@@ -99,7 +99,7 @@
                   *ngFor="let category of filteredCategories | async"
                   [value]="category._id"
                 >
-                  {{ category.name }}
+                  {{ category.name }} - {{getLanguageName(category.language)}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
