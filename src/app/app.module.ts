@@ -16,7 +16,7 @@ import { PackageModule } from "../app/components/package/package.module";
 import { CreateCategoryComponent } from "./components/mobileCategory/mobileCategory.component";
 
 import { VideoLibraryModule } from "../app/components/video-library/video-library.module";
-import {  } from "../app/components/banner/banner.module";
+import { BannerModule } from "../app/components/banner/banner.module";
 import { CategoryFormComponent } from "./components/mobileCategory/mobile category form/category-form.component";
 import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.component";
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
@@ -75,7 +75,7 @@ import {ContentSuggestionService} from './services/suggestion.service';
     PackageModule,
     NgxMatSelectSearchModule,
     VideoLibraryModule,
-    // BannerModule,
+    BannerModule,
     GuideModule,
     EditorModule,
     ProgramModule,
