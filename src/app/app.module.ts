@@ -16,7 +16,7 @@ import { PackageModule } from "../app/components/package/package.module";
 import { CreateCategoryComponent } from "./components/mobileCategory/mobileCategory.component";
 
 import { VideoLibraryModule } from "../app/components/video-library/video-library.module";
-import { BannerModule } from "../app/components/banner/banner.module";
+import {  } from "../app/components/banner/banner.module";
 import { CategoryFormComponent } from "./components/mobileCategory/mobile category form/category-form.component";
 import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.component";
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
@@ -41,7 +41,8 @@ import { CategoriesService } from "./services/categories.service";
 import { CanActivateViaAuthGuard } from "./guards/PermissionGuard";
 import { NoWhitespaceDirective } from "./validators/no-whitespace.directive";
 import { GuideModule } from "./components/tv-guide/tv-guide.module";
-
+import { ContentSuggestionConfigComponent } from './components/content-suggestion-config/content-suggestion-config.component';
+import {ContentSuggestionService} from './services/suggestion.service';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { GuideModule } from "./components/tv-guide/tv-guide.module";
     ErrorDialog,
     WarningDialog,
     TicketDescriptionDialog,
+    ContentSuggestionConfigComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +75,7 @@ import { GuideModule } from "./components/tv-guide/tv-guide.module";
     PackageModule,
     NgxMatSelectSearchModule,
     VideoLibraryModule,
-    BannerModule,
+    // BannerModule,
     GuideModule,
     EditorModule,
     ProgramModule,
@@ -88,6 +90,7 @@ import { GuideModule } from "./components/tv-guide/tv-guide.module";
     CountryService,
     LeagueService,
     CategoriesService,
+    ContentSuggestionService,
     CanActivateViaAuthGuard,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

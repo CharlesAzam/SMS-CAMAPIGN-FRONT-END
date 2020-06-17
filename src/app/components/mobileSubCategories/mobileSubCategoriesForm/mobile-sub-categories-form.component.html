@@ -83,7 +83,14 @@
                     <mat-button-toggle value=false>NO</mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
-
+            <div class="form-group">
+                <mat-label>Is content suggestion</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="isWatchSuggestion" style="margin-left: 10px;" required>
+                    <mat-button-toggle value=true>YES</mat-button-toggle>
+                    <mat-button-toggle value=false>NO</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
             <div>
                 <button color='primary' [disabled]="subCategoryForm.invalid" mat-raised-button
                     type="submit">{{subCategoryModel?'Update':'Save'}}</button>
