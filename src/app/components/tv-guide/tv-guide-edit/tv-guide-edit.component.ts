@@ -80,10 +80,10 @@ export class GuideEditComponent implements OnInit {
                 image: this.guideModel.image ? this.guideModel.image : "",
                 date_time_in_gmt: this.guideModel.date_time_in_gmt
                   ? moment.utc(this.guideModel.date_time_in_gmt).local().toISOString(true).split(".")[0]
-                  : new Date().toISOString().split(".")[0],
+                  : moment.utc().local().toISOString(true).split(".")[0],
                 end_date_time_in_gmt: this.guideModel.end_date_time_in_gmt
                   ? moment.utc(this.guideModel.end_date_time_in_gmt).local().toISOString(true).split(".")[0]
-                  : new Date().toISOString().split(".")[0],
+                  : moment.utc().local().toISOString(true).split(".")[0],
                 laligalive: this.guideModel.laligalive
                   ? this.guideModel.laligalive
                   : "",
