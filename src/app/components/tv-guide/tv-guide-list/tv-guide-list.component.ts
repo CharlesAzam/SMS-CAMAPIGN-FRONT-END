@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { GuideFilter } from "../tv-guide-filter";
 import { GuideService } from "../tv-guide.service";
 import { Guide } from "../tv-guide";
@@ -17,7 +17,7 @@ import * as moment from 'moment';
   selector: "tv-guide",
   templateUrl: "tv-guide-list.component.html",
 })
-export class GuideListComponent {
+export class GuideListComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   searchTimeout = null;
@@ -38,7 +38,7 @@ export class GuideListComponent {
 
   filter = new GuideFilter();
   selectedGuide: Guide;
-  dataSource = new MatTableDataSource<Guide>([]);
+  dataSource = new MatTableDataSource<Guide[]>([]);
   count: number;
 
   displayedColumns: string[] = ["No", "name", "startTime", "endTime", "action"];
@@ -225,5 +225,9 @@ export class GuideListComponent {
       },
       (error) => console.error(error)
     );
+  }
+
+  getDateTimeProperTimezone(date: string) {
+    return moment.utc(date).local().toISOString(true).split(".")[0];
   }
 }
