@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CategoriesService } from "src/app/services/categories.service";
 import { SubCategoriesService } from "src/app/services/sub.categories.service";
 import { VodService } from "../../vod/vod.service";
+import * as moment from 'moment';
 
 @Component({
   selector: "tv-guide-edit",
@@ -56,7 +57,7 @@ export class GuideEditComponent implements OnInit {
     // private subCategoryService: SubCategoriesService,
     // private contentService: VodService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.getCategories();
@@ -78,14 +79,10 @@ export class GuideEditComponent implements OnInit {
                 channel: this.guideModel.channel ? this.guideModel.channel : "",
                 image: this.guideModel.image ? this.guideModel.image : "",
                 date_time_in_gmt: this.guideModel.date_time_in_gmt
-                  ? new Date(this.guideModel.date_time_in_gmt)
-                      .toISOString()
-                      .split(".")[0]
+                  ? moment.utc(this.guideModel.date_time_in_gmt).local().toISOString(true).split(".")[0]
                   : new Date().toISOString().split(".")[0],
                 end_date_time_in_gmt: this.guideModel.end_date_time_in_gmt
-                  ? new Date(this.guideModel.end_date_time_in_gmt)
-                      .toISOString()
-                      .split(".")[0]
+                  ? moment.utc(this.guideModel.end_date_time_in_gmt).local().toISOString(true).split(".")[0]
                   : new Date().toISOString().split(".")[0],
                 laligalive: this.guideModel.laligalive
                   ? this.guideModel.laligalive
@@ -132,6 +129,11 @@ export class GuideEditComponent implements OnInit {
   }
   save() {
     if (this.imageUrl) this.guideForm.value["image"] = this.imageUrl;
+    this.guideForm.value["date_time_in_gmt"] = new Date(this.guideForm.value["date_time_in_gmt"]).toISOString();
+    this.guideForm.value["end_date_time_in_gmt"] = new Date(this.guideForm.value["end_date_time_in_gmt"]).toISOString();
+
+    console.log(this.guideForm.value);
+
     if (this.guideModel) {
       Object.assign(this.guideModel, this.guideForm.value);
       this.guideService.update(this.guideModel).subscribe(
