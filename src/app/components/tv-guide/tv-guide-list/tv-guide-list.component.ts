@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { GuideFilter } from "../tv-guide-filter";
 import { GuideService } from "../tv-guide.service";
 import { Guide } from "../tv-guide";
@@ -11,12 +11,13 @@ import {
 import { startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
 import { AuthenticationService } from "../../login/login.service";
+import * as moment from 'moment';
 
 @Component({
   selector: "tv-guide",
   templateUrl: "tv-guide-list.component.html",
 })
-export class GuideListComponent {
+export class GuideListComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   searchTimeout = null;
@@ -37,7 +38,7 @@ export class GuideListComponent {
 
   filter = new GuideFilter();
   selectedGuide: Guide;
-  dataSource = new MatTableDataSource<Guide>([]);
+  dataSource = new MatTableDataSource<Guide[]>([]);
   count: number;
 
   displayedColumns: string[] = ["No", "name", "startTime", "endTime", "action"];
@@ -46,7 +47,7 @@ export class GuideListComponent {
     private guideService: GuideService,
     private dialog: MatDialog,
     public authenticationService: AuthenticationService
-  ) {}
+  ) { }
 
   delete(row) {
     this.dialog
@@ -150,8 +151,9 @@ export class GuideListComponent {
       var headers = lines[0].split(",");
       const model = [
         "channel",
-        "date_time_in_gmt",
-        "end_date_time_in_gmt",
+        "date",
+        "time_from",
+        "time_to",
         "name",
         "type",
         "image",
@@ -175,7 +177,19 @@ export class GuideListComponent {
           result.push(obj);
         }
       }
-      console.log("type of ", typeof result);
+
+      result.forEach(r => {
+        let date_time_in_gmt = moment(`${r.date} ${r.time_from}`, 'DD-MM-YY hh:mm');
+        let duration = moment(r.time_to, 'hh:mm').diff(moment(r.time_from, 'hh:mm'));
+        
+        r.date_time_in_gmt = date_time_in_gmt.toISOString();
+        r.end_date_time_in_gmt = date_time_in_gmt.add(duration, 'milliseconds').toISOString();
+        delete r.time_from;
+        delete r.time_to;
+        delete r.date;
+      });
+
+      console.log(result)
       this.guideService.bulkUpload(result).subscribe(
         (response: any) => {
           this.getGuides(this.paginator.pageIndex + 1, this.paginator.pageSize);
@@ -189,14 +203,15 @@ export class GuideListComponent {
           console.error(err);
         }
       );
-      console.log("final-------", result);
-      //return result; //JavaScript object
       return JSON.stringify(result); //JSON
 
-      //convert text to json here
-      //var json = this.csvJSON(text);
+
     };
     reader.readAsText(csv);
+  }
+
+  extractFields() {
+
   }
 
   getCount() {
@@ -210,5 +225,9 @@ export class GuideListComponent {
       },
       (error) => console.error(error)
     );
+  }
+
+  getDateTimeProperTimezone(date: string) {
+    return moment.utc(date).local().toISOString(true).split(".")[0];
   }
 }

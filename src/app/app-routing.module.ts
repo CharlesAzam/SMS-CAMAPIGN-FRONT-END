@@ -70,7 +70,7 @@ const routes: Routes = [
         data: { moduleData: ["subcategory", "read"] },
       },
       {
-        path: "subCategoryForm/:id",
+        path: "subCategoryForm/:id/:lang",
         component: MobileSubCategoriesFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
         data: { moduleData: ["subcategory", "create"] },

@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CategoriesService } from "src/app/services/categories.service";
 import { SubCategoriesService } from "src/app/services/sub.categories.service";
 import { VodService } from "../../vod/vod.service";
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: "banner-edit",
@@ -26,6 +27,7 @@ export class BannerEditComponent implements OnInit {
   types: string[] = ["package", "vod"];
   type = "vod";
   content: any[] = [];
+  languages: any[] = [];
 
   filterCategoriesCtrl: FormControl = new FormControl();
   filterSubCategoryCtrl: FormControl = new FormControl();
@@ -57,10 +59,12 @@ export class BannerEditComponent implements OnInit {
     private categoryService: CategoriesService,
     private subCategoryService: SubCategoriesService,
     private contentService: VodService,
+    private languageService: LanguageService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.getLanguages();
     this.getCategories();
     this.getSubCategories();
     this.getContent();
@@ -271,5 +275,21 @@ export class BannerEditComponent implements OnInit {
       },
       error => console.error(error)
     );
+  }
+
+  getLanguages() {
+    this.languageService.list().subscribe((response) => {
+      if (response.status === 200) {
+        this.languages = response.data;
+      }
+    },
+      error => {
+        console.log("Error! ", error)
+      });
+  }
+
+  getLanguageName(id){
+    let lang = this.languages.find((lang)=> lang._id === id);
+    return lang.name;
   }
 }
