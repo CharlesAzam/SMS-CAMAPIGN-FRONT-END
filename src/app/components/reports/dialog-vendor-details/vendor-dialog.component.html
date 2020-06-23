@@ -2,7 +2,7 @@
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="vendorForm">
     <!-- Users -->
-    <div class="form-group">
+    <div class="form-group" *ngIf="vendorInformation == null">
       <mat-form-field style="width: 100%;">
         <mat-label>User</mat-label>
         <mat-select formControlName="user" required>
@@ -13,12 +13,41 @@
           >
           </ngx-mat-select-search>
           <mat-option *ngFor="let u of filteredUsers | async" [value]="u"
-            >{{ u.vendorName }} {{ u.email }}
+            >{{ u.username }} {{ u.vendorEmail }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    
+
+    <div class="row" *ngIf="vendorInformation">
+      <!-- Username -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <mat-form-field style="width: 100%;">
+            <input
+              matInput
+              name="Username"
+              placeholder="Username"
+              formControlName="username"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <mat-form-field style="width: 100%;">
+            <input
+              matInput
+              name="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
 
     <!-- Report Types -->
     <div class="form-group">
@@ -27,7 +56,7 @@
         <mat-select formControlName="reportType" required multiple>
           <ngx-mat-select-search
             [formControl]="filterReportTypeCtrl"
-            [noEntriesFoundLabel]="'Report Type not found'"
+            [noEntriesFoundLabel]="'Report Type not frepmortound'"
             [placeholderLabel]="'Find Report Type..'"
           >
           </ngx-mat-select-search>
@@ -44,7 +73,7 @@
     <div class="form-group">
       <mat-form-field style="width: 100%;">
         <mat-label>Report Formats</mat-label>
-        <mat-select formControlName="reportFormat" required multiple>
+        <mat-select formControlName="reportFormat" required>
           <ngx-mat-select-search
             [formControl]="filterFormatsCtrl"
             [noEntriesFoundLabel]="'Report Type not found'"
@@ -75,37 +104,57 @@
     <!-- Header -->
     <div class="form-group">
       <mat-form-field style="width: 100%;" required>
+        <mat-label>Header </mat-label>
         <input
           matInput
           name="header"
-          placeholder="Header (0/50)"
+          maxlength="50"
+          placeholder="50 Characters max"
           formControlName="header"
+          required
         />
       </mat-form-field>
     </div>
 
     <div class="form-group">
-      <mat-form-field style="width: 100%;" required>
-        <mat-label>Body (0/255) </mat-label>
+      <mat-form-field style="width: 100%;">
+        <mat-label>Body </mat-label>
         <textarea
           matInput
+          maxlength="255"
+          placeholder="255 Characters max"
           cdkTextareaAutosize
           cdkAutosizeMinRows="5"
           cdkAutosizeMaxRows="5"
+          formControlName="body"
+          required
         >
         </textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let stats of vendorStatus" [value]="stats"
+            >{{ stats }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
+
   <button
     mat-button
-    [disabled]="vendorForm.invalid"
-    [mat-dialog-close]="getData()"
+    [disabled]="vendorForm.invalid || loading"
+    (click)="manageVendor()"
     cdkFocusInitial
   >
-    Submit
+    {{ vendorInformation !== null ? "Update" : "Submit" }}
   </button>
 </mat-dialog-actions>

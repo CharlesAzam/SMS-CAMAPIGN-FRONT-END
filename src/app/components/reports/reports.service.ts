@@ -10,7 +10,6 @@ const EXCEL_EXTENSION = ".xlsx";
 
 @Injectable()
 export class ReportService {
- 
   constructor(private http: HttpClient) {}
 
   exportFileToCsv(data: any[], title?: string, filename?: string, headers?) {
@@ -258,18 +257,43 @@ export class ReportService {
     return this.http.get<any>(url, { headers, params });
   }
 
-  getVendorConfigurationList() {
+  getVendorConfigurationList(page, size) {
     let url = API.BASE_URL + "/cms/channelprovider-list";
-    return this.http.get<any>(url);
+    let params: any = {};
+
+    if (page) params.page = page;
+
+    if (size) params.size = size;
+
+    return this.http.get<any>(url, { params });
   }
 
   getVendorConfigurationById(vendorId) {
-    let url = API.BASE_URL + "/cms/channelprovider/"+vendorId;
+    let url = API.BASE_URL + "/cms/channelprovider/" + vendorId;
     return this.http.get<any>(url);
   }
 
-  updateVendorConfiguration(vendorConfigData: any) {
+  createVendorConfiguration(data) {
+    let url = API.BASE_URL + "/cms/channelprovider/create";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.post<any>(url, data, { headers });
+  }
 
+  updateVendorConfiguration(vendorConfigData: any) {
+    let url =
+      API.BASE_URL + `/cms/channelprovider/${vendorConfigData._id}/update`;
+    let headers = new HttpHeaders().set("Accept", "application/json");
+    return this.http.put<any>(url, vendorConfigData, { headers });
+  }
+
+  delete(vendorConfigId: any) {
+    let url = API.BASE_URL + "/cms/channelprovider/" + vendorConfigId;
+    return this.http.delete<any>(url);
+  }
+
+  getVendorUsers() {
+    let url = API.BASE_URL + "/cms/getChannelProviderUser";
+    return this.http.get<any>(url);
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
@@ -280,15 +304,5 @@ export class ReportService {
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );
-  }
-
-  delete(vendorConfigId: any) {
-    let url = API.BASE_URL + "/cms/channelprovider/"+vendorConfigId;
-    return this.http.delete<any>(url);
-  }
-
-  getVendorUsers() {
-    let url = API.BASE_URL + "/cms/channel/getChannelProviderUser";
-    return this.http.get<any>(url);
   }
 }
