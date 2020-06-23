@@ -1181,6 +1181,11 @@ export class VodEditComponent implements OnInit {
       createdBy: new FormControl("")
     });
   }
+
+  getLanguageName(id){
+    let lang = this.languages.find((lang)=> lang._id === id);
+    return lang.name;
+  }
 }
 
 @Component({

@@ -22,6 +22,7 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     private languageService: LanguageService,
     private contentService: VodService) { }
 
+  selectedLanguage:any;
   languages: any[] = []
   categories: any[] = []
   boxes: any[] = [
@@ -60,10 +61,11 @@ export class MobileSubCategoriesFormComponent implements OnInit {
   contents: any[] = []
 
   ngOnInit() {
-    this.getCategories();
-    this.getLanguages();
-    this.getContents()
     this.activatedRoute.params.subscribe(params => {
+      this.selectedLanguage = params.lang;
+      this.getCategories(params.lang);
+      this.getLanguages();
+      this.getContents()
       if (params.id !== 'new') {
         this.subCategoryService.findById(params.id).subscribe((response: any) => {
           if (response.status === 200) {
@@ -109,10 +111,10 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     //Upload to S3
   }
 
-  getCategories() {
+  getCategories(lang?) {
     this.categoryService.find().subscribe((result: any) => {
       if (result.status == 200) {
-        this.categories = result.data;
+        this.categories = result.data.filter((cat)=> cat.language === lang);
         this.filteredCategories.next(this.categories.slice());
 
       }
