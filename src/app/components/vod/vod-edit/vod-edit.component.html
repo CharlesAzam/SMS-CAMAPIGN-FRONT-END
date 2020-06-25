@@ -1577,6 +1577,53 @@
                 </mat-form-field>
               </div>
 
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>Lanugage</mat-label>
+                  <mat-select formControlName="language" required>
+                    <mat-option
+                      *ngFor="let lang of languages"
+                      [value]="lang._id"
+                    >
+                      {{ lang.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <div class="form-group">
+                  <button mat-raised-button (click)="openLinksDialog()">
+                    Add Links
+                  </button>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Image</th>
+                      <th scope="col">Link</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let link of links; let i = index">
+                    <tr>
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ link.thumbnail }}</td>
+                      <td>{{ link.videoLink }}</td>
+                      <td>
+                        <a style="cursor: pointer;" (click)="openLinksDialog(i)"
+                          >Edit</a
+                        >,
+                        <a style="cursor: pointer;" (click)="removeLinks(i)"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               <div class="row" style="width: 100%;">
                 <div>
                   <mat-card

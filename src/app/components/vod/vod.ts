@@ -29,4 +29,5 @@ export class Vod {
     images: any[]
     packageID: any[]
     createdBy: string
+    links: any[];
 }
