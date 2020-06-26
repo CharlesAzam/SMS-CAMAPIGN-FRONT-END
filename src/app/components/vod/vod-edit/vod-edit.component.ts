@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, UrlSerializer, DefaultUrlSerializer } from "@angular/router";
 import { VodService } from "../vod.service";
 import { Vod } from "../vod";
 import { map, switchMap, takeUntil } from "rxjs/operators";
@@ -524,7 +524,7 @@ export class VodEditComponent implements OnInit {
                 this.getTags();
                 this.formType = "News";
                 this.contentType = "NEWS";
-                this.links =  this.vod.links;
+                this.links = this.vod.links;
                 this.initializeNewsForm();
                 this.getSubCategories({
                   value: this.vod.categories.map(categor => categor._id)
@@ -1387,22 +1387,24 @@ export class AddNewLinks {
   images: string = '';
   isUploading: boolean = false;
   fileToUpload: any = null;
+  isDisabled: boolean = true;
 
   linksForm = new FormGroup({
-    videoLink: new FormControl("", [Validators.required])
+    videoLink: new FormControl("", [Validators.required]),
   });
 
   constructor(
     public dialogRef: MatDialogRef<AddNewLinks>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private vodService: VodService
+    private vodService: VodService,
   ) {
     if (data) {
       this.linksForm.setValue({
-        videoLink: data.videoLink
+        videoLink: data.videoLink,
       });
 
       this.images = data.thumbnail
+      this.isDisabled = false;
     }
 
   }
@@ -1437,10 +1439,31 @@ export class AddNewLinks {
   }
 
   getResult() {
+    let str = this.getYoutubeCode(this.linksForm.value['videoLink'])
     return {
       videoLink: this.linksForm.value['videoLink'],
-      thumbnail: this.images
+      thumbnail: this.images,
+      code: str
     }
+  }
+
+  getYoutubeCode(link: string) {
+
+    const codeString = link.split('?')[1];
+    let code = null;
+    if (codeString && codeString.split('&').length > 0) {
+      let codes = codeString.split('&');
+      codes.forEach((str) => {
+
+        if (str.split('=')[0] === 'v') {
+
+          code = str.split('=')[1];
+          this.isDisabled = false;
+        }
+      });
+    }
+
+    return code;
   }
 }
 
