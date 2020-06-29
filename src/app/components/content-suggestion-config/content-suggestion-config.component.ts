@@ -9,6 +9,7 @@ import {
 } from "@angular/material";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ContentSuggestionService } from "../../services/suggestion.service";
+import { ErrorDialog } from '../../components/error-dialog/dialog-error';
 
 @Component({
   selector: 'app-content-suggestion-config',
@@ -29,7 +30,7 @@ export class ContentSuggestionConfigComponent implements OnInit {
   suggestionFilters : any;
   isLoading: Boolean = true;
   
-  constructor(public suggestionService:ContentSuggestionService) { 
+  constructor(public suggestionService:ContentSuggestionService , public dialog: MatDialog) { 
     this.suggestionService.fetch().subscribe((response: any) => {
       console.log("fetch",response);
       this.isLoading = false;
@@ -56,10 +57,22 @@ export class ContentSuggestionConfigComponent implements OnInit {
   }
 
   submit(){
-    this.isLoading = true;
-    console.log("test",this.suggestionForm.value)
     this.suggestionFilters = this.suggestionForm.value;
-    this.suggestionFilters.maxWatchCount = this.suggestionFilters.country === 'false' ?  0 : parseInt(this.suggestionFilters.maxWatchCount);
+    if(this.suggestionFilters.country === 'false'){
+      this.suggestionFilters.maxWatchCount = 0;
+      this.suggestionForm.patchValue({
+        maxWatchCount: 0
+      });
+    }
+    if(this.suggestionFilters.country === 'true' && parseInt(this.suggestionFilters.maxWatchCount) === 0){
+      const ref = this.dialog.open(ErrorDialog, {
+          width: '400px',
+          data: {message: 'Value of maximum watch count cannot be 0.'}
+      });
+      return;
+    }
+    console.log("test",this.suggestionFilters)
+    this.isLoading = true;
     this.suggestionService.save(this.suggestionFilters).subscribe((response: any) => {
       this.isLoading = false;
       console.log("Save",response);
