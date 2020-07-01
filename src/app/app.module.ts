@@ -41,7 +41,8 @@ import { CategoriesService } from "./services/categories.service";
 import { CanActivateViaAuthGuard } from "./guards/PermissionGuard";
 import { NoWhitespaceDirective } from "./validators/no-whitespace.directive";
 import { GuideModule } from "./components/tv-guide/tv-guide.module";
-
+import { ContentSuggestionConfigComponent } from './components/content-suggestion-config/content-suggestion-config.component';
+import {ContentSuggestionService} from './services/suggestion.service';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { GuideModule } from "./components/tv-guide/tv-guide.module";
     ErrorDialog,
     WarningDialog,
     TicketDescriptionDialog,
+    ContentSuggestionConfigComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,7 @@ import { GuideModule } from "./components/tv-guide/tv-guide.module";
     CountryService,
     LeagueService,
     CategoriesService,
+    ContentSuggestionService,
     CanActivateViaAuthGuard,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
