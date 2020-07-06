@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "AzamCMS"
+  "defaultProject": "AzamCMS",
+  "cli": {
+    "analytics": "a6839631-dbd1-4cd7-b8a9-87b3ea2b9435"
+  }
 }
