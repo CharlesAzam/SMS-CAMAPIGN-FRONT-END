@@ -296,6 +296,11 @@ export class ReportService {
     return this.http.get<any>(url);
   }
 
+  fetchReportSubtypes() {
+    let url = API.BASE_URL + "/cms/reports/subtypes";
+    return this.http.post<any>(url, {});
+  }
+
   private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
