@@ -187,6 +187,17 @@ export class VendorDialogComponent {
   manageVendor() {
     this.loading = true;
     console.log("this.vendorForm.value",this.vendorForm.value);
+    const vendorFormValues = this.vendorForm.value;
+    if(vendorFormValues){
+      if(vendorFormValues.subType && vendorFormValues.subType.length !== 0){
+        vendorFormValues.subType.map((val) =>{
+          if(val.name.length === 0){
+              _.remove(vendorFormValues.reportType,function(v){ return v === val.reportType});
+              _.remove(vendorFormValues.subType,function(v){ return v["reportType"] === val.reportType});
+          }
+        })
+      }
+    }
     if (this.vendorInformation) {
       Object.assign(this.vendorInformation, this.vendorForm.value);
       this.vendorInformation["reportFormat"] = [
@@ -199,6 +210,8 @@ export class VendorDialogComponent {
           if (response.success) {
             this.dialogRef.close(this.vendorInformation);
           }
+        }, (error) =>{
+          this.loading = false;
         });
     } else {
       let vendor = this.vendorForm.value;
@@ -214,6 +227,8 @@ export class VendorDialogComponent {
           if (response.success) {
             this.dialogRef.close(vendor);
           }
+        }, (error) =>{
+          this.loading = false;
         });
     }
   }
@@ -266,7 +281,7 @@ export class VendorDialogComponent {
   protected _onDestroy = new Subject<void>();
 
   pushInSubtypeFormControl(lastValue){
-    if(this.reportSubtype[lastValue]){
+    if(this.reportSubtype[lastValue] && this.reportSubtype[lastValue].length !== 0){
       this.subType.push(this.subTypeAttr());
       const subtypeSize = this.subType.length;
       this.subType.at(subtypeSize -1 ).setValue({"reportType":lastValue, "name":this.reportSubtype[lastValue]})
@@ -324,7 +339,7 @@ export class VendorDialogComponent {
           }
         }
       }else{
-        if(this.reportSubtype[lastValue]){
+        if(this.reportSubtype[lastValue] && this.reportSubtype[lastValue].length !== 0){
           this.subType.push(this.subTypeAttr());
           this.subType.setValue([{"reportType":lastValue, "name":this.reportSubtype[lastValue]}]);
           this.onSearchEvent(lastValue,null);
@@ -363,11 +378,11 @@ export class VendorDialogComponent {
   }
   
   manageSubType(data){
-    console.log("----here",data.subType,this.reportSubtype);
+    // console.log("----here",data.subType,this.reportSubtype);
     const subtype = data.subType;
     for(let i =0; i<= subtype.length -1 ;i++){
-      if(this.reportSubtype[subtype[i].reportType]){
-        console.log("1",subtype[i],this.reportSubtype[subtype[i].reportType])
+      if(this.reportSubtype[subtype[i].reportType] && this.reportSubtype[subtype[i].reportType].length !== 0){
+        // console.log("1",subtype[i],this.reportSubtype[subtype[i].reportType])
         this.subType.push(this.subTypeAttr());
         let lastValue = subtype[i].reportType;
         this.subType.at(i).setValue({"reportType":lastValue, "name":subtype[i].name});
@@ -381,7 +396,7 @@ export class VendorDialogComponent {
           const isExist = _.findIndex(subtype,function(v){
             return v["reportType"] === selectedRT[i]
           });
-          console.log("isExist",isExist);
+          // console.log("isExist",isExist);
           if(isExist === -1){
             this.pushInSubtypeFormControl(selectedRT[i]);
           }
