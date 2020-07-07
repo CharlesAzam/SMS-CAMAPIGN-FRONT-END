@@ -1,0 +1,65 @@
+<div style="margin-top: 30px; margin-left: 30px; margin-right: 30px;">
+    <mat-card>
+      <div class="header">
+        <h2 class="title">Content Suggestion Configuration</h2>
+      </div>
+      <div class="content"></div>
+    </mat-card>
+  
+    
+    <mat-card style="margin-top: 30px;">
+        <h3>Set Filters</h3>
+        <form [formGroup]="suggestionForm" (ngSubmit)="submit()">
+            <hr>
+            <div class="form-group">
+                <mat-label>Country</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="country" (change)="onValChange($event.value)" style="margin-left: 10px;" >
+                    <mat-button-toggle value=true>YES</mat-button-toggle>
+                    <mat-button-toggle value=false>NO</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div class="form-group" *ngIf="countryVal == 'true'">
+                <mat-form-field class="input-layouts">
+                    <input matInput placeholder="Maximum watch count of content" formControlName="maxWatchCount" >
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Tags</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="tags" style="margin-left: 10px;" >
+                    <mat-button-toggle value=true>YES</mat-button-toggle>
+                    <mat-button-toggle value=false>NO</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div class="form-group">
+                <mat-label>Category</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="category" style="margin-left: 10px;" >
+                    <mat-button-toggle value=true>YES</mat-button-toggle>
+                    <mat-button-toggle value=false>NO</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div class="form-group">
+                <mat-label>Sub-category</mat-label>
+                <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                    formControlName="subcategory" style="margin-left: 10px;" >
+                    <mat-button-toggle value=true>YES</mat-button-toggle>
+                    <mat-button-toggle value=false>NO</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            
+            <div class="form-group">
+                <mat-form-field class="input-layouts">
+                    <input matInput placeholder="Maximum watch count of content per user" formControlName="watchCountPerUser">
+                </mat-form-field>
+            </div>
+            <div>
+                <button color='primary' [disabled]="isLoading" mat-raised-button
+                    type="submit">Save</button>
+            </div>
+
+        </form>
+    </mat-card>
+  </div>
+  

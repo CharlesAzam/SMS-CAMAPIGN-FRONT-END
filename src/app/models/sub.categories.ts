@@ -10,5 +10,6 @@ export class SubCategory {
     public priority: number
     public language: string
     public isContinueWatching : boolean
+    public isWatchSuggestion: boolean
     constructor() { }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, UrlSerializer, DefaultUrlSerializer } from "@angular/router";
 import { VodService } from "../vod.service";
 import { Vod } from "../vod";
 import { map, switchMap, takeUntil } from "rxjs/operators";
@@ -124,6 +124,7 @@ export class VodEditComponent implements OnInit {
   cdns: any[] = [];
   boxes: string[] = ["HORIZONTAL_CARD", "VERTICAL_CARD", "BANNER", "LOGO"];
   seasons: any[] = [];
+  links: any[] = [];
   images: string[] = [];
   allSelected = false;
   @ViewChild("countrySelection", null) countrySelection: MatSelect;
@@ -236,8 +237,8 @@ export class VodEditComponent implements OnInit {
                         categor => categor._id
                       )
                         ? this.vod.categories.map(categor => {
-                            return categor._id;
-                          })
+                          return categor._id;
+                        })
                         : "",
 
                       region:
@@ -246,8 +247,8 @@ export class VodEditComponent implements OnInit {
                           : [],
                       country: this.vod.country
                         ? this.vod.country.map(country => {
-                            if (country._id != 0) return country._id;
-                          })
+                          if (country._id != 0) return country._id;
+                        })
                         : "",
 
                       subCategories: this.vod.subCategories
@@ -319,8 +320,8 @@ export class VodEditComponent implements OnInit {
                         categor => categor._id
                       )
                         ? this.vod.categories.map(categor => {
-                            return categor._id;
-                          })
+                          return categor._id;
+                        })
                         : "",
                       region:
                         this.vod.region.length > 0
@@ -328,8 +329,8 @@ export class VodEditComponent implements OnInit {
                           : [],
                       country: this.vod.country
                         ? this.vod.country.map(country => {
-                            if (country._id != 0) return country._id;
-                          })
+                          if (country._id != 0) return country._id;
+                        })
                         : "",
                       subCategories: this.vod.subCategories
                         ? this.vod.subCategories.map(subs => subs._id)
@@ -394,8 +395,8 @@ export class VodEditComponent implements OnInit {
                       director: this.vod.director ? this.vod.director : "",
                       categories: this.vod.categories
                         ? this.vod.categories.map(categor => {
-                            return categor._id;
-                          })
+                          return categor._id;
+                        })
                         : "",
                       region:
                         this.vod.region.length > 0
@@ -403,8 +404,8 @@ export class VodEditComponent implements OnInit {
                           : [],
                       country: this.vod.country
                         ? this.vod.country.map(country => {
-                            if (country._id != 0) return country._id;
-                          })
+                          if (country._id != 0) return country._id;
+                        })
                         : "",
                       subCategories: this.vod.subCategories
                         ? this.vod.subCategories.map(subs => subs._id)
@@ -481,8 +482,8 @@ export class VodEditComponent implements OnInit {
                     this.vod.region.length > 0 ? this.vod.region[0]._id : [],
                   country: this.vod.country
                     ? this.vod.country.map(country => {
-                        if (country._id != 0) return country._id;
-                      })
+                      if (country._id != 0) return country._id;
+                    })
                     : "",
                   subCategories: this.vod.subCategories
                     ? this.vod.subCategories.map(subs => subs._id)
@@ -523,6 +524,7 @@ export class VodEditComponent implements OnInit {
                 this.getTags();
                 this.formType = "News";
                 this.contentType = "NEWS";
+                this.links = this.vod.links;
                 this.initializeNewsForm();
                 this.getSubCategories({
                   value: this.vod.categories.map(categor => categor._id)
@@ -537,8 +539,8 @@ export class VodEditComponent implements OnInit {
                     this.vod.region.length > 0 ? this.vod.region[0]._id : [],
                   country: this.vod.country
                     ? this.vod.country.map(country => {
-                        if (country._id != 0) return country._id;
-                      })
+                      if (country._id != 0) return country._id;
+                    })
                     : "",
                   countryOrigin: this.vod.countryOrigin
                     ? this.vod.countryOrigin
@@ -562,6 +564,10 @@ export class VodEditComponent implements OnInit {
                   status: String(this.vod.status)
                     ? String(this.vod.status)
                     : "",
+                  language: this.vod.language
+                    ? this.vod.language
+                    : "",
+                  links: this.vod.links ? this.vod.links : [],
                   series: this.vod.series ? this.vod.series : [],
                   images: this.vod.images ? this.vod.images : [],
                   imageThumb: this.vod.imageThumb ? "" : ""
@@ -668,6 +674,10 @@ export class VodEditComponent implements OnInit {
     }
     if (this.isNewsForm) {
       this.contentForm.value["images"] = this.images;
+    }
+
+    if (this.links.length > 0) {
+      this.contentForm.value["links"] = this.links;
     }
     if (this.vod) {
       Object.assign(this.vod, this.contentForm.value);
@@ -962,6 +972,25 @@ export class VodEditComponent implements OnInit {
     });
   }
 
+  openLinksDialog(i?) {
+    const index = i;
+    const dialogRef = this.dialog.open(AddNewLinks, {
+      width: "800px",
+      data: String(index) !== "undefined" ? this.links[index] : null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        if (String(index) !== "undefined") {
+          this.links[index] = result;
+        } else {
+          this.links.push(result);
+        }
+      }
+    });
+  }
+
   openImagesDialog() {
     const dialogRef = this.dialog.open(AddMultipleImages, {
       width: "800px",
@@ -984,6 +1013,12 @@ export class VodEditComponent implements OnInit {
   removeSeason(index) {
     if (confirm("Are you sure to remove this Season?")) {
       this.seasons.splice(index, 1);
+    }
+  }
+
+  removeLinks(index) {
+    if (confirm("Are you sure to remove this Link?")) {
+      this.links.splice(index, 1);
     }
   }
 
@@ -1105,6 +1140,8 @@ export class VodEditComponent implements OnInit {
       isFreeForAzam: new FormControl("", [Validators.required]),
       isSeries: new FormControl("false"),
       status: new FormControl("", [Validators.required]),
+      language: new FormControl("", [Validators.required]),
+      links: new FormControl([], [Validators.required]),
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl("", [Validators.required])
@@ -1180,6 +1217,11 @@ export class VodEditComponent implements OnInit {
       //  packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
+  }
+
+  getLanguageName(id) {
+    let lang = this.languages.find((lang) => lang._id === id);
+    return lang.name;
   }
 }
 
@@ -1304,7 +1346,7 @@ export class AddMultipleImages {
     public dialogRef: MatDialogRef<AddMultipleImages>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private vodService: VodService
-  ) {}
+  ) { }
 
   handelImageChange(files: FileList) {
     for (let index = 0; index < files.length; index++) {
@@ -1336,3 +1378,92 @@ export class AddMultipleImages {
     }
   }
 }
+
+@Component({
+  selector: "dialog-news-links",
+  templateUrl: "../dialog-news-add-links.html"
+})
+export class AddNewLinks {
+  images: string = '';
+  isUploading: boolean = false;
+  fileToUpload: any = null;
+  isDisabled: boolean = true;
+
+  linksForm = new FormGroup({
+    videoLink: new FormControl("", [Validators.required]),
+  });
+
+  constructor(
+    public dialogRef: MatDialogRef<AddNewLinks>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private vodService: VodService,
+  ) {
+    if (data) {
+      this.linksForm.setValue({
+        videoLink: data.videoLink,
+      });
+
+      this.images = data.thumbnail
+      this.isDisabled = false;
+    }
+
+  }
+
+  handelImageChange(files: FileList) {
+    for (let index = 0; index < files.length; index++) {
+      this.fileToUpload = files.item(index);
+      this.fileToUpload.mimeType = this.fileToUpload.type;
+      this.uploadFileToActivity();
+    }
+  }
+
+  uploadFileToActivity() {
+    this.isUploading = true;
+    this.vodService.uploadUrl(this.fileToUpload).subscribe(
+      (response: any) => {
+        this.isUploading = false;
+        if (response.status == 200 || response.success) {
+          this.images = response.fileUrl;
+        }
+      },
+      error => {
+        this.isUploading = false;
+      }
+    );
+  }
+
+  removeImage(index) {
+    if (confirm("Are you sure to remove this File?")) {
+      this.images = '';
+    }
+  }
+
+  getResult() {
+    let str = this.getYoutubeCode(this.linksForm.value['videoLink'])
+    return {
+      videoLink: this.linksForm.value['videoLink'],
+      thumbnail: this.images,
+      code: str
+    }
+  }
+
+  getYoutubeCode(link: string) {
+
+    const codeString = link.split('?')[1];
+    let code = null;
+    if (codeString && codeString.split('&').length > 0) {
+      let codes = codeString.split('&');
+      codes.forEach((str) => {
+
+        if (str.split('=')[0] === 'v') {
+
+          code = str.split('=')[1];
+          this.isDisabled = false;
+        }
+      });
+    }
+
+    return code;
+  }
+}
+

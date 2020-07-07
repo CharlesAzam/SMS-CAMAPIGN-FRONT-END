@@ -22,6 +22,7 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     private languageService: LanguageService,
     private contentService: VodService) { }
 
+  selectedLanguage:any;
   languages: any[] = []
   categories: any[] = []
   boxes: any[] = [
@@ -55,15 +56,17 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     language: new FormControl('', [Validators.required]),
     status: new FormControl('', [Validators.required]),
     parentCatID: new FormControl('', [Validators.required]),
-    isContinueWatching: new FormControl('', [Validators.required])
+    isContinueWatching: new FormControl('', [Validators.required]),
+    isWatchSuggestion: new FormControl('', [Validators.required])
   })
   contents: any[] = []
 
   ngOnInit() {
-    this.getCategories();
-    this.getLanguages();
-    this.getContents()
     this.activatedRoute.params.subscribe(params => {
+      this.selectedLanguage = params.lang;
+      this.getCategories(params.lang);
+      this.getLanguages();
+      this.getContents()
       if (params.id !== 'new') {
         this.subCategoryService.findById(params.id).subscribe((response: any) => {
           if (response.status === 200) {
@@ -77,7 +80,8 @@ export class MobileSubCategoriesFormComponent implements OnInit {
               priority: this.subCategoryModel.priority ? this.subCategoryModel.priority : '',
               language: this.subCategoryModel.language ? this.subCategoryModel.language : '',
               parentCatID: this.subCategoryModel.parentCatID._id ? this.subCategoryModel.parentCatID._id : '',
-              isContinueWatching:String(this.subCategoryModel.isContinueWatching) ? String(this.subCategoryModel.isContinueWatching)  : ''
+              isContinueWatching:String(this.subCategoryModel.isContinueWatching) ? String(this.subCategoryModel.isContinueWatching)  : '',
+              isWatchSuggestion:String(this.subCategoryModel.isWatchSuggestion) ? String(this.subCategoryModel.isWatchSuggestion)  : ''
             })
           }
         }, error => console.error(error));
@@ -109,10 +113,10 @@ export class MobileSubCategoriesFormComponent implements OnInit {
     //Upload to S3
   }
 
-  getCategories() {
+  getCategories(lang?) {
     this.categoryService.find().subscribe((result: any) => {
       if (result.status == 200) {
-        this.categories = result.data;
+        this.categories = result.data.filter((cat)=> cat.language === lang);
         this.filteredCategories.next(this.categories.slice());
 
       }

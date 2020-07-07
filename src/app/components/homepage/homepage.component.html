@@ -28,6 +28,10 @@
         <span>Roles</span>
       </button>
 
+      <button *ngIf="userInfo.isSuperAdmin == true" mat-menu-item [routerLink]="['admin/notification']">
+        <span>Notification <img src="https://img.icons8.com/android/12/000000/appointment-reminders.png"/></span>
+      </button>
+
       <button mat-menu-item (click)="logout()">
         <span>Logout</span>
       </button>
@@ -122,6 +126,8 @@
           routerLink="video-library"
           >Video Library</a
         >
+        <a mat-list-item
+          routerLink="content-suggestion">Content Suggestion Config</a>
       </div>
 
       <mat-list-item

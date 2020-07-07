@@ -9,6 +9,8 @@ import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.compone
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
 import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/MobileSubCategoriesComponent";
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
+import { ContentSuggestionConfigComponent } from './components/content-suggestion-config/content-suggestion-config.component';
+
 
 import { AuthGuardService as AuthGuard } from "./services/auth-guard.service";
 import { CanActivateViaAuthGuard } from "./guards/PermissionGuard";
@@ -70,7 +72,7 @@ const routes: Routes = [
         data: { moduleData: ["subcategory", "read"] },
       },
       {
-        path: "subCategoryForm/:id",
+        path: "subCategoryForm/:id/:lang",
         component: MobileSubCategoriesFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
         data: { moduleData: ["subcategory", "create"] },
@@ -104,6 +106,11 @@ const routes: Routes = [
         component: CategoryFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
         data: { moduleData: ["category", "create"] },
+      },
+      {
+        path: "content-suggestion",
+        component: ContentSuggestionConfigComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: "admin",

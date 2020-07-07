@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { GuideFilter } from "../tv-guide-filter";
 import { GuideService } from "../tv-guide.service";
 import { Guide } from "../tv-guide";
@@ -11,12 +11,13 @@ import {
 import { startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
 import { AuthenticationService } from "../../login/login.service";
+import * as moment from 'moment';
 
 @Component({
   selector: "tv-guide",
   templateUrl: "tv-guide-list.component.html",
 })
-export class GuideListComponent {
+export class GuideListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   searchTimeout = null;
@@ -37,7 +38,7 @@ export class GuideListComponent {
 
   filter = new GuideFilter();
   selectedGuide: Guide;
-  dataSource = new MatTableDataSource<Guide>([]);
+  dataSource = new MatTableDataSource<Guide[]>([]);
   count: number;
 
   displayedColumns: string[] = ["No", "name", "startTime", "endTime", "action"];
@@ -46,7 +47,7 @@ export class GuideListComponent {
     private guideService: GuideService,
     private dialog: MatDialog,
     public authenticationService: AuthenticationService
-  ) {}
+  ) { }
 
   delete(row) {
     this.dialog
@@ -71,6 +72,23 @@ export class GuideListComponent {
             },
             (error) => console.error(error)
           );
+        }
+      });
+  }
+
+  showMessage(title, message) {
+    this.dialog
+      .open(WarningDialog, {
+        width: "400px",
+        data: {
+          title: title,
+          message: message,
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.getGuides(this.paginator.pageIndex + 1, this.paginator.pageSize)
         }
       });
   }
@@ -104,7 +122,6 @@ export class GuideListComponent {
   }
 
   getGuides(index, size) {
-    console.log(index);
     this.guideService.find(index, size, this.filterText).subscribe(
       (response: any) => {
         if (response.status === 200) {
@@ -119,18 +136,26 @@ export class GuideListComponent {
     console.log(event.target.files[0]);
     this.convertToJson(event.target.files[0]);
   }
+
   checkIfPresnet(model, header) {
+    var headerArray = [];
+    for (let i = 0; i < header.length; i++) {
+      headerArray.push(header[i].trim());
+    }
+
     if (model.length !== header.length) {
       return false;
     }
     let count = 0;
-    for (let index = 0; index < header.length; index++) {
-      if (header.indexOf(model[index]) > -1) {
+    for (let index = 0; index < headerArray.length; index++) {
+      if (headerArray.indexOf(model[index].trim()) > -1) {
         ++count;
       }
     }
     if (count === model.length) {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -143,15 +168,12 @@ export class GuideListComponent {
 
       var result = [];
 
-      // NOTE: If your columns contain commas in their values, you'll need
-      // to deal with those before doing the next step
-      // (you might convert them to &&& or something, then covert them back later)
-      // jsfiddle showing the issue https://jsfiddle.net/
       var headers = lines[0].split(",");
       const model = [
         "channel",
-        "date_time_in_gmt",
-        "end_date_time_in_gmt",
+        "date",
+        "time_from",
+        "time_to",
         "name",
         "type",
         "image",
@@ -159,8 +181,9 @@ export class GuideListComponent {
         "tags",
         "program_type",
       ];
-      console.log("hihhihi", this.checkIfPresnet(model, headers));
+
       if (!this.checkIfPresnet(model, headers)) {
+        this.showMessage("Error", "Unable to process file");
         return null;
       }
       for (var i = 1; i < lines.length; i++) {
@@ -175,28 +198,41 @@ export class GuideListComponent {
           result.push(obj);
         }
       }
-      console.log("type of ", typeof result);
+
+      result.forEach(r => {
+        let date_time_in_gmt = moment(`${r.date} ${r.time_from}`, 'DD-MM-YY hh:mm');
+        let duration = moment(r.time_to, 'hh:mm').diff(moment(r.time_from, 'hh:mm'));
+
+        r.date_time_in_gmt = date_time_in_gmt.toISOString();
+        r.end_date_time_in_gmt = date_time_in_gmt.add(duration, 'milliseconds').toISOString();
+        delete r.time_from;
+        delete r.time_to;
+        delete r.date;
+      });
+
+      console.log(result)
       this.guideService.bulkUpload(result).subscribe(
         (response: any) => {
           this.getGuides(this.paginator.pageIndex + 1, this.paginator.pageSize);
           if (response.success) {
-            console.log("success");
+            this.showMessage("Success", "Successfully uploaded guide");
           } else {
-            console.log("failed");
+            this.showMessage("Error", "Uploading TV guide files");
           }
         },
         (err: any) => {
           console.error(err);
         }
       );
-      console.log("final-------", result);
-      //return result; //JavaScript object
       return JSON.stringify(result); //JSON
 
-      //convert text to json here
-      //var json = this.csvJSON(text);
+
     };
     reader.readAsText(csv);
+  }
+
+  extractFields() {
+
   }
 
   getCount() {
@@ -210,5 +246,9 @@ export class GuideListComponent {
       },
       (error) => console.error(error)
     );
+  }
+
+  getDateTimeProperTimezone(date: string) {
+    return moment.utc(date).local().toISOString(true).split(".")[0];
   }
 }
