@@ -53,7 +53,7 @@
     <div class="form-group">
       <mat-form-field style="width: 100%;">
         <mat-label>Report Type</mat-label>
-        <mat-select formControlName="reportType" required multiple>
+        <mat-select formControlName="reportType" #reportType (selectionChange)="onReportTypeChange(reportType.value)" required multiple>
           <ngx-mat-select-search
             [formControl]="filterReportTypeCtrl"
             [noEntriesFoundLabel]="'Report Type not frepmortound'"
@@ -68,7 +68,83 @@
         </mat-select>
       </mat-form-field>
     </div>
-
+    
+    <div class="form-group" *ngIf="reportNamesArray.length !== 0">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle="true" [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Select package name
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div  formArrayName="subType" >
+            <div
+            *ngFor="let arrayItem of reportNamesArray; let i=index" [formGroupName]="i">
+            <div *ngIf="arrayItem.type === 'package'">
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>{{arrayItem.reportType}}</mat-label>
+                  <mat-select formControlName="name" multiple>
+                    <ngx-mat-select-search
+                    [formControl]="arrayItem.ctrlName"
+                    [noEntriesFoundLabel]="'Report name not found'"
+                    [placeholderLabel]="'Find package name..'"
+                  >
+                  </ngx-mat-select-search>
+                    <mat-option 
+                      *ngFor="let pkgName of arrayItem.name  ;  let i2=index"
+                      [value]="pkgName"
+                      >{{ pkgName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          </div>
+          
+        </mat-expansion-panel>
+       
+      </mat-accordion>
+    </div>
+    <div class="form-group" *ngIf="reportNamesArray.length !== 0">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle="true" [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Select content name
+            </mat-panel-title>
+            
+          </mat-expansion-panel-header>
+          <div  formArrayName="subType" >
+            <div
+            *ngFor="let arrayItem of reportNamesArray; let i=index" [formGroupName]="i">
+            <div *ngIf="arrayItem.type === 'content'">
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>{{arrayItem.reportType}}</mat-label>
+                  <mat-select formControlName="name" multiple>
+                    <ngx-mat-select-search
+                    [formControl]="arrayItem.ctrlName"
+                    [noEntriesFoundLabel]="'Content name not found'"
+                    [placeholderLabel]="'Find content name..'"
+                  >
+                    </ngx-mat-select-search>
+                    <mat-option 
+                      *ngFor="let pkgName of arrayItem.name ;  let i2=index"
+                      [value]="pkgName"
+                      >{{ pkgName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          </div>
+        </mat-expansion-panel>
+       
+      </mat-accordion>
+    </div>
     <!-- Report Formats -->
     <div class="form-group">
       <mat-form-field style="width: 100%;">
