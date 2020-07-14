@@ -40,6 +40,7 @@ export class VodEditComponent implements OnInit {
   filterCdnCtrl: FormControl = new FormControl();
   filterTagsCtrl: FormControl = new FormControl();
   filterOriginCountryCtrl: FormControl = new FormControl();
+  filterPackagesCtrl: FormControl = new FormControl();
 
   filteredCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
@@ -48,6 +49,7 @@ export class VodEditComponent implements OnInit {
   filteredCdns: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredTags: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredOriginCountry: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredPackages: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   protected _onDestroy = new Subject<void>();
 
@@ -288,7 +290,7 @@ export class VodEditComponent implements OnInit {
                       series: this.vod.series ? this.vod.series : [],
                       images: this.vod.images ? this.vod.images : [],
                       imageThumb: this.vod.imageThumb ? "" : "",
-                      //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                      packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
 
@@ -366,7 +368,7 @@ export class VodEditComponent implements OnInit {
                       series: this.vod.series ? this.vod.series : [],
                       images: this.vod.images ? this.vod.images : [],
                       imageThumb: this.vod.imageThumb ? "" : "",
-                      //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                      packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
 
@@ -447,7 +449,7 @@ export class VodEditComponent implements OnInit {
                       series: this.vod.series ? this.vod.series : [],
                       images: this.vod.images ? this.vod.images : [],
                       imageThumb: this.vod.imageThumb ? "" : "",
-                      //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                      packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
 
@@ -517,7 +519,7 @@ export class VodEditComponent implements OnInit {
                   series: this.vod.series ? this.vod.series : [],
                   images: this.vod.images ? this.vod.images : [],
                   imageThumb: this.vod.imageThumb ? "" : "",
-                  // packageID: this.vod.packageID ? this.vod.packageID : '',
+                  packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                   createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                 });
               } else if (this.vod.contentType === "NEWS") {
@@ -578,6 +580,12 @@ export class VodEditComponent implements OnInit {
           break;
       }
     });
+
+    this.filterPackagesCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterPackages();
+      });
 
     this.filterTagsCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -765,6 +773,7 @@ export class VodEditComponent implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           this.packages = response.data;
+          this.filteredPackages.next(this.packages.slice());
         }
       },
       error => console.error(error)
@@ -827,6 +836,23 @@ export class VodEditComponent implements OnInit {
         }
       },
       error => console.error(error)
+    );
+  }
+
+  filterPackages() {
+    if (!this.packages) return;
+
+    let search: string = this.filterPackagesCtrl.value;
+    if (!search) {
+      this.filteredPackages.next(this.packages.slice());
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredPackages.next(
+      this.packages.filter(
+        pack => pack.name.toLowerCase().indexOf(search) > -1
+      )
     );
   }
 
@@ -1066,7 +1092,7 @@ export class VodEditComponent implements OnInit {
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl("", [Validators.required]),
-      // packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1121,7 +1147,7 @@ export class VodEditComponent implements OnInit {
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl(""),
-      // packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1180,7 +1206,7 @@ export class VodEditComponent implements OnInit {
         "https://s3.eu-west-1.amazonaws.com/com.azamtv2019/DOCUBOXHD-350x200-LOGOS-29b70b951bf81cc6045631f83c2868b0.jpg",
         [Validators.required]
       ),
-      //  packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1214,7 +1240,7 @@ export class VodEditComponent implements OnInit {
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl("", [Validators.required]),
-      //  packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
