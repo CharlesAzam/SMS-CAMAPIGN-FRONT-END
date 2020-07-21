@@ -32,7 +32,7 @@ export class AdminService {
         "pageNumber": index,
         "size": size
       };
-      return this.http.get<any>(url, {  headers })
+      return this.http.get<any>(url, { headers })
     }
     return this.http.get<any>(url, { headers })
   }
@@ -46,7 +46,7 @@ export class AdminService {
         "pageNumber": index,
         "size": size
       };
-      return this.http.get<any>(url, {  headers })
+      return this.http.get<any>(url, { headers })
     }
     return this.http.get<any>(url, { headers })
   }
@@ -94,6 +94,62 @@ export class AdminService {
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.put<any>(url, data, { headers });
+  }
+
+  getRolePermission(roleName: string) {
+
+    let url = API.BASE_URL + `/cms/list-role-permisson/${roleName}`;
+
+    return this.http.get(url);
+  }
+
+  getModulePermission(moduleName: string) {
+    // console.log("Role Name from get role oermission "+moduleName)
+    let url = API.BASE_URL + `/cms/get-module-permission/${moduleName}`;
+
+    return this.http.get(url);
+  }
+
+  RemoveSingleModule(roleName, moduleName) {
+    // console.log("Role Name from get role oermission "+moduleName)
+    let url = API.BASE_URL + `/cms/role-name-remove-module/${roleName}/${moduleName}`;
+
+    return this.http.get(url);
+  }
+
+  AddSingleModule(roleName, moduleName, actions) {
+    // console.log("Role Name from get role oermission "+moduleName)
+    let url = API.BASE_URL + `/cms/role-name-add-module-actions/${roleName}/${moduleName}/${actions}`;
+
+    return this.http.get(url);
+  }
+
+  updateSinglePermission(roleName, moduleName, action) {
+    let url = API.BASE_URL + `/cms/role-name-assign-module-permission/${roleName}/${moduleName}/${action}`;
+
+    return this.http.get(url);
+
+  }
+
+  deleteSinglePermission(roleName, moduleName, action) {
+    let url = API.BASE_URL + `/cms/role-name-delete-module-permission/${roleName}/${moduleName}/${action}`;
+
+    return this.http.get(url);
+
+  }
+
+  UpdateRoleName(oldRoleName, newRoleName) {
+    let url = API.BASE_URL + `/cms/update-role-name/${oldRoleName}/${newRoleName}`;
+
+    return this.http.get(url);
+
+  }
+
+  UpdateUserDetail(userId, data) {
+    console.log(data)
+    let url = API.BASE_URL + `/cms/edit-user/${userId}`;
+
+    return this.http.post(url, data);
   }
 
   getCount() {

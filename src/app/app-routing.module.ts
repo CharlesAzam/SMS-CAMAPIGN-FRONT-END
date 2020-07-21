@@ -9,11 +9,11 @@ import { MobileTagsComponent } from "./components/mobileTags/mobile-tags.compone
 import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/mobileTagsFormComponent";
 import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/MobileSubCategoriesComponent";
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
+import { ContentSuggestionConfigComponent } from './components/content-suggestion-config/content-suggestion-config.component';
 
 
-import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
-import { CanActivateViaAuthGuard } from './guards/PermissionGuard';
-
+import { AuthGuardService as AuthGuard } from "./services/auth-guard.service";
+import { CanActivateViaAuthGuard } from "./guards/PermissionGuard";
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -26,8 +26,8 @@ const routes: Routes = [
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
       {
         path: "dashboard",
-        component: DashboardComponent
-        , canActivate: [AuthGuard],
+        component: DashboardComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: "content",
@@ -38,83 +38,91 @@ const routes: Routes = [
         path: "package",
         loadChildren: "./components/package/package.module#PackageModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['package'] }
+        data: { moduleData: ["package"] },
       },
       {
         path: "video-library",
         loadChildren:
           "./components/video-library/video-library.module#VideoLibraryModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['cdn'] }
-
+        data: { moduleData: ["cdn"] },
       },
       {
         path: "banner",
         loadChildren: "./components/banner/banner.module#BannerModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['banner'] }
-
+        data: { moduleData: ["banner"] },
+      },
+      {
+        path: "tv-guide",
+        loadChildren: "./components/tv-guide/tv-guide.module#GuideModule",
+        canActivate: [AuthGuard, CanActivateViaAuthGuard],
+        data: { moduleData: ["Program"] },
       },
       {
         path: "category",
         component: CreateCategoryComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['category'] }
+        data: { moduleData: ["category"] },
       },
       {
         path: "subCategory",
         component: MobileSubCategoriesComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['subcategory', 'read'] }
+        data: { moduleData: ["subcategory", "read"] },
       },
       {
-        path: "subCategoryForm/:id",
+        path: "subCategoryForm/:id/:lang",
         component: MobileSubCategoriesFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['subcategory', 'create'] }
+        data: { moduleData: ["subcategory", "create"] },
       },
       {
         path: "MobileTags",
         component: MobileTagsComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['tag', 'read'] }
+        data: { moduleData: ["tag", "read"] },
       },
       {
         path: "reports",
         loadChildren: "./components/reports/reports.module#ReportsModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['reports-portal'] }
+        data: { moduleData: ["reports-portal"] },
       },
       {
         path: "support",
         loadChildren: "./components/support/support.module#SupportModule",
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['customer-support'] }
+        data: { moduleData: ["customer-support"] },
       },
       {
         path: "MobileTagForm/:id",
         component: MobileTagFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['tag', 'create'] }
+        data: { moduleData: ["tag", "create"] },
       },
       {
         path: "CategoryForm/:id",
         component: CategoryFormComponent,
         canActivate: [AuthGuard, CanActivateViaAuthGuard],
-        data: { moduleData: ['category', 'create'] }
+        data: { moduleData: ["category", "create"] },
+      },
+      {
+        path: "content-suggestion",
+        component: ContentSuggestionConfigComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: "admin",
-        loadChildren:
-          "./components/admin/admin.module#AdminModule",
+        loadChildren: "./components/admin/admin.module#AdminModule",
         canActivate: [AuthGuard],
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -4,14 +4,14 @@ import { FormControl } from "@angular/forms";
 import { SubCategoriesService } from "src/app/services/sub.categories.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { startWith, tap } from "rxjs/operators";
-import { MatPaginator, MatDialog } from "@angular/material";
+import { MatPaginator, MatDialog, PageEvent } from "@angular/material";
 import { LanguageService } from "src/app/services/language.service";
 import { WarningDialog } from "../warning-dialog/dialog-warning";
-import { AuthenticationService } from '../login/login.service';
+import { AuthenticationService } from "../login/login.service";
 @Component({
   selector: "app-mobile-sub-categories-component",
   templateUrl: "./MobileSubCategoriesComponent.html",
-  styleUrls: ["./MobileSubCategoriesComponent.css"]
+  styleUrls: ["./MobileSubCategoriesComponent.css"],
 })
 export class MobileSubCategoriesComponent implements OnInit {
   constructor(
@@ -20,7 +20,7 @@ export class MobileSubCategoriesComponent implements OnInit {
     private subCategoryService: SubCategoriesService,
     private languageService: LanguageService,
     private dialog: MatDialog,
-    public checkPermissionService: AuthenticationService,
+    public checkPermissionService: AuthenticationService
   ) {}
 
   languages: any[] = [];
@@ -29,13 +29,17 @@ export class MobileSubCategoriesComponent implements OnInit {
     "name",
     "category",
     "Status",
-    "symbol"
+    "symbol",
   ];
   datasource = new MatTableDataSource<any>([]);
+  subCategories: any[] = [];
   selectedLanguageId: string;
+  pageEvent: PageEvent;
+  pageIndex = 0;
 
   count: number;
   searchTimeout = null;
+  filterText: string = "";
 
   routeToCategoryForm() {
     this.router.navigate(["home/subCategoryForm"]);
@@ -59,35 +63,27 @@ export class MobileSubCategoriesComponent implements OnInit {
                       this.getSubCategories(
                         this.selectedLanguageId,
                         this.paginator.pageIndex + 1,
-                        this.paginator.pageSize,
-                        ""
+                        this.paginator.pageSize
                       )
                     )
                   )
                   .subscribe();
               }
             },
-            error => console.log(error)
+            (error) => console.log(error)
           );
         }
       },
-      error => console.log(error)
+      (error) => console.log(error)
     );
   }
 
   onTabChanged(event) {
+    this.pageIndex = 0;
     this.selectedLanguageId = this.languages[event.index]._id;
     this.paginator.pageIndex = 0;
     this.datasource = new MatTableDataSource<any>([]);
-    this.getCategoryCount(this.selectedLanguageId).subscribe(
-      (response: any) => {
-        if (response.success) {
-          this.count = response.count;
-          this.getSubCategories(this.selectedLanguageId, 1, 10, "");
-        }
-      },
-      error => console.log(error)
-    );
+    this.getSubCategories(this.selectedLanguageId, 1, 10);
   }
   @ViewChild(MatPaginator, { static: false })
   paginator: MatPaginator;
@@ -98,11 +94,11 @@ export class MobileSubCategoriesComponent implements OnInit {
         width: "400px",
         data: {
           title: "Warning",
-          message: `Are you sure want to delete ${row.name} subcategory`
-        }
+          message: `Are you sure want to delete ${row.name} subcategory`,
+        },
       })
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.subCategoryService.delete(row._id).subscribe(
             (response: any) => {
@@ -111,30 +107,44 @@ export class MobileSubCategoriesComponent implements OnInit {
               this.getSubCategories(
                 this.selectedLanguageId,
                 this.paginator.pageIndex + 1,
-                this.paginator.pageSize,
-                ""
+                this.paginator.pageSize
               );
             },
-            error => console.error(error)
+            (error) => console.error(error)
           );
         }
       });
   }
 
   applyFilter(filterValue: string) {
-    this.datasource.filter = filterValue.trim().toLowerCase();
+    if (
+      filterValue.trim().length >= 3 ||
+      filterValue.length < this.filterText.length
+    ) {
+      this.filterText = filterValue;
+      if (this.searchTimeout) clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.getSubCategories(
+          this.selectedLanguageId,
+          1,
+          this.paginator.pageSize
+        );
+      }, 500);
+    }
   }
 
-  getSubCategories(language, pageNumber, size, filterText) {
+  getSubCategories(language, pageNumber, size) {
     this.subCategoryService
-      .find(pageNumber, size, language, filterText)
+      .find(pageNumber, size, language, this.filterText)
       .subscribe(
         (result: any) => {
-          if (result.status == 200) {
+          if (result.success) {
             this.datasource = result.data;
+            this.subCategories = result.data;
+            this.count = result.count;
           }
         },
-        error => console.log(error)
+        (error) => console.log(error)
       );
   }
 
@@ -144,5 +154,15 @@ export class MobileSubCategoriesComponent implements OnInit {
 
   getLanguages() {
     return this.languageService.list();
+  }
+
+  getServerData(data: PageEvent) {
+    this.pageIndex = data.pageIndex;
+
+    this.getSubCategories(
+      this.selectedLanguageId,
+      data.pageIndex + 1,
+      data.pageSize
+    );
   }
 }

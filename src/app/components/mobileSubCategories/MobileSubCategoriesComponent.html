@@ -1,4 +1,7 @@
-<mat-tab-group (selectedTabChange)="onTabChanged($event);" *ngIf="languages.length > 0">
+<mat-tab-group
+  (selectedTabChange)="onTabChanged($event);"
+  *ngIf="languages.length > 0"
+>
   <mat-tab label="{{language.name}}" *ngFor="let language of languages">
     <div class="container">
       <mat-card style="margin-top: 30px;">
@@ -11,23 +14,37 @@
         <mat-card style="margin-top: 30px;">
           <div>
             <mat-form-field style="width: 83%;">
-              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+              <input
+                matInput
+                (keyup)="applyFilter($event.target.value)"
+                placeholder="Filter"
+              />
             </mat-form-field>
 
-            <button *ngIf="checkPermissionService.isModuleAllowed('subCategory','create')" mat-raised-button
-              color="primary" style="margin-left: 23px;" [routerLink]="['../subCategoryForm/new']">
+            <button
+              *ngIf="checkPermissionService.isModuleAllowed('subCategory','create')"
+              mat-raised-button
+              color="primary"
+              style="margin-left: 23px;"
+              [routerLink]="['../subCategoryForm','new',selectedLanguageId]"
+            >
               Create Sub Category
             </button>
           </div>
           <!--Filter input button container end -->
 
-          <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+          <table
+            mat-table
+            [dataSource]="datasource"
+            class="mat-elevation-z8"
+            *ngIf="subCategories.length > 0"
+          >
             <!--- Note that these columns can be defined in any order.The actual rendered columns are set as a property on the row definition" -->
             <!-- Position Column -->
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef>No.</th>
               <td mat-cell *matCellDef="let element; let i = index">
-                {{(paginator.pageIndex*paginator.pageSize)+i+1}}
+                {{(pageIndex*paginator.pageSize)+i+1}}
               </td>
             </ng-container>
             <!-- Category Column -->
@@ -52,21 +69,38 @@
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef>Action</th>
               <td mat-cell *matCellDef="let row">
-                <mat-icon (click)="deleteCategory(row)" style="cursor: pointer;"
-                  *ngIf="checkPermissionService.isModuleAllowed('subCategory','delete')">delete
+                <mat-icon
+                  (click)="deleteCategory(row)"
+                  style="cursor: pointer;"
+                  *ngIf="checkPermissionService.isModuleAllowed('subCategory','delete')"
+                  >delete
                 </mat-icon>
-                <span style=" margin-right: 20px;margin-left: 20px;"></span>
-                <mat-icon *ngIf="checkPermissionService.isModuleAllowed('subCategory','update')" [routerLink]="['../subCategoryForm', row._id]" style="cursor: pointer;">
-                  edit</mat-icon>
+                <span style="margin-right: 20px; margin-left: 20px;"></span>
+                <mat-icon
+                  *ngIf="checkPermissionService.isModuleAllowed('subCategory','update')"
+                  [routerLink]="['../subCategoryForm', row._id, selectedLanguageId]"
+                  style="cursor: pointer;"
+                >
+                  edit</mat-icon
+                >
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
 
+          <div *ngIf="subCategories.length === 0">No records found</div>
+
           <!-- <div class="table-paginator-style"> -->
-          <mat-paginator [length]="count" [pageSize]="10" class="table-paginator-style" [pageSizeOptions]="[10, 20]"
-            showFirstLastButtons>
+          <mat-paginator
+            [length]="count"
+            [pageSize]="10"
+            [pageIndex]="pageIndex"
+            class="table-paginator-style"
+            [pageSizeOptions]="[10, 20]"
+            showFirstLastButtons
+            (page)="pageEvent = getServerData($event)"
+          >
           </mat-paginator>
           <!-- </div> -->
         </mat-card>

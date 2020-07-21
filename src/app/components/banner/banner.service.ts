@@ -44,7 +44,7 @@ export class BannerService {
         )
     }
 
-    find(pageIndex?, pageSize?): Observable<Banner[]> {
+    find(pageIndex?, pageSize?, filter=''): Observable<Banner[]> {
         let url = API.BASE_URL + '/cms/banner-list';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -52,7 +52,8 @@ export class BannerService {
         if (pageIndex || pageSize ) {
             let params = {
                 "pageNumber": pageIndex,
-                "size": pageSize
+                "size": pageSize,
+                "filter":filter
             };
             return this.http.get<Banner[]>(url, { params, headers });
         }

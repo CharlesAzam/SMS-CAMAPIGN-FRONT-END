@@ -4,6 +4,7 @@ import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { startWith, tap } from 'rxjs/operators';
 import { WarningDialog } from '../../warning-dialog/dialog-warning';
+import * as moment from 'moment'
 
 
 @Component({
@@ -29,12 +30,23 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator, { static: false })
     paginator: MatPaginator
 
-    displayedColumns: string[] = ['position', 'name', 'actions'];
+    displayedColumns: string[] = ['position', 'name','Created','Updated', 'actions'];
     count: number
     dataSource = new MatTableDataSource<any>([]);
 
+    DateFormatter(param){
+        let date=param;
+        return moment(date).format('MM/DD/YYYY h:mm A');
+    }
+
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    //Function to edit role 
+    editRole(row){
+        console.log("Editing user role "+JSON.stringify(row));
+        this.router.navigate(['../role',`${row}`])
     }
 
     deleteRole(row) {

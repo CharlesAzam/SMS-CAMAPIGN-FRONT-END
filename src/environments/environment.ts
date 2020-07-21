@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
 };
 export const API = {
-  BASE_URL: "http://localhost:3002",
+  BASE_URL: "http://3.250.190.232:3002"
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -16,4 +16,4 @@ export const API = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-  // this.environment.as = 'watch the patriot act';
+

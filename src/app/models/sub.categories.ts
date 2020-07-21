@@ -9,5 +9,7 @@ export class SubCategory {
     public parentCatID: any
     public priority: number
     public language: string
+    public isContinueWatching : boolean
+    public isWatchSuggestion: boolean
     constructor() { }
 }

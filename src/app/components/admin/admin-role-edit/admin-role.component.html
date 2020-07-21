@@ -1,43 +1,186 @@
 <div class="container">
+
     <mat-card style="margin-top: 30px;">
-        <h2>Add Role</h2>
-        <form (ngSubmit)="onSubmit()">
-            <hr>
-            <div class="form-group">
-                <mat-form-field class="input-layouts">
-                    <input matInput name="name" placeholder="Enter name" (keydown.space)="$event.preventDefault()"   [formControl]="roleName" required>
-                    <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
-                </mat-form-field>
+
+        <mat-accordion>
+
+            <!--Create Form start-->
+
+            <div *ngIf="showCreate">
+                <h2>{{heading}} Role</h2>
+                <!--input text field start -->
+                <hr>
+                <form (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+
+                        <mat-form-field class="input-layouts">
+
+                            <input matInput name="name" placeholder="{{placeHolderValue}}"
+                                (keydown.space)="$event.preventDefault()" [formControl]="roleName" required>
+
+
+
+                            <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <mat-label style="margin-bottom: 20px;">Permission set *(Read Permission is required to access any
+                        of the
+                        modules below)</mat-label>
+                    <!--Input text field end-->
+
+                    <div *ngFor="let role of modulesAndActions">
+
+                        <mat-expansion-panel style="margin-bottom: 20px;">
+
+                            <mat-expansion-panel-header>
+
+                                <mat-panel-title>
+
+                                    {{role.module}}
+
+                                </mat-panel-title>
+
+                                <mat-panel-description>
+
+                                    <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
+
+                                </mat-panel-description>
+
+                            </mat-expansion-panel-header>
+
+
+                            <div *ngFor="let action of role.actions ">
+
+                                <!-- <mat-form-field> -->
+
+                                <custom-checkbox [module]="role.module" [action]="action"
+                                    (saveSelection)="savePermissionSet($event)">{{action}}</custom-checkbox>
+
+
+                                <!-- </mat-form-field> -->
+
+                            </div>
+
+                        </mat-expansion-panel>
+
+                    </div>
+                    <div>
+                        <button mat-raised-button
+                            [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 ">{{heading}}
+                            Role</button>
+                    </div>
+                </form>
             </div>
-            <mat-label style="margin-bottom: 20px;">Permission set *(Read Permission is required to access any of the modules below)</mat-label>
 
-            <mat-accordion>
-                <div *ngFor="let role of modulesAndActions">
-                    <mat-expansion-panel style="margin-bottom: 20px;">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{role.module}}
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
+            <!--Create Form end-->
 
-                        <div *ngFor="let action of role.actions">
-                            <!-- <mat-form-field> -->
-                            <custom-checkbox [module]="role.module" [action]="action"
-                                (saveSelection)="savePermissionSet($event)">{{action}}</custom-checkbox>
-                            <!-- </mat-form-field> -->
-                        </div>
 
-                    </mat-expansion-panel>
-                </div>
 
-            </mat-accordion>
-            <div>
-                <button mat-raised-button [disabled]="roleName.invalid || selectedModulesAndActions.length == 0 ">Create Role</button>
+            <!--Edit Form start-->
+            <div *ngIf="showEdit">
+                <!--Input test field start-->
+                <h2>{{heading}} Role</h2>
+                <hr>
+                <form>
+                    <div class="form-group">
+
+                        <mat-form-field class="input-layouts">
+                            <div style="float: left; width: 70% !important;">
+                                <input matInput name="name" placeholder="{{placeHolderValue}}"
+                                    (keydown.space)="$event.preventDefault()" [formControl]="roleName" required>
+                            </div>
+                            <div style="float: right !important;">
+                                <button mat-raised-button [disabled]="roleName.invalid"
+                                    (click)="onSubmitUpdate()">{{heading}} role name</button>
+                            </div>
+
+                            <mat-error *ngIf="roleName.invalid">You must enter role name</mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <mat-label style="margin-bottom: 20px; font-size: 10px !important; font-weight: bolder;">Permission set *(Read
+                        Permission is required to access any of the
+                        modules below).Also in order remove permission from 
+                        a check box simply tick the item and to add
+                        permission simply click the perission button  
+                    </mat-label>
+                    <!--Input textfirld end-->
+                    <div *ngFor="let role of modulesAndActions">
+
+                        <mat-expansion-panel style=" margin-bottom: 20px;">
+
+                            <mat-expansion-panel-header>
+
+                                <mat-panel-title>
+                                    {{role.module}}
+                                </mat-panel-title>
+
+                                <button style="margin-right: 25px !important;" (click)="removeModule(role.module)"
+                                    mat-raised-button color="warn" [routerLink]="['admin/roles']"> REMOVE MODULE</button>
+
+
+
+                                <mat-panel-description>
+                                    <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div style="flex-direction: row; margin-bottom: 30px;">
+                                <mat-error *ngIf="role.actions.length==1 && role.actions!='read'">
+                                    Module must have atleast one <b>read</b> permission.Please add a read permission
+                                    Also note removing all permission has the same effect removing a module
+                                </mat-error>
+                                <div style="float: left;" *ngFor="let action of role.actions; index as i ">
+                                    <custom-checkbox-2 [module]="role.module" [action]="action"
+                                        (click)="removeModulePermission(role.module,action,role.actions)">{{action}}
+                                    </custom-checkbox-2>
+                                </div>
+                                <div style="float: right; margin-left: 10px;" *ngFor="let permission of permissions; index as i ">
+                                    <button mat-raised-button (click)="pushSinglePermission(permission,role.module)"
+                                        value="permission">{{permission}}</button>
+                                </div>
+                            </div>
+                            <button mat-raised-button (click)="fetchModulePermssion(role.module)">SHOW PERMISSION FOR
+                                {{role.module | uppercase}}</button>
+
+                        </mat-expansion-panel>
+                    </div>
+
+                </form>
             </div>
+            <!--Edit Form start-->
+            <!-- <div style="margin-top: 25px;margin-bottom: 25px;">
+                <hr>
+                <h2 style="color: rgb(73, 78, 78); text-align: center;">ADD MODULES TO ROLE {{RoleName|uppercase}} </h2>
+                <hr>
+            </div> -->
 
-        </form>
+            <div style="margin-top: 15px;" *ngFor="let role of AllRolePermissions">
+                <mat-expansion-panel style="margin-bottom: 20px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{role.module}}
+                        </mat-panel-title>
+                        <button style="margin-right: 25px !important;" mat-raised-button color="accent"
+                            (click)="addModule(role.module,role.actions)" [routerLink]="['admin/roles']">ADD MODULE TO ROLE {{RoleName|uppercase}}
+                        </button>
+                        <mat-panel-description>
+                            <!-- {{moduleAndActions.find((data)=> data.actions.length)}} -->
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let action of role.actions; index as i ">
+                        <custom-checkbox [module]="role.module" [action]="action"
+                            (saveSelection)="savePermissionSet($event)">{{action}}
+                        </custom-checkbox>
+                        <!-- </mat-form-field> -->
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </mat-accordion>
     </mat-card>
 </div>

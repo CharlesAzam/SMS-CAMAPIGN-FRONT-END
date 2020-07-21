@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AdminService } from '../admin.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { startWith, tap } from 'rxjs/operators';
 import { WarningDialog } from '../../warning-dialog/dialog-warning';
+import * as moment from 'moment'
 
 
 @Component({
@@ -22,10 +24,12 @@ export class AdminUsersListComponent implements OnInit {
     paginator: MatPaginator
 
     constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private dialog: MatDialog,
         private adminService: AdminService) { }
 
-    displayedColumns: string[] = ['position', 'name', 'Status', 'symbol'];
+    displayedColumns: string[] = ['position','name','Role','Created','Updated','Status','symbol'];
     count: number
     dataSource = new MatTableDataSource<any>([]);
 
@@ -37,6 +41,11 @@ export class AdminUsersListComponent implements OnInit {
         this.getUserList();
         this.dataSource.paginator = this.paginator;
 
+    }
+
+    DateFormatter(param){
+        let date=param;
+        return moment(date).format('MM/DD/YYYY h:mm A');
     }
 
     getUserList(pageIndex?, pageSize?) {
@@ -69,6 +78,16 @@ export class AdminUsersListComponent implements OnInit {
                 }
             });
 
+    }
+
+    editUser(row) {
+        let id=JSON.stringify(row._id)
+        let l =id.length
+        let userId=id.slice(1,l-1)
+        console.log("JSON user ID \n"+id)
+        console.log("Trimed User ID \n"+userId)
+        this.router.navigate([`../users/${userId}`,row])
+        
     }
 
 }

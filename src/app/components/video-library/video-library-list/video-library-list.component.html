@@ -20,7 +20,7 @@
       </button>
     </div>
 
-    <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table style="width: 100%;" [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="count > 0">
 
       <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
@@ -71,7 +71,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [length]="count" [pageSize]="100" class="table-paginator-style" [pageSizeOptions]="[100, 200]"
+
+    <div *ngIf="count === 0">No records found</div>
+
+    <mat-paginator [length]="count" [pageSize]="20" class="table-paginator-style" [pageSizeOptions]="[20, 40, 80]"
       showFirstLastButtons>
     </mat-paginator>
 
