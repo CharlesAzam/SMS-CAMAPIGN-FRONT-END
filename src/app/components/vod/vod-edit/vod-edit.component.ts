@@ -67,7 +67,7 @@ export class VodEditComponent implements OnInit {
   imageUrl: string = "";
   fileToUpload: any = null;
 
-  currencies: string[] = ["TZS", "USD"];
+  currencies: string[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
 
   visible = true;
   selectable = true;
@@ -1273,7 +1273,7 @@ export class AddSeasonsDialog {
     noOfDays: new FormControl("")
   });
   episode: any[] = [];
-  currencies: any[] = ["TZS", "USD"];
+  currencies: any[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
   seasonEditObject: Object = null;
 
   constructor(
@@ -1428,7 +1428,7 @@ export class AddPricesDialog {
     noOfDays: new FormControl("")
   });
   episode: any[] = [];
-  currencies: any[] = ["TZS", "USD"];
+  currencies: any[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
   editPackageObject: Object = null;
 
   constructor(
