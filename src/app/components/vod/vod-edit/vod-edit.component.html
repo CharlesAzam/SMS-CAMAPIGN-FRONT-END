@@ -234,27 +234,42 @@
                 </mat-button-toggle-group>
               </div>
 
-              <div formGroupName="price">
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Price" type="number" formControlName="price" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
-
+              <div>
                 <div class="form-group">
-                  <mat-form-field style="width: 100%;">
-                    <mat-label>Currency</mat-label>
-                    <mat-select formControlName="currency" required>
-                      <mat-option *ngFor="let currency of currencies" [value]="currency">
-                        {{ currency }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                  <button mat-raised-button (click)="openPriceDialog()">
+                    Add Price List
+                  </button>
                 </div>
-
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Number of days valid" formControlName="noOfDays" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Local Content name</th>
+                      <th scope="col">Local Content description</th>
+                      <th scope="col">Currency</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Number of Days</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let priceObject of priceArray; let i = index">
+                    <tr>
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ priceObject.title }}</td>
+                      <td>{{ priceObject.description }}</td>
+                      <td>{{ priceObject.currency }}</td>
+                      <td>{{ priceObject.price }}</td>
+                      <td>{{ priceObject.noOfDays }}</td>
+                      <td>
+                        <a style="cursor: pointer;" (click)="openPriceDialog(i)"
+                          >Edit</a
+                        >,
+                        <a style="cursor: pointer;" (click)="removePrice(i)"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <div class="form-group">
@@ -507,27 +522,42 @@
                 </mat-button-toggle-group>
               </div>
 
-              <div formGroupName="price">
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Price" type="number" formControlName="price" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
-
+              <div>
                 <div class="form-group">
-                  <mat-form-field style="width: 100%;">
-                    <mat-label>Currency</mat-label>
-                    <mat-select formControlName="currency" required>
-                      <mat-option *ngFor="let currency of currencies" [value]="currency">
-                        {{ currency }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                  <button mat-raised-button (click)="openPriceDialog()">
+                    Add Price List
+                  </button>
                 </div>
-
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Number of days valid" formControlName="noOfDays" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Local Content name</th>
+                      <th scope="col">Local Content description</th>
+                      <th scope="col">Currency</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Number of Days</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let priceObject of priceArray; let i = index">
+                    <tr>
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ priceObject.title }}</td>
+                      <td>{{ priceObject.description }}</td>
+                      <td>{{ priceObject.currency }}</td>
+                      <td>{{ priceObject.price }}</td>
+                      <td>{{ priceObject.noOfDays }}</td>
+                      <td>
+                        <a style="cursor: pointer;" (click)="openPriceDialog(i)"
+                          >Edit</a
+                        >,
+                        <a style="cursor: pointer;" (click)="removePrice(i)"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <div class="form-group">
@@ -784,27 +814,42 @@
                 </mat-button-toggle-group>
               </div>
 
-              <div formGroupName="price">
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Price" type="number" formControlName="price" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
-
+              <div>
                 <div class="form-group">
-                  <mat-form-field style="width: 100%;">
-                    <mat-label>Currency</mat-label>
-                    <mat-select formControlName="currency" required>
-                      <mat-option *ngFor="let currency of currencies" [value]="currency">
-                        {{ currency }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                  <button mat-raised-button (click)="openPriceDialog()">
+                    Add Price List
+                  </button>
                 </div>
-
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Number of days valid" formControlName="noOfDays" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Local Content name</th>
+                      <th scope="col">Local Content description</th>
+                      <th scope="col">Currency</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Number of Days</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let priceObject of priceArray; let i = index">
+                    <tr>
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ priceObject.title }}</td>
+                      <td>{{ priceObject.description }}</td>
+                      <td>{{ priceObject.currency }}</td>
+                      <td>{{ priceObject.price }}</td>
+                      <td>{{ priceObject.noOfDays }}</td>
+                      <td>
+                        <a style="cursor: pointer;" (click)="openPriceDialog(i)"
+                          >Edit</a
+                        >,
+                        <a style="cursor: pointer;" (click)="removePrice(i)"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <div class="form-group">
@@ -1032,27 +1077,42 @@
                 </mat-button-toggle-group>
               </div>
 
-              <div formGroupName="price">
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Price" type="number" formControlName="price" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
-
+              <div>
                 <div class="form-group">
-                  <mat-form-field style="width: 100%;">
-                    <mat-label>Currency</mat-label>
-                    <mat-select formControlName="currency">
-                      <mat-option *ngFor="let currency of currencies" [value]="currency">
-                        {{ currency }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                  <button mat-raised-button (click)="openPriceDialog()">
+                    Add Price List
+                  </button>
                 </div>
-
-                <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Number of days valid" formControlName="noOfDays" required />
-                  <!-- <mat-error *ngIf="starring.invalid">Language Details can not be empty</mat-error> -->
-                </mat-form-field>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Local Content name</th>
+                      <th scope="col">Local Content description</th>
+                      <th scope="col">Currency</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Number of Days</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let priceObject of priceArray; let i = index">
+                    <tr>
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ priceObject.title }}</td>
+                      <td>{{ priceObject.description }}</td>
+                      <td>{{ priceObject.currency }}</td>
+                      <td>{{ priceObject.price }}</td>
+                      <td>{{ priceObject.noOfDays }}</td>
+                      <td>
+                        <a style="cursor: pointer;" (click)="openPriceDialog(i)"
+                          >Edit</a
+                        >,
+                        <a style="cursor: pointer;" (click)="removePrice(i)"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <div class="form-group">
@@ -1204,11 +1264,17 @@
               <mat-form-field style="width: 100%;">
                 <mat-label>Country Origin</mat-label>
                 <mat-select formControlName="countryOrigin" required>
-                  <ngx-mat-select-search [formControl]="filterOriginCountryCtrl"
-                    [noEntriesFoundLabel]="'Country not found'" [placeholderLabel]="'Find Country...'">
+                  <ngx-mat-select-search
+                    [formControl]="filterOriginCountryCtrl"
+                    [noEntriesFoundLabel]="'Country not found'"
+                    [placeholderLabel]="'Find Country...'"
+                  >
                   </ngx-mat-select-search>
-                  <mat-option *ngFor="let count of filteredOriginCountry | async" [value]="count.country">
-                    {{count.country}}
+                  <mat-option
+                    *ngFor="let count of filteredOriginCountry | async"
+                    [value]="count.country"
+                  >
+                    {{ count.country }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

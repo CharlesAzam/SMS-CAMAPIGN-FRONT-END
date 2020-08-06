@@ -20,7 +20,7 @@ export class PackageEditComponent implements OnInit {
   errors: string;
   azamPackages: any[];
   countries: any[];
-  currencies: any[] = ["TZS", "USD"];
+  currencies: any[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
   priceArray: any[] = [];
   contents: any[] = [];
 
@@ -226,7 +226,7 @@ export class AddPricesDialog {
     noOfDays: new FormControl("")
   });
   episode: any[] = [];
-  currencies: any[] = ["TZS", "USD"];
+  currencies: any[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
   editPackageObject: Object = null;
 
   constructor(
