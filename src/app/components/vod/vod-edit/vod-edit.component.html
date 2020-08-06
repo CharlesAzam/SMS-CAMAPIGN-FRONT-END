@@ -28,6 +28,27 @@
                       [placeholderLabel]="'Find Tag..'">
                     </ngx-mat-select-search>
                     <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ ta.name }}
+                    </ngx-mat-select-search>
+                    <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ ta.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>Packages</mat-label>
+                  <mat-select formControlName="packageID" multiple>
+                    <ngx-mat-select-search
+                      [formControl]="filterPackagesCtrl"
+                      [noEntriesFoundLabel]="'Package not found'"
+                      [placeholderLabel]="'Find Package..'"
+                    >
+                    </ngx-mat-select-search>
+                    <mat-option
+                      *ngFor="let pack of filteredPackages | async"
+                      [value]="pack._id"
+                      >{{ pack.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -317,6 +338,19 @@
 
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
+                  <mat-label>Packages</mat-label>
+                  <mat-select formControlName="packageID" multiple>
+                    <ngx-mat-select-search [formControl]="filterPackagesCtrl"
+                      [noEntriesFoundLabel]="'Package not found'" [placeholderLabel]="'Find Package..'">
+                    </ngx-mat-select-search>
+                    <mat-option *ngFor="let pack of filteredPackages | async" [value]="pack._id">{{ pack.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
                   <input matInput formControlName="releaseDate" [matDatepicker]="picker" placeholder="Release Date"
                     name="releaseDate" (click)="picker.open()" />
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -564,6 +598,19 @@
                       [placeholderLabel]="'Find Tag..'">
                     </ngx-mat-select-search>
                     <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ ta.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>Packages</mat-label>
+                  <mat-select formControlName="packageID" multiple>
+                    <ngx-mat-select-search [formControl]="filterPackagesCtrl"
+                      [noEntriesFoundLabel]="'Package not found'" [placeholderLabel]="'Find Package..'">
+                    </ngx-mat-select-search>
+                    <mat-option *ngFor="let pack of filteredPackages | async" [value]="pack._id">{{ pack.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -832,18 +879,20 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <!--
-                            <div class="form-group">
-                                <mat-form-field style="width: 100%;">
-                                    <mat-label>Package</mat-label>
-                                    <mat-select formControlName="packageID" multiple required>
-                                        <mat-option *ngFor="let pack of packages" [value]="pack._id">{{pack.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            -->
 
+              <div class="form-group">
+                <mat-form-field style="width: 100%;">
+                  <mat-label>Packages</mat-label>
+                  <mat-select formControlName="packageID" multiple>
+                    <ngx-mat-select-search [formControl]="filterPackagesCtrl"
+                      [noEntriesFoundLabel]="'Package not found'" [placeholderLabel]="'Find Package..'">
+                    </ngx-mat-select-search>
+                    <mat-option *ngFor="let pack of filteredPackages | async" [value]="pack._id">{{ pack.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+    
               <mat-form-field style="width: 100%;">
                 <input matInput placeholder="Starring" formControlName="starring" name="starring" />
                 <!-- <mat-error *ngIf="starring.invalid">Starring can not be empty</mat-error> -->
