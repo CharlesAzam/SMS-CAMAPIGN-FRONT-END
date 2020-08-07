@@ -28,8 +28,6 @@
                       [placeholderLabel]="'Find Tag..'">
                     </ngx-mat-select-search>
                     <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ ta.name }}
-                    </ngx-mat-select-search>
-                    <mat-option *ngFor="let ta of filteredTags | async" [value]="ta._id">{{ ta.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
