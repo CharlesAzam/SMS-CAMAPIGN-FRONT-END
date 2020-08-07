@@ -758,7 +758,7 @@ export class VodEditComponent implements OnInit {
       };
     }
 
-    if(this.priceArray.length > 0) {
+    if (this.priceArray.length > 0) {
       this.contentForm.value['price'] = this.priceArray;
     }
 
@@ -1708,7 +1708,6 @@ export class AddNewLinks {
         if (str.split('=')[0] === 'v') {
 
           code = str.split('=')[1];
-          this.isDisabled = false;
         }
       });
     }
