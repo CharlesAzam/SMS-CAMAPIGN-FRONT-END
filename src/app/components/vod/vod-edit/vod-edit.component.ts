@@ -864,10 +864,14 @@ export class VodEditComponent implements OnInit {
             }
           })
 
-          this.contentForm.patchValue({ enSubCategories: enTmpArr });
-          this.contentForm.patchValue({ swSubCategories: swTmpArr });
-          this.filteredEnglishSubCategories.next(this.englishSubCategorie);
-          this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
+          if (lang == this.enId) {
+            this.contentForm.patchValue({ enSubCategories: enTmpArr });
+            this.filteredEnglishSubCategories.next(this.englishSubCategorie);
+          } else {
+            this.contentForm.patchValue({ swSubCategories: swTmpArr });
+            this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
+          }
+
 
         }
       },
