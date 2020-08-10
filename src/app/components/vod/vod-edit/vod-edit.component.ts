@@ -864,14 +864,68 @@ export class VodEditComponent implements OnInit {
             }
           })
 
-          if (lang == this.enId) {
             this.contentForm.patchValue({ enSubCategories: enTmpArr });
             this.filteredEnglishSubCategories.next(this.englishSubCategorie);
-          } else {
             this.contentForm.patchValue({ swSubCategories: swTmpArr });
             this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
-          }
 
+
+        }
+      },
+      error => console.error(error)
+    );
+  }
+
+  getEnglishSubCategories(event, lang?) {
+    this.subCategoriesService.findByCategory(event.value).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          const enTmpArr = [];
+          const enCurrSelection = this.contentForm.controls.enSubCategories;
+
+
+          response.data.forEach((sub) => {
+            if (enCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.enId) {
+              enTmpArr.push(sub._id);
+            }
+
+            if (sub.language === this.enId) {
+              this.englishSubCategorie.push(sub);
+            }
+          })
+
+          // if (lang == this.enId) {
+          this.contentForm.patchValue({ enSubCategories: enTmpArr });
+          this.filteredEnglishSubCategories.next(this.englishSubCategorie);
+
+
+        }
+      },
+      error => console.error(error)
+    );
+  }
+
+  getSwahiliSubCategories(event, lang?) {
+    this.subCategoriesService.findByCategory(event.value).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          const swTmpArr = [];
+          const swCurrSelection = this.contentForm.controls.swSubCategories;
+
+
+          response.data.forEach((sub) => {
+
+            if (swCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.swaId) {
+              swTmpArr.push(sub._id);
+            }
+
+            if (sub.language === this.swaId) {
+              this.swahiliSubCategorie.push(sub);
+            }
+          })
+
+          this.contentForm.patchValue({ swSubCategories: swTmpArr });
+          this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
 
         }
       },
