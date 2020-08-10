@@ -30,7 +30,7 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [disabled]="linksForm.invalid || isDisabled || images === ''" [mat-dialog-close]="getResult()" cdkFocusInitial>Add
+    <button mat-button mat-dialog-close (click)="cancelPage()">Cancel</button>
+    <button mat-button [disabled]="linksForm.invalid || images === ''" [mat-dialog-close]="getResult()" cdkFocusInitial>Add
         Link</button>
 </mat-dialog-actions>

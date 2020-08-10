@@ -33,27 +33,35 @@ export class VodEditComponent implements OnInit {
   isLiveTvForm: boolean = false;
   isSeriesForm: boolean = false;
 
-  filterCategoriesCtrl: FormControl = new FormControl();
+  filterEnglishCategoriesCtrl: FormControl = new FormControl();
+  filterSwahiliCategoriesCtrl: FormControl = new FormControl();
   filterCountryCtrl: FormControl = new FormControl();
   filterRegionsCtrl: FormControl = new FormControl();
-  filterSubCategoryCtrl: FormControl = new FormControl();
+  filterEnglishSubCategoryCtrl: FormControl = new FormControl();
+  filterSwahiliSubCategoryCtrl: FormControl = new FormControl();
   filterCdnCtrl: FormControl = new FormControl();
   filterTagsCtrl: FormControl = new FormControl();
   filterOriginCountryCtrl: FormControl = new FormControl();
+  filterPackagesCtrl: FormControl = new FormControl();
 
-  filteredCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredEnglishCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredSwahiliCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredCountries: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredRegions: ReplaySubject<any[]> = new ReplaySubject<any[]>();
-  filteredSubCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredEnglishSubCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredSwahiliSubCategories: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredCdns: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredTags: ReplaySubject<any[]> = new ReplaySubject<any[]>();
   filteredOriginCountry: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+  filteredPackages: ReplaySubject<any[]> = new ReplaySubject<any[]>();
 
   protected _onDestroy = new Subject<void>();
 
   formType: string = "";
 
   contentForm = new FormGroup({});
+
+  priceArray: any[] = [];
 
   id: string;
   vod: Vod;
@@ -65,7 +73,7 @@ export class VodEditComponent implements OnInit {
   imageUrl: string = "";
   fileToUpload: any = null;
 
-  currencies: string[] = ["TZS", "USD"];
+  currencies: string[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
 
   visible = true;
   selectable = true;
@@ -113,14 +121,18 @@ export class VodEditComponent implements OnInit {
     this.initializeForm();
   }
 
+  enId: string;
+  swaId: string;
   languages: any[] = [];
   tagss: any[] = [];
-  categorys: any[] = [];
+  englishCategorys: any[] = [];
+  swahiliCategorys: any[] = [];
   channels: any[] = [];
   countries: any[] = [];
   regionss: any[] = [];
   packages: any[] = [];
-  subCategorie: any[] = [];
+  englishSubCategorie: any[] = [];
+  swahiliSubCategorie: any[] = [];
   cdns: any[] = [];
   boxes: string[] = ["HORIZONTAL_CARD", "VERTICAL_CARD", "BANNER", "LOGO"];
   seasons: any[] = [];
@@ -233,7 +245,14 @@ export class VodEditComponent implements OnInit {
                       duration: this.vod.duration ? this.vod.duration : "",
                       starring: this.vod.starring ? this.vod.starring : "",
                       director: this.vod.director ? this.vod.director : "",
-                      categories: this.vod.categories.map(
+                      enCategories: this.vod.categories.map(
+                        categor => categor._id
+                      )
+                        ? this.vod.categories.map(categor => {
+                          return categor._id;
+                        })
+                        : "",
+                      swCategories: this.vod.categories.map(
                         categor => categor._id
                       )
                         ? this.vod.categories.map(categor => {
@@ -251,7 +270,10 @@ export class VodEditComponent implements OnInit {
                         })
                         : "",
 
-                      subCategories: this.vod.subCategories
+                      enSubCategories: this.vod.subCategories
+                        ? this.vod.subCategories.map(subs => subs._id)
+                        : "",
+                      swSubCategories: this.vod.subCategories
                         ? this.vod.subCategories.map(subs => subs._id)
                         : "",
                       language: this.vod.language ? this.vod.language : [],
@@ -288,9 +310,10 @@ export class VodEditComponent implements OnInit {
                       series: this.vod.series ? this.vod.series : [],
                       images: this.vod.images ? this.vod.images : [],
                       imageThumb: this.vod.imageThumb ? "" : "",
-                      //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                      packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
+                    this.priceArray = this.vod.priceDetail;
 
                     break;
 
@@ -316,7 +339,14 @@ export class VodEditComponent implements OnInit {
                       duration: this.vod.duration ? this.vod.duration : "",
                       starring: this.vod.starring ? this.vod.starring : "",
                       director: this.vod.director ? this.vod.director : "",
-                      categories: this.vod.categories.map(
+                      enCategories: this.vod.categories.map(
+                        categor => categor._id
+                      )
+                        ? this.vod.categories.map(categor => {
+                          return categor._id;
+                        })
+                        : "",
+                      swCategories: this.vod.categories.map(
                         categor => categor._id
                       )
                         ? this.vod.categories.map(categor => {
@@ -332,7 +362,10 @@ export class VodEditComponent implements OnInit {
                           if (country._id != 0) return country._id;
                         })
                         : "",
-                      subCategories: this.vod.subCategories
+                      enSubCategories: this.vod.subCategories
+                        ? this.vod.subCategories.map(subs => subs._id)
+                        : "",
+                      swSubCategories: this.vod.subCategories
                         ? this.vod.subCategories.map(subs => subs._id)
                         : "",
                       language: this.vod.language ? this.vod.language : [],
@@ -366,9 +399,10 @@ export class VodEditComponent implements OnInit {
                       series: this.vod.series ? this.vod.series : [],
                       images: this.vod.images ? this.vod.images : [],
                       imageThumb: this.vod.imageThumb ? "" : "",
-                      //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                      packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
+                    this.priceArray = this.vod.priceDetail;
 
                     break;
 
@@ -393,7 +427,14 @@ export class VodEditComponent implements OnInit {
                       duration: this.vod.duration ? this.vod.duration : "",
                       starring: this.vod.starring ? this.vod.starring : "",
                       director: this.vod.director ? this.vod.director : "",
-                      categories: this.vod.categories
+                      enCategories: this.vod.categories
+                        ? this.vod.categories.map(categor => {
+                          return categor._id;
+                        })
+                        : "",
+                      swCategories: this.vod.categories.map(
+                        categor => categor._id
+                      )
                         ? this.vod.categories.map(categor => {
                           return categor._id;
                         })
@@ -407,7 +448,10 @@ export class VodEditComponent implements OnInit {
                           if (country._id != 0) return country._id;
                         })
                         : "",
-                      subCategories: this.vod.subCategories
+                      enSubCategories: this.vod.subCategories
+                        ? this.vod.subCategories.map(subs => subs._id)
+                        : "",
+                      swSubCategories: this.vod.subCategories
                         ? this.vod.subCategories.map(subs => subs._id)
                         : "",
                       language: this.vod.language ? this.vod.language : [],
@@ -447,9 +491,10 @@ export class VodEditComponent implements OnInit {
                       series: this.vod.series ? this.vod.series : [],
                       images: this.vod.images ? this.vod.images : [],
                       imageThumb: this.vod.imageThumb ? "" : "",
-                      //  packageID: this.vod.packageID ? this.vod.packageID : '',
+                      packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                       createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                     });
+                    this.priceArray = this.vod.priceDetail;
 
                     break;
 
@@ -475,8 +520,15 @@ export class VodEditComponent implements OnInit {
                   duration: this.vod.duration ? this.vod.duration : "",
                   starring: this.vod.starring ? this.vod.starring : "",
                   director: this.vod.director ? this.vod.director : "",
-                  categories: this.vod.categories.map(categor => categor._id)
+                  enCategories: this.vod.categories.map(categor => categor._id)
                     ? this.vod.categories.map(categor => categor._id)
+                    : "",
+                  swCategories: this.vod.categories.map(
+                    categor => categor._id
+                  )
+                    ? this.vod.categories.map(categor => {
+                      return categor._id;
+                    })
                     : "",
                   region:
                     this.vod.region.length > 0 ? this.vod.region[0]._id : [],
@@ -485,7 +537,10 @@ export class VodEditComponent implements OnInit {
                       if (country._id != 0) return country._id;
                     })
                     : "",
-                  subCategories: this.vod.subCategories
+                  enSubCategories: this.vod.subCategories
+                    ? this.vod.subCategories.map(subs => subs._id)
+                    : "",
+                  swSubCategories: this.vod.subCategories
                     ? this.vod.subCategories.map(subs => subs._id)
                     : "",
                   language: this.vod.language ? this.vod.language : [],
@@ -517,9 +572,10 @@ export class VodEditComponent implements OnInit {
                   series: this.vod.series ? this.vod.series : [],
                   images: this.vod.images ? this.vod.images : [],
                   imageThumb: this.vod.imageThumb ? "" : "",
-                  // packageID: this.vod.packageID ? this.vod.packageID : '',
+                  packageID: this.vod.packageID ? this.vod.packageID.map((pack) => pack._id) : '',
                   createdBy: this.vod.createdBy ? this.vod.createdBy : ""
                 });
+                this.priceArray = this.vod.priceDetail;
               } else if (this.vod.contentType === "NEWS") {
                 this.getTags();
                 this.formType = "News";
@@ -546,10 +602,20 @@ export class VodEditComponent implements OnInit {
                     ? this.vod.countryOrigin
                     : "",
 
-                  categories: this.vod.categories.map(categor => categor._id)
+                  enCategories: this.vod.categories.map(categor => categor._id)
                     ? this.vod.categories.map(categor => categor._id)
                     : "",
-                  subCategories: this.vod.subCategories
+                  swCategories: this.vod.categories.map(
+                    categor => categor._id
+                  )
+                    ? this.vod.categories.map(categor => {
+                      return categor._id;
+                    })
+                    : "",
+                  enSubCategories: this.vod.subCategories
+                    ? this.vod.subCategories.map(subs => subs._id)
+                    : "",
+                  swSubCategories: this.vod.subCategories
                     ? this.vod.subCategories.map(subs => subs._id)
                     : "",
                   isFree: String(this.vod.isFree)
@@ -579,23 +645,42 @@ export class VodEditComponent implements OnInit {
       }
     });
 
+    this.filterPackagesCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterPackages();
+      });
+
     this.filterTagsCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterTags();
       });
 
-    this.filterCategoriesCtrl.valueChanges
+    this.filterEnglishCategoriesCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.filterCategories();
+        this.filterEnglishCategories();
       });
 
-    this.filterSubCategoryCtrl.valueChanges
+    this.filterEnglishSubCategoryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.filterSubCategories();
+        this.filterEnglishSubCategories();
       });
+
+    this.filterSwahiliCategoriesCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterEnglishCategories();
+      });
+
+    this.filterSwahiliSubCategoryCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterEnglishSubCategories();
+      });
+
 
     this.filterCdnCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -672,6 +757,11 @@ export class VodEditComponent implements OnInit {
         season: this.seasons
       };
     }
+
+    if (this.priceArray.length > 0) {
+      this.contentForm.value['price'] = this.priceArray;
+    }
+
     if (this.isNewsForm) {
       this.contentForm.value["images"] = this.images;
     }
@@ -679,6 +769,10 @@ export class VodEditComponent implements OnInit {
     if (this.links.length > 0) {
       this.contentForm.value["links"] = this.links;
     }
+
+    this.contentForm.value["categories"] = this.contentForm.value['enCategories'].concat(this.contentForm.value['swCategories']);
+    this.contentForm.value["subCategories"] = this.contentForm.value['enSubCategories'].concat(this.contentForm.value['swSubCategories']);
+
     if (this.vod) {
       Object.assign(this.vod, this.contentForm.value);
 
@@ -713,8 +807,10 @@ export class VodEditComponent implements OnInit {
     this.categoriesService.findByType(type).subscribe(
       (response: any) => {
         if (response.status === 200) {
-          this.categorys = response.data;
-          this.filteredCategories.next(this.categorys.slice());
+          this.englishCategorys = response.data.filter(category => category.language === this.enId);
+          this.swahiliCategorys = response.data.filter(category => category.language === this.swaId);
+          this.filteredEnglishCategories.next(this.englishCategorys.slice());
+          this.filteredSwahiliCategories.next(this.swahiliCategorys.slice());
         }
       },
       error => console.error(error)
@@ -740,20 +836,97 @@ export class VodEditComponent implements OnInit {
       .setValue(result.countries.map(count => count._id));
   }
 
-  getSubCategories(event) {
+  getSubCategories(event, lang?) {
     this.subCategoriesService.findByCategory(event.value).subscribe(
       (response: any) => {
         if (response.status === 200) {
-          const tmpArr = [];
-          const currentSelection = this.contentForm.controls.subCategories;
-          this.subCategorie = response.data.map(sub => {
-            if (currentSelection.value.indexOf(sub._id) >= 0) {
-              tmpArr.push(sub._id);
+          const enTmpArr = [];
+          const swTmpArr = [];
+          const enCurrSelection = this.contentForm.controls.enSubCategories;
+          const swCurrSelection = this.contentForm.controls.swSubCategories;
+
+
+          response.data.forEach((sub) => {
+            if (enCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.enId) {
+              enTmpArr.push(sub._id);
             }
-            return sub;
-          });
-          this.contentForm.patchValue({ subCategories: tmpArr });
-          this.filteredSubCategories.next(this.subCategorie);
+
+            if (sub.language === this.enId) {
+              this.englishSubCategorie.push(sub);
+            }
+
+            if (swCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.swaId) {
+              swTmpArr.push(sub._id);
+            }
+
+            if (sub.language === this.swaId) {
+              this.swahiliSubCategorie.push(sub);
+            }
+          })
+
+            this.contentForm.patchValue({ enSubCategories: enTmpArr });
+            this.filteredEnglishSubCategories.next(this.englishSubCategorie);
+            this.contentForm.patchValue({ swSubCategories: swTmpArr });
+            this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
+
+
+        }
+      },
+      error => console.error(error)
+    );
+  }
+
+  getEnglishSubCategories(event, lang?) {
+    this.subCategoriesService.findByCategory(event.value).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          const enTmpArr = [];
+          const enCurrSelection = this.contentForm.controls.enSubCategories;
+
+
+          response.data.forEach((sub) => {
+            if (enCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.enId) {
+              enTmpArr.push(sub._id);
+            }
+
+            if (sub.language === this.enId) {
+              this.englishSubCategorie.push(sub);
+            }
+          })
+
+          // if (lang == this.enId) {
+          this.contentForm.patchValue({ enSubCategories: enTmpArr });
+          this.filteredEnglishSubCategories.next(this.englishSubCategorie);
+
+
+        }
+      },
+      error => console.error(error)
+    );
+  }
+
+  getSwahiliSubCategories(event, lang?) {
+    this.subCategoriesService.findByCategory(event.value).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          const swTmpArr = [];
+          const swCurrSelection = this.contentForm.controls.swSubCategories;
+
+
+          response.data.forEach((sub) => {
+
+            if (swCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.swaId) {
+              swTmpArr.push(sub._id);
+            }
+
+            if (sub.language === this.swaId) {
+              this.swahiliSubCategorie.push(sub);
+            }
+          })
+
+          this.contentForm.patchValue({ swSubCategories: swTmpArr });
+          this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
+
         }
       },
       error => console.error(error)
@@ -765,6 +938,7 @@ export class VodEditComponent implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           this.packages = response.data;
+          this.filteredPackages.next(this.packages.slice());
         }
       },
       error => console.error(error)
@@ -787,6 +961,8 @@ export class VodEditComponent implements OnInit {
       (response: any) => {
         if (response.status === 200) {
           this.languages = response.data;
+          this.swaId = this.languages.find((lang) => lang.abbreviation === 'sw')._id;
+          this.enId = this.languages.find((lang) => lang.abbreviation === 'en')._id;
         }
       },
       error => console.error(error)
@@ -830,19 +1006,53 @@ export class VodEditComponent implements OnInit {
     );
   }
 
-  filterSubCategories() {
-    if (!this.subCategorie) return;
+  filterEnglishSubCategories() {
+    if (!this.englishSubCategorie) return;
 
-    let search: string = this.filterSubCategoryCtrl.value;
+    let search: string = this.filterEnglishSubCategoryCtrl.value;
     if (!search) {
-      this.filteredSubCategories.next(this.subCategorie.slice());
+      this.filteredEnglishSubCategories.next(this.englishSubCategorie.slice());
     } else {
       search = search.toLowerCase();
     }
 
-    this.filteredSubCategories.next(
-      this.subCategorie.filter(
+    this.filteredEnglishSubCategories.next(
+      this.englishSubCategorie.filter(
         sub => sub.name.toLowerCase().indexOf(search) > -1
+      )
+    );
+  }
+
+  filterSwahiliSubCategories() {
+    if (!this.swahiliSubCategorie) return;
+
+    let search: string = this.filterSwahiliSubCategoryCtrl.value;
+    if (!search) {
+      this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie.slice());
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredSwahiliSubCategories.next(
+      this.swahiliSubCategorie.filter(
+        sub => sub.name.toLowerCase().indexOf(search) > -1
+      )
+    );
+  }
+
+  filterPackages() {
+    if (!this.packages) return;
+
+    let search: string = this.filterPackagesCtrl.value;
+    if (!search) {
+      this.filteredPackages.next(this.packages.slice());
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredPackages.next(
+      this.packages.filter(
+        pack => pack.name.toLowerCase().indexOf(search) > -1
       )
     );
   }
@@ -937,18 +1147,35 @@ export class VodEditComponent implements OnInit {
     );
   }
 
-  filterCategories() {
-    if (!this.categorys) return;
+  filterEnglishCategories() {
+    if (!this.englishCategorys) return;
 
-    let search: string = this.filterCategoriesCtrl.value;
+    let search: string = this.filterEnglishCategoriesCtrl.value;
     if (!search) {
-      this.filteredCategories.next(this.categorys.slice());
+      this.filteredEnglishCategories.next(this.englishCategorys.slice());
     } else {
       search = search.toLowerCase();
     }
 
-    this.filteredCategories.next(
-      this.categorys.filter(
+    this.filteredEnglishCategories.next(
+      this.englishCategorys.filter(
+        category => category.name.toLowerCase().indexOf(search) > -1
+      )
+    );
+  }
+
+  filterSwahiliCategories() {
+    if (!this.swahiliCategorys) return;
+
+    let search: string = this.filterSwahiliCategoriesCtrl.value;
+    if (!search) {
+      this.filteredSwahiliCategories.next(this.swahiliCategorys.slice());
+    } else {
+      search = search.toLowerCase();
+    }
+
+    this.filteredSwahiliCategories.next(
+      this.swahiliCategorys.filter(
         category => category.name.toLowerCase().indexOf(search) > -1
       )
     );
@@ -967,6 +1194,25 @@ export class VodEditComponent implements OnInit {
           this.seasons[index] = result;
         } else {
           this.seasons.push(result);
+        }
+      }
+    });
+  }
+
+  openPriceDialog(i?) {
+    const index = i;
+    const dialogRef = this.dialog.open(AddPricesDialog, {
+      width: "800px",
+      data: String(index) !== "undefined" ? this.priceArray[index] : null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        if (String(index) !== "undefined") {
+          this.priceArray[index] = result;
+        } else {
+          this.priceArray.push(result);
         }
       }
     });
@@ -1035,6 +1281,12 @@ export class VodEditComponent implements OnInit {
     return data;
   }
 
+  removePrice(index) {
+    if (confirm("Are you sure to remove this price Object?")) {
+      this.priceArray.splice(index, 1);
+    }
+  }
+
   initializeSeriesForm() {
     this.contentForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -1044,10 +1296,12 @@ export class VodEditComponent implements OnInit {
       duration: new FormControl(),
       starring: new FormControl("", [Validators.required]),
       director: new FormControl("", [Validators.required]),
-      categories: new FormControl("", [Validators.required]),
+      enCategories: new FormControl("", [Validators.required]),
+      swCategories: new FormControl("", [Validators.required]),
       region: new FormControl(""),
       country: new FormControl("", [Validators.required]),
-      subCategories: new FormControl("", [Validators.required]),
+      enSubCategories: new FormControl("", [Validators.required]),
+      swSubCategories: new FormControl("", [Validators.required]),
       language: new FormControl("", [Validators.required]),
       isFree: new FormControl("", [Validators.required]),
       price: new FormGroup({
@@ -1066,7 +1320,7 @@ export class VodEditComponent implements OnInit {
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl("", [Validators.required]),
-      // packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1077,8 +1331,10 @@ export class VodEditComponent implements OnInit {
       description: new FormControl("", [Validators.required]),
       tags: new FormControl("", [Validators.required]),
 
-      categories: new FormControl("", [Validators.required]),
-      subCategories: new FormControl("", [Validators.required]),
+      enCategories: new FormControl("", [Validators.required]),
+      swCategories: new FormControl("", [Validators.required]),
+      enSubCategories: new FormControl("", [Validators.required]),
+      swSubCategories: new FormControl("", [Validators.required]),
       isFree: new FormControl("", [Validators.required]),
       price: new FormGroup({
         price: new FormControl("", [Validators.required]),
@@ -1102,10 +1358,12 @@ export class VodEditComponent implements OnInit {
       duration: new FormControl(),
       starring: new FormControl(""),
       director: new FormControl(""),
-      categories: new FormControl("", [Validators.required]),
+      enCategories: new FormControl("", [Validators.required]),
+      swCategories: new FormControl("", [Validators.required]),
       region: new FormControl(""),
       country: new FormControl("", [Validators.required]),
-      subCategories: new FormControl("", [Validators.required]),
+      enSubCategories: new FormControl("", [Validators.required]),
+      swSubCategories: new FormControl("", [Validators.required]),
       language: new FormControl([], [Validators.required]),
       isFree: new FormControl("", [Validators.required]),
       price: new FormGroup({
@@ -1121,7 +1379,7 @@ export class VodEditComponent implements OnInit {
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl(""),
-      // packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1134,8 +1392,10 @@ export class VodEditComponent implements OnInit {
       region: new FormControl(""),
       country: new FormControl("", [Validators.required]),
       countryOrigin: new FormControl("", [Validators.required]),
-      categories: new FormControl("", [Validators.required]),
-      subCategories: new FormControl("", [Validators.required]),
+      enCategories: new FormControl("", [Validators.required]),
+      swCategories: new FormControl("", [Validators.required]),
+      enSubCategories: new FormControl("", [Validators.required]),
+      swSubCategories: new FormControl("", [Validators.required]),
       isFree: new FormControl("", [Validators.required]),
       isFreeForAzam: new FormControl("", [Validators.required]),
       isSeries: new FormControl("false"),
@@ -1157,10 +1417,12 @@ export class VodEditComponent implements OnInit {
       duration: new FormControl(""),
       starring: new FormControl(""),
       director: new FormControl(""),
-      categories: new FormControl("", [Validators.required]),
+      enCategories: new FormControl("", [Validators.required]),
+      swCategories: new FormControl("", [Validators.required]),
       region: new FormControl(""),
       country: new FormControl("", [Validators.required]),
-      subCategories: new FormControl("", [Validators.required]),
+      enSubCategories: new FormControl("", [Validators.required]),
+      swSubCategories: new FormControl("", [Validators.required]),
       language: new FormControl([], [Validators.required]),
       isFree: new FormControl("", [Validators.required]),
       price: new FormGroup({
@@ -1180,7 +1442,7 @@ export class VodEditComponent implements OnInit {
         "https://s3.eu-west-1.amazonaws.com/com.azamtv2019/DOCUBOXHD-350x200-LOGOS-29b70b951bf81cc6045631f83c2868b0.jpg",
         [Validators.required]
       ),
-      //  packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1194,11 +1456,13 @@ export class VodEditComponent implements OnInit {
       duration: new FormControl(""),
       starring: new FormControl(""),
       director: new FormControl(""),
-      categories: new FormControl("", [Validators.required]),
+      enCategories: new FormControl("", [Validators.required]),
+      swCategories: new FormControl("", [Validators.required]),
       region: new FormControl(""),
       country: new FormControl("", [Validators.required]),
       referenceChannelID: new FormControl("", [Validators.required]),
-      subCategories: new FormControl("", [Validators.required]),
+      enSubCategories: new FormControl("", [Validators.required]),
+      swSubCategories: new FormControl("", [Validators.required]),
       language: new FormControl([], [Validators.required]),
       isFree: new FormControl("", [Validators.required]),
       price: new FormGroup({
@@ -1214,7 +1478,7 @@ export class VodEditComponent implements OnInit {
       series: new FormControl([]),
       images: new FormControl([]),
       imageThumb: new FormControl("", [Validators.required]),
-      //  packageID: new FormControl(''),
+      packageID: new FormControl(''),
       createdBy: new FormControl("")
     });
   }
@@ -1237,7 +1501,7 @@ export class AddSeasonsDialog {
     noOfDays: new FormControl("")
   });
   episode: any[] = [];
-  currencies: any[] = ["TZS", "USD"];
+  currencies: any[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
   seasonEditObject: Object = null;
 
   constructor(
@@ -1380,6 +1644,50 @@ export class AddMultipleImages {
 }
 
 @Component({
+  selector: "dialog-content-type",
+  templateUrl: "../dialog-content-add-price.html"
+})
+export class AddPricesDialog {
+  priceForm = new FormGroup({
+    title: new FormControl(""),
+    description: new FormControl(""),
+    price: new FormControl(""),
+    currency: new FormControl(""),
+    noOfDays: new FormControl("")
+  });
+  episode: any[] = [];
+  currencies: any[] = ['USD', 'TZS', 'KES', 'UGX', 'MWK', 'RWF', 'BIF'];
+  editPackageObject: Object = null;
+
+  constructor(
+    public dialogRef: MatDialogRef<AddPricesDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
+    console.log(data);
+    if (data) {
+      this.editPackageObject = data;
+      this.priceForm.setValue({
+        title: data.title ? data.title : "",
+        description: data.description ? data.description : "",
+        currency: data.currency ? data.currency : "",
+        noOfDays: data.noOfDays ? data.noOfDays : "",
+        price: data.price ? data.price : ""
+      });
+      this.episode = data.episode;
+    }
+  }
+
+  getData() {
+    if (this.editPackageObject !== null) {
+      return this.priceForm.value;
+    } else {
+      return this.priceForm.value;
+    }
+  }
+}
+@Component({
   selector: "dialog-news-links",
   templateUrl: "../dialog-news-add-links.html"
 })
@@ -1458,12 +1766,12 @@ export class AddNewLinks {
         if (str.split('=')[0] === 'v') {
 
           code = str.split('=')[1];
-          this.isDisabled = false;
         }
       });
     }
 
     return code;
   }
+
 }
 
