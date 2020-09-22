@@ -248,18 +248,17 @@ export class VodEditComponent implements OnInit {
                       enCategories: this.vod.categories.map(
                         categor => categor._id
                       )
-                        ? this.vod.categories.map(categor => {
+                        ? this.vod.categories.filter(cat => cat.language === this.enId).map(categor => {
                           return categor._id;
                         })
                         : "",
                       swCategories: this.vod.categories.map(
                         categor => categor._id
                       )
-                        ? this.vod.categories.map(categor => {
+                        ? this.vod.categories.filter(cat => cat.language === this.swaId).map(categor => {
                           return categor._id;
                         })
                         : "",
-
                       region:
                         this.vod.region.length > 0
                           ? this.vod.region[0]._id
@@ -271,10 +270,15 @@ export class VodEditComponent implements OnInit {
                         : "",
 
                       enSubCategories: this.vod.subCategories
-                        ? this.vod.subCategories.map(subs => subs._id)
+                        ? this.vod.subCategories.filter(cat => cat.language === this.enId).map(subs => {
+                          return subs._id
+                        })
                         : "",
                       swSubCategories: this.vod.subCategories
-                        ? this.vod.subCategories.map(subs => subs._id)
+                        ? this.vod.subCategories.filter(cat => cat.language === this.swaId).map(subs => {
+                          if (subs.language === this.swaId)
+                            return subs._id
+                        })
                         : "",
                       language: this.vod.language ? this.vod.language : [],
                       isFree: String(this.vod.isFree)
@@ -342,14 +346,14 @@ export class VodEditComponent implements OnInit {
                       enCategories: this.vod.categories.map(
                         categor => categor._id
                       )
-                        ? this.vod.categories.map(categor => {
+                        ? this.vod.categories.filter(cat => cat.language === this.enId).map(categor => {
                           return categor._id;
                         })
                         : "",
                       swCategories: this.vod.categories.map(
                         categor => categor._id
                       )
-                        ? this.vod.categories.map(categor => {
+                        ? this.vod.categories.filter(cat => cat.language === this.swaId).map(categor => {
                           return categor._id;
                         })
                         : "",
@@ -363,10 +367,15 @@ export class VodEditComponent implements OnInit {
                         })
                         : "",
                       enSubCategories: this.vod.subCategories
-                        ? this.vod.subCategories.map(subs => subs._id)
+                        ? this.vod.subCategories.filter(cat => cat.language === this.enId).map(subs => {
+                          return subs._id
+                        })
                         : "",
                       swSubCategories: this.vod.subCategories
-                        ? this.vod.subCategories.map(subs => subs._id)
+                        ? this.vod.subCategories.filter(cat => cat.language === this.swaId).map(subs => {
+                          if (subs.language === this.swaId)
+                            return subs._id
+                        })
                         : "",
                       language: this.vod.language ? this.vod.language : [],
                       isFree: String(this.vod.isFree)
@@ -427,15 +436,17 @@ export class VodEditComponent implements OnInit {
                       duration: this.vod.duration ? this.vod.duration : "",
                       starring: this.vod.starring ? this.vod.starring : "",
                       director: this.vod.director ? this.vod.director : "",
-                      enCategories: this.vod.categories
-                        ? this.vod.categories.map(categor => {
+                      enCategories: this.vod.categories.map(
+                        categor => categor._id
+                      )
+                        ? this.vod.categories.filter(cat => cat.language === this.enId).map(categor => {
                           return categor._id;
                         })
                         : "",
                       swCategories: this.vod.categories.map(
                         categor => categor._id
                       )
-                        ? this.vod.categories.map(categor => {
+                        ? this.vod.categories.filter(cat => cat.language === this.swaId).map(categor => {
                           return categor._id;
                         })
                         : "",
@@ -449,10 +460,15 @@ export class VodEditComponent implements OnInit {
                         })
                         : "",
                       enSubCategories: this.vod.subCategories
-                        ? this.vod.subCategories.map(subs => subs._id)
+                        ? this.vod.subCategories.filter(cat => cat.language === this.enId).map(subs => {
+                          return subs._id
+                        })
                         : "",
                       swSubCategories: this.vod.subCategories
-                        ? this.vod.subCategories.map(subs => subs._id)
+                        ? this.vod.subCategories.filter(cat => cat.language === this.swaId).map(subs => {
+                          if (subs.language === this.swaId)
+                            return subs._id
+                        })
                         : "",
                       language: this.vod.language ? this.vod.language : [],
                       referenceChannelID: parseInt(
@@ -520,13 +536,17 @@ export class VodEditComponent implements OnInit {
                   duration: this.vod.duration ? this.vod.duration : "",
                   starring: this.vod.starring ? this.vod.starring : "",
                   director: this.vod.director ? this.vod.director : "",
-                  enCategories: this.vod.categories.map(categor => categor._id)
-                    ? this.vod.categories.map(categor => categor._id)
+                  enCategories: this.vod.categories.map(
+                    categor => categor._id
+                  )
+                    ? this.vod.categories.filter(cat => cat.language === this.enId).map(categor => {
+                      return categor._id;
+                    })
                     : "",
                   swCategories: this.vod.categories.map(
                     categor => categor._id
                   )
-                    ? this.vod.categories.map(categor => {
+                    ? this.vod.categories.filter(cat => cat.language === this.swaId).map(categor => {
                       return categor._id;
                     })
                     : "",
@@ -538,10 +558,15 @@ export class VodEditComponent implements OnInit {
                     })
                     : "",
                   enSubCategories: this.vod.subCategories
-                    ? this.vod.subCategories.map(subs => subs._id)
+                    ? this.vod.subCategories.filter(cat => cat.language === this.enId).map(subs => {
+                      return subs._id
+                    })
                     : "",
                   swSubCategories: this.vod.subCategories
-                    ? this.vod.subCategories.map(subs => subs._id)
+                    ? this.vod.subCategories.filter(cat => cat.language === this.swaId).map(subs => {
+                      if (subs.language === this.swaId)
+                        return subs._id
+                    })
                     : "",
                   language: this.vod.language ? this.vod.language : [],
                   isFree: String(this.vod.isFree)
@@ -602,21 +627,30 @@ export class VodEditComponent implements OnInit {
                     ? this.vod.countryOrigin
                     : "",
 
-                  enCategories: this.vod.categories.map(categor => categor._id)
-                    ? this.vod.categories.map(categor => categor._id)
+                  enCategories: this.vod.categories.map(
+                    categor => categor._id
+                  )
+                    ? this.vod.categories.filter(cat => cat.language === this.enId).map(categor => {
+                      return categor._id;
+                    })
                     : "",
                   swCategories: this.vod.categories.map(
                     categor => categor._id
                   )
-                    ? this.vod.categories.map(categor => {
+                    ? this.vod.categories.filter(cat => cat.language === this.swaId).map(categor => {
                       return categor._id;
                     })
                     : "",
                   enSubCategories: this.vod.subCategories
-                    ? this.vod.subCategories.map(subs => subs._id)
+                    ? this.vod.subCategories.filter(cat => cat.language === this.enId).map(subs => {
+                      return subs._id
+                    })
                     : "",
                   swSubCategories: this.vod.subCategories
-                    ? this.vod.subCategories.map(subs => subs._id)
+                    ? this.vod.subCategories.filter(cat => cat.language === this.swaId).map(subs => {
+                      if (subs.language === this.swaId)
+                        return subs._id
+                    })
                     : "",
                   isFree: String(this.vod.isFree)
                     ? String(this.vod.isFree)
@@ -864,10 +898,10 @@ export class VodEditComponent implements OnInit {
             }
           })
 
-            this.contentForm.patchValue({ enSubCategories: enTmpArr });
-            this.filteredEnglishSubCategories.next(this.englishSubCategorie);
-            this.contentForm.patchValue({ swSubCategories: swTmpArr });
-            this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
+          this.contentForm.patchValue({ enSubCategories: enTmpArr });
+          this.filteredEnglishSubCategories.next(this.englishSubCategorie);
+          this.contentForm.patchValue({ swSubCategories: swTmpArr });
+          this.filteredSwahiliSubCategories.next(this.swahiliSubCategorie);
 
 
         }
@@ -882,7 +916,6 @@ export class VodEditComponent implements OnInit {
         if (response.status === 200) {
           const enTmpArr = [];
           const enCurrSelection = this.contentForm.controls.enSubCategories;
-
 
           response.data.forEach((sub) => {
             if (enCurrSelection.value.indexOf(sub._id) >= 0 && sub.language === this.enId) {
