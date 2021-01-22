@@ -1773,7 +1773,7 @@ export class AddNewLinks {
     );
   }
 
-  removeImage(index) {
+  removeImage() {
     if (confirm("Are you sure to remove this File?")) {
       this.images = '';
     }

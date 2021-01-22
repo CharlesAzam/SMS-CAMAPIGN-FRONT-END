@@ -6,7 +6,7 @@
             <mat-card class="col-sm-3 col-md-3" *ngIf="images != ''" style="margin: 10px">
                 <img src={{images}} width="100" height="100" />
                 <mat-card-actions>
-                    <button mat-button (click)="removeImage(i)">DELETE</button>
+                    <button mat-button (click)="removeImage()">DELETE</button>
                 </mat-card-actions>
             </mat-card>
         </div>
@@ -30,7 +30,6 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close (click)="cancelPage()">Cancel</button>
     <button mat-button [disabled]="linksForm.invalid || images === ''" [mat-dialog-close]="getResult()" cdkFocusInitial>Add
         Link</button>
 </mat-dialog-actions>

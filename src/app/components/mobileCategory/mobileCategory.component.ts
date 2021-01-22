@@ -158,6 +158,7 @@ export class CreateCategoryComponent implements OnInit, AfterViewInit {
       data.pageIndex + 1,
       data.pageSize
     );
+    return data;
   }
   getLanguages() {
     return this.languageService.list();

@@ -164,5 +164,6 @@ export class MobileSubCategoriesComponent implements OnInit {
       data.pageIndex + 1,
       data.pageSize
     );
+    return data;
   }
 }

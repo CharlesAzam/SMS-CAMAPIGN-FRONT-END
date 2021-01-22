@@ -200,7 +200,7 @@ export class GuideListComponent implements OnInit, AfterViewInit {
       }
 
       result.forEach(r => {
-        let date_time_in_gmt = moment(`${r.date} ${r.time_from}`, 'DD-MM-YY hh:mm');
+        let date_time_in_gmt = moment(`${r.date} ${r.time_from}`, 'DD-MM-YYYY hh:mm');
         let duration = moment(r.time_to, 'hh:mm').diff(moment(r.time_from, 'hh:mm'));
 
         r.date_time_in_gmt = date_time_in_gmt.toISOString();
