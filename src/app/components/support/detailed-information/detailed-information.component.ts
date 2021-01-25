@@ -121,9 +121,10 @@ export class DetailedInformationComponent implements OnInit, AfterViewInit {
     "actions"
   ];
   rechargeHistoryColumns: string[] = [
+    "transactionDate",
+    "transactionType",
     "transactionToken",
     "transactionReference",
-    "transactionDate",
     "paidAmount",
     "status"
   ];

@@ -125,7 +125,7 @@
                         Wallet Amount
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.walletBalance }}
+                        {{ element.walletBalance | currency:element.walletCurrency }}
                     </td>
                 </ng-container>
 
