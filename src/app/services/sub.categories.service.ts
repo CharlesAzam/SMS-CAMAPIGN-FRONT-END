@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SubCategory } from "../models/sub.categories";
-import { API } from "src/environments/environment";
+import { environment }from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +12,7 @@ export class SubCategoriesService {
   constructor(private http: HttpClient) {}
 
   find(pageNumber?, size?, language?, filter?) {
-    let url = API.BASE_URL + "/cms/sub-category-list";
+    let url = environment.apiUrl + "/cms/sub-category-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
     let params: any = {};
 
@@ -36,38 +36,38 @@ export class SubCategoriesService {
     return this.http.get<any[]>(url, { headers });
   }
   findById(id: string) {
-    let url = API.BASE_URL + "/cms/sub-category/" + id;
+    let url = environment.apiUrl + "/cms/sub-category/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
   findByCategory(categoryID) {
     let data = { catID: categoryID };
-    let url = API.BASE_URL + "/cms/sub-category/category";
+    let url = environment.apiUrl + "/cms/sub-category/category";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<any>(url, data, { headers });
   }
 
   save(data: SubCategory) {
-    let url = API.BASE_URL + "/cms/sub-category/create";
+    let url = environment.apiUrl + "/cms/sub-category/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<any>(url, data, { headers });
   }
 
   update(data: SubCategory) {
-    let url = API.BASE_URL + `/cms/sub-category/${data._id}/update`;
+    let url = environment.apiUrl + `/cms/sub-category/${data._id}/update`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.put<any>(url, data, { headers });
   }
 
   delete(id: string) {
-    let url = API.BASE_URL + `/cms/sub-category/${id}/`;
+    let url = environment.apiUrl + `/cms/sub-category/${id}/`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.delete<any>(url, { headers });
   }
 
   getCount(language?) {
     let url =
-      API.BASE_URL +
+      environment.apiUrl +
       `/cms/count/subcategory${language ? "?language=" + language : ""}`;
     return this.http.get(url);
   }

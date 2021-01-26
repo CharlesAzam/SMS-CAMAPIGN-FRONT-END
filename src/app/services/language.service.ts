@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators/map';
-import { API } from 'src/environments/environment';
+import { environment }from 'src/environments/environment';
 
 @Injectable()
 export class LanguageService {
@@ -9,6 +9,6 @@ export class LanguageService {
     }
 
     list() {
-        return this.http.get<any>(API.BASE_URL+'/cms/language-list').pipe(map((response: any) => response));
+        return this.http.get<any>(environment.apiUrl+'/cms/language-list').pipe(map((response: any) => response));
     }
 }

@@ -2,7 +2,7 @@
     "title": "Package",
     "entity": "package",
     "api": {
-        "url": "API.BASE_URLapi/vod"
+        "url": "environment.apiUrlapi/vod"
     },
     "filter": [
         "name"

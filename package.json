@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy:prod": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://azamtvmax-cms/ --delete --profile azamtvmax --acl public-read",
-    "deploy:dev": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://azamtvmax-cms/ --delete --profile azamtvmax --acl public-read"
+    "deploy:dev": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://azamtvmax-cms-dev/ --delete --profile azamtvmax --acl public-read"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +44,7 @@
     "@types/node": "^8.10.61",
     "angular-crud": "^0.1.3",
     "codelyzer": "^5.2.2",
+    "eslint": "^7.18.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",

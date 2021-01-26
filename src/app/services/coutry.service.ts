@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators/map';
-import { API } from 'src/environments/environment';
+import { environment }from 'src/environments/environment';
 
 @Injectable()
 export class CountryService {
@@ -9,10 +9,10 @@ export class CountryService {
     }
 
     list() {
-        return this.http.get<any>(API.BASE_URL + '/cms/country-list').pipe(map((response: any) => response));
+        return this.http.get<any>(environment.apiUrl + '/cms/country-list').pipe(map((response: any) => response));
     }
 
     regions() {
-        return this.http.get<any>(API.BASE_URL + '/cms/region-list').pipe(map((response: any) => response));
+        return this.http.get<any>(environment.apiUrl + '/cms/region-list').pipe(map((response: any) => response));
     }
 }
