@@ -137,7 +137,7 @@
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
                   <mat-label>Region</mat-label>
-                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)">
+                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)" multiple>
                     <mat-option *ngFor="let regions of regionss" [value]="regions._id">{{ regions.name }}
                     </mat-option>
                   </mat-select>
@@ -442,7 +442,7 @@
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
                   <mat-label>Region</mat-label>
-                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)">
+                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)" multiple>
                     <mat-option *ngFor="let regions of regionss" [value]="regions._id">{{ regions.name }}
                     </mat-option>
                   </mat-select>
@@ -720,7 +720,7 @@
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
                   <mat-label>Region</mat-label>
-                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)">
+                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)" multiple>
                     <mat-option *ngFor="let regions of regionss" [value]="regions._id">{{ regions.name }}
                     </mat-option>
                   </mat-select>
@@ -998,7 +998,7 @@
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
                   <mat-label>Region</mat-label>
-                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)">
+                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)" multiple>
                     <mat-option *ngFor="let regions of regionss" [value]="regions._id">{{ regions.name }}
                     </mat-option>
                   </mat-select>
@@ -1252,7 +1252,7 @@
               <div class="form-group">
                 <mat-form-field style="width: 100%;">
                   <mat-label>Region</mat-label>
-                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)">
+                  <mat-select formControlName="region" (selectionChange)="selectCountriesRegion($event)" multiple>
                     <mat-option *ngFor="let regions of regionss" [value]="regions._id">{{ regions.name }}
                     </mat-option>
                   </mat-select>
