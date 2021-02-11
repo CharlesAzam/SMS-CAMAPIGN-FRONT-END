@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy:prod": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://azamtvmax-cms/ --delete --profile azamtvmax --acl public-read",
-    "deploy:dev": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://azamtvmax-cms-dev/ --delete --profile azamtvmax --acl public-read"
+    "deploy:dev": "ng build --configuration=staging --extract-css false && aws s3 sync dist s3://azamtvmax-cms-dev/ --delete --profile azamtvmax --acl public-read"
   },
   "private": true,
   "dependencies": {
