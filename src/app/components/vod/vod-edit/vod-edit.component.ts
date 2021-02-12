@@ -261,7 +261,7 @@ export class VodEditComponent implements OnInit {
                         : "",
                       region:
                         this.vod.region.length > 0
-                          ? this.vod.region.map(region=>region._id)
+                          ? this.vod.region.map(region => region._id)
                           : [],
                       country: this.vod.country
                         ? this.vod.country.map(country => {
@@ -359,7 +359,7 @@ export class VodEditComponent implements OnInit {
                         : "",
                       region:
                         this.vod.region.length > 0
-                          ? this.vod.region.map(region=>region._id)
+                          ? this.vod.region.map(region => region._id)
                           : [],
                       country: this.vod.country
                         ? this.vod.country.map(country => {
@@ -452,7 +452,7 @@ export class VodEditComponent implements OnInit {
                         : "",
                       region:
                         this.vod.region.length > 0
-                          ? this.vod.region.map(region=>region._id)
+                          ? this.vod.region.map(region => region._id)
                           : [],
                       country: this.vod.country
                         ? this.vod.country.map(country => {
@@ -551,7 +551,7 @@ export class VodEditComponent implements OnInit {
                     })
                     : "",
                   region:
-                    this.vod.region.length > 0 ? this.vod.region.map(region=>region._id) : [],
+                    this.vod.region.length > 0 ? this.vod.region.map(region => region._id) : [],
                   country: this.vod.country
                     ? this.vod.country.map(country => {
                       if (country._id != 0) return country._id;
@@ -617,7 +617,7 @@ export class VodEditComponent implements OnInit {
                   description: this.vod.description ? this.vod.description : "",
                   tags: this.vod.tags ? this.vod.tags : [],
                   region:
-                    this.vod.region.length > 0 ? this.vod.region.map(region=>region._id) : [],
+                    this.vod.region.length > 0 ? this.vod.region.map(region => region._id) : [],
                   country: this.vod.country
                     ? this.vod.country.map(country => {
                       if (country._id != 0) return country._id;
@@ -864,14 +864,19 @@ export class VodEditComponent implements OnInit {
   }
 
   selectCountriesRegion(event) {
-    for (let index = 0; index < event.value.length; index++) {
-      const element = event.value[index];
-      let result = this.regionss.find(region => region._id === element);
-      this.contentForm
-        .get("country")
-        .setValue(result.countries.map(count => count._id));
+    if (event.value.length > 0) {
+      for (let index = 0; index < event.value.length; index++) {
+        const element = event.value[index];
+        let result = this.regionss.find(region => region._id === element);
+        this.contentForm
+          .get("country")
+          .setValue(result.countries.map(count => count._id));
+      }
+    } else {
+      this.contentForm.get('country').setValue([]);
     }
-   
+
+
   }
 
   getSubCategories(event, lang?) {
