@@ -864,19 +864,17 @@ export class VodEditComponent implements OnInit {
   }
 
   selectCountriesRegion(event) {
+    this.contentForm.get('country').setValue([]);
     if (event.value.length > 0) {
       for (let index = 0; index < event.value.length; index++) {
         const element = event.value[index];
         let result = this.regionss.find(region => region._id === element);
+        const data = result.countries.map(count => count._id).concat(this.contentForm.get('country').value ? this.contentForm.get('country').value : [])
         this.contentForm
           .get("country")
-          .setValue(result.countries.map(count => count._id));
+          .patchValue(data);
       }
-    } else {
-      this.contentForm.get('country').setValue([]);
     }
-
-
   }
 
   getSubCategories(event, lang?) {
