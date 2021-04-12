@@ -7,6 +7,7 @@ export class Package {
     isFree: boolean = false;
     azamPackageMappingName: string;
     isVodAllowed: boolean = false;
+    appleProductId: string;
     link: string;
     validityInDays: string;
     countryDetail: any;

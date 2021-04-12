@@ -4,7 +4,8 @@ import { PackageFilter } from './package-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment }from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
+import { AppleProduct } from './apple-product';
 
 @Injectable()
 export class PackageService {
@@ -49,7 +50,7 @@ export class PackageService {
                 "size": size
             };
 
-            if(filter){
+            if (filter) {
                 params['filter'] = filter;
             }
 
@@ -109,6 +110,14 @@ export class PackageService {
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<Package>(url, packageDef, { headers });
+    }
+
+    // Get Apple products
+    appleProductList() {
+        let url = environment.apiUrl + `/cms/apple/products`;
+        let headers = new HttpHeaders()
+            .set('Accept', 'application/json');
+        return this.http.get<AppleProduct[]>(url, { headers });
     }
 }
 

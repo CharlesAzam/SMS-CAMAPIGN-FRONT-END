@@ -30,9 +30,19 @@
             </mat-form-field>
 
             <mat-form-field style="width: 100%;">
-              <mat-label>Contents</mat-label>
-              <mat-select formControlName="content" required multiple>
-                <mat-option *ngFor="let cont of contents" [value]="cont._id"
+              <mat-label>Live TV</mat-label>
+              <mat-select formControlName="liveTvContent" required multiple>
+                <mat-option *ngFor="let cont of liveTvContent" [value]="cont._id"
+                  >{{ cont.title }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <mat-label>VIDEO/SERIES</mat-label>
+              <mat-select #contentSelction formControlName="vodContent" required multiple>
+                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
+                <mat-option *ngFor="let cont of vodContent" [value]="cont._id"
                   >{{ cont.title }}
                 </mat-option>
               </mat-select>
@@ -57,6 +67,18 @@
                   [value]="package.planCode"
                 >
                   {{ package.planName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+              <mat-label>Apple Package Mapping</mat-label>
+              <mat-select formControlName="appleProductId">
+                <mat-option
+                  *ngFor="let package of appleProducts"
+                  [value]="package._id"
+                >
+                  {{ package.productId }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
