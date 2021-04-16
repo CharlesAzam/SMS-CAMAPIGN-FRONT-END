@@ -76,7 +76,7 @@
               <mat-select formControlName="appleProductId">
                 <mat-option
                   *ngFor="let package of appleProducts"
-                  [value]="package._id"
+                  [value]="package.productId"
                 >
                   {{ package.productId }}
                 </mat-option>
