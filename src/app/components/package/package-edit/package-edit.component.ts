@@ -27,6 +27,8 @@ export class PackageEditComponent implements OnInit {
   liveTvContent: any[] = [];
   vodContent: any[] = [];
   allSelected: boolean = false;
+  fileToUpload: any = null;
+  isUploading: boolean = false;
   appleProducts: AppleProduct[] = [];
   @ViewChild("contentSelction", null) contentSelction: MatSelect;
 
@@ -49,6 +51,7 @@ export class PackageEditComponent implements OnInit {
     isVodAllowed: new FormControl(""),
     countryDetail: new FormControl(""),
     // link: new FormControl(''),
+    isSmartcardAddOn: new FormControl(""),
     validityInDays: new FormControl(""),
     status: new FormControl(""),
     liveTvContent: new FormControl(""),
@@ -64,6 +67,8 @@ export class PackageEditComponent implements OnInit {
   IsFreeToggleFormShow() {
     console.log("show");
   }
+
+  imageUrl: string = '';
 
   hidden = false;
 
@@ -95,8 +100,11 @@ export class PackageEditComponent implements OnInit {
             isFree: String(this.packageDef.isFree)
               ? String(this.packageDef.isFree)
               : "",
-            liveTvContent: this.packageDef.content ? this.packageDef.content : "",
-            vodContent: this.packageDef.content ? this.packageDef.content : "",
+            isSmartcardAddOn: String(this.packageDef.isSmartcardAddOn)
+              ? String(this.packageDef.isSmartcardAddOn)
+              : "",
+            liveTvContent: this.packageDef.content ? this.packageDef.content.filter((pack) => pack.vodType !== 'VIDEO').map((pack) => pack._id) : "",
+            vodContent: this.packageDef.content ? this.packageDef.content.filter((pack) => pack.vodType === 'VIDEO').map((pack) => pack._id) : "",
             azamPackageMappingName: this.packageDef.azamPackageMappingName
               ? this.packageDef.azamPackageMappingName
               : "",
@@ -113,6 +121,7 @@ export class PackageEditComponent implements OnInit {
             status: this.packageDef.status ? this.packageDef.status : ""
           });
           this.priceArray = this.packageDef.price;
+          this.imageUrl = this.packageDef.imageUrl;
         }
       },
       error => console.error(error)
@@ -216,10 +225,12 @@ export class PackageEditComponent implements OnInit {
 
   save() {
     this.packageForm.value.price = this.priceArray;
+    this.packageForm.value.imageUrl = this.imageUrl;
     if (this.packageDef) {
       Object.assign(this.packageDef, this.packageForm.value);
       delete this.packageDef.content;
       this.packageDef.content = this.packageForm.value['liveTvContent'].concat(this.packageForm.value['vodContent']);
+      console.log(this.packageDef.content.length);
       this.packageService.update(this.packageDef).subscribe(
         (response: any) => {
           console.log(response);
@@ -252,6 +263,28 @@ export class PackageEditComponent implements OnInit {
     if (confirm("Are you sure to remove this price Object?")) {
       this.priceArray.splice(index, 1);
     }
+  }
+
+
+  handelImageChange(files: FileList) {
+    this.fileToUpload = files.item(0);
+    this.fileToUpload.mimeType = this.fileToUpload.type;
+    this.uploadFileToActivity();
+  }
+
+  uploadFileToActivity() {
+    this.isUploading = true;
+    this.contentService.uploadUrl(this.fileToUpload).subscribe(
+      (response: any) => {
+        this.isUploading = false;
+        if (response.status == 200 || response.success) {
+          this.imageUrl = response.fileUrl;
+        }
+      },
+      error => {
+        this.isUploading = false;
+      }
+    );
   }
 }
 

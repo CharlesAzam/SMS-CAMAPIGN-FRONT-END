@@ -8,6 +8,8 @@ export class Package {
     azamPackageMappingName: string;
     isVodAllowed: boolean = false;
     appleProductId: string;
+    imageUrl: string;
+    isSmartcardAddOn: boolean;
     link: string;
     validityInDays: string;
     countryDetail: any;
