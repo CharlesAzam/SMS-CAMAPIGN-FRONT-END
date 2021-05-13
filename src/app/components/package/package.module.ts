@@ -7,7 +7,6 @@ import { PackageEditComponent, AddPricesDialog } from './package-edit/package-ed
 import { PackageService } from './package.service';
 import { PACKAGE_ROUTES } from './package.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
-import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   imports: [
@@ -15,7 +14,6 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     FormsModule,
     MaterialModule,
     RouterModule.forChild(PACKAGE_ROUTES),
-    EditorModule,
     ReactiveFormsModule
   ],
   declarations: [

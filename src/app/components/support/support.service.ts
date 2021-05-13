@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { API } from "src/environments/environment";
+import { environment }from "src/environments/environment";
 import { SupportFilter } from "./support-filter.model";
 // import { userInfo } from "os";
 
@@ -11,7 +11,7 @@ export class SupportService {
   constructor(private http: HttpClient) {}
 
   getUsers(filter: SupportFilter, pageIndex?, pageSize?) {
-    let url = API.BASE_URL + "/cms/customer-portal/users";
+    let url = environment.apiUrl + "/cms/customer-portal/users";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -49,7 +49,7 @@ export class SupportService {
   }
 
   getPackageInformation(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/package/" + filter.userId;
+    let url = environment.apiUrl + "/cms/customer-portal/package/" + filter.userId;
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -63,7 +63,7 @@ export class SupportService {
   }
 
   getSeasonInformation(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/season/" + filter.userId;
+    let url = environment.apiUrl + "/cms/customer-portal/season/" + filter.userId;
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -77,7 +77,7 @@ export class SupportService {
   }
 
   getVideoInformation(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/content/" + filter.userId;
+    let url = environment.apiUrl + "/cms/customer-portal/content/" + filter.userId;
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -91,14 +91,14 @@ export class SupportService {
   }
 
   getSmartCardInformation(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/smartcards/" + filter.userId;
+    let url = environment.apiUrl + "/cms/customer-portal/smartcards/" + filter.userId;
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     return this.http.get<any>(url, { headers });
   }
 
   getRechargeInformation(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/recharge/" + filter.userId;
+    let url = environment.apiUrl + "/cms/customer-portal/recharge/" + filter.userId;
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -112,7 +112,7 @@ export class SupportService {
   }
 
   getWalletInformation(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/wallet/" + filter.userId;
+    let url = environment.apiUrl + "/cms/customer-portal/wallet/" + filter.userId;
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -126,13 +126,13 @@ export class SupportService {
   }
 
   getUserCount() {
-    let url = API.BASE_URL + "/cms/customer-portal/users-count";
+    let url = environment.apiUrl + "/cms/customer-portal/users-count";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getSupportTickets(filter: SupportFilter, pageIndex?, pageSize?) {
-    let url = API.BASE_URL + "/cms/customer-portal/support";
+    let url = environment.apiUrl + "/cms/customer-portal/support";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -167,44 +167,44 @@ export class SupportService {
   }
 
   getPackageCount(id: string) {
-    let url = API.BASE_URL + "/cms/customer-portal/package-count/" + id;
+    let url = environment.apiUrl + "/cms/customer-portal/package-count/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getRechargeHistoryCount(id: string) {
-    let url = API.BASE_URL + "/cms/customer-portal/recharge-count/" + id;
+    let url = environment.apiUrl + "/cms/customer-portal/recharge-count/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getWalletCount(id: string) {
-    let url = API.BASE_URL + "/cms/customer-portal/wallet-count/" + id;
+    let url = environment.apiUrl + "/cms/customer-portal/wallet-count/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getVideoCount(id: string) {
-    let url = API.BASE_URL + "/cms/customer-portal/content-count/" + id;
+    let url = environment.apiUrl + "/cms/customer-portal/content-count/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getSeasonCount(id: string) {
-    let url = API.BASE_URL + "/cms/customer-portal/season-count/" + id;
+    let url = environment.apiUrl + "/cms/customer-portal/season-count/" + id;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   removeSmartcard(userId: string, smartCardNumber: string) {
     let url =
-      API.BASE_URL + `/cms/customer-portal/smartcards/${userId}/${smartCardNumber}`;
+      environment.apiUrl + `/cms/customer-portal/smartcards/${userId}/${smartCardNumber}`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.delete<any>(url, { headers });
   }
 
   getSupportCount(filter: SupportFilter) {
-    let url = API.BASE_URL + "/cms/customer-portal/support-count";
+    let url = environment.apiUrl + "/cms/customer-portal/support-count";
     let headers = new HttpHeaders().set("Accept", "application/json");
     let params: any = {};
 
@@ -234,7 +234,7 @@ export class SupportService {
   }
   updateStatus(row: any): Observable<Object> {
     let headers = new HttpHeaders();
-    const endpoint = API.BASE_URL + "/cms/customer-portal/change-ticket-status";
+    const endpoint = environment.apiUrl + "/cms/customer-portal/change-ticket-status";
     const userData = JSON.parse(localStorage.getItem("currentUser"));
     console.log("UD=", userData);
     return this.http.post(
@@ -249,12 +249,12 @@ export class SupportService {
   }
 
   cancelSubscriptionReq(data) {
-    let url = API.BASE_URL + "/cms/cancelSubscriptionReq";
+    let url = environment.apiUrl + "/cms/cancelSubscriptionReq";
     return this.http.post(url, data);
   }
 
   refundMoneyReq(data) {
-    let url = API.BASE_URL + "/cms/refundMoneyReq";
+    let url = environment.apiUrl + "/cms/refundMoneyReq";
     return this.http.post(url, data);
   }
 }

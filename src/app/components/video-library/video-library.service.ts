@@ -3,7 +3,7 @@ import { VideoLibraryFilter } from "./video-library-filter";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { API } from "src/environments/environment";
+import { environment }from "src/environments/environment";
 
 @Injectable()
 export class VideoLibraryService {
@@ -12,7 +12,7 @@ export class VideoLibraryService {
   videoLibraryList: VideoLibrary[] = [];
 
   findById(id: string): Observable<VideoLibrary> {
-    let url = API.BASE_URL + "/cms/cdn/" + id;
+    let url = environment.apiUrl + "/cms/cdn/" + id;
     // let params = { "id": id };
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<VideoLibrary>(url, { headers });
@@ -30,7 +30,7 @@ export class VideoLibraryService {
   // }
 
   find(index?, size?, filter?): Observable<VideoLibrary[]> {
-    let url = API.BASE_URL + "/cms/cdn-list";
+    let url = environment.apiUrl + "/cms/cdn-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     if (index || size) {
@@ -47,25 +47,25 @@ export class VideoLibraryService {
   }
 
   save(entity: VideoLibrary): Observable<VideoLibrary> {
-    let url = API.BASE_URL + "/cms/cdn/create";
+    let url = environment.apiUrl + "/cms/cdn/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<VideoLibrary>(url, entity, { headers });
   }
 
   delete(id: string) {
-    let url = API.BASE_URL + `/cms/cdn/${id}/`;
+    let url = environment.apiUrl + `/cms/cdn/${id}/`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.delete<any>(url, { headers });
   }
 
   update(data: any) {
-    let url = API.BASE_URL + `/cms/cdn/${data._id}/update`;
+    let url = environment.apiUrl + `/cms/cdn/${data._id}/update`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.put<any>(url, data, { headers });
   }
 
   getCount() {
-    let url = API.BASE_URL + `/cms/count/cdn`;
+    let url = environment.apiUrl + `/cms/count/cdn`;
     return this.http.get(url);
   }
 }

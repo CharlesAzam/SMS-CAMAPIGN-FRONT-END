@@ -7,7 +7,6 @@ import { VodEditComponent, AddSeasonsDialog, AddEpisodesDialog, AddMultipleImage
 import { VodService } from './vod.service';
 import { VOD_ROUTES } from './vod.routes';
 import { MaterialModule } from 'src/app/modules/app-material.module';
-import { NZorroModules } from 'src/app/modules/app-nzorro.module';
 
 
 @NgModule({

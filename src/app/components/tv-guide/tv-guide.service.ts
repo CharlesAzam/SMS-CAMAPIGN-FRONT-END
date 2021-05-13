@@ -3,7 +3,7 @@ import { GuideFilter } from "./tv-guide-filter";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { API } from "src/environments/environment";
+import { environment }from "src/environments/environment";
 // const API_URL = 'http://localhost:3000/cms'
 
 @Injectable()
@@ -13,7 +13,7 @@ export class GuideService {
   guideList: Guide[] = [];
 
   findById(id: string): Observable<Guide> {
-    let url = API.BASE_URL + `/cms/program/${id}`;
+    let url = environment.apiUrl + `/cms/program/${id}`;
 
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<Guide>(url, { headers });
@@ -21,7 +21,7 @@ export class GuideService {
 
   uploadUrl(fileToUpload: File): Observable<Object> {
     let headers = new HttpHeaders();
-    const endpoint = API.BASE_URL + "/cms/upload-file";
+    const endpoint = environment.apiUrl + "/cms/upload-file";
     const formData: FormData = new FormData();
     console.log("fileToUpload", fileToUpload);
     formData.append("file", fileToUpload, fileToUpload.name);
@@ -41,7 +41,7 @@ export class GuideService {
   }
 
   find(pageIndex?, pageSize?, filter?): Observable<Guide[]> {
-    let url = API.BASE_URL + "/cms/program-list";
+    let url = environment.apiUrl + "/cms/program-list";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     if (pageIndex || pageSize || filter) {
@@ -58,30 +58,30 @@ export class GuideService {
   }
 
   delete(id: string) {
-    let url = API.BASE_URL + `/cms/program/${id}/`;
+    let url = environment.apiUrl + `/cms/program/${id}/`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.delete<any>(url, { headers });
   }
 
   update(data: Guide) {
-    let url = API.BASE_URL + `/cms/program/${data._id}/update`;
+    let url = environment.apiUrl + `/cms/program/${data._id}/update`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.put<any>(url, data, { headers });
   }
 
   save(entity: Guide): Observable<Guide> {
-    let url = API.BASE_URL + "/cms/program/create";
+    let url = environment.apiUrl + "/cms/program/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<Guide>(url, entity, { headers });
   }
   bulkUpload(entity: Guide[]): Observable<Guide[]> {
-    let url = API.BASE_URL + "/cms/program-list/create";
+    let url = environment.apiUrl + "/cms/program-list/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<Guide[]>(url, entity, { headers });
   }
 
   getCount() {
-    let url = API.BASE_URL + `/cms/count/programs`;
+    let url = environment.apiUrl + `/cms/count/programs`;
     return this.http.get(url);
   }
 }

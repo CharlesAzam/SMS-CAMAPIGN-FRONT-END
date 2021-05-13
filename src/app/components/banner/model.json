@@ -2,7 +2,7 @@
     "title": "Banner",
     "entity": "banner",
     "api": {
-        "url": "API.BASE_URLapi/vod"
+        "url": "environment.apiUrlapi/vod"
     },
     "filter": [
         "name"

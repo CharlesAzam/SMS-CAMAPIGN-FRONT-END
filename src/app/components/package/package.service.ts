@@ -4,7 +4,7 @@ import { PackageFilter } from './package-filter';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { API } from 'src/environments/environment';
+import { environment }from 'src/environments/environment';
 
 @Injectable()
 export class PackageService {
@@ -16,7 +16,7 @@ export class PackageService {
 
     // Azam packages list 
     findAzamPackageMappingList() {
-        let url = API.BASE_URL + '/cms/azam-plans';
+        let url = environment.apiUrl + '/cms/azam-plans';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<any>(url, { headers })
@@ -24,7 +24,7 @@ export class PackageService {
 
 
     findCountryCodes() {
-        let url = API.BASE_URL + '/api/country-currency-codes'
+        let url = environment.apiUrl + '/api/country-currency-codes'
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<any>(url, { headers })
@@ -32,14 +32,14 @@ export class PackageService {
 
 
     findContent() {
-        let url = API.BASE_URL + '/cms/content/vod'
+        let url = environment.apiUrl + '/cms/content/vod'
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<any>(url, { headers })
     }
 
     findPackageList(pageNumber?, size?, filter?) {
-        let url = API.BASE_URL + '/cms/package-list'
+        let url = environment.apiUrl + '/cms/package-list'
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
@@ -60,7 +60,7 @@ export class PackageService {
 
 
     findById(id: string): Observable<Package> {
-        let url = API.BASE_URL + '/cms/package/' + id;
+        let url = environment.apiUrl + '/cms/package/' + id;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.get<Package>(url, { headers });
@@ -78,7 +78,7 @@ export class PackageService {
     }
 
     find(filter?: PackageFilter): Observable<Package[]> {
-        let url = API.BASE_URL + '/cms/package-list';
+        let url = environment.apiUrl + '/cms/package-list';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
@@ -86,26 +86,26 @@ export class PackageService {
     }
 
     save(entity: Package): Observable<Package> {
-        let url = API.BASE_URL + '/cms/package/create';
+        let url = environment.apiUrl + '/cms/package/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<Package>(url, entity, { headers });
     }
 
     getCount() {
-        let url = API.BASE_URL + `/cms/count/package`;
+        let url = environment.apiUrl + `/cms/count/package`;
         return this.http.get(url);
     }
 
     delete(packageDef: any) {
-        let url = API.BASE_URL + `/cms/package/${packageDef._id}/delete`;
+        let url = environment.apiUrl + `/cms/package/${packageDef._id}/delete`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<any>(url, {}, { headers });
     }
 
     update(packageDef: any) {
-        let url = API.BASE_URL + `/cms/package/${packageDef._id}/update`;
+        let url = environment.apiUrl + `/cms/package/${packageDef._id}/update`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<Package>(url, packageDef, { headers });

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { API } from "src/environments/environment";
+import { environment }from "src/environments/environment";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import { SupportFilter } from "../support/support-filter.model";
@@ -37,7 +37,7 @@ export class ReportService {
   }
 
   getCollectionSummary(filter?: SupportFilter) {
-    let url = API.BASE_URL + "/cms/reports/summary?type=COLL_SUM";
+    let url = environment.apiUrl + "/cms/reports/summary?type=COLL_SUM";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -71,7 +71,7 @@ export class ReportService {
   }
 
   getDetailedCollection(filter?: SupportFilter) {
-    let url = API.BASE_URL + "/cms/reports/summary?type=COLL_DET";
+    let url = environment.apiUrl + "/cms/reports/summary?type=COLL_DET";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -107,7 +107,7 @@ export class ReportService {
   getCollectionSummaryCount() {}
 
   getTransactions(filter?: SupportFilter) {
-    let url = API.BASE_URL + "/cms/reports/summary?type=TRNCS_SUM";
+    let url = environment.apiUrl + "/cms/reports/summary?type=TRNCS_SUM";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -141,7 +141,7 @@ export class ReportService {
   }
 
   getUserReports(filter?: SupportFilter) {
-    let url = API.BASE_URL + "/cms/reports/summary";
+    let url = environment.apiUrl + "/cms/reports/summary";
     let headers = new HttpHeaders().set("Accept", "application/json");
 
     let params: any = {};
@@ -182,46 +182,46 @@ export class ReportService {
 
     if (filter.pageSize) params.size = filter.pageSize;
     if (filter.pageIndex) params.pageNumber = filter.pageIndex;
-    let url = API.BASE_URL + "/cms/reports/" + subscriptionType;
+    let url = environment.apiUrl + "/cms/reports/" + subscriptionType;
     return this.http.get(url, { params });
   }
 
   cancelSubscription(data) {
-    let url = API.BASE_URL + "/cms/cancelSubscription";
+    let url = environment.apiUrl + "/cms/cancelSubscription";
     return this.http.post(url, data);
   }
 
   refundMoney(data) {
-    let url = API.BASE_URL + "/cms/refundMoney";
+    let url = environment.apiUrl + "/cms/refundMoney";
     return this.http.post(url, data);
   }
 
   getPackageCount() {
-    let url = API.BASE_URL + "/cms/reports/confirm-package";
+    let url = environment.apiUrl + "/cms/reports/confirm-package";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getRechargeHistoryCount() {
-    let url = API.BASE_URL + "/cms/reports/confirm-recharge";
+    let url = environment.apiUrl + "/cms/reports/confirm-recharge";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getVideoCount() {
-    let url = API.BASE_URL + "/cms/reports/confirm-content";
+    let url = environment.apiUrl + "/cms/reports/confirm-content";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getSeasonCount() {
-    let url = API.BASE_URL + "/cms/reports/confirm-season";
+    let url = environment.apiUrl + "/cms/reports/confirm-season";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.get<any>(url, { headers });
   }
 
   getSubscriptionReport(filter) {
-    let url = API.BASE_URL + "/cms/reports/summary";
+    let url = environment.apiUrl + "/cms/reports/summary";
     let headers = new HttpHeaders().set("Accept", "application/json");
     let params: any = {};
     if (filter.type) params.type = filter.type;
@@ -240,7 +240,7 @@ export class ReportService {
   }
 
   getInvoiceReport(filter) {
-    let url = API.BASE_URL + "/cms/reports/summary?type=INVOICE";
+    let url = environment.apiUrl + "/cms/reports/summary?type=INVOICE";
     let headers = new HttpHeaders().set("Accept", "application/json");
     let params: any = {};
 
@@ -258,7 +258,7 @@ export class ReportService {
   }
 
   getVendorConfigurationList(page, size) {
-    let url = API.BASE_URL + "/cms/channelprovider-list";
+    let url = environment.apiUrl + "/cms/channelprovider-list";
     let params: any = {};
 
     if (page) params.page = page;
@@ -269,35 +269,35 @@ export class ReportService {
   }
 
   getVendorConfigurationById(vendorId) {
-    let url = API.BASE_URL + "/cms/channelprovider/" + vendorId;
+    let url = environment.apiUrl + "/cms/channelprovider/" + vendorId;
     return this.http.get<any>(url);
   }
 
   createVendorConfiguration(data) {
-    let url = API.BASE_URL + "/cms/channelprovider/create";
+    let url = environment.apiUrl + "/cms/channelprovider/create";
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.post<any>(url, data, { headers });
   }
 
   updateVendorConfiguration(vendorConfigData: any) {
     let url =
-      API.BASE_URL + `/cms/channelprovider/${vendorConfigData._id}/update`;
+      environment.apiUrl + `/cms/channelprovider/${vendorConfigData._id}/update`;
     let headers = new HttpHeaders().set("Accept", "application/json");
     return this.http.put<any>(url, vendorConfigData, { headers });
   }
 
   delete(vendorConfigId: any) {
-    let url = API.BASE_URL + "/cms/channelprovider/" + vendorConfigId;
+    let url = environment.apiUrl + "/cms/channelprovider/" + vendorConfigId;
     return this.http.delete<any>(url);
   }
 
   getVendorUsers() {
-    let url = API.BASE_URL + "/cms/getChannelProviderUser";
+    let url = environment.apiUrl + "/cms/getChannelProviderUser";
     return this.http.get<any>(url);
   }
 
   fetchReportSubtypes() {
-    let url = API.BASE_URL + "/cms/reports/subtypes";
+    let url = environment.apiUrl + "/cms/reports/subtypes";
     return this.http.post<any>(url, {});
   }
 

@@ -168,5 +168,6 @@ export class MobileTagsComponent implements OnInit, AfterViewInit {
       data.pageIndex + 1,
       data.pageSize
     );
+    return data;
   }
 }

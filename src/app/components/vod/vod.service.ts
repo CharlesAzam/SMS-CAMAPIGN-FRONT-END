@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable,Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { API } from 'src/environments/environment';
+import { environment }from 'src/environments/environment';
 
 @Injectable()
 export class VodService {
@@ -19,7 +19,7 @@ export class VodService {
 
     uploadUrl(fileToUpload: File): Observable<Object> {
         let headers = new HttpHeaders()
-        const endpoint = API.BASE_URL + '/cms/upload-file';
+        const endpoint = environment.apiUrl + '/cms/upload-file';
         const formData: FormData = new FormData();
         console.log("fileToUpload", fileToUpload)
         formData.append('file', fileToUpload, fileToUpload.name);
@@ -29,7 +29,7 @@ export class VodService {
 
 
     findById(id: string): Observable<Vod> {
-        let url = API.BASE_URL + '/cms/get-content/' + id;
+        let url = environment.apiUrl + '/cms/get-content/' + id;
 
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
@@ -48,7 +48,7 @@ export class VodService {
     }
 
     find(route: String, pageNumber?: string, size?: string, filter?: string): Observable<Vod[]> {
-        let url = API.BASE_URL + '/cms/content/' + route;
+        let url = environment.apiUrl + '/cms/content/' + route;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
 
@@ -67,21 +67,21 @@ export class VodService {
     }
 
     save(entity: Vod): Observable<any> {
-        let url = API.BASE_URL + '/cms/content/create';
+        let url = environment.apiUrl + '/cms/content/create';
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.post<any>(url, entity, { headers });
     }
 
     update(data: Vod) {
-        let url = API.BASE_URL + `/cms/content/${data._id}/update`;
+        let url = environment.apiUrl + `/cms/content/${data._id}/update`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<any>(url, data, { headers });
     }
 
     delete(data: Vod) {
-        let url = API.BASE_URL + `/cms/content/${data._id}/delete`;
+        let url = environment.apiUrl + `/cms/content/${data._id}/delete`;
         let headers = new HttpHeaders()
             .set('Accept', 'application/json');
         return this.http.put<any>(url, data, { headers });
@@ -89,12 +89,12 @@ export class VodService {
 
 
     getCount(contentType) {
-        let url = API.BASE_URL + `/cms/count/content/${contentType}`;
+        let url = environment.apiUrl + `/cms/count/content/${contentType}`;
         return this.http.get(url);
     }
 
     getCount2(contentType) {
-        let url = API.BASE_URL + `/cms/count/content/${contentType}`;
+        let url = environment.apiUrl + `/cms/count/content/${contentType}`;
         return this.http.get<any>(url).pipe(map(result=>{
             console.log("This is return value \n"+JSON.stringify(result));
             return result;
@@ -106,7 +106,7 @@ export class VodService {
     }
 
     getChannels(){
-        let url = API.BASE_URL + `/cms/channels`;
+        let url = environment.apiUrl + `/cms/channels`;
         return this.http.get(url);
     }
 }

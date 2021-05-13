@@ -5,7 +5,6 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { EditorModule } from "@tinymce/tinymce-angular";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./modules/app-material.module";
@@ -24,7 +23,6 @@ import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/M
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
 import { LanguageService } from "./services/language.service";
 import { CountryService } from "./services/coutry.service";
-import { ProgramModule } from "./components/programs/program.module";
 import { MatInputModule } from "@angular/material";
 import { LeagueService } from "./services/league.service";
 import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
@@ -77,8 +75,6 @@ import {ContentSuggestionService} from './services/suggestion.service';
     VideoLibraryModule,
     BannerModule,
     GuideModule,
-    EditorModule,
-    ProgramModule,
     ReactiveFormsModule,
     ReportsModule,
     SupportModule,

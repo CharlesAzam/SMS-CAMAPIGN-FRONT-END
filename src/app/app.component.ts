@@ -6,7 +6,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AzamCMS';
+  title = 'AzamTV Max CMS';
 
   mySubscription;
 

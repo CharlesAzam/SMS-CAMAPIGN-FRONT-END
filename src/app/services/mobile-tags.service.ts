@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MobileTags } from '../../app/models/mobile-tags'
-import { API } from 'src/environments/environment';
+import { environment }from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class MobileTagsService {
   constructor(private http: HttpClient) { }
 
   find(pageNumber?, size?, language?, filter?) {
-    let url = API.BASE_URL + '/cms/tag-list';
+    let url = environment.apiUrl + '/cms/tag-list';
     //let params = { "name": "mimi","type":"low" };
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
@@ -41,35 +41,35 @@ export class MobileTagsService {
   }
 
   findById(id: string) {
-    let url = API.BASE_URL + '/cms/tag/' + id;
+    let url = environment.apiUrl + '/cms/tag/' + id;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.get<any>(url, { headers });
   }
 
   save(data: MobileTags) {
-    let url = API.BASE_URL + '/cms/tag/create';
+    let url = environment.apiUrl + '/cms/tag/create';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.post<any>(url, data, { headers });
   }
 
   update(data: MobileTags) {
-    let url = API.BASE_URL + `/cms/tag/${data._id}/update`;
+    let url = environment.apiUrl + `/cms/tag/${data._id}/update`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.put<any>(url, data, { headers });
   }
 
   delete(id: string) {
-    let url = API.BASE_URL + `/cms/tag/${id}/`;
+    let url = environment.apiUrl + `/cms/tag/${id}/`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.put<any>(url, { headers });
   }
 
   getCount(language?) {
-    let url = API.BASE_URL + `/cms/count/tags${language ? '?language=' + language : ''}`;
+    let url = environment.apiUrl + `/cms/count/tags${language ? '?language=' + language : ''}`;
     return this.http.get(url);
   }
 
