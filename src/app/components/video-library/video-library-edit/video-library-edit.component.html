@@ -9,7 +9,7 @@
           <p *ngIf="errors">{{ errors }}</p>
 
           <form #videoLibraryForm="ngForm">
-            <mat-form-field style="width: 100%;">
+            <mat-form-field style="width: 100%">
               <input
                 matInput
                 placeholder="Name"
@@ -23,7 +23,7 @@
               >
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;">
+            <mat-form-field style="width: 100%">
               <input
                 matInput
                 placeholder="Stream URL Android"
@@ -37,7 +37,7 @@
               >
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;">
+            <mat-form-field style="width: 100%">
               <input
                 matInput
                 placeholder="Stream URL IOS"
@@ -51,7 +51,7 @@
               >
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;">
+            <mat-form-field style="width: 100%">
               <input
                 matInput
                 placeholder="Nagra Content ID"
@@ -70,7 +70,9 @@
                 [disabled]="videoLibraryForm.form.invalid"
                 (click)="save()"
                 class="btn btn-default"
+                mat-raised-button
               >
+                <mat-icon>save</mat-icon>
                 Save
               </button>
             </div>

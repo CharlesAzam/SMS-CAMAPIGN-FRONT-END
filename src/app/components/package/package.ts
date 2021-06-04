@@ -7,6 +7,9 @@ export class Package {
     isFree: boolean = false;
     azamPackageMappingName: string;
     isVodAllowed: boolean = false;
+    appleProductId: string;
+    imageUrl: string;
+    isSmartcardAddOn: boolean;
     link: string;
     validityInDays: string;
     countryDetail: any;
