@@ -10,6 +10,7 @@ import { VodService } from "../../vod/vod.service";
 import { CountryService } from "src/app/services/coutry.service";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSelect, MatOption } from "@angular/material";
 import { AppleProduct } from "../apple-product";
+import { ErrorDialog } from "../../error-dialog/dialog-error";
 
 @Component({
   selector: "package-edit",
@@ -54,8 +55,8 @@ export class PackageEditComponent implements OnInit {
     isSmartcardAddOn: new FormControl(""),
     validityInDays: new FormControl(""),
     status: new FormControl(""),
-    liveTvContent: new FormControl(""),
-    vodContent: new FormControl(""),
+    liveTvContent: new FormControl([]),
+    vodContent: new FormControl([]),
     appleProductId: new FormControl("")
   });
 
@@ -103,8 +104,8 @@ export class PackageEditComponent implements OnInit {
             isSmartcardAddOn: String(this.packageDef.isSmartcardAddOn)
               ? String(this.packageDef.isSmartcardAddOn)
               : "",
-            liveTvContent: this.packageDef.content ? this.packageDef.content.filter((pack) => pack.vodType !== 'VIDEO').map((pack) => pack._id) : "",
-            vodContent: this.packageDef.content ? this.packageDef.content.filter((pack) => pack.vodType === 'VIDEO').map((pack) => pack._id) : "",
+            liveTvContent: this.packageDef.content ? this.packageDef.content.filter((pack) => pack.vodType !== 'VIDEO').map((pack) => pack._id) : [],
+            vodContent: this.packageDef.content ? this.packageDef.content.filter((pack) => pack.vodType === 'VIDEO').map((pack) => pack._id) : [],
             azamPackageMappingName: this.packageDef.azamPackageMappingName
               ? this.packageDef.azamPackageMappingName
               : "",
@@ -153,7 +154,6 @@ export class PackageEditComponent implements OnInit {
       },
       err => {
         console.log(err);
-        // this.router.navigate([''])
       }
     );
   }
@@ -230,27 +230,44 @@ export class PackageEditComponent implements OnInit {
       Object.assign(this.packageDef, this.packageForm.value);
       delete this.packageDef.content;
       this.packageDef.content = this.packageForm.value['liveTvContent'].concat(this.packageForm.value['vodContent']);
-      console.log(this.packageDef.content.length);
       this.packageService.update(this.packageDef).subscribe(
         (response: any) => {
-          console.log(response);
-          if (response.status || response.Code) {
+          if (response.success && response.Code === 200) {
             this.errors = "Update was successful!";
             this.back();
+          } else {
+            this.errors = "Error saving";
           }
         },
         err => {
-          this.errors = "Error saving";
+          this.dialog
+            .open(ErrorDialog, {
+              width: "400px",
+              data: {
+                title: "Error",
+                message: `Error occurred while updating package `,
+              },
+            })
+          this.errors = "Error updating";
         }
       );
     } else {
       const data = { ...this.packageForm.value, content: this.packageForm.value['liveTvContent'].concat(this.packageForm.value['vodContent']) }
       this.packageService.save(data).subscribe(
         (response: any) => {
-          console.log(response);
-          if (response.status || response.Code) {
+          if (response.success && response.Code === 200) {
             this.errors = "Save was successful!";
             this.back();
+          } else {
+            this.dialog
+              .open(ErrorDialog, {
+                width: "400px",
+                data: {
+                  title: "Error",
+                  message: `Error occurred while creating new package `,
+                },
+              })
+            this.errors = "Error saving";
           }
         },
         err => {

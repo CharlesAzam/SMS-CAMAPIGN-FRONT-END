@@ -45,7 +45,6 @@
               <mat-select
                 #contentSelction
                 formControlName="vodContent"
-                required
                 multiple
               >
                 <mat-option
@@ -73,7 +72,7 @@
 
             <mat-form-field style="width: 100%">
               <mat-label>Azam Package Mapping Name</mat-label>
-              <mat-select formControlName="azamPackageMappingName">
+              <mat-select formControlName="azamPackageMappingName" required>
                 <mat-option
                   *ngFor="let package of azamPackages"
                   [value]="package.planCode"
