@@ -16,6 +16,7 @@ import { VendorReportConfigComponent } from './vendor-reports/vendor-reports.com
 import { VendorDialogComponent } from './dialog-vendor-details/vendor-dialog.component';
 import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 import { PackageWiseRevenueReport } from './package-revenue-recognition/revenue-recognition-report.component';
+import { SubscriberCountReportsComponent } from './subscriber-count-reports/subscriber-count-reports.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { PackageWiseRevenueReport } from './package-revenue-recognition/revenue-
     InvoiceReportComponent,
     RevenueReportComponent,
     VendorDialogComponent,
-    PackageWiseRevenueReport
+    PackageWiseRevenueReport,
+    SubscriberCountReportsComponent
   ],
   providers: [
     ReportService

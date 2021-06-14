@@ -23,7 +23,7 @@ export class UserReportComponet implements OnInit {
   datasource = new MatTableDataSource<any>([])
   protected _onDestroy = new Subject<void>();
 
-  method: any;
+  method: any='';
   country: any;
   filter: SupportFilter;
 
