@@ -9,6 +9,7 @@ import { RevenueReportComponent } from './revenue-recognition/revenue-recognitio
 import { VendorReportConfigComponent } from './vendor-reports/vendor-reports.component';
 import { DetailedCollectionReportComponent } from './detailed-collection-reports/collection-report.component';
 import { PackageWiseRevenueReport } from './package-revenue-recognition/revenue-recognition-report.component';
+import { SubscriberCountReportsComponent } from './subscriber-count-reports/subscriber-count-reports.component';
 
 export const REPORT_ROUTES: Routes = [
   {
@@ -55,5 +56,9 @@ export const REPORT_ROUTES: Routes = [
   {
     path: 'vendors',
     component: VendorReportConfigComponent
-  }
+  },
+  {
+    path: 'subscriptions-count',
+    component: SubscriberCountReportsComponent
+  },
 ]

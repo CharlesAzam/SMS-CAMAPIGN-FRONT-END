@@ -176,6 +176,24 @@ export class ReportService {
     return this.http.get(url, { params, headers });
   }
 
+  getSubscriberCount(filter?: SupportFilter) {
+    let url = environment.apiUrl + "/cms/reports/subscriber-count";
+    let headers = new HttpHeaders().set("Accept", "application/json");
+
+    let params: any = {};
+    if (filter.from) params.from = filter.from;
+
+    if (filter.to) params.to = filter.to;
+
+    if (filter.today) params.today = filter.today;
+
+    if (filter.week) params.week = true;
+
+    if (filter.month) params.month = true;
+
+    return this.http.get(url, { params, headers });
+  }
+
   getCancellationRequests(filter: SupportFilter, subscriptionType: string) {
     let params: any = {};
     if (filter.type) params.type = filter.type;
