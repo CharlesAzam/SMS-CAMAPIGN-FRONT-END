@@ -16,8 +16,16 @@ interface Delivery {
   styleUrls: ['./sms-campaign.component.css']
 })
 export class SmsCampaignComponent implements OnInit {
-
-  constructor() { }
+  list : any[];
+  constructor() { 
+    this.list = 
+      [
+        {name :'India',checked : false},
+        {name :'US',checked : false},
+        {name :'China',checked : false},
+        {name :'France',checked : false}
+      ]
+  }
   panelOpenState = false;
 
   Channels: Channel[] = [
@@ -31,6 +39,14 @@ export class SmsCampaignComponent implements OnInit {
     {value: 'pizza-1', viewValue: 'Pizza'},
     {value: 'tacos-2', viewValue: 'Tacos'}
   ]
+
+  shareCheckedList(item:any[]){
+    console.log(item);
+  }
+  shareIndividualCheckedList(item:{}){
+    console.log(item);
+  }
+
   ngOnInit() {
   }
 

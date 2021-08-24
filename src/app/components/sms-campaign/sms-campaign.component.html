@@ -20,6 +20,12 @@
       </mat-card>
     </div>
 
+    <app-multi-select-dropdown
+ [list]="list"
+ (shareCheckedList)="shareCheckedList($event)" 
+ (shareIndividualCheckedList)="shareIndividualCheckedList($event)">
+</app-multi-select-dropdown>
+
     <div class="row">
       <div class="mid">
         <div class="mid-right">
