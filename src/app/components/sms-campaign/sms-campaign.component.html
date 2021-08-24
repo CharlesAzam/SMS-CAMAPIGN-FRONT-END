@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="main-content-style">
+    <div class="col">
+      <h4>Campaign</h4>
+    </div>
+
+    <div class="row">
+      <mat-card class="mid">
+        <div>
+          <button mat-raised-button>
+            <mat-icon color="primary">date_range</mat-icon> Between
+          </button>
+        </div>
+        <div class="mid-left">
+          <div style="margin-top: 5px; margin-right: 20px">Create Campaign</div>
+          <button mat-raised-button>
+            <mat-icon color="primary">add_circle</mat-icon> Campaign
+          </button>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="row">
+      <div class="mid">
+        <div class="mid-right">
+          <div style="margin-right: 5px">
+            <mat-form-field appearance="outline">
+              <mat-icon matSuffix>search</mat-icon>
+              <input matInput placeholder="Search" />
+            </mat-form-field>
+          </div>
+          <div style="margin-right: 5px">
+            <mat-form-field
+              style="height: 15px !important"
+              appearance="outline"
+            >
+              <mat-label>Channel</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let Channel of Channels"
+                  [value]="Channel.value"
+                >
+                  {{ Channel.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div style="margin-right: 5px">
+            <mat-form-field
+              style="height: 15px !important"
+              appearance="outline"
+            >
+              <mat-label>Delivery</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let Channel of Channels"
+                  [value]="Channel.value"
+                >
+                  {{ Channel.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div style="margin-right: 5px">
+            <mat-form-field
+              style="height: 15px !important"
+              appearance="outline"
+            >
+              <mat-label>Status</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let Channel of Channels"
+                  [value]="Channel.value"
+                >
+                  {{ Channel.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div style="margin-right: 5px">
+            <mat-form-field
+              style="height: 15px !important"
+              appearance="outline"
+            >
+              <mat-label
+                ><mat-icon color="primary">add</mat-icon> Filter</mat-label
+              >
+              <mat-select>
+                <mat-option
+                  *ngFor="let Channel of Channels"
+                  [value]="Channel.value"
+                >
+                  {{ Channel.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>

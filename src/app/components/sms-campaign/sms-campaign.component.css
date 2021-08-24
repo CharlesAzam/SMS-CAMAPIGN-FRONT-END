@@ -1,0 +1,75 @@
+.title{
+    width: 200px;
+}
+
+.mid{
+    width: 1000px;
+    display: flex;
+    flex: 1;
+    /* flex-direction: row; */
+    /* align-items: center; */
+    align-content: space-between;
+    justify-items: flex-start;
+    justify-content: space-between;
+    /* background-color: aqua; */
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 200px;
+}
+
+.mid-left{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    /* flex-direction: row; */
+    /* align-items: center; */
+    align-content:space-between;
+    justify-items: flex-start;
+    justify-content:flex-end 
+}
+
+.mid-right{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-content:space-evenly;
+    justify-items: flex-start;
+    justify-content:flex-start; 
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.main-content-style{
+ display: flex;
+ flex: 1;
+ flex-direction: column;
+ align-content: flex-start;
+ background-color: yellow;
+ position:absolute;
+ right: 315px;
+}
+
+mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.5);
+    width: 33.33333%;
+}
+
+.container{
+    padding: 10px !important;
+}
+
+/* ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-10.1em) scale(.40);
+    width: 20%;
+} */
+
+/* <div class="row">
+<mat-icon style="position:absolute; right:8px;top:8px;"color="primary">search</mat-icon>
+<input style="position:relative;" class="form-control "  name="UserName"  type="text"   placeholder="Search by Name or ID" >
+</div> */

@@ -3,7 +3,7 @@
     <button mat-button (click)="sidenav.toggle()">
       <mat-icon color="primary">menu</mat-icon>
     </button>
-    <img style="height: 30px !important;" src="/assets/azam-logo.png" />
+    <img style="height: 30px !important" src="/assets/azam-logo.png" />
   </div>
 
   <div>
@@ -28,8 +28,16 @@
         <span>Roles</span>
       </button>
 
-      <button *ngIf="userInfo.isSuperAdmin == true" mat-menu-item [routerLink]="['admin/notification']">
-        <span>Notification <img src="https://img.icons8.com/android/12/000000/appointment-reminders.png"/></span>
+      <button
+        *ngIf="userInfo.isSuperAdmin == true"
+        mat-menu-item
+        [routerLink]="['admin/notification']"
+      >
+        <span
+          >Notification
+          <img
+            src="https://img.icons8.com/android/12/000000/appointment-reminders.png"
+        /></span>
       </button>
 
       <button mat-menu-item (click)="logout()">
@@ -51,15 +59,13 @@
   >
     <mat-nav-list>
       <mat-list-item routerLink="dashboard" class="parent">
-        <mat-icon color="primary" style="margin-right: 5px;"
-          >dashboard</mat-icon
-        >
+        <mat-icon color="primary" style="margin-right: 5px">dashboard</mat-icon>
 
         <span class="full-width">Dashboard</span>
       </mat-list-item>
 
       <mat-list-item (click)="showMobile = !showMobile" class="parent">
-        <mat-icon color="primary" style="margin-right: 5px;"
+        <mat-icon color="primary" style="margin-right: 5px"
           >smartphone</mat-icon
         >
         <span class="full-width" *ngIf="isExpanded || isShowing">Mobile</span>
@@ -126,8 +132,9 @@
           routerLink="video-library"
           >Video Library</a
         >
-        <a mat-list-item
-          routerLink="content-suggestion">Content Suggestion Config</a>
+        <a mat-list-item routerLink="content-suggestion"
+          >Content Suggestion Config</a
+        >
       </div>
 
       <mat-list-item
@@ -135,9 +142,7 @@
         (click)="showReports = !showReports"
         class="parent"
       >
-        <mat-icon color="primary" style="margin-right: 5px;"
-          >bar_chart</mat-icon
-        >
+        <mat-icon color="primary" style="margin-right: 5px">bar_chart</mat-icon>
         <span class="full-width" *ngIf="isExpanded || isShowing">Reports</span>
         <mat-icon
           class="menu-button"
@@ -194,15 +199,87 @@
             >Detailed</a
           >
         </div>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-user-reports')" routerLink="reports">Users Reports</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/transactions">Transaction Reports</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/requests">Requests</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/subscriptions">Subscription Reports</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/subscriptions-count">Subscription Count Reports</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/invoices">Invoice Reports</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/revenue">Revenue Reports</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/revenue-packagewise">Packagewise Revenue</a>
-        <a mat-list-item *ngIf="isModulePermitted('Reports-Portal', 'view-all') || isModulePermitted('Reports-Portal', 'view-transaction-reports')" routerLink="reports/vendors">Vendor Configuration</a>
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-user-reports')
+          "
+          routerLink="reports"
+          >Users Reports</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/transactions"
+          >Transaction Reports</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/requests"
+          >Requests</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/subscriptions"
+          >Subscription Reports</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/subscriptions-count"
+          >Subscription Count Reports</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/invoices"
+          >Invoice Reports</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/revenue"
+          >Revenue Reports</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/revenue-packagewise"
+          >Packagewise Revenue</a
+        >
+        <a
+          mat-list-item
+          *ngIf="
+            isModulePermitted('Reports-Portal', 'view-all') ||
+            isModulePermitted('Reports-Portal', 'view-transaction-reports')
+          "
+          routerLink="reports/vendors"
+          >Vendor Configuration</a
+        >
       </div>
 
       <mat-list-item
@@ -213,7 +290,7 @@
         (click)="showSupport = !showSupport"
         class="parent"
       >
-        <mat-icon color="primary" style="margin-right: 5px;">people</mat-icon>
+        <mat-icon color="primary" style="margin-right: 5px">people</mat-icon>
         <span class="full-width" *ngIf="isExpanded || isShowing">Support</span>
         <mat-icon
           class="menu-button"
@@ -223,7 +300,6 @@
           >expand_more
         </mat-icon>
       </mat-list-item>
-
       <div
         class="submenu"
         [ngClass]="{ expanded: showSupport }"
@@ -242,6 +318,10 @@
           >User Information</a
         >
       </div>
+      <mat-list-item  routerLink="campaign" class="parent">
+        <mat-icon color="primary" style="margin-right: 5px">message</mat-icon>
+        <span class="full-width">Campaign</span>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 
