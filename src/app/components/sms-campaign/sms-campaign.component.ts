@@ -99,9 +99,10 @@ export class SmsCampaignComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
-  @HostListener('window:resize', ['$event'])
+@HostListener('window:resize', ['$event'])
 onResize(event) {
   this.adjustCSSQuery = event.target.innerWidth;
   console.log(`width == ${this.adjustCSSQuery}`)
