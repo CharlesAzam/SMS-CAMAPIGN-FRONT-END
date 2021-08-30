@@ -10,6 +10,7 @@ import { MobileTagFormComponent } from "./components/mobileTags/mobileTagsForm/m
 import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/MobileSubCategoriesComponent";
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
 import { ContentSuggestionConfigComponent } from './components/content-suggestion-config/content-suggestion-config.component';
+import { SmsCampaignComponent } from "./components/sms-campaign/sms-campaign.component";
 
 
 import { AuthGuardService as AuthGuard } from "./services/auth-guard.service";
@@ -117,6 +118,10 @@ const routes: Routes = [
         loadChildren: "./components/admin/admin.module#AdminModule",
         canActivate: [AuthGuard],
       },
+      {
+        path:"campaign",
+        component:SmsCampaignComponent,
+      }
     ],
   },
 ];
