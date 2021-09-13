@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {
   MatCardModule,
   MatInputModule,
@@ -62,11 +62,13 @@ const modules = [
   MatExpansionModule,
   SatDatepickerModule, 
   SatNativeDateModule,
-  MatTooltipModule
+  MatTooltipModule,
 ];
 
+
+
 @NgModule({
-  imports: modules,
-  exports: modules,
+  imports: [modules,NgMultiSelectDropDownModule.forRoot()],
+  exports: [modules]
 })
 export class MaterialModule { }

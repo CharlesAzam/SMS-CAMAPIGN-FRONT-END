@@ -44,6 +44,7 @@ import {ContentSuggestionService} from './services/suggestion.service';
 import { SmsCampaignComponent } from './components/sms-campaign/list-campaign/sms-campaign.component';
 import { MultiSelectDropdownComponent } from './components/sms-campaign/multi-select-dropdown/multi-select-dropdown.component';
 import { CreateCampaignComponent } from './components/sms-campaign/create-campaign/create-campaign.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { CreateCampaignComponent } from './components/sms-campaign/create-campai
     MobileTagFormComponent,
     MobileSubCategoriesComponent,
     MobileSubCategoriesFormComponent,
-
+    
     ErrorDialog,
     WarningDialog,
     TicketDescriptionDialog,
@@ -85,6 +86,7 @@ import { CreateCampaignComponent } from './components/sms-campaign/create-campai
     ReportsModule,
     SupportModule,
     MatInputModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   entryComponents: [ErrorDialog, WarningDialog, TicketDescriptionDialog],
   providers: [

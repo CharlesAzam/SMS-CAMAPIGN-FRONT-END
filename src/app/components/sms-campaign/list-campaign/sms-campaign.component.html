@@ -31,10 +31,11 @@
         <hr />
         <mat-card-content>
          <div style="width: 60%;">
-          <form [formGroup]="capaignMessageForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
             <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective"/>
             <br>
+            <!--Add multiple select item here-->
             <!-- <mat-form-field appearance="fill">
               <mat-label>Select</mat-label>
               <mat-select>
@@ -45,6 +46,26 @@
             <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
             <textarea style="width: 400px !important; height: 200px !important;"  name="campaignMessage" formControlName="campaignMessage"></textarea>
             <br/>
+            <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
+            <div style="width: 400px !important; margin-top: 10px;margin-bottom: 10px;">
+            <ng-multiselect-dropdown #multiSelect
+            [placeholder]="'Select City'" 
+            [data]="data" 
+            [formControl]="f.name" 
+            [settings]="settings"
+            [disabled]="false"
+            (onFilterChange)="onFilterChange($event)"
+            (onDropDownClose)="onDropDownClose($event)"
+            (onSelect)="onItemSelect($event)" 
+            (onDeSelect)="onDeSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event)">
+          </ng-multiselect-dropdown>
+            </div>
+      
+          <span *ngIf="f?.name?.errors?.required" style="color: red;">
+            City is required
+          </span>
             <button mat-raised-button type="submit" color="primary">SUBMIT</button>
           </form>
          </div>

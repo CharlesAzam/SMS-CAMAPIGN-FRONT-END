@@ -1,6 +1,6 @@
 import { HostListener, Input } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from  '@angular/forms';
+import { Component, OnInit ,ViewChild} from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from  '@angular/forms';
 import { Router } from '@angular/router';
 //Channel
 interface Channel {
@@ -48,19 +48,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class SmsCampaignComponent implements OnInit {
   //Render var 
   @Input() renderCreateCampaign=false;
-
+  // Create DaiDH
+  @ViewChild('multiSelect',null) multiSelect;
   [x: string]: any;
   list : any[];
   @Input() adjustCSSQuery;
   dateRange: any;
-
+  public loadContent: boolean = false;
+  public name = 'Cricketers';
+  public data = [];
+  public settings = {};
+  public selectedItems = [];
+  
 
   //Campaign form
-  capaignMessageForm: FormGroup;
+  form: FormGroup;
 
 
   createCampaignMessageForm(){
-    this.capaignMessageForm=this.formBuilder.group({
+    this.form=this.formBuilder.group({
       campaigObjective:[''],
       campaignMessage:[''],
     });
@@ -76,7 +82,7 @@ export class SmsCampaignComponent implements OnInit {
       ]
 
     //Initalize form group
-    this.createCampaignMessageForm();
+    //this.createCampaignMessageForm();  
   }
   panelOpenState = false;
 
@@ -127,7 +133,77 @@ export class SmsCampaignComponent implements OnInit {
   }
 
   ngOnInit() {
+    //This are the type of channels available
+    this.data = [
+      { item_id: 1, item_text: 'SMS' },
+      { item_id: 2, item_text: 'PUSH NOTIFICATION' },
+      { item_id: 3, item_text: 'EMAIL' },
+      { item_id: 4, item_text: 'IN APP' },
+    ];
+    // setting and support i18n
+    this.settings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: true,
+      selectAllText: 'ALL',
+      unSelectAllText: 'UN SELECT',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 3,
+      searchPlaceholderText: 'CHANNEL',
+      noDataAvailablePlaceholderText: 'NO DATA PRESENT',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+    this.setForm();
+  }
+  public setForm() {
+    this.form = new FormGroup({
+      campaigObjective:new FormControl('',null),
+      campaignMessage:new FormControl('',null),
+      name: new FormControl(this.data, null)
+    });
+    this.loadContent = true;
+  }
+  get f() {
+    return this.form.controls;
+  }
 
+  public save() {
+    console.log('save == ',this.form.value);
+  }
+
+  public resetForm() {
+    // beacuse i need select all crickter by default when i click on reset button.
+    this.setForm();
+    this.multiSelect.toggleSelectAll();
+    // i try below variable isAllItemsSelected reference from your  repository but still not working
+    // this.multiSelect.isAllItemsSelected = true;
+  }
+
+  public onFilterChange(item: any) {
+    console.log('onFilter change ',item);
+  }
+  public onDropDownClose(item: any) {
+    console.log('onDropDown change ',item);
+  }
+
+  public onItemSelect(item: any) {
+    console.log('onItemSelect ',item);
+  }
+  public onDeSelect(item: any) {
+    console.log('onDeSelect ',item);
+  }
+
+  public onSelectAll(items: any) {
+    console.log('onSelectAll ',items);
+  }
+  public onDeSelectAll(items: any) {
+    console.log('onDeSelectAll ',items);
   }
 
 //Class functions
@@ -162,9 +238,10 @@ Redirect(){
 }
 //submit campaign form
 onSubmit(){
-  console.log("submit form campaign form \n",JSON.stringify(this.capaignMessageForm.value,null,2))
+  console.log("submit form campaign form \n",JSON.stringify(this.form.value,null,2))
 }
 
+//Multi select functions
 
 
 
