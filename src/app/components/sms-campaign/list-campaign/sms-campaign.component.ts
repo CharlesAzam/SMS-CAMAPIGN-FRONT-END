@@ -1,6 +1,7 @@
 import { HostListener, Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { timer } from 'rxjs';
+import { FormGroup, FormBuilder } from  '@angular/forms';
+import { Router } from '@angular/router';
 //Channel
 interface Channel {
   value: string;
@@ -45,9 +46,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./sms-campaign.component.css']
 })
 export class SmsCampaignComponent implements OnInit {
+  //Render var 
+  @Input() renderCreateCampaign=false;
+
+  [x: string]: any;
   list : any[];
   @Input() adjustCSSQuery;
-  constructor() { 
+  dateRange: any;
+
+
+  //Campaign form
+  capaignMessageForm: FormGroup;
+
+
+  createCampaignMessageForm(){
+    this.capaignMessageForm=this.formBuilder.group({
+      campaigObjective:[''],
+      campaignMessage:[''],
+    });
+  }
+  constructor(private router: Router,private formBuilder: FormBuilder) { 
     //For Check box letter
     this.list = 
       [
@@ -56,9 +74,16 @@ export class SmsCampaignComponent implements OnInit {
         {name :'China',checked : false},
         {name :'France',checked : false}
       ]
+
+    //Initalize form group
+    this.createCampaignMessageForm();
   }
   panelOpenState = false;
 
+  /**
+   * All table variable listing campaigns status,channels, and campaign messages
+   * */
+  //start table vars declartion
   //columns
   displayedColumns: string[] = ['Channel', 'Start time', 'Created time', 'Sent'];
   dataSource = ELEMENT_DATA;
@@ -91,6 +116,9 @@ export class SmsCampaignComponent implements OnInit {
     {value: 'Awaiting Next Run2', viewValue: 'Awaiting Next Run'},
   ]
 
+  ////start table vars declartion
+
+  //Drop downs vars
   shareCheckedList(item:any[]){
     console.log(item);
   }
@@ -99,13 +127,45 @@ export class SmsCampaignComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
+//Class functions
 @HostListener('window:resize', ['$event'])
 onResize(event) {
   this.adjustCSSQuery = event.target.innerWidth;
   console.log(`width == ${this.adjustCSSQuery}`)
 }
+
+//Date Range
+getDateRange(event: any){
+  // look at how the date is emitted from save
+  console.log(event.target.value.begin);
+  console.log(event.target.value.end);
+
+  // change in view
+  this.dateRange = event.target.value;
+  console.log("Date Range object ",JSON.stringify(this.dateRange,null,2))
+}
+
+//Create campaing messages 
+CreateCampaignMessage(){
+  console.log("Create Campaign message ...")
+  this.renderCreateCampaign==false ? this.renderCreateCampaign=true : this.renderCreateCampaign=false;
+  //this.renderCreateCampaign=true;
+ 
+}
+//Create campaign type
+Redirect(){
+  console.log("Button working ...")
+  this.router.navigate(["home/create-campaign"]);
+}
+//submit campaign form
+onSubmit(){
+  console.log("submit form campaign form \n",JSON.stringify(this.capaignMessageForm.value,null,2))
+}
+
+
+
 
 }

@@ -41,8 +41,9 @@ import { NoWhitespaceDirective } from "./validators/no-whitespace.directive";
 import { GuideModule } from "./components/tv-guide/tv-guide.module";
 import { ContentSuggestionConfigComponent } from './components/content-suggestion-config/content-suggestion-config.component';
 import {ContentSuggestionService} from './services/suggestion.service';
-import { SmsCampaignComponent } from './components/sms-campaign/sms-campaign.component';
+import { SmsCampaignComponent } from './components/sms-campaign/list-campaign/sms-campaign.component';
 import { MultiSelectDropdownComponent } from './components/sms-campaign/multi-select-dropdown/multi-select-dropdown.component';
+import { CreateCampaignComponent } from './components/sms-campaign/create-campaign/create-campaign.component';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { MultiSelectDropdownComponent } from './components/sms-campaign/multi-se
     ContentSuggestionConfigComponent,
     SmsCampaignComponent,
     MultiSelectDropdownComponent,
+    CreateCampaignComponent,
   ],
   imports: [
     BrowserModule,
