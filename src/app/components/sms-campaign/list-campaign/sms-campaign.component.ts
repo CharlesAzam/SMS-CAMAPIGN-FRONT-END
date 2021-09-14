@@ -48,8 +48,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class SmsCampaignComponent implements OnInit {
   //Render var 
   @Input() renderCreateCampaign=false;
+  @Input() renderMessageList = true;
   // Create DaiDH
-  @ViewChild('multiSelect',null) multiSelect;
+  @ViewChild('multiSelect',null) multiSelect: { toggleSelectAll: () => void; };
   [x: string]: any;
   list : any[];
   @Input() adjustCSSQuery;
@@ -121,6 +122,8 @@ export class SmsCampaignComponent implements OnInit {
     {value: 'Draft-2', viewValue: 'Draft'},
     {value: 'Awaiting Next Run2', viewValue: 'Awaiting Next Run'},
   ]
+
+
 
   ////start table vars declartion
 
