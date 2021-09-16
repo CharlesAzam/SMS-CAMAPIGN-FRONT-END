@@ -10,9 +10,16 @@ export class SmsCampaignServiceService {
   constructor(private http: HttpClient) {
   }
 
-  //Create Channel
-  //Update Channel
-  //Delete Channel
+  //Create Campaing Channel
+  createCampaingCahnnel(payload: any){
+    console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
+    let url = environment.apiUrl + '/cms/campaign-create';
+    let headers = new HttpHeaders()
+      .set('Accept', 'application/json');
+    return this.http.post<any>(url, payload, { headers });
+  }
+  //Update Capmpaing Channel
+  //Delete Campaing Channel
   //Get Channel by ID
   //Get All channels
 

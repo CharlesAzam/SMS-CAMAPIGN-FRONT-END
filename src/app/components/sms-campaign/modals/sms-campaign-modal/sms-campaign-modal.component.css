@@ -1,0 +1,21 @@
+.img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px;
+    border-radius: 5px;
+    /* padding: 10px; */
+    box-shadow: 2px 2px 2px 2px #888888;  
+}
+
+.messageFont{
+    font-size: 10px; 
+    font-weight: 700;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

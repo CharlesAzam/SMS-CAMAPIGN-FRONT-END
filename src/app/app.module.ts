@@ -45,6 +45,7 @@ import { SmsCampaignComponent } from './components/sms-campaign/list-campaign/sm
 import { MultiSelectDropdownComponent } from './components/sms-campaign/multi-select-dropdown/multi-select-dropdown.component';
 import { CreateCampaignComponent } from './components/sms-campaign/create-campaign/create-campaign.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { SmsCampaignModalComponent } from './components/sms-campaign/modals/sms-campaign-modal/sms-campaign-modal.component';
 // import { TopnavComponent } from './components/topnav/topnav.component'
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     SmsCampaignComponent,
     MultiSelectDropdownComponent,
     CreateCampaignComponent,
+    SmsCampaignModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatInputModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  entryComponents: [ErrorDialog, WarningDialog, TicketDescriptionDialog],
+  entryComponents: [ErrorDialog, WarningDialog, TicketDescriptionDialog,SmsCampaignModalComponent],
   providers: [
     LanguageService,
     CountryService,

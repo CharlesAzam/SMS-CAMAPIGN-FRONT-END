@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {SmsCampaignModalComponent} from '../modals/sms-campaign-modal/sms-campaign-modal.component'
 import {
   FormGroup,
   FormBuilder,
@@ -37,7 +39,7 @@ export class CreateCampaignComponent implements OnInit {
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,public dialog: MatDialog) {
     //console.log(this.setForm)
     //This are the type of channels available
     this.data = [
@@ -237,16 +239,35 @@ export class CreateCampaignComponent implements OnInit {
     }
   }
 
+  openDialog(message): any {
+    const dialogRef = this.dialog.open(SmsCampaignModalComponent, {
+      data: {
+      payload:message,
+      message: `YOUR ABOUT TO CREATE A CAMPAIGN ${message.campaigName.toUpperCase()} OF CHANNEL ${message.channelType.toUpperCase()}`,
+            buttonText: {
+                ok: 'CREATE CAMPAIGN CHANNEL',
+                cancel: 'CANCEL'
+            }
+        }
+    })
+
+    return dialogRef;
+}
+
   //submit campaign form
   onSubmit() {
-    let objt: any={
+    let payload: any={
       isReccuring:this.isReccuring,
       date:this.dateRange,
       ...this.campaignForm.value
     }
+
+    this.openDialog(payload)
     console.log(
       "submit form campaign form \n",
-      JSON.stringify(objt, null, 2)
+      JSON.stringify(payload, null, 2)
     );
+     
+
   }
 }
