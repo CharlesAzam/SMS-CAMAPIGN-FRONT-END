@@ -151,6 +151,8 @@
                     placeholder="Choose a date"
                     [satDatepicker]="picker"
                     [value]="dateRange"
+                    name="date"
+                    formControlName="date"
                     (dateChange)="getDateRange($event)"
                   />
                   <sat-datepicker
@@ -286,6 +288,7 @@
               mat-raised-button
               type="submit"
               color="primary"
+              [disabled]="this.campaignForm.invalid"
             >
               SUBMIT
             </button>

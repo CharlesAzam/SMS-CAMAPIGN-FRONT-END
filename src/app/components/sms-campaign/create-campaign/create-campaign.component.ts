@@ -110,6 +110,7 @@ export class CreateCampaignComponent implements OnInit {
       channelType: [this.channel,Validators.required],
       RunTimeType: ["",Validators.required],
       recuringCampaignDuration: [""],
+      date:[""],
       normalMessage:[""],
       campaignStages: this.formBuilder.group({
         stage: this.formBuilder.array([]),
@@ -154,6 +155,11 @@ export class CreateCampaignComponent implements OnInit {
     this.multiSelect.toggleSelectAll();
     // i try below variable isAllItemsSelected reference from your  repository but still not working
     // this.multiSelect.isAllItemsSelected = true;
+    //Set form to initial state
+    this.isReccuring = false;
+    this.displayCalendar = false;
+    this.isMultipleDate=false;
+    this.displayCalendar=false;
   }
 
   public onFilterChange(item: any) {
@@ -258,7 +264,6 @@ export class CreateCampaignComponent implements OnInit {
   onSubmit() {
     let payload: any={
       isReccuring:this.isReccuring,
-      date:this.dateRange,
       ...this.campaignForm.value
     }
 
