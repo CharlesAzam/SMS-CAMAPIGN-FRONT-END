@@ -29,6 +29,47 @@
     
 }
 
+.campaing-form-lable{
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.RunTimeTypeStyleSheet{
+ height: 60px;
+ width: 150px;
+ /* background: aquamarine; */
+ flex-direction: row;
+ align-items: flex-start;
+ margin-right: 1%;
+ margin-left: 1.2%;
+ /* display: flex;
+ 
+ align-content: space-between; */
+}
+.containerField{
+   flex-direction: row;
+   align-items: flex-start;
+   align-content: space-between;
+   justify-content: space-evenly; 
+}
+.dateContainer{
+position: relative;
+}
+
+.buttonArrangement{
+flex-direction: row;
+display: flex;
+/* flex:1; */
+align-content: flex-start;
+justify-content: space-evenly; 
+}
+
+.stagesStyle{
+ margin-top: 10px;
+ margin-bottom: 10px;
+}
+
 /* .main-content-1{
     
 } */
