@@ -104,9 +104,9 @@ export class CreateCampaignComponent implements OnInit {
     console.log("Channel type ",x)
     this.loadContent = true;
     return (this.campaignForm = this.formBuilder.group({
-      campaigName: [""],
-      channelType: [this.channel],
-      RunTimeType: [""],
+      campaigName: ["",Validators.required],
+      channelType: [this.channel,Validators.required],
+      RunTimeType: ["",Validators.required],
       recuringCampaignDuration: [""],
       normalMessage:[""],
       campaignStages: this.formBuilder.group({
