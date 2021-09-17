@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {SmsCampaignModalComponent} from '../modals/sms-campaign-modal/sms-campaign-modal.component'
+import {MatTableDataSource} from '@angular/material/table';
 import {
   FormGroup,
   FormBuilder,
@@ -8,6 +9,32 @@ import {
   Validators,
   FormArray,
 } from "@angular/forms";
+
+//Create Campaign
+export interface Campaings{
+  isReccuring:boolean;
+  date:any
+  CampaignName: string;
+  ChannelType:string;
+  RunTimeType:any;
+  CampaingStartTime: any;
+  MappedMessage:string [];
+  CreatedAt:any;
+  UpdatedAt:any; 
+}
+
+const CAMPAIGN_LIST_DATA:Campaings[] = [
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'23/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'21/11/2021',RunTimeType:'wefwef',CampaingStartTime:'12/11/2021',MappedMessage:['wfwefwef','kfdvlno'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'24/11/2021',RunTimeType:'wefwef',CampaingStartTime:'15/11/2021',MappedMessage:['vwovnro','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'25/11/2021',RunTimeType:'wefwef',CampaingStartTime:'19/11/2021',MappedMessage:['fffff','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'26/11/2021',RunTimeType:'wefwef',CampaingStartTime:'01/11/2021',MappedMessage:['kkkkk','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'27/11/2021',RunTimeType:'wefwef',CampaingStartTime:'10/11/2021',MappedMessage:['qqqq','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'28/11/2021',RunTimeType:'wefwef',CampaingStartTime:'13/12/2021',MappedMessage:['llll','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'29/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['wwww','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'30/11/2021',RunTimeType:'wefwef',CampaingStartTime:'09/11/2021',MappedMessage:['zzzzzzz','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
+
+];
 
 @Component({
   selector: "app-create-campaign",
@@ -32,12 +59,14 @@ export class CreateCampaignComponent implements OnInit {
   @Input() displayCalendar: boolean;
   @Input() HideSMSForm:boolean;
   @Input() DisplayOtherFrom:boolean;
-
+  @Input() showCompose:boolean;
+  @Input() renderCreateCampaign=true;
 
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
 
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
+ 
 
   constructor(private formBuilder: FormBuilder,public dialog: MatDialog) {
     //console.log(this.setForm)
@@ -76,6 +105,35 @@ export class CreateCampaignComponent implements OnInit {
 
     //this.addCampaignStages();
   }
+
+  //Table relate functions and variable start
+    //Campinag variabels
+    //List Campaign Delivery Status
+    dataSource=new MatTableDataSource(CAMPAIGN_LIST_DATA);
+    //columns
+    //{CampaignName:'sdsd',ChannelType:'dfwef',date:'23/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+    displayedColumns: string[] = ['CampaignName','ChannelType','date','RunTimeType','CampaingStartTime','MappedMessage','isReccuring','CreatedAt','UpdatedAt','Delete','Update'];
+
+    //Apply Data filter to table listing composed messages
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+  
+    //All functions table relate
+    ListCampaings(){
+      this.renderCreateCampaign==true ? this.renderCreateCampaign =false : this.renderCreateCampaign =true;
+    }
+
+    //Update Campaing 
+    UpdateCampaign(){
+      console.log("Update campaing table data ....");
+    }
+    //Delete Campaing
+    DeleteCampaign(){
+     console.log("Delete campaigntable data ....");
+    }
+  //Table relate functions and variable end
 
   //Date Range
   getDateRange(event: any) {
@@ -275,4 +333,6 @@ export class CreateCampaignComponent implements OnInit {
      
 
   }
+
+
 }

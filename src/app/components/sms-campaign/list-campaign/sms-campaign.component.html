@@ -9,9 +9,8 @@
         <div *ngIf="showComposeForm==true; else ComposeMessage">
            <mat-icon>table_view</mat-icon> VIEW MESSAGES
         </div>
-
         <ng-template #ComposeMessage>
-          <mat-icon>message</mat-icon> COMPOSE MESSAGES
+          <mat-icon>add</mat-icon> COMPOSE MESSAGES
         </ng-template>
       </div>
     </div>
@@ -87,13 +86,15 @@
 
      <!--Display table list to show messages start-->
      <div *ngIf="showComposeForm == false">
-       <p>show list messages composed</p>
-       <mat-form-field appearance="fill">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-      </mat-form-field>
+       <label class="campaing-form-lable">LIST OF CAMPAIGN MESSAGE</label>
+       <div style="margin-left: 3%;">
+        <mat-form-field appearance="outline">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
+       </div>
 
-      <table mat-table [dataSource]="composedMessageDataSource" class="mat-elevation-z8">
+       <table mat-table [dataSource]="composedMessageDataSource" class="mat-elevation-z8">
 
         <!-- Campaign Objective Column -->
         <ng-container matColumnDef="Objective">
@@ -130,6 +131,22 @@
           <th mat-header-cell *matHeaderCellDef> Updated By </th>
           <td mat-cell *matCellDef="let element"> {{element.UpdatedAt}} </td>
         </ng-container>
+
+        <!-- Delete Action Column -->
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef> Delete</th>
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteComposeMessage()">
+            <mat-icon >delete</mat-icon> DELETE
+          </button> </td>
+        </ng-container>
+
+        <!-- Update Action Column -->
+        <ng-container matColumnDef="Update">
+          <th mat-header-cell *matHeaderCellDef> Update</th>
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateComposeMessge()">
+            <mat-icon>update</mat-icon> UPDATE
+          </button> </td>
+        </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="composedMessageDislayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: composedMessageDislayedColumns;"></tr>
@@ -139,14 +156,18 @@
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
-
-      <mat-paginator
+      <!--paginator start-->
+      <div style="background-color: burlywood; margin-right: 5%; ">
+        <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       length="50"
       showFirstLastButtons
-      aria-label="Select page of periodic elements"
+      aria-label="Select page of message list"
     >
     </mat-paginator>
+      </div>
+      <!--paginator end-->
+      
      </div>
     <!--Display table list to show messages end-->
   </div>

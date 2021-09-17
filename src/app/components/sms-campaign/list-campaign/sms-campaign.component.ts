@@ -28,7 +28,6 @@ export interface CampaignDelivery {
 }
 
 // List of campaign Messages 
-['Objective','Message','MappedCampaing','CreatedBy','CreatedAt','UpdatedAt']
 export interface CampaignMessage{
   Objective: string;
   Message: string;
@@ -114,7 +113,7 @@ export class SmsCampaignComponent implements OnInit {
   //start table vars declartion
   //columns
   displayedColumns: string[] = ['Channel', 'Start time', 'Created time', 'Sent'];
-  composedMessageDislayedColumns: string []=['Objective','Message','MappedCampaing','CreatedBy','CreatedAt','UpdatedAt'];
+  composedMessageDislayedColumns: string []=['Objective','Message','MappedCampaing','CreatedBy','CreatedAt','UpdatedAt','Delete','Update'];
   dataSource = CAMPAIGN_DELIVER_DATA;
   composedMessageDataSource = new MatTableDataSource(LIST_COMPOSED_MESSAGES);
   
@@ -124,6 +123,15 @@ export class SmsCampaignComponent implements OnInit {
     this.composedMessageDataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  //Delete table function for compose message
+  deleteComposeMessage(){
+    console.log(`Delete message`);
+  }
+  
+  //Update table function for comnpose message
+  updateComposeMessge(){
+    console.log(`Update message`);
+  }
   //Channels
   Channels: Channel[] = [
     {value: 'steak-0', viewValue: 'Sms'},

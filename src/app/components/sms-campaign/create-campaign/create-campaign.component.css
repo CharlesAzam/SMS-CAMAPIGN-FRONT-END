@@ -70,6 +70,45 @@ justify-content: space-evenly;
  margin-bottom: 10px;
 }
 
+.campaign-mid-left{
+    display: flex;
+    flex: 1;
+    flex-direction:row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 3%;
+    /* flex-direction: row; */
+    /* align-items: center; */
+    align-content:space-between;
+    justify-items: flex-start;
+    justify-content:space-between 
+}
+
+.create-sms-campaign{
+    display: flex;
+    flex-direction: row;
+    align-content:space-around;
+    margin-top: 5px; 
+    margin-right: 20px;
+    border: 1px;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px 2px #888888;  
+}
+
+.sms-campaing{
+  width:90%;
+  font-size: 15px;
+  font-weight: 600;
+  color: black; 
+}
+
+.Theader{
+    font-size: 14px;
+    font-weight:700;
+    color: black;   
+}
+
 /* .main-content-1{
     
 } */

@@ -1,37 +1,58 @@
-<!-- <div class="container"> -->
-<div class="header">
-  <h4 style="margin-left: 5px; margin-top: 15px">Create campaign channel</h4>
-</div>
 
-<!--row with channel type--->
-<div class="row">
-  <div
-    class="item-icon"
-    matTooltip="Create SMS Campaign Channel"
-    (click)="campaign('SMS')"
-  >
-    <img src="https://img.icons8.com/ios-filled/50/000000/messaging-.png" />
+  <!--Button render form and table start -->
+  <div class="campaign-mid-left">
+    <div class="create-sms-campaign" (click)="ListCampaings()">
+      <!-- <p style="margin-left: 5% !important;"></p> -->
+      <div  *ngIf="renderCreateCampaign==true; else ComposeMessage">
+         <mat-icon>table_view</mat-icon> VIEW CAMPAINGS
+      </div>
+
+      <ng-template #ComposeMessage>
+        <mat-icon>message</mat-icon> CREATE MESSAGES
+      </ng-template>
+    </div>
   </div>
-  <div
-    class="item-icon"
-    matTooltip="Create Push notification Campaign Channel"
-    (click)="campaign('Push notification')"
-  >
-    <img
-      src="https://img.icons8.com/ios-filled/50/000000/push-notifications.png"
-    />
-  </div>
-  <div
-    class="item-icon"
-    matTooltip="Create In app Campaign Channel"
-    (click)="campaign('In app')"
-  >
-    <img
-      src="https://img.icons8.com/ios-filled/50/000000/smartphone-tablet.png"
-    />
-  </div>
-</div>
-<!--Campaign set up and configaration-->
+  <!--Button render form and table end -->
+
+  <!--Render Conditionaly create campaign form and table list start-->
+  <div style="margin-left: 2.8%;" *ngIf="renderCreateCampaign == true">
+     <!--form title start-->
+     <div class="header">
+      <h4 style="margin-left: 5px; margin-top: 15px">Create campaign channel</h4>
+      </div>
+     <!--form title end-->
+
+     <!--row with icon channel type start--->
+      <div class="row">
+        <div
+          class="item-icon"
+          matTooltip="Create SMS Campaign Channel"
+          (click)="campaign('SMS')"
+        >
+          <img src="https://img.icons8.com/ios-filled/50/000000/messaging-.png" />
+        </div>
+        <div
+          class="item-icon"
+          matTooltip="Create Push notification Campaign Channel"
+          (click)="campaign('Push notification')"
+        >
+          <img
+            src="https://img.icons8.com/ios-filled/50/000000/push-notifications.png"
+          />
+        </div>
+        <div
+          class="item-icon"
+          matTooltip="Create In app Campaign Channel"
+          (click)="campaign('In app')"
+        >
+          <img
+            src="https://img.icons8.com/ios-filled/50/000000/smartphone-tablet.png"
+          />
+        </div>
+      </div>
+      <!--row with icon channel type end---> 
+
+      <!--Campaign set up and configaration-->
 <div>
   <div class="header">
     <h4 style="margin-left: 5px; margin-top: 40px; margin-bottom: 15px">
@@ -41,7 +62,7 @@
 
   <!--Channel configaration form start-->
   <!--conditionaly render Channel configaration form based on type -->
-  <div *ngIf="DisplayOtherFrom == true">
+  <div style="margin-left: 3%;" *ngIf="DisplayOtherFrom == true">
     <div style="width: 90%; margin-left: 15px">
       <p style="font-size: large; font-weight: bold; color: grey">
         The feature to create and configure {{ channel }} will be added soon
@@ -325,5 +346,115 @@
 
   <!--Channel Configaration form end-->
 </div>
+</div>
 
-<!-- </div> -->
+<div style="margin-left: 3%;" *ngIf="renderCreateCampaign == false">
+   <label class="campaing-form-lable">LIST OF CAMPAIGNS</label>
+       <div >
+        <mat-form-field appearance="outline">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search Campings .." #input>
+        </mat-form-field>
+       </div>
+
+       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 sms-campaing">
+
+        <!-- CampaignName Objective Column -->
+        <ng-container matColumnDef="CampaignName">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">CAMPAIGN NAME</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.CampaignName}} </td>
+        </ng-container>
+      
+        <!-- ChannelType Column -->
+        <ng-container matColumnDef="ChannelType">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">CHANNEL TYPE</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.ChannelType}} </td>
+        </ng-container>
+      
+        <!-- date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">RUNTIME DATE</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+      
+        <!-- RunTimeType Column -->
+        <ng-container matColumnDef="RunTimeType">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">RUN TIME TYPE</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.RunTimeType}} </td>
+        </ng-container>
+
+        <!-- CampaingStartTime  Column -->
+        <ng-container matColumnDef="CampaingStartTime">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">CAMPAING START TIME</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.CampaingStartTime}} </td>
+        </ng-container>
+
+         <!-- MappedMessage  Column -->
+         <ng-container matColumnDef="MappedMessage">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">MAPPED MESSAGE</p></th>
+          <td mat-cell *matCellDef="let element">{{element.MappedMessage}} </td>
+        </ng-container>
+
+         <!-- isReccuring Column -->
+         <ng-container matColumnDef="isReccuring">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">IS RECCURING</p></th>
+          <td mat-cell *matCellDef="let element">{{element.isReccuring}} </td>
+        </ng-container>
+
+        <!-- CreatedAt By Column -->
+        <ng-container matColumnDef="CreatedAt">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">CREATED AT</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.CreatedAt}} </td>
+        </ng-container>
+
+         <!-- UpdatedAt Column -->
+         <ng-container matColumnDef="UpdatedAt">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">UPDATED AT</p></th>
+          <td mat-cell *matCellDef="let element"> {{element.UpdatedAt}} </td>
+        </ng-container>
+
+        <!-- Delete Action Column -->
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">DELETE</p></th>
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteComposeMessage()">
+            <mat-icon >delete</mat-icon> DELETE
+          </button> </td>
+        </ng-container>
+
+        <!-- Update Action Column -->
+        <ng-container matColumnDef="Update">
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">UPDATE</p></th>
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateComposeMessge()">
+            <mat-icon>update</mat-icon> UPDATE
+          </button> </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+       <!--paginator start-->
+       <div style="margin-right: 10%;">
+        <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      length="50"
+      showFirstLastButtons
+      aria-label="Select page of campaign list"
+    >
+    </mat-paginator>
+      </div>
+      <!--paginator end-->
+</div>
+<!--Render Conditionaly create campaign form and table list end-->
+ 
+
+
+
+
+
+
