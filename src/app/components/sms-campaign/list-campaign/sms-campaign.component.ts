@@ -32,6 +32,7 @@ export interface CampaignMessage{
   Objective: string;
   Message: string;
   MappedCampaing:string[];
+  isPersonalized:boolean;
   CreatedBy:any;
   CreatedAt:any;
   UpdatedAt:any;
@@ -54,17 +55,17 @@ const CAMPAIGN_DELIVER_DATA: CampaignDelivery[] = [
 //List Composed messages
 
 const LIST_COMPOSED_MESSAGES: CampaignMessage[] =[
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Test dvoiv',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'alex was here',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Alex Khadriyov',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Mikhial Poshinski',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Poliya Andrer',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Berhanus Fekadu',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Tariku Alemayu',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Ermias Abraminch',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Mengistu Haile Mariam',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Samuel Njau',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Lemmah moges',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Rahel Michake',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Test dvoiv',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'alex was here',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Alex Khadriyov',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Mikhial Poshinski',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Poliya Andrer',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Berhanus Fekadu',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:false,CreatedBy:'Tariku Alemayu',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Ermias Abraminch',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Mengistu Haile Mariam',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:false,CreatedBy:'Samuel Njau',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Lemmah moges',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],isPersonalized:true,CreatedBy:'Rahel Michake',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
 ]
 
 
@@ -113,7 +114,7 @@ export class SmsCampaignComponent implements OnInit {
   //start table vars declartion
   //columns
   displayedColumns: string[] = ['Channel', 'Start time', 'Created time', 'Sent'];
-  composedMessageDislayedColumns: string []=['Objective','Message','MappedCampaing','CreatedBy','CreatedAt','UpdatedAt','Delete','Update'];
+  composedMessageDislayedColumns: string []=['Objective','Message','MappedCampaing','isPersoanlized','CreatedBy','CreatedAt','UpdatedAt','Delete','Update'];
   dataSource = CAMPAIGN_DELIVER_DATA;
   composedMessageDataSource = new MatTableDataSource(LIST_COMPOSED_MESSAGES);
   
@@ -205,7 +206,8 @@ export class SmsCampaignComponent implements OnInit {
     this.form = new FormGroup({
       campaigObjective:new FormControl('',null),
       campaignMessage:new FormControl('',null),
-      name: new FormControl(this.data, null)
+      name: new FormControl(this.data, null),
+      personalizeMessage: new FormControl('',null),
     });
     this.loadContent = true;
   }
