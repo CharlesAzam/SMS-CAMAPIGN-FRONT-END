@@ -5,73 +5,150 @@
       <div class="create-sms-campaign" (click)="CreateCampaignMessage()">
         <mat-icon>arrow_back</mat-icon>GO BACK
       </div>
-    </div>
-    <div style="margin-top: 20px">
-      <mat-card class="mat-card-content">
-        <mat-card-title class="mat-content-header"
-          >CREATE CAMPAING MESSAGE</mat-card-title
-        >
-        <hr />
-        <mat-card-content>
-          <p>
-            Create various sms campaign messages and save them as template to be
-            mapped to different channels accordingly.You can also update and
-            delete exeting message template and apply them to multiple
-            channels.mat-card-header A message can have one to one or one to
-            many relation with channel i.e message can be mapped to either one
-            or multiple channels depending on the current need.
-          </p>
-        </mat-card-content>
-      </mat-card>
+      <div class="create-sms-campaign" (click)="ListMessages()">
+        <div *ngIf="showComposeForm==true; else ComposeMessage">
+           <mat-icon>table_view</mat-icon> VIEW MESSAGES
+        </div>
 
-      <mat-card class="mat-card-content">
-        <mat-card-title class="mat-content-header"
-          >COMPOSE CAMPAIGN MESSAGE</mat-card-title
-        >
-        <hr />
-        <mat-card-content>
-         <div style="width: 60%;">
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
-            <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective"/>
-            <br>
-            <!--Add multiple select item here-->
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Select</mat-label>
-              <mat-select>
-                <mat-option value="one">First option</mat-option>
-                <mat-option value="two">Second option</mat-option>
-              </mat-select>
-            </mat-form-field> -->
-            <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
-            <textarea style="width: 400px !important; height: 200px !important;"  name="campaignMessage" formControlName="campaignMessage"></textarea>
-            <br/>
-            <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
-            <div style="width: 400px !important; margin-top: 10px;margin-bottom: 10px;">
-            <ng-multiselect-dropdown #multiSelect
-            [placeholder]="'Select City'" 
-            [data]="data" 
-            [formControl]="f.name" 
-            [settings]="settings"
-            [disabled]="false"
-            (onFilterChange)="onFilterChange($event)"
-            (onDropDownClose)="onDropDownClose($event)"
-            (onSelect)="onItemSelect($event)" 
-            (onDeSelect)="onDeSelect($event)"
-            (onSelectAll)="onSelectAll($event)"
-            (onDeSelectAll)="onDeSelectAll($event)">
-          </ng-multiselect-dropdown>
-            </div>
-      
-          <span *ngIf="f?.name?.errors?.required" style="color: red;">
-            Channel is required
-          </span>
-            <button mat-raised-button type="submit" color="primary">SUBMIT</button>
-          </form>
-         </div>
-        </mat-card-content>
-      </mat-card>
+        <ng-template #ComposeMessage>
+          <mat-icon>message</mat-icon> COMPOSE MESSAGES
+        </ng-template>
+      </div>
     </div>
+    <!--Conditionaly render compose message form-->
+     <div *ngIf="showComposeForm == true">
+      <div style="margin-top: 20px">
+        <mat-card class="mat-card-content">
+          <mat-card-title class="mat-content-header"
+            >CREATE CAMPAING MESSAGE</mat-card-title
+          >
+          <hr />
+          <mat-card-content>
+            <p>
+              Create various sms campaign messages and save them as template to be
+              mapped to different channels accordingly.You can also update and
+              delete exeting message template and apply them to multiple
+              channels.mat-card-header A message can have one to one or one to
+              many relation with channel i.e message can be mapped to either one
+              or multiple channels depending on the current need.
+            </p>
+          </mat-card-content>
+        </mat-card>
+  
+        <mat-card class="mat-card-content">
+          <mat-card-title class="mat-content-header"
+            >COMPOSE CAMPAIGN MESSAGE</mat-card-title
+          >
+          <hr />
+          <mat-card-content>
+           <div style="width: 60%;">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
+              <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective"/>
+              <br>
+              <!--Add multiple select item here-->
+              <!-- <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option value="one">First option</mat-option>
+                  <mat-option value="two">Second option</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+              <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
+              <textarea style="width: 400px !important; height: 200px !important;"  name="campaignMessage" formControlName="campaignMessage"></textarea>
+              <br/>
+              <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
+              <div style="width: 400px !important; margin-top: 10px;margin-bottom: 10px;">
+              <ng-multiselect-dropdown #multiSelect
+              [placeholder]="'Select City'" 
+              [data]="data" 
+              [formControl]="f.name" 
+              [settings]="settings"
+              [disabled]="false"
+              (onFilterChange)="onFilterChange($event)"
+              (onDropDownClose)="onDropDownClose($event)"
+              (onSelect)="onItemSelect($event)" 
+              (onDeSelect)="onDeSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)">
+              </ng-multiselect-dropdown>
+              </div>
+        
+            <span *ngIf="f?.name?.errors?.required" style="color: red;">
+              Channel is required
+            </span>
+              <button mat-raised-button type="submit" color="primary">SUBMIT</button>
+            </form>
+           </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+     </div>
+
+     <!--Display table list to show messages start-->
+     <div *ngIf="showComposeForm == false">
+       <p>show list messages composed</p>
+       <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+
+      <table mat-table [dataSource]="composedMessageDataSource" class="mat-elevation-z8">
+
+        <!-- Campaign Objective Column -->
+        <ng-container matColumnDef="Objective">
+          <th mat-header-cell *matHeaderCellDef> Campaign Objective. </th>
+          <td mat-cell *matCellDef="let element"> {{element.Objective}} </td>
+        </ng-container>
+      
+        <!-- Message Column -->
+        <ng-container matColumnDef="Message">
+          <th mat-header-cell *matHeaderCellDef> Message </th>
+          <td mat-cell *matCellDef="let element"> {{element.Message}} </td>
+        </ng-container>
+      
+        <!-- Mapped Channel(Campaing) Column -->
+        <ng-container matColumnDef="MappedCampaing">
+          <th mat-header-cell *matHeaderCellDef> Mapped Channel(Campaing) </th>
+          <td mat-cell *matCellDef="let element"> {{element.MappedCampaing}} </td>
+        </ng-container>
+      
+        <!-- Create By Column -->
+        <ng-container matColumnDef="CreatedBy">
+          <th mat-header-cell *matHeaderCellDef> Create By </th>
+          <td mat-cell *matCellDef="let element"> {{element.CreatedBy}} </td>
+        </ng-container>
+
+         <!-- Created At Column -->
+         <ng-container matColumnDef="CreatedAt">
+          <th mat-header-cell *matHeaderCellDef> Create At </th>
+          <td mat-cell *matCellDef="let element"> {{element.CreatedAt}} </td>
+        </ng-container>
+
+         <!-- Updated At Column -->
+         <ng-container matColumnDef="UpdatedAt">
+          <th mat-header-cell *matHeaderCellDef> Updated By </th>
+          <td mat-cell *matCellDef="let element"> {{element.UpdatedAt}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="composedMessageDislayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: composedMessageDislayedColumns;"></tr>
+      
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      length="50"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+     </div>
+    <!--Display table list to show messages end-->
   </div>
   <!--Render main component to list all campaing -->
   <div

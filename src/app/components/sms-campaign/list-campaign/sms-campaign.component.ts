@@ -2,6 +2,7 @@ import { HostListener, Input } from '@angular/core';
 import { Component, OnInit ,ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from  '@angular/forms';
 import { Router } from '@angular/router';
+import {MatTableDataSource} from '@angular/material/table';
 //Channel
 interface Channel {
   value: string;
@@ -18,15 +19,27 @@ interface Status {
   value: string;
   viewValue: string;
 }
-export interface PeriodicElement {
+//List of Campaign execution status
+export interface CampaignDelivery {
   name: string;
   position: number;
   weight: string;
   symbol: string;
 }
 
-//Message status
-const ELEMENT_DATA: PeriodicElement[] = [
+// List of campaign Messages 
+['Objective','Message','MappedCampaing','CreatedBy','CreatedAt','UpdatedAt']
+export interface CampaignMessage{
+  Objective: string;
+  Message: string;
+  MappedCampaing:string[];
+  CreatedBy:any;
+  CreatedAt:any;
+  UpdatedAt:any;
+}
+
+//List Campaign Delivery Status
+const CAMPAIGN_DELIVER_DATA: CampaignDelivery[] = [
   {position: 1, name: '08-10-21', weight:'05-10-21', symbol: 'true'},
   {position: 2, name: '08-10-21', weight:'05-10-21', symbol: 'true'},
   {position: 3, name: '08-10-21', weight:'05-10-21', symbol: 'true'},
@@ -39,6 +52,22 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, name:'08-10-21', weight:'05-10-21', symbol: 'true'},
 ];
 
+//List Composed messages
+
+const LIST_COMPOSED_MESSAGES: CampaignMessage[] =[
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Test dvoiv',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'alex was here',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Alex Khadriyov',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Mikhial Poshinski',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Poliya Andrer',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Berhanus Fekadu',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Tariku Alemayu',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Ermias Abraminch',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Mengistu Haile Mariam',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Samuel Njau',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Lemmah moges',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {Objective: 'sbsidvub',Message: 'wiuvirubvieruv',MappedCampaing:['fveverv','vjeirbuv','veiubviebv'],CreatedBy:'Rahel Michake',CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
+]
+
 
 @Component({
   selector: 'app-sms-campaign',
@@ -47,8 +76,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class SmsCampaignComponent implements OnInit {
   //Render var 
-  @Input() renderCreateCampaign=false;
-  @Input() renderMessageList = true;
+  @Input() renderCreateCampaign=true;
+  @Input() showComposeForm=true;
   // Create DaiDH
   @ViewChild('multiSelect',null) multiSelect: { toggleSelectAll: () => void; };
   [x: string]: any;
@@ -74,14 +103,6 @@ export class SmsCampaignComponent implements OnInit {
   }
   constructor(private router: Router,private formBuilder: FormBuilder) { 
     //For Check box letter
-    this.list = 
-      [
-        {name :'India',checked : false},
-        {name :'US',checked : false},
-        {name :'China',checked : false},
-        {name :'France',checked : false}
-      ]
-
     //Initalize form group
     //this.createCampaignMessageForm();  
   }
@@ -93,7 +114,15 @@ export class SmsCampaignComponent implements OnInit {
   //start table vars declartion
   //columns
   displayedColumns: string[] = ['Channel', 'Start time', 'Created time', 'Sent'];
-  dataSource = ELEMENT_DATA;
+  composedMessageDislayedColumns: string []=['Objective','Message','MappedCampaing','CreatedBy','CreatedAt','UpdatedAt'];
+  dataSource = CAMPAIGN_DELIVER_DATA;
+  composedMessageDataSource = new MatTableDataSource(LIST_COMPOSED_MESSAGES);
+  
+  //Apply Data filter to table listing composed messages
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.composedMessageDataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   //Channels
   Channels: Channel[] = [
@@ -233,6 +262,13 @@ CreateCampaignMessage(){
   this.renderCreateCampaign==false ? this.renderCreateCampaign=true : this.renderCreateCampaign=false;
   //this.renderCreateCampaign=true;
  
+}
+
+//View Messages
+ListMessages(){
+ 
+  this.showComposeForm==true ? this.showComposeForm = false : this.showComposeForm =true;
+  console.log("List messsages ",this.showComposeForm);
 }
 //Create campaign type
 Redirect(){
