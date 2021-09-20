@@ -87,7 +87,7 @@ export class SmsCampaignModalComponent implements OnInit {
 
   onConfirmClick(): void {
     //Launch service to call back end in modal
-    this.campaingServie.createCampaingCahnnel(this.payload).subscribe((response: any) => {
+    this.campaingServie.createCampaingChannel(this.payload).subscribe((response: any) => {
       console.log("Received payload",response);
       // if (response.status === 200)
       //     console.log("Response Data")
@@ -121,7 +121,67 @@ export class SmsCampaignModalComponent implements OnInit {
 
   onUpdate(){
    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
+   this.campaingServie.updateCampaingChannel(this.payload).subscribe((response: any) => {
+    console.log("Received payload",response);
+    // if (response.status === 200)
+    //     console.log("Response Data")
+    // // console.log(response.data)
+    // //this.getModulesAndActions2
+    // let arr = [];
+    // let moduleArr = [];
+    // //console.log(response.data)
+
+    // Object.keys(response.data).forEach((key) => {
+    //     // console.log("Iterator function "+key)
+    //     arr.push({
+    //         module: key,
+    //         actions: response.data[key],
+    //     })
+    // });
+
+    // this.modulesAndActions = arr;
+    // // console.log('Filter module list \n')
+    // this.modulesAndActions.forEach((c) => {
+    //     // console.log(c.module)
+    //     moduleArr.push(c.module)
+    // });
+
+    // //console.log('Filter module \n', moduleArr)
+    // this.getModulesAndActionsUpdate(moduleArr);
+}, error => console.log(error))
   }
+
+  delete(){
+    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
+    this.campaingServie.deleteCampaingChannel(this.payload).subscribe((response: any) => {
+     console.log("Received payload",response);
+     // if (response.status === 200)
+     //     console.log("Response Data")
+     // // console.log(response.data)
+     // //this.getModulesAndActions2
+     // let arr = [];
+     // let moduleArr = [];
+     // //console.log(response.data)
+ 
+     // Object.keys(response.data).forEach((key) => {
+     //     // console.log("Iterator function "+key)
+     //     arr.push({
+     //         module: key,
+     //         actions: response.data[key],
+     //     })
+     // });
+ 
+     // this.modulesAndActions = arr;
+     // // console.log('Filter module list \n')
+     // this.modulesAndActions.forEach((c) => {
+     //     // console.log(c.module)
+     //     moduleArr.push(c.module)
+     // });
+ 
+     // //console.log('Filter module \n', moduleArr)
+     // this.getModulesAndActionsUpdate(moduleArr);
+ }, error => console.log(error))
+   }
 
   public cancel(){
     this.dialogRef.close(true);
