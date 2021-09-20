@@ -416,7 +416,7 @@
         <!-- Delete Action Column -->
         <ng-container matColumnDef="Delete">
           <th mat-header-cell *matHeaderCellDef><p class="Theader">DELETE</p></th>
-          <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteComposeMessage()">
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteCampaign(element)">
             <mat-icon >delete</mat-icon> DELETE
           </button> </td>
         </ng-container>
@@ -424,7 +424,7 @@
         <!-- Update Action Column -->
         <ng-container matColumnDef="Update">
           <th mat-header-cell *matHeaderCellDef><p class="Theader">UPDATE</p></th>
-          <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateComposeMessge()">
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateCampaign(element)">
             <mat-icon>update</mat-icon> UPDATE
           </button> </td>
         </ng-container>

@@ -24,7 +24,7 @@ export interface Campaings{
 }
 
 const CAMPAIGN_LIST_DATA:Campaings[] = [
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'23/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'sdsd',ChannelType:'dfwef',date:'23/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['SMS','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
   {CampaignName:'sdsd',ChannelType:'dfwef',date:'21/11/2021',RunTimeType:'wefwef',CampaingStartTime:'12/11/2021',MappedMessage:['wfwefwef','kfdvlno'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
   {CampaignName:'sdsd',ChannelType:'dfwef',date:'24/11/2021',RunTimeType:'wefwef',CampaingStartTime:'15/11/2021',MappedMessage:['vwovnro','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
   {CampaignName:'sdsd',ChannelType:'dfwef',date:'25/11/2021',RunTimeType:'wefwef',CampaingStartTime:'19/11/2021',MappedMessage:['fffff','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
@@ -68,7 +68,7 @@ export class CreateCampaignComponent implements OnInit {
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
  
 
-  constructor(private formBuilder: FormBuilder,public dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder,private dialog: MatDialog) {
     //console.log(this.setForm)
     //This are the type of channels available
     this.data = [
@@ -94,7 +94,7 @@ export class CreateCampaignComponent implements OnInit {
       clearSearchFilter: true,
       maxHeight: 197,
       itemsShowLimit: 3,
-      searchPlaceholderText: "CHANNEL",
+      searchPlaceholderText: "SEARCH CAMPAIGN CHANNEL",
       noDataAvailablePlaceholderText: "NO DATA PRESENT",
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
@@ -126,12 +126,12 @@ export class CreateCampaignComponent implements OnInit {
     }
 
     //Update Campaing 
-    UpdateCampaign(){
-      console.log("Update campaing table data ....");
+    deleteCampaign(data: any){
+      console.log(`Update campaing table data .... \n ${JSON.stringify(data,null,2)}`);
     }
     //Delete Campaing
-    DeleteCampaign(){
-     console.log("Delete campaigntable data ....");
+    updateCampaign(data:any){
+     console.log(`Delete campaigntable data .... \n ${JSON.stringify(data,null,2)} `);
     }
   //Table relate functions and variable end
 
@@ -306,7 +306,8 @@ export class CreateCampaignComponent implements OnInit {
   openDialog(message): any {
     const dialogRef = this.dialog.open(SmsCampaignModalComponent, {
       data: {
-      payload:message,
+      payload:"message",
+      type:"campaign",
       message: `YOUR ABOUT TO CREATE A CAMPAIGN ${message.campaigName.toUpperCase()} OF CHANNEL ${message.channelType.toUpperCase()}`,
             buttonText: {
                 ok: 'CREATE CAMPAIGN CHANNEL',
@@ -320,9 +321,11 @@ export class CreateCampaignComponent implements OnInit {
 
   //submit campaign form
   onSubmit() {
+    let user=JSON.parse(localStorage.getItem('currentUser'));
     let payload: any={
       isReccuring:this.isReccuring,
-      ...this.campaignForm.value
+      ...this.campaignForm.value,
+      createdBy:user.userInfo.username,
     }
 
     this.openDialog(payload)

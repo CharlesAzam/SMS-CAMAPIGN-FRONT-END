@@ -122,7 +122,7 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-f
 .sms-campaing{
     width:100% !important;
     /* margin-right: 80% !important; */
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 600;
     color: black; 
   }
@@ -131,7 +131,15 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-f
       font-size: 13px;
       font-weight:700;
       color: black; 
-      text-transform: uppercase;  
+      text-transform: uppercase;
+      text-align: center;  
+}
+.Theader2{
+    font-size: 13px;
+    font-weight:700;
+    color: black; 
+    text-transform: uppercase;
+    /* text-align: center;   */
 }
 
 

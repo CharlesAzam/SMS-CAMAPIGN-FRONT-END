@@ -59,7 +59,7 @@
               <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
               <div style="width: 400px !important; margin-top: 10px;margin-bottom: 10px;">
               <ng-multiselect-dropdown #multiSelect
-              [placeholder]="'Select City'" 
+              [placeholder]="'Select Channel'" 
               [data]="data" 
               [formControl]="f.name" 
               [settings]="settings"
@@ -90,7 +90,7 @@
      </div>
 
      <!--Display table list to show messages start-->
-     <div style="width: 100%;" *ngIf="showComposeForm == false">
+     <div style="width: 100% !important;" *ngIf="showComposeForm == false">
        <label class="campaing-form-lable">LIST OF CAMPAIGN MESSAGE</label>
        <div style="margin-left: 3.5%;">
         <mat-form-field appearance="outline">
@@ -121,14 +121,14 @@
 
         <!-- isPersoanlized Column -->
         <ng-container matColumnDef="isPersoanlized">
-          <th mat-header-cell *matHeaderCellDef><p class="Theader">ISPERSONALIZED</p></th>
-          <td mat-cell *matCellDef="let element"> {{element.isPersoanlized}} </td>
+          <th mat-header-cell *matHeaderCellDef><p class="Theader">IS PERSONALIZED</p></th>
+          <td class="Theader" mat-cell *matCellDef="let element"> {{element.isPersonalized}} </td>
         </ng-container>
       
         <!-- Create By Column -->
         <ng-container matColumnDef="CreatedBy">
           <th mat-header-cell *matHeaderCellDef><p class="Theader">CREATED BY</p></th>
-          <td mat-cell *matCellDef="let element"> {{element.CreatedBy}} </td>
+          <td class="Theader2" mat-cell *matCellDef="let element"> {{element.CreatedBy}} </td>
         </ng-container>
 
          <!-- Created At Column -->
@@ -146,7 +146,7 @@
         <!-- Delete Action Column -->
         <ng-container matColumnDef="Delete">
           <th mat-header-cell *matHeaderCellDef><p class="Theader">DELETE</p></th>
-          <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteComposeMessage()">
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteComposeMessage(element)">
             <mat-icon >delete</mat-icon> DELETE
           </button> </td>
         </ng-container>
@@ -154,7 +154,7 @@
         <!-- Update Action Column -->
         <ng-container matColumnDef="Update">
           <th mat-header-cell *matHeaderCellDef><p class="Theader">UPDATE</p></th>
-          <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateComposeMessge()">
+          <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateComposeMessge(element)">
             <mat-icon>update</mat-icon> UPDATE
           </button> </td>
         </ng-container>

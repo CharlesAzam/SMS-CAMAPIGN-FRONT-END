@@ -1,15 +1,85 @@
 <mat-dialog-content>
-	<div class="col">
+	
+    <div class="col">
     
         <img  class="img" src="../../../../../assets/azam-logo.png">
-        <p class="messageFont">
-            {{message}}
-        </p>
+        <!--Render normal form start-->
+        <div class="col" *ngIf="renderFormType==='normal'">
+            <p class="messageFont">
+                {{message}}
+            </p>
+            <p class="messageFont">MESSAGE OBJECTIVE: {{formDetails?.campaigObjective}}. </p>
+            <p class="messageFont">MAPPED CHANNELS CHANNEL.</p>
+            <hr>
+            <mat-list>
+                <mat-list-item *ngFor="let item of formDetails?.name">* {{item.item_text}}</mat-list-item>
+            </mat-list>
+            <hr>
+        </div>
+        <!--Render normal form end-->
+
+        <!--Render campaign form start-->
+        <div style="height: 800px;" *ngIf="renderFormType==='message'">
+            <!-- {{renderFormType}} -->
+            <div style="width: 70%; height: 600px;">
+                <form [formGroup]="form" (ngSubmit)="onUpdate()">
+                  <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
+                  <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective"/>
+                  <br/>
+                   <span *ngIf="form.controls['campaigObjective'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                    ** Campaign objective field can't be empty!
+                   </span>
+                  <br/>
+                  <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
+                  <textarea style="width: 400px !important; height: 200px !important;"  name="campaignMessage" formControlName="campaignMessage"></textarea>
+                  <br>
+                  <span *ngIf="form.controls['campaignMessage'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                    ** Campaign must have a message!
+                   </span>
+                  <br/>
+                  <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
+                  <div style="width: 400px !important; height: 100px;">
+                  <ng-multiselect-dropdown #multiSelect
+                  [placeholder]="'SELECT CAMPAIGN CHANNEL'" 
+                  [data]="dataz" 
+                  [formControl]="f.name" 
+                  [settings]="settings"
+                  [disabled]="false"
+                  (onFilterChange)="onFilterChange($event)"
+                  (onDropDownClose)="onDropDownClose($event)"
+                  (onSelect)="onItemSelect($event)" 
+                  (onDeSelect)="onDeSelect($event)"
+                  (onSelectAll)="onSelectAll($event)"
+                  (onDeSelectAll)="onDeSelectAll($event)">
+                  </ng-multiselect-dropdown>
+                  </div>
+                  <br>
+                  <label class="campaing-form-lable" for="Campaing Message">IS PERSONALIZED MESSAGE</label><br>
+                  <mat-checkbox color="primary" name="personalizeMessage" formControlName="personalizeMessage">Checked</mat-checkbox>
+                  <br>
+                <span *ngIf="f?.name?.errors?.required" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                   ** Please map message to specific campaign
+                </span>
+                <span *ngIf="form.controls['name'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                   ** Duplicate message are not allowed
+                </span>
+                  <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="this.form.invalid">UPDATE</button>
+                  <button mat-raised-button type="submit"  (click)="cancel()">CANCEL</button>
+                </form>
+               </div>
+        </div>
+        <!--Render campaign form end-->
+
+         <!--Render message edit form start-->
+         <div *ngIf="renderFormType==='campaign'">
+            {{renderFormType}}
+        </div>
+        <!--Render Campaign forom end-->
 
 
     </div>
 </mat-dialog-content>
-<mat-dialog-actions align="center">
+<mat-dialog-actions *ngIf="renderFormType==='normal'" align="center">
 	<button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
 	<button mat-raised-button mat-dialog-close tabindex="-1" color="warn" >{{cancelButtonText}}</button>
 </mat-dialog-actions>

@@ -4,10 +4,10 @@
   margin-right: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  border: 1px;
+  /* border: 1px;
     border-radius: 5px;
     /* padding: 10px; */
-    box-shadow: 2px 2px 2px 2px #888888;  
+    /* box-shadow: 2px 2px 2px 2px #888888;   */ 
 }
 
 .messageFont{
@@ -16,6 +16,6 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
