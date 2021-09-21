@@ -1,25 +1,60 @@
 <mat-dialog-content>
 	
     <div class="col">
-    
-        <img  class="img" src="../../../../../assets/azam-logo.png">
-        <!--Render normal form start-->
-        <div class="col" *ngIf="renderFormType==='normal'">
-            <p class="messageFont">
-                {{message}}
-            </p>
-            <p class="messageFont">MESSAGE OBJECTIVE: {{formDetails?.campaigObjective}}. </p>
-            <p class="messageFont">MAPPED CHANNELS CHANNEL.</p>
-            <hr>
-            <mat-list>
-                <mat-list-item *ngFor="let item of formDetails?.name">* {{item.item_text}}</mat-list-item>
-            </mat-list>
-            <hr>
+        
+        <!--normal-create-message-start-->
+        <div *ngIf="type=='create-message'">
+            <img  class="img" src="../../../../../assets/azam-logo.png">
+            <!--Render normal form start-->
+            <div class="col" *ngIf="renderFormType==='normal'">
+                <p class="messageFont">
+                    {{message}}
+                </p>
+                <p class="messageFont">MESSAGE OBJECTIVE: {{formDetails?.campaigObjective}}. </p>
+                <p class="messageFont">MAPPED CHANNELS CHANNEL.</p>
+                <hr>
+                <mat-list>
+                    <mat-list-item *ngFor="let item of formDetails?.name">* {{item.item_text}}</mat-list-item>
+                </mat-list>
+                <hr>
+            </div>
         </div>
+        <!--normal-create-message-end-->
+      
+
+        <!--normal-create-campaign-start-->      
+            <!--Render normal form start-->
+            <div class="col" *ngIf="renderFormType==='create-campaign'">
+                <img  class="img" src="../../../../../assets/azam-logo.png">
+                <p class="messageFont">
+                    {{message}}
+                </p>
+                <p class="messageFont">CAMPAIGN NAME: {{formDetails?.campaigName}}. </p>
+                <p class="messageFont">CHANNEL TYPE: {{formDetails?.channelType}}.</p>
+                <p class="messageFont">CREATED BY: {{formDetails?.createdBy}}.</p>
+                <p class="messageFont"> CAMPAIGN WILL START AT: {{formDetails?.date}}</p>
+                <hr>
+                <div *ngIf="isReccuring===false">
+                <p class="messageFont">MAPPED MESSAGES FOR NORMAL RUNTIME </p>
+                <mat-list>
+                    <mat-list-item *ngFor="let item of formDetails?.normalMessage">* {{item.item_text}}</mat-list-item>
+                </mat-list>
+                </div>
+                <div *ngIf="isReccuring===true">
+                    <p class="messageFont">MAPPED MESSAGES FOR RECCURING CAMPAIGN: </p>
+                    <mat-list>
+                        <mat-list-item *ngFor="let item of formDetails?.campaignStages?.stage">* {{item.mappedMessages.item_text}}</mat-list-item>
+                    </mat-list>
+                </div>
+                <hr>
+            </div>
+        <!--normal-create-campaign-end-->
+       
         <!--Render normal form end-->
 
         <!--Render campaign form start-->
-        <div style="height: 800px;" *ngIf="renderFormType==='message'">
+        <div *ngIf="renderFormType==='message'">
+            <img  class="img" src="../../../../../assets/azam-logo.png">
             <!-- {{renderFormType}} -->
             <div style="width: 70%; height: 600px;">
                 <form [formGroup]="form" (ngSubmit)="onUpdate()">
@@ -71,15 +106,287 @@
         <!--Render campaign form end-->
 
          <!--Render message edit form start-->
-         <div *ngIf="renderFormType==='campaign'">
-            {{renderFormType}}
+         <div  *ngIf="renderFormType=='campaign'">
+            <img  class="img" src="../../../../../assets/azam-logo.png">
+            <div >
+                <!-- <mat-card class="mat-card-content"> -->
+                  <!-- <mat-card-content> -->
+                    <form  [formGroup]="campaignForm" (ngSubmit)="onUpdate('campaign')">
+                      <label class="campaing-form-lable" for="Campaing objective"
+                        >Campaign name</label
+                      ><br />
+                      <input
+                        style="width: 60% !important; height: 40px !important"
+                        name="campaigName"
+                        formControlName="campaigName"
+                        [class.valid]="
+                          this.campaignForm.get('campaigName').valid &&
+                          (this.campaignForm.get('campaigName').dirty ||
+                            this.campaignForm.get('campaigName').touched)
+                        "
+                        [class.invalid]="
+                          this.campaignForm.get('campaigName').invalid &&
+                          (this.campaignForm.get('campaigName').dirty ||
+                            this.campaignForm.get('campaigName').touched)
+                        "
+                      /><br />
+                      <div
+                        *ngIf="
+                          this.campaignForm.get('campaigName').invalid &&
+                          this.campaignForm.get('campaigName').errors &&
+                          (this.campaignForm.get('campaigName').dirty ||
+                            this.campaignForm.get('campaigName').touched)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            this.campaignForm.get('campaigName').hasError('required')
+                          "
+                        >
+                          Campaign name field is required.
+                        </small>
+                      </div>
+                      <label class="campaing-form-lable" for="Campaing objective"
+                        >Channel Type {{ channel }}</label
+                      ><br />
+                      <input
+                        style="width: 60% !important; height: 40px !important"
+                        name="channelType"
+                        formControlName="channelType"
+                        [class.valid]="
+                          this.campaignForm.get('channelType').valid &&
+                          (this.campaignForm.get('channelType').dirty ||
+                            this.campaignForm.get('channelType').touched)
+                        "
+                        [class.invalid]="
+                          this.campaignForm.get('channelType').invalid &&
+                          (this.campaignForm.get('channelType').dirty ||
+                            this.campaignForm.get('channelType').touched)
+                        "
+                      /><br />
+                      <div
+                        *ngIf="
+                          this.campaignForm.get('channelType').invalid &&
+                          this.campaignForm.get('channelType').errors &&
+                          (this.campaignForm.get('channelType').dirty ||
+                            this.campaignForm.get('channelType').touched)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            this.campaignForm.get('channelType').hasError('required')
+                          "
+                        >
+                        Channel type field is required.
+                        </small>
+                      </div>
+                      <label class="campaing-form-lable" for="Campaing objective"
+                        >Run time type</label
+                      ><br />
+                      <div class="row">
+                        <div
+                          class="RunTimeTypeStyleSheet"
+                          *ngFor="let RuntimeType of RuntimeTypes"
+                        >
+                          <input
+                            style="margin-right: 1%"
+                            [value]="RuntimeType"
+                            type="radio"
+                            name="RunTimeType"
+                            formControlName="RunTimeType"
+                            (change)="onRadioChange(RuntimeType)"
+                          />
+                          <label class="campaing-form-lable" for="Campaing objective">{{
+                            RuntimeType
+                          }}</label>
+                        </div>
+                        <!--if true show calendar-->
+                        <div class="row" *ngIf="displayCalendar == true">
+                          <div class="dateContainer">
+                            <input
+                              matInput
+                              placeholder="Choose a date"
+                              [satDatepicker]="picker"
+                              [value]="dateRange"
+                              name="date"
+                              formControlName="date"
+                              (dateChange)="getDateRange($event)"
+                            />
+                            <sat-datepicker
+                              #picker
+                              [rangeMode]="isMultipleDate"
+                            ></sat-datepicker>
+                            <sat-datepicker-toggle
+                              matSuffix
+                              [for]="picker"
+                            ></sat-datepicker-toggle>
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="displayCalendar == true"
+                          style="
+                            width: 150px !important;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                          "
+                        >
+                          <ng-multiselect-dropdown
+                            #multiSelect
+                            [placeholder]="'Select message to map'"
+                            [data]="dataz"
+                            [formControl]="g.normalMessage"
+                            [settings]="settings"
+                            [disabled]="false"
+                            (onFilterChange)="onFilterChange($event)"
+                            (onDropDownClose)="onDropDownClose($event)"
+                            (onSelect)="onItemSelect($event, i)"
+                            (onDeSelect)="onDeSelect($event)"
+                            (onSelectAll)="onSelectAll($event)"
+                            (onDeSelectAll)="onDeSelectAll($event)"
+                          >
+                          </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                      <!--if true show campaign stages-->
+                      <div *ngIf="isReccuring == true">
+                        <label class="campaing-form-lable" for="Campaing objective"
+                          >Campaing duration</label
+                        ><br />
+                        <input
+                          style="width: 60% !important; height: 40px !important"
+                          name="recuringCampaignDuration"
+                          formControlName="recuringCampaignDuration"
+                        /><br />
+                        <div formGroupName="campaignStages">
+                          <div class="row">
+                            <button
+                              color="primary"
+                              mat-raised-button
+                              style="
+                                margin-left: 15px;
+                                margin-top: 10px;
+                                margin-bottom: 10px;
+                              "
+                              type="button"
+                              (click)="addCampaignStages()"
+                            >
+                              Add stages
+                            </button>
+                          </div>
+                          <div formArrayName="stage">
+                            <div
+                              *ngFor="
+                                let stage of campaignStagez?.controls;
+                                let i = index
+                              "
+                              [formGroupName]="i"
+                            >
+                              <div class="row">
+                                <p
+                                  style="
+                                    margin-right: 50px;
+                                    font-weight: bold;
+                                    font-size: 20px;
+                                  "
+                                >
+                                  stage {{ i + 1 }}
+                                </p>
+                                <label
+                                  style="font-weight: bold; font-size: 20px"
+                                  for="Campaing objective"
+                                  >Map message to campaign stage</label
+                                >
+                              </div>
+                              <div style="margin-bottom: 10px; margin-top: 10px">
+                                <div class="row">
+                                  <input
+                                    style="margin-left: 15px; margin-right: 10px"
+                                    formControlName="from"
+                                    placeholder="From "
+                                  />
+                                  <input
+                                    style="margin-right: 10px"
+                                    formControlName="to"
+                                    placeholder="to"
+                                  />
+                                  <div style="width: 40% !important; margin-right: 10px">
+                                    <ng-multiselect-dropdown
+                                      #multiSelect
+                                      [placeholder]="'Select message to map'"
+                                      [data]="this.dataz"
+                                      [formControl]="f.mappedMessages"
+                                      [settings]="settings"
+                                      [disabled]="false"
+                                      (onFilterChange)="onFilterChange($event)"
+                                      (onDropDownClose)="onDropDownClose($event)"
+                                      (onSelect)="onItemSelect($event, i)"
+                                      (onDeSelect)="onDeSelect($event)"
+                                      (onSelectAll)="onSelectAll($event)"
+                                      (onDeSelectAll)="onDeSelectAll($event)"
+                                    >
+                                    </ng-multiselect-dropdown>
+                                  </div>
+                                  <button
+                                    color="warn"
+                                    mat-raised-button
+                                    type="button"
+                                    (click)="removeCapaingStage(i)"
+                                  >
+                                    Remove stage
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        style="margin-right: 30px"
+                        mat-raised-button
+                        type="submit"
+                        color="primary"
+                        [disabled]="this.campaignForm.invalid"
+                      >
+                        UPDATE
+                      </button>
+                      <button mat-raised-button type="button" (click)="cancel()">
+                        CANCEL
+                      </button>
+                    </form>
+                    <!--Drop down with mapped messages-->
+                    <label class="campaing-form-lable" for="Campaing objective"
+                      >Message Mapped to channel</label
+                    ><br />
+                    <div
+                      style="width: 60% !important; margin-top: 10px; margin-bottom: 10px"
+                    >
+                      <ng-multiselect-dropdown
+                        #multiSelect
+                        [placeholder]="'View Mapped messages'"
+                        [data]="dataz"
+                        [settings]="settings"
+                        [disabled]="true"
+                        (onFilterChange)="onFilterChange($event)"
+                        (onDropDownClose)="onDropDownClose($event)"
+                        (onSelect)="onItemSelect($event)"
+                        (onDeSelect)="onDeSelect($event)"
+                        (onSelectAll)="onSelectAll($event)"
+                        (onDeSelectAll)="onDeSelectAll($event)"
+                      >
+                      </ng-multiselect-dropdown>
+                    </div>
+                  <!-- </mat-card-content> -->
+                <!-- </mat-card> -->
+            </div>
         </div>
         <!--Render Campaign forom end-->
 
 
     </div>
 </mat-dialog-content>
-<mat-dialog-actions *ngIf="renderFormType==='normal'" align="center">
+<mat-dialog-actions *ngIf="renderFormType==='create-campaign' || renderFormType==='create-message' " align="center">
 	<button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
 	<button mat-raised-button mat-dialog-close tabindex="-1" color="warn" >{{cancelButtonText}}</button>
 </mat-dialog-actions>

@@ -16,7 +16,7 @@ export interface Campaings{
   date:any
   CampaignName: string;
   ChannelType:string;
-  RunTimeType:any;
+  RunTimeType:any[];
   CampaingStartTime: any;
   MappedMessage:string [];
   CreatedAt:any;
@@ -24,15 +24,15 @@ export interface Campaings{
 }
 
 const CAMPAIGN_LIST_DATA:Campaings[] = [
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'23/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['SMS','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'21/11/2021',RunTimeType:'wefwef',CampaingStartTime:'12/11/2021',MappedMessage:['wfwefwef','kfdvlno'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'24/11/2021',RunTimeType:'wefwef',CampaingStartTime:'15/11/2021',MappedMessage:['vwovnro','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'25/11/2021',RunTimeType:'wefwef',CampaingStartTime:'19/11/2021',MappedMessage:['fffff','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'26/11/2021',RunTimeType:'wefwef',CampaingStartTime:'01/11/2021',MappedMessage:['kkkkk','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'27/11/2021',RunTimeType:'wefwef',CampaingStartTime:'10/11/2021',MappedMessage:['qqqq','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'28/11/2021',RunTimeType:'wefwef',CampaingStartTime:'13/12/2021',MappedMessage:['llll','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'29/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['wwww','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'sdsd',ChannelType:'dfwef',date:'30/11/2021',RunTimeType:'wefwef',CampaingStartTime:'09/11/2021',MappedMessage:['zzzzzzz','wefwfwef'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
+  {CampaignName:'Customer Greetings',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["OneTime"],CampaingStartTime:'23/11/2021',MappedMessage:['MSG1'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Promotional deals and discounts',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["OneTime"],CampaingStartTime:'12/11/2021',MappedMessage:['MSG2'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Alerts & notifications',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["OneTime"],CampaingStartTime:'15/11/2021',MappedMessage:['MSG3'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Customer onBoarding',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["MultipleDates"],CampaingStartTime:'19/11/2021',MappedMessage:['MSG4'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Flash Sale',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["MultipleDates"],CampaingStartTime:'01/11/2021',MappedMessage:['MSG4'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'SMS coupons',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["MultipleDates"],CampaingStartTime:'10/11/2021',MappedMessage:['MSG4'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Loyalty programs',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["Recurring"],CampaingStartTime:'13/12/2021',MappedMessage:['MSG4'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Sports promotion',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["Recurring"],CampaingStartTime:'23/11/2021',MappedMessage:['MSG4'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  {CampaignName:'Text to win',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["Recurring"],CampaingStartTime:'09/11/2021',MappedMessage:['MSG4'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
 
 ];
 
@@ -72,10 +72,10 @@ export class CreateCampaignComponent implements OnInit {
     //console.log(this.setForm)
     //This are the type of channels available
     this.data = [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-      { item_id: 3, item_text: "EMAIL" },
-      { item_id: 4, item_text: "IN APP" },
+      { item_id: 1, item_text: "MSG1" },
+      { item_id: 2, item_text: "MSG2" },
+      { item_id: 3, item_text: "MSG3" },
+      { item_id: 4, item_text: "MSG4" },
     ];
   }
   @Input() channel: string;
@@ -111,7 +111,7 @@ export class CreateCampaignComponent implements OnInit {
     //List Campaign Delivery Status
     dataSource=new MatTableDataSource(CAMPAIGN_LIST_DATA);
     //columns
-    //{CampaignName:'sdsd',ChannelType:'dfwef',date:'23/11/2021',RunTimeType:'wefwef',CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+    //{CampaignName:'sdsd',ChannelType:'SMS',date:'23/11/2021',RunTimeType:['wert'],CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
     displayedColumns: string[] = ['CampaignName','ChannelType','date','RunTimeType','CampaingStartTime','MappedMessage','isReccuring','CreatedAt','UpdatedAt','Delete','Update'];
 
     //Apply Data filter to table listing composed messages
@@ -132,6 +132,10 @@ export class CreateCampaignComponent implements OnInit {
     //Delete Campaing
     updateCampaign(data:any){
      console.log(`Delete campaigntable data .... \n ${JSON.stringify(data,null,2)} `);
+     this.openDialog({
+       type:'campaign',
+       ...data
+     });
     }
   //Table relate functions and variable end
 
@@ -304,18 +308,43 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   openDialog(message): any {
-    const dialogRef = this.dialog.open(SmsCampaignModalComponent, {
-      data: {
-      payload:"message",
-      type:"campaign",
-      message: `YOUR ABOUT TO CREATE A CAMPAIGN ${message.campaigName.toUpperCase()} OF CHANNEL ${message.channelType.toUpperCase()}`,
-            buttonText: {
-                ok: 'CREATE CAMPAIGN CHANNEL',
-                cancel: 'CANCEL'
-            }
-        }
-    })
+    //Assign appropritate message according to form type
+    let formModaldata ={
+        data: {
+        payload:message,
+        message:null,
+              buttonText: {
+                  ok: 'OK',
+                  cancel: 'CANCEL'
+              }
+          }
+      
+    }
+    
+    //ADJUST CONDITION
+    console.log("type === > ",message.type)
+    switch (message.type) {
+      case "campaign":
+        formModaldata.data.message=`YOUR ABOUT TO EDIT CAMPAIGN DETAIL`;
+        formModaldata.data.buttonText.ok=`UPDATE`
+        break;
+      case "message":
+        formModaldata.data.message=`YOUR ABOUT TO EDIT MESSAGE DETAIL`;
+        formModaldata.data.buttonText.ok=`UPDATE`
+        break;
+      case "create-campaign":
+        formModaldata.data.message=`YOUR ABOUT TO CREATE A NEW CAMPAIGN`;
+        formModaldata.data.buttonText.ok=`CREATE CAMPAIGN`
+        break;
+      case "create-message":
+        formModaldata.data.message=`YOUR ABOUT TO CREATE A NEW CAMPAIGN MESSAGE`;
+        formModaldata.data.buttonText.ok=`CREATE MESSAGE`
+        break;
+      default:
+        break;
+    }
 
+    const dialogRef = this.dialog.open(SmsCampaignModalComponent,formModaldata)
     return dialogRef;
 }
 
@@ -323,6 +352,7 @@ export class CreateCampaignComponent implements OnInit {
   onSubmit() {
     let user=JSON.parse(localStorage.getItem('currentUser'));
     let payload: any={
+      type:'create-campaign',
       isReccuring:this.isReccuring,
       ...this.campaignForm.value,
       createdBy:user.userInfo.username,

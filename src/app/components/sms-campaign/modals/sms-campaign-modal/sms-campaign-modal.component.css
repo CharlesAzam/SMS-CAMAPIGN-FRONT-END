@@ -19,3 +19,37 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.mat-content-header{
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 5px;
+ }
+ 
+ .mat-card-content{
+  margin-top:30px;
+  margin-bottom: 30px;
+ }
+ 
+ .campaing-form-lable{
+     font-weight: 700;
+     font-size: 18px;
+     margin-top: 15px;
+     margin-bottom: 15px;
+     /* margin-left: 3.5%; */
+ }
+ .RunTimeTypeStyleSheet{
+  height: 100px;
+  width: 150px;
+  /* background: aquamarine; */
+  flex-direction: row;
+  align-items: flex-start;
+  margin-right: 1%;
+  margin-left: 1.2%;
+  /* display: flex;
+  
+  align-content: space-between; */
+ }
+ .dateContainer{
+  position: relative;
+  }
