@@ -38,9 +38,12 @@ export class SmsCampaignModalComponent implements OnInit {
   @Input() showCompose:boolean;
   @Input() renderCreateCampaign=true;
   @Input() RunType: string;
+  @Input() mappedMessages = [];
+  @Input() EDIT_MESSAGE=[];
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
   public dataz:any [];
   public settings = {};
+  public settings2 = {};
   public loadContent: boolean = false;
   public dateRange: any;
   // Create DaiDH
@@ -61,10 +64,18 @@ export class SmsCampaignModalComponent implements OnInit {
         "stage": [
           {
             "from": "1",
+            "to": "2",
+            "mappedMessages": {
+              "item_id": 1,
+              "item_text": "MSG1"
+            }
+          },
+          {
+            "from": "2",
             "to": "3",
             "mappedMessages": {
               "item_id": 1,
-              "item_text": "SMS"
+              "item_text": "MSG2"
             }
           }
         ]
@@ -102,6 +113,25 @@ export class SmsCampaignModalComponent implements OnInit {
       defaultOpen: false,
     };
 
+    this.settings2 = {
+      singleSelection: false,
+      idField: "item_id",
+      textField: "item_text",
+      enableCheckAll: true,
+      selectAllText: "ALL",
+      unSelectAllText: "UN SELECT",
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 3,
+      searchPlaceholderText: "SEARCH CAMPAIGN MESSAGES",
+      noDataAvailablePlaceholderText: "NO DATA PRESENT",
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
+
     //This is willl be all the messages available
     this.dataz = [
       { item_id: 1, item_text: "MSG1" },
@@ -110,23 +140,29 @@ export class SmsCampaignModalComponent implements OnInit {
       { item_id: 4, item_text: "MSG4" },
     ];
 
+    //This is willl be all the campaign channels available
+    this.data = [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+      { item_id: 3, item_text: "EMAIL" },
+      { item_id: 4, item_text: "IN APP" },
+    ];
+
+
     this.setForm(this.renderFormType);
 
     if(this.formDetails.campaignStages.stage!=null){
     let stages:any [] = this.formDetails.campaignStages.stage;
      console.log("i = ",JSON.stringify(this.formDetails.campaignStages.stage,null,2))
-      let controls=<FormArray>(
-        (<FormGroup>this.campaignForm.get("campaignStages")).get("stage")
-      );
+     
 
       stages.forEach((stageItem,index)=>{
-        this.campaignStagez.push(this.newCampaign());
-        console.log(`stage from ${stageItem.from} to ${stageItem.to} mappedMessages ${stageItem.mappedMessages} item index >>> `,index)
-        controls.controls[index].patchValue({
-          'from':stageItem.from,
-          'to':stageItem.to,
-          'mappedMessages':stageItem.mappedMessages
-        })
+        
+        console.log(`stage from ${stageItem.from} to ${stageItem.to} mappedMessages ${stageItem.mappedMessages.item_text} item index >>> `,index)
+        this.campaignStagez.push(this.newDynamicCampaign(stageItem.from,stageItem.to,stageItem.mappedMessages.item_text));
+        this.EDIT_MESSAGE[index]=stageItem.mappedMessages.item_text
+        this.mappedMessages.push(stageItem.mappedMessages);
+     
       })
 
       
@@ -135,7 +171,6 @@ export class SmsCampaignModalComponent implements OnInit {
       
       // this.selectedItem.push(item);
       // this.selectedItem;
-       console.log("campaign form ",JSON.stringify(this.campaignForm.value,null,2))
       //controls.controls[i].patchValue({'mappedMessages':item})
       // console.log(`selected item array ---> \n`,controls.controls[i]);
       
@@ -188,7 +223,7 @@ export class SmsCampaignModalComponent implements OnInit {
   }
 
   onUpdate(type:string){
-   console.log(`on update campaign  --> ${type} `,JSON.stringify(this.campaignForm.value,null,2))
+   console.log(`on update campaign  --> ${type} `,this.campaignForm.controls)
    return
    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
    this.campaingServie.updateCampaingChannel(this.payload).subscribe((response: any) => {
@@ -257,6 +292,8 @@ export class SmsCampaignModalComponent implements OnInit {
     this.dialogRef.close(true);
   }
 
+
+  //Drop down function for messages start
   public onFilterChange(item: any) {
     console.log("onFilter change ", item);
   }
@@ -264,21 +301,47 @@ export class SmsCampaignModalComponent implements OnInit {
     console.log("onDropDown change ", item);
   }
 
-  public async onItemSelect(item: any) {
+  public onItemSelect(item: any) {
     console.log("onItemSelect ", item);
-    let arr = []
-    arr=this.formDetails.MappedCampaing
-    let result=arr.find((objct)=>objct == item.item_text)
-    if(result){
-      //this.form.setErrors({ 'invalid': true });
-      console.log("error ",this.form.controls['name'].setErrors({invalid:true}))
-    }else{
-      //Add to Array
-      this.formDetails.MappedCampaing.push(item.item_text)
-    }
-    
   }
   public onDeSelect(item: any) {
+    console.log("onDeSelect ", item);
+  }
+
+  public onSelectAll(items: any) {
+    console.log("onSelectAll ", items);
+  }
+  public onDeSelectAll(items: any) {
+    console.log("onDeSelectAll ", items);
+  }
+  //Drop down function for messages end
+
+  // Drop down function for campaign start
+  public onFilterChange2(item: any) {
+    console.log("onFilter change ", item);
+  }
+  public onDropDownClose2(item: any) {
+    console.log("onDropDown change ", item);
+  }
+
+  public onItemSelect2(item: any,i: number) {
+    console.log(`onItemSelect ${i} `, item);
+   
+    console.log("onItemSelect ", item);
+    console.log("Array index ",i)
+    console.log("push item to data array")
+   
+
+    let controls=<FormArray>(
+      (<FormGroup>this.campaignForm.get("campaignStages")).get("stage")
+    );
+
+    console.log("i = ",i)
+    controls.controls[i].get('mappedMessages').setValue(item.item_text)
+    console.log(`selected item array ---> \n`,controls.controls[i]);
+    
+  }
+  public onDeSelect2(item: any) {
     console.log("onDeSelect ", item);
     let indx: number; //Local index
     let arr = []
@@ -296,15 +359,16 @@ export class SmsCampaignModalComponent implements OnInit {
   }
   }
 
-  public onSelectAll(items: any) {
+  public onSelectAll2(items: any) {
     console.log("onSelectAll ", items);
     this.formDetails.MappedCampaing=[]
     this.formDetails.MappedCampaing=items
   }
-  public onDeSelectAll(items: any) {
+  public onDeSelectAll2(items: any) {
     console.log("onDeSelectAll ", items);
     this.formDetails.MappedCampaing=[]
   }
+  //Drop down function for campigns end
 
   /*
     {
@@ -348,7 +412,7 @@ export class SmsCampaignModalComponent implements OnInit {
         campaigName: [this.formDetails.CampaignName,Validators.required],
         channelType: [this.formDetails.ChannelType,Validators.required],
         RunTimeType: [this.formDetails.RunTimeType[0],Validators.required],
-        recuringCampaignDuration: [""],
+        recuringCampaignDuration: [this.formDetails.recuringCampaignDuration],
         date:[this.formDetails.date],
         normalMessage:[this.formDetails.MappedMessage],
         campaignStages: this.formBuilder.group({
@@ -415,6 +479,14 @@ export class SmsCampaignModalComponent implements OnInit {
       from: [""],
       to: [""],
       mappedMessages: [], //Messages mapped to channel and stage
+    });
+  }
+  //Dynamic stage injection
+  newDynamicCampaign(from:any,to:any,mappedMessage:any): FormGroup {
+    return this.formBuilder.group({
+      from:  [from],
+      to: [to],
+      mappedMessages:[mappedMessage], //Messages mapped to channel and stage
     });
   }
   //Create campaing stages form

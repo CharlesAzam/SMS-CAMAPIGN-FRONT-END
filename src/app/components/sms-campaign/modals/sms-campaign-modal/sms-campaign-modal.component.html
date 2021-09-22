@@ -76,7 +76,7 @@
                   <div style="width: 400px !important; height: 100px;">
                   <ng-multiselect-dropdown #multiSelect
                   [placeholder]="'SELECT CAMPAIGN CHANNEL'" 
-                  [data]="dataz" 
+                  [data]="data" 
                   [formControl]="f.name" 
                   [settings]="settings"
                   [disabled]="false"
@@ -111,7 +111,7 @@
             <div >
                 <!-- <mat-card class="mat-card-content"> -->
                   <!-- <mat-card-content> -->
-                    <form  [formGroup]="campaignForm" (ngSubmit)="onUpdate('campaign')">
+                    <form  style="width: 900px !important;" [formGroup]="campaignForm" (ngSubmit)="onUpdate('campaign')">
                       <label class="campaing-form-lable" for="Campaing objective"
                         >Campaign name</label
                       ><br />
@@ -237,7 +237,7 @@
                             [placeholder]="'Select message to map'"
                             [data]="dataz"
                             [formControl]="g.normalMessage"
-                            [settings]="settings"
+                            [settings]="settings2"
                             [disabled]="false"
                             (onFilterChange)="onFilterChange($event)"
                             (onDropDownClose)="onDropDownClose($event)"
@@ -294,7 +294,7 @@
                                   stage {{ i + 1 }}
                                 </p>
                                 <label
-                                  style="font-weight: bold; font-size: 20px"
+                                  style="font-weight: bold; font-size: 17px"
                                   for="Campaing objective"
                                   >Map message to campaign stage</label
                                 >
@@ -302,29 +302,30 @@
                               <div style="margin-bottom: 10px; margin-top: 10px">
                                 <div class="row">
                                   <input
-                                    style="margin-left: 15px; margin-right: 10px"
+                                    style="margin-left: 15px;margin-right: 10px;"
                                     formControlName="from"
                                     placeholder="From "
                                   />
                                   <input
-                                    style="margin-right: 10px"
+                                    style="margin-right: 10px;"
                                     formControlName="to"
                                     placeholder="to"
                                   />
-                                  <div style="width: 40% !important; margin-right: 10px">
+                                  <div style="width: 30% !important; margin-right: 15px;height:10px;">
                                     <ng-multiselect-dropdown
                                       #multiSelect
-                                      [placeholder]="'Select message to map'"
-                                      [data]="this.dataz"
-                                      [formControl]="f.mappedMessages"
+                                      [placeholder]="EDIT_MESSAGE[i]"
+                                      [formControl]="g.mappedMessages"
                                       [settings]="settings"
+                                      [data]="dataz"
                                       [disabled]="false"
-                                      (onFilterChange)="onFilterChange($event)"
-                                      (onDropDownClose)="onDropDownClose($event)"
-                                      (onSelect)="onItemSelect($event, i)"
-                                      (onDeSelect)="onDeSelect($event)"
-                                      (onSelectAll)="onSelectAll($event)"
-                                      (onDeSelectAll)="onDeSelectAll($event)"
+                                      name="Talex"
+                                      (onFilterChange)="onFilterChange2($event)"
+                                      (onDropDownClose)="onDropDownClose2($event)"
+                                      (onSelect)="onItemSelect2($event, i)"
+                                      (onDeSelect)="onDeSelect2($event)"
+                                      (onSelectAll)="onSelectAll2($event)"
+                                      (onDeSelectAll)="onDeSelectAll2($event)"
                                     >
                                     </ng-multiselect-dropdown>
                                   </div>
@@ -364,10 +365,10 @@
                     >
                       <ng-multiselect-dropdown
                         #multiSelect
-                        [placeholder]="'View Mapped messages'"
+                        [placeholder]="'VIEW MAPPED MESSAGE'"
                         [data]="dataz"
-                        [settings]="settings"
-                        [disabled]="true"
+                        [settings]="settings2"
+                        [disabled]="false"
                         (onFilterChange)="onFilterChange($event)"
                         (onDropDownClose)="onDropDownClose($event)"
                         (onSelect)="onItemSelect($event)"

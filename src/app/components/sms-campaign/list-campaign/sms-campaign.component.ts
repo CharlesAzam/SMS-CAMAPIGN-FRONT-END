@@ -335,6 +335,8 @@ export class SmsCampaignComponent implements OnInit {
     // this.multiSelect.isAllItemsSelected = true;
   }
 
+  //TODO implement drop downfunction sms-campigns form
+  //Drop down function for message function start
   public onFilterChange(item: any) {
     console.log("onFilter change ", item);
   }
@@ -355,6 +357,7 @@ export class SmsCampaignComponent implements OnInit {
   public onDeSelectAll(items: any) {
     console.log("onDeSelectAll ", items);
   }
+  //Drop down function for message function end
 
   //Class functions
   @HostListener("window:resize", ["$event"])
