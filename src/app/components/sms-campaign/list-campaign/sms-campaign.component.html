@@ -19,7 +19,7 @@
       <div style="margin-top: 20px">
         <mat-card class="mat-card-content">
           <mat-card-title class="mat-content-header"
-            >CREATE CAMPAING MESSAGE</mat-card-title
+            >CREATE CAMPAIGN MESSAGE</mat-card-title
           >
           <hr />
           <mat-card-content>
@@ -189,7 +189,7 @@
     (window:resize)="onResize($event)"
   >
     <div class="col">
-      <h4 style="margin-left: 15px; margin-top: 15px">Campaign</h4>
+      <h4 style="margin-left: 15px; margin-top: 15px">LIST OF RUNNING CAMPAIGNS</h4>
     </div>
 
     <div class="row">
@@ -214,13 +214,16 @@
 
         <div class="mid-left">
           <div class="create-sms-campaign">
-            <span (click)="CreateCampaignMessage()"
-              >CREATE CAMPAIGN MESSAGE</span
+            <mat-icon color="primary">add_circle</mat-icon>
+            <span style=" 
+            font-weight: 600;margin-top: 2%;margin-right: 0%;" (click)="CreateCampaignMessage()"
+              > CREATE CAMPAIGN MESSAGE</span
             >
           </div>
-          <button mat-raised-button (click)="Redirect()">
-            <mat-icon color="primary">add_circle</mat-icon> Campaign
-          </button>
+          <div class="create-sms-campaign" (click)="Redirect()">
+            <mat-icon color="primary">add_circle</mat-icon><span style=" 
+            font-weight: 600; margin-top: 4%;margin-right: 0%;"> CAMPAIGN </span>
+          </div>
         </div>
       </mat-card>
     </div>
@@ -239,7 +242,7 @@
               style="height: 15px !important"
               appearance="outline"
             >
-              <mat-label>Channel</mat-label>
+              <mat-label>CAMPAIGN</mat-label>
               <mat-select>
                 <mat-option
                   *ngFor="let Channel of Channels"
@@ -255,7 +258,7 @@
               style="height: 15px !important"
               appearance="outline"
             >
-              <mat-label>Delivery</mat-label>
+              <mat-label>DELIVERY CHANNEL</mat-label>
               <mat-select>
                 <mat-option
                   *ngFor="let Channel of Channels"
@@ -271,7 +274,7 @@
               style="height: 15px !important"
               appearance="outline"
             >
-              <mat-label>Status</mat-label>
+              <mat-label>STATUS</mat-label>
               <mat-select>
                 <mat-option
                   *ngFor="let Status of Statuses"
@@ -311,25 +314,25 @@
 
         <!-- Position Column -->
         <ng-container matColumnDef="Channel">
-          <th mat-header-cell *matHeaderCellDef width="3%">Channel</th>
+          <th mat-header-cell *matHeaderCellDef width="3%">CAMPAIGN</th>
           <td mat-cell *matCellDef="let element">{{ element.position }}</td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="Start time">
-          <th mat-header-cell *matHeaderCellDef width="3%">Start time</th>
+          <th mat-header-cell *matHeaderCellDef width="3%">START TIME</th>
           <td mat-cell *matCellDef="let element">{{ element.name }}</td>
         </ng-container>
 
         <!-- Weight Column -->
         <ng-container matColumnDef="Created time">
-          <th mat-header-cell *matHeaderCellDef width="3%">Created time</th>
+          <th mat-header-cell *matHeaderCellDef width="3%">CREATED TIME</th>
           <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="Sent">
-          <th mat-header-cell *matHeaderCellDef width="3%">Sent</th>
+          <th mat-header-cell *matHeaderCellDef width="3%">STATUS</th>
           <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
         </ng-container>
 
