@@ -16,7 +16,7 @@ import {FormGroup,FormBuilder,FormControl,Validators,FormArray,} from "@angular/
 
 
 export class SmsCampaignModalComponent implements OnInit {
-  @Input() message: string = "Warning a module must have at least one permission \n.Removing it will result to the module being removed?";
+  @Input() message: string = "Are you sure you want to delete this item?";
   @Input() confirmButtonText = "Yes";
   @Input() cancelButtonText = "Cancel";
   @Input() renderFormType:string;
@@ -271,8 +271,15 @@ export class SmsCampaignModalComponent implements OnInit {
 }, error => console.log(error))
 }
 
-  delete(){
-    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
+  delete(type){
+    if(type == 'delete-message'){
+      console.log(type + " delete payload ",JSON.stringify(this.formDetails,null,2))
+      //Call delete delete -message service
+    }else if(type == 'delete-campaign'){
+      console.log(type + " delete payload ",JSON.stringify(this.formDetails,null,2))
+    }
+    
+    return;
     this.campaingServie.deleteCampaingChannel(this.payload).subscribe((response: any) => {
      console.log("Received payload",response);
      // if (response.status === 200)

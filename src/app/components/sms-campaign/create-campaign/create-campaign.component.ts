@@ -127,7 +127,11 @@ export class CreateCampaignComponent implements OnInit {
 
     //Update Campaing 
     deleteCampaign(data: any){
-      console.log(`Update campaing table data .... \n ${JSON.stringify(data,null,2)}`);
+      console.log(`delete campaing table data .... \n ${JSON.stringify(data,null,2)}`);
+      this.openDialog({
+        type:'delete-campaign',
+        ...data
+      });
     }
     //Delete Campaing
     updateCampaign(data:any){

@@ -1,6 +1,32 @@
 <mat-dialog-content>
 	
     <div class="col">
+        <!--delete-start-->
+        
+          <div class="col" *ngIf="renderFormType=='delete-message'">
+              <img  class="img" src="../../../../../assets/azam-logo.png">
+              <p class="messageFont">
+                  {{message}}
+              </p>
+              <p class="messageFont">MESSAGE OBJECTIVE: {{formDetails?.Message}}. </p>
+              <mat-dialog-actions  align="center">
+                <button mat-raised-button color="primary" (click)="delete(formDetails?.type)" tabindex="1">{{confirmButtonText}}</button>
+                <button mat-raised-button mat-dialog-close tabindex="-1" color="warn" >{{cancelButtonText}}</button>
+              </mat-dialog-actions>
+          </div>
+
+          <div class="col" *ngIf="renderFormType=='delete-campaign'">
+            <img  class="img" src="../../../../../assets/azam-logo.png">
+            <p class="messageFont">
+                {{message}}
+            </p>
+            <p class="messageFont">CAMPAIGN : {{formDetails?.CampaignName}}. </p>
+            <mat-dialog-actions  align="center">
+              <button mat-raised-button color="primary" (click)="delete(formDetails?.type)" tabindex="1">{{confirmButtonText}}</button>
+              <button mat-raised-button mat-dialog-close tabindex="-1" color="warn" >{{cancelButtonText}}</button>
+            </mat-dialog-actions>
+        </div>
+      <!--delete-end-->
         
         <!--normal-create-message-start-->
         <!-- <div *ngIf="type=='create-message'"> -->

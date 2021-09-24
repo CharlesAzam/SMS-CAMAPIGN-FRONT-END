@@ -296,6 +296,12 @@ export class SmsCampaignComponent implements OnInit {
   //Delete table function for compose message
   deleteComposeMessage(data: any) {
     console.log(`Delete message \n ${JSON.stringify(data, null, 2)}`);
+    this.openDialog({
+      type: "delete-message",
+      //message:"Are you sure you want to delte",
+      ...data,
+    });
+
   }
 
   //Update table function for comnpose message
