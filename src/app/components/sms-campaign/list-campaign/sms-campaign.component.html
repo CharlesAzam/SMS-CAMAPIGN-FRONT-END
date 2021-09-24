@@ -43,7 +43,13 @@
            <div style="width: 60%;">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
               <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
-              <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective"/>
+              <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective" [class.valid]="this.form.get('campaigObjective').valid &&(this.form.get('campaigObjective').dirty ||this.form.get('campaigObjective').touched)"/>
+              <br>
+              <!-- <div *ngIf="this.form.get('campaigObjective').valid &&(this.form.get('campaigObjective').dirty ||this.form.get('campaigObjective').touched)"> -->
+                <span *ngIf="form.controls['campaigObjective'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                  ** Campaign objective field can't be empty!
+                 </span>
+              <!-- </div> -->
               <br>
               <!--Add multiple select item here-->
               <!-- <mat-form-field appearance="fill">
@@ -54,8 +60,20 @@
                 </mat-select>
               </mat-form-field> -->
               <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
-              <textarea style="width: 400px !important; height: 200px !important;"  name="campaignMessage" formControlName="campaignMessage"></textarea>
+              <textarea style="width: 400px !important; height: 200px !important;" #textMessageInput name="campaignMessage" formControlName="campaignMessage" (blur)="setPersonalized(textMessageInput.value)"></textarea>
               <br/>
+              <!-- <div *ngIf="this.form.get('campaignMessage').valid &&(this.form.get('campaignMessage').dirty ||this.form.get('campaignMessage').touched)"> -->
+                <span *ngIf="form.controls['campaignMessage'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                  ** Campaign must have a message!
+                 </span>
+              <!-- </div> -->
+              <br>
+              <div  *ngIf="isPersonalized == 'YES' " style="margin-top: 10px;margin-bottom: 10px;" >
+               <p style="width: 400px !important;font-weight: 800; font-size: 15px;">
+                   {{TextAreaMessage}}
+               </p><br>
+              </div>
+
               <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
               <div style="width: 400px !important; margin-top: 10px;margin-bottom: 10px;">
               <ng-multiselect-dropdown #multiSelect
@@ -74,13 +92,18 @@
               </div>
               <br>
               <label class="campaing-form-lable" for="Campaing Message">IS PERSONALIZED MESSAGE</label><br>
-              <mat-checkbox color="primary" name="personalizeMessage" formControlName="personalizeMessage">Checked</mat-checkbox>
+              <mat-checkbox color="primary" name="personalizeMessage" #ch (change)= 'onChange($event)'  formControlName="personalizeMessage" > IS PERSONALIZED  {{isPersonalized}} </mat-checkbox>
               <br>
         
             <span *ngIf="f?.name?.errors?.required" style="color: red;">
               Channel is required
             </span>
-              <button style="margin-right: 20%" mat-raised-button type="submit" color="primary">SUBMIT</button>
+            <span *ngIf="isPersonalMessageError == true" style="color: red;">
+              Please add #### to place username for personal message
+            </span>
+            <br>
+
+              <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="this.form.hasError()" >SUBMIT</button>
               <button mat-raised-button type="submit"  (click)="resetForm()">RESET</button>
             </form>
            </div>

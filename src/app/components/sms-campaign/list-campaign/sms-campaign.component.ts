@@ -1,6 +1,11 @@
 import { HostListener, Input } from "@angular/core";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import {FormGroup,FormBuilder,FormControl,Validators,}from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { SmsCampaignModalComponent } from "../modals/sms-campaign-modal/sms-campaign-modal.component";
@@ -34,7 +39,7 @@ export interface CampaignDelivery {
 export interface CampaignMessage {
   Objective: string;
   Message: string;
-  MappedMessage:any[];
+  MappedMessage: any[];
   MappedCampaing: any[];
   isPersonalized: boolean;
   CreatedBy: any;
@@ -68,8 +73,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 3",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Test dvoiv",
     CreatedAt: "08-10-21",
@@ -78,8 +86,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "alex was here",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Alex Khadriyov",
     CreatedAt: "08-10-21",
@@ -88,8 +99,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 2",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Mikhial Poshinski",
     CreatedAt: "08-10-21",
@@ -98,8 +112,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 4 ",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Poliya Andrer",
     CreatedAt: "08-10-21",
@@ -108,8 +125,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 5",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Berhanus Fekadu",
     CreatedAt: "08-10-21",
@@ -118,8 +138,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 6",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: false,
     CreatedBy: "Tariku Alemayu",
     CreatedAt: "08-10-21",
@@ -128,8 +151,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 7",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Ermias Abraminch",
     CreatedAt: "08-10-21",
@@ -138,8 +164,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 8",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Mengistu Haile Mariam",
     CreatedAt: "08-10-21",
@@ -148,8 +177,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 9",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: false,
     CreatedBy: "Samuel Njau",
     CreatedAt: "08-10-21",
@@ -158,8 +190,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 10",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Lemmah moges",
     CreatedAt: "08-10-21",
@@ -168,8 +203,11 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "message test 12",
-    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
-    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
+    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
+    MappedCampaing: [
+      { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    ],
     isPersonalized: true,
     CreatedBy: "Rahel Michake",
     CreatedAt: "08-10-21",
@@ -186,6 +224,11 @@ export class SmsCampaignComponent implements OnInit {
   //Render var
   @Input() renderCreateCampaign = true;
   @Input() showComposeForm = true;
+  //isPesonalized
+  @Input() isPersonalized: string;
+  @Input() TextAreaMessage: string;
+  @Input() TextAreaMessageCount: number;
+  @Input() isPersonalMessageError: boolean;
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
   [x: string]: any;
@@ -204,8 +247,8 @@ export class SmsCampaignComponent implements OnInit {
 
   createCampaignMessageForm() {
     this.form = this.formBuilder.group({
-      campaigObjective: [""],
-      campaignMessage: [""],
+      campaigObjective: ["",Validators.required],
+      campaignMessage: ["",Validators.required],
     });
   }
   constructor(
@@ -330,10 +373,10 @@ export class SmsCampaignComponent implements OnInit {
   }
   public setForm() {
     this.form = new FormGroup({
-      campaigObjective: new FormControl("", null),
-      campaignMessage: new FormControl("", null),
-      name: new FormControl(this.data, null),
-      personalizeMessage: new FormControl("", null),
+      campaigObjective: new FormControl("", Validators.required),
+      campaignMessage: new FormControl("", Validators.required),
+      name: new FormControl(this.data, Validators.required),
+      personalizeMessage: new FormControl("", Validators.required),
     });
     this.loadContent = true;
   }
@@ -436,12 +479,49 @@ export class SmsCampaignComponent implements OnInit {
       ...this.payload,
     });
   }
+  
+  //Ispoesonal Checkbox
+  private _flagError: any;
+  onChange(event: any) {
+    console.log("show event showoptions() ==> ", event.checked);
+    let flag = event.checked;
+    flag != true ? (this.isPersonalized = "NO") : (this.isPersonalized = "YES");
+    if (flag) {
+      console.log(
+        this.isPersonalized + " error value --------> ",
+        this._flagError
+      );
+      if (this._flagError == -1) {
+        console.log("Please add #### for pesonalized message");
+        this.isPersonalMessageError = true;
+      } else {
+        this.isPersonalMessageError = false;
+      }
+    } else {
+      console.log("IS THERE ANY ERROR --------> ", this.isPersonalized);
+    }
+  }
+
+  setPersonalized(m) {
+    //Get personalized message
+    //Validate data
+    console.log(
+      this.isPersonalized +
+        " <<<--- isPersonalized serach result m.search('####') ---->>> " +
+        m.search("####")
+    );
+    this._flagError = m.search("####");
+
+    this.TextAreaMessage = m;
+    this.TextAreaMessage = m.replace("####", "John");
+    console.log("message from event ", m);
+    console.log("this is textArea message ", this.TextAreaMessage);
+  }
 
   //Dialog Open
   openDialog(message): any {
-    
     //Assign appropritate message according to form type
-    let formModaldata ={
+    let formModaldata = {
       data: {
         payload: message,
         message: null,
@@ -450,26 +530,29 @@ export class SmsCampaignComponent implements OnInit {
           cancel: "CANCEL",
         },
       },
-    }
+    };
     switch (message.type) {
       case "campaing":
-        formModaldata.data.message=`YOUR ABOUT TO EDIT CAMPAIGN DETAIL`;
-        formModaldata.data.buttonText.ok=`UPDATE`
+        formModaldata.data.message = `YOUR ABOUT TO EDIT CAMPAIGN DETAIL`;
+        formModaldata.data.buttonText.ok = `UPDATE`;
         break;
       case "message":
-        formModaldata.data.message=`YOUR ABOUT TO EDIT MESSAGE DETAIL`;
-        formModaldata.data.buttonText.ok=`UPDATE`
+        formModaldata.data.message = `YOUR ABOUT TO EDIT MESSAGE DETAIL`;
+        formModaldata.data.buttonText.ok = `UPDATE`;
         break;
       case "normal":
-        formModaldata.data.message=`YOUR ABOUT TO CREATE A NEW CAMPAIGN MESSAGE`;
-        formModaldata.data.buttonText.ok=`CREATE`
+        formModaldata.data.message = `YOUR ABOUT TO CREATE A NEW CAMPAIGN MESSAGE`;
+        formModaldata.data.buttonText.ok = `CREATE`;
         break;
       default:
         break;
     }
-    console.log("opennDialog= ", JSON.stringify(formModaldata,null,2));
+    console.log("opennDialog= ", JSON.stringify(formModaldata, null, 2));
 
-    const dialogRef = this.dialog.open(SmsCampaignModalComponent, formModaldata);
+    const dialogRef = this.dialog.open(
+      SmsCampaignModalComponent,
+      formModaldata
+    );
 
     return dialogRef;
   }

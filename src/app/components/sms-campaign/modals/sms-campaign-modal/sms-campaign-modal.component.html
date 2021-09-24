@@ -68,12 +68,18 @@
                    </span>
                   <br/>
                   <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
-                  <textarea style="width: 400px !important; height: 200px !important;"  name="campaignMessage" formControlName="campaignMessage"></textarea>
+                  <textarea style="width: 400px !important; height: 200px !important;" #textMessageInput name="campaignMessage" formControlName="campaignMessage" (blur)="setPersonalized(textMessageInput.value)"></textarea>
                   <br>
                   <span *ngIf="form.controls['campaignMessage'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
                     ** Campaign must have a message!
                    </span>
                   <br/>
+                  <div  *ngIf="isPersonalized == 'YES' " style="margin-top: 10px;margin-bottom: 10px;" >
+                    <p style="width: 400px !important;font-weight: 800; font-size: 15px;">
+                        {{TextAreaMessage}}
+                    </p><br>
+                   </div>
+                  
                   <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
                   <div style="width: 400px !important; height: 100px;">
                   <ng-multiselect-dropdown #multiSelect
@@ -92,7 +98,7 @@
                   </div>
                   <br>
                   <label class="campaing-form-lable" for="Campaing Message">Is personalized message</label><br>
-                  <mat-checkbox color="primary" name="personalizeMessage" formControlName="personalizeMessage">Checked</mat-checkbox>
+                  <mat-checkbox color="primary" name="personalizeMessage" formControlName="personalizeMessage" #ch (change)= 'onChange($event)'>IS PERSONALIZED  {{isPersonalized}}</mat-checkbox>
                   <br>
                 <span *ngIf="f?.name?.errors?.required" style="color: red;margin-top: 5px;margin-bottom: 5px;">
                    ** Please map message to specific campaign
@@ -100,6 +106,10 @@
                 <span *ngIf="DuplicateValueFlag == true" style="color: red;margin-top: 5px;margin-bottom: 5px;">
                    ** {{this.errorMessageMapping}}
                 </span>
+                <span *ngIf="isPersonalMessageError == true" style="color: red;">
+                  Please add #### to place username for personal message
+                </span>
+                <br>
                   <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="this.form.invalid || this.DuplicateValueFlag == true">UPDATE</button>
                   <button mat-raised-button type="submit"  (click)="cancel()">CANCEL</button>
                 </form>

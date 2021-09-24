@@ -41,6 +41,13 @@ export class SmsCampaignModalComponent implements OnInit {
   @Input() mappedMessages = [];
   @Input() EDIT_MESSAGE=[];
 
+  //isPesonalized
+  @Input() isPersonalized: any;
+  @Input() TextAreaMessage: string;
+  @Input() TextAreaMessageCount: number;
+  @Input() isPersonalMessageError: boolean;
+
+
   @Input() errorMessageMapping: string;
   @Input() DuplicateValueFlag: boolean;
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
@@ -87,11 +94,14 @@ export class SmsCampaignModalComponent implements OnInit {
         ]
       },"recuringCampaignDuration": "3",
     };
+      this.isPersonalized=this.formDetails.isPersonalized == true ? 'YES' : 'NO'
+
       this.RunType = this.formDetails.RunTimeType;
       this.isReccuring = data.payload.isReccuring
       console.log("payload \n",JSON.stringify(data.payload,null,2))
       console.log(`modal data Objective = `,data.payload.Objective);
       console.log(`modal data type = `,data.payload.type);
+      console.log(`modal isPersonalized = `,data.payload.isPersonalized);
       this.currentMappedMessage =data.payload.MappedCampaing
       this.renderFormType=data.payload.type;
       if (data.buttonText) {
@@ -563,6 +573,44 @@ export class SmsCampaignModalComponent implements OnInit {
     this.dateRange = event.target.value;
     console.log("Date Range object ", JSON.stringify(this.dateRange, null, 2));
   }
+  //Message Ispersonal message validation and injection
+   //Ispoesonal Checkbox
+   private _flagError: any;
+   onChange(event: any) {
+     console.log("show event showoptions() ==> ", event.checked);
+     let flag = event.checked;
+     flag != true ? (this.isPersonalized = "NO") : (this.isPersonalized = "YES");
+     if (flag) {
+       console.log(
+         this.isPersonalized + " error value --------> ",
+         this._flagError
+       );
+       if (this._flagError == -1) {
+         console.log("Please add #### for pesonalized message");
+         this.isPersonalMessageError = true;
+       } else {
+         this.isPersonalMessageError = false;
+       }
+     } else {
+       console.log("IS THERE ANY ERROR --------> ", this.isPersonalized);
+     }
+   }
+ 
+   setPersonalized(m) {
+     //Get personalized message
+     //Validate data
+     console.log(
+       this.isPersonalized +
+         " <<<--- isPersonalized serach result m.search('####') ---->>> " +
+         m.search("####")
+     );
+     this._flagError = m.search("####");
+ 
+     this.TextAreaMessage = m;
+     this.TextAreaMessage = m.replace("####", "John");
+     console.log("message from event ", m);
+     console.log("this is textArea message ", this.TextAreaMessage);
+   }
 }
 
 
