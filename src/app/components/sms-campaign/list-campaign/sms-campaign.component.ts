@@ -34,7 +34,8 @@ export interface CampaignDelivery {
 export interface CampaignMessage {
   Objective: string;
   Message: string;
-  MappedCampaing: string[];
+  MappedMessage:any[];
+  MappedCampaing: any[];
   isPersonalized: boolean;
   CreatedBy: any;
   CreatedAt: any;
@@ -56,12 +57,19 @@ const CAMPAIGN_DELIVER_DATA: CampaignDelivery[] = [
 ];
 
 //List Composed messages
+/*
+ { item_id: 1, item_text: "SMS" },
+      { item_id: 2, item_text: "PUSH NOTIFICATION" },
+      { item_id: 3, item_text: "EMAIL" },
+      { item_id: 4, item_text: "IN APP" },
+*/
 
 const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 3",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Test dvoiv",
     CreatedAt: "08-10-21",
@@ -70,7 +78,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "alex was here",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Alex Khadriyov",
     CreatedAt: "08-10-21",
@@ -79,7 +88,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 2",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Mikhial Poshinski",
     CreatedAt: "08-10-21",
@@ -88,7 +98,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 4 ",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Poliya Andrer",
     CreatedAt: "08-10-21",
@@ -97,7 +108,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 5",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Berhanus Fekadu",
     CreatedAt: "08-10-21",
@@ -106,7 +118,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 6",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: false,
     CreatedBy: "Tariku Alemayu",
     CreatedAt: "08-10-21",
@@ -115,7 +128,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 7",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Ermias Abraminch",
     CreatedAt: "08-10-21",
@@ -124,7 +138,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 8",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Mengistu Haile Mariam",
     CreatedAt: "08-10-21",
@@ -133,7 +148,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 9",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: false,
     CreatedBy: "Samuel Njau",
     CreatedAt: "08-10-21",
@@ -142,7 +158,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "test message 10",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Lemmah moges",
     CreatedAt: "08-10-21",
@@ -151,7 +168,8 @@ const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
   {
     Objective: "sbsidvub",
     Message: "message test 12",
-    MappedCampaing: ["SMS", "PUSH NOTIFICATION"],
+    MappedMessage: ["SMS" ,"PUSH NOTIFICATION" ],
+    MappedCampaing: [{ item_id: 1, item_text: "SMS" },{ item_id: 2, item_text: "PUSH NOTIFICATION" }],
     isPersonalized: true,
     CreatedBy: "Rahel Michake",
     CreatedAt: "08-10-21",
@@ -414,7 +432,7 @@ export class SmsCampaignComponent implements OnInit {
       JSON.stringify(user.userInfo.username, null, 2)
     );
     this.openDialog({
-      type: "normal",
+      type: "create-message",
       ...this.payload,
     });
   }

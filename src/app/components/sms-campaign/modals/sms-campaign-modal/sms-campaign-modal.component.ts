@@ -40,12 +40,17 @@ export class SmsCampaignModalComponent implements OnInit {
   @Input() RunType: string;
   @Input() mappedMessages = [];
   @Input() EDIT_MESSAGE=[];
+
+  @Input() errorMessageMapping: string;
+  @Input() DuplicateValueFlag: boolean;
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
   public dataz:any [];
   public settings = {};
   public settings2 = {};
   public loadContent: boolean = false;
   public dateRange: any;
+  public cleanData = []
+  public currentMappedMessage = []
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
 
@@ -60,7 +65,8 @@ export class SmsCampaignModalComponent implements OnInit {
     if (data) {
       this.message = data.message || this.message;
       this.payload = data.payload;
-      this.formDetails = {...data.payload,"campaignStages": {
+      this.formDetails = {...data.payload,
+        "campaignStages": {
         "stage": [
           {
             "from": "1",
@@ -74,17 +80,19 @@ export class SmsCampaignModalComponent implements OnInit {
             "from": "2",
             "to": "3",
             "mappedMessages": {
-              "item_id": 1,
+              "item_id": 2,
               "item_text": "MSG2"
             }
           }
         ]
-      },"recuringCampaignDuration": "3",};
+      },"recuringCampaignDuration": "3",
+    };
       this.RunType = this.formDetails.RunTimeType;
       this.isReccuring = data.payload.isReccuring
       console.log("payload \n",JSON.stringify(data.payload,null,2))
       console.log(`modal data Objective = `,data.payload.Objective);
       console.log(`modal data type = `,data.payload.type);
+      this.currentMappedMessage =data.payload.MappedCampaing
       this.renderFormType=data.payload.type;
       if (data.buttonText) {
         this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
@@ -94,11 +102,12 @@ export class SmsCampaignModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Settings for campaign form drop down
     this.settings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: "item_id",
       textField: "item_text",
-      enableCheckAll: true,
+      enableCheckAll: false,
       selectAllText: "ALL",
       unSelectAllText: "UN SELECT",
       allowSearchFilter: true,
@@ -112,7 +121,7 @@ export class SmsCampaignModalComponent implements OnInit {
       showSelectedItemsAtTop: false,
       defaultOpen: false,
     };
-
+    //Settings for message form drop down
     this.settings2 = {
       singleSelection: false,
       idField: "item_id",
@@ -164,16 +173,7 @@ export class SmsCampaignModalComponent implements OnInit {
         this.mappedMessages.push(stageItem.mappedMessages);
      
       })
-
-      
-  
-  
-      
-      // this.selectedItem.push(item);
-      // this.selectedItem;
-      //controls.controls[i].patchValue({'mappedMessages':item})
-      // console.log(`selected item array ---> \n`,controls.controls[i]);
-      
+    
      
     }
 
@@ -223,7 +223,12 @@ export class SmsCampaignModalComponent implements OnInit {
   }
 
   onUpdate(type:string){
-   console.log(`on update campaign  --> ${type} `,this.campaignForm.controls)
+   if(type=='update-message'){
+    console.log(`on update type  --> ${type} `,this.form.value)
+   }else if(type == 'update-campaign'){
+    console.log(`on update  type  --> ${type} `,this.campaignForm.value)
+   }
+   
    return
    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
    this.campaingServie.updateCampaingChannel(this.payload).subscribe((response: any) => {
@@ -301,18 +306,65 @@ export class SmsCampaignModalComponent implements OnInit {
     console.log("onDropDown change ", item);
   }
 
-  public onItemSelect(item: any) {
+  public onItemSelect(item: any,i:number) {
     console.log("onItemSelect ", item);
+    console.log("form control value this.formDetails.MappedCampaing ",this.formDetails.MappedCampaing)
+    console.log(`currentMappedMessage ---> \n`,this.currentMappedMessage);
+    
+    //Check for duplicates maps
+    status = this.currentMappedMessage.find((elem)=>{
+      return elem==item.item_text
+    })
+
+   
+    console.log("eqlity check "+ item.item_text + " == "+ status);
+    if(status ==undefined){
+      console.log("Flag duplicate error is false  ",status);
+      this.DuplicateValueFlag = false;
+    }else if(status !== undefined && item.item_text == status){
+      //flag duplicate error is false
+      console.log(`Flag duplicate error is true  with value ${item.item_text}`,status)
+      this.DuplicateValueFlag = true;
+    }
+    
+    
+    
+    // if(this.DuplicateValueFlag!=true){
+    //   this.currentMappedMessage.push(item) //you were the culprit
+    //   this.form.get('name').setValue(this.currentMappedMessage);
+    // }
+    
+   
+
+
+    
   }
+
   public onDeSelect(item: any) {
+    this.DuplicateValueFlag = false
     console.log("onDeSelect ", item);
+    console.log("form value data  before \n", JSON.stringify(this.form.value,null,2))
+    console.log("currentMappedMessage data  before splice \n", JSON.stringify(this.currentMappedMessage,null,2))
+    let index=this.currentMappedMessage.indexOf(item.item_text);
+    if (index > -1) {
+      this.currentMappedMessage.splice(index, 1);
+      console.log("spliced array ",this.formDetails.MappedCampaing)
+    }
+    
+    console.log(`index of selected item ${item.item_text} with ${index} `);
+    console.log("form value  data  after \n", JSON.stringify(this.form.get('name').value,null,2))
+    console.log("currentMappedMessage data after splice \n", JSON.stringify(this.currentMappedMessage,null,2))
+
+    //this.form.get('name').setValue(this.currentMappedMessage);
   }
 
   public onSelectAll(items: any) {
     console.log("onSelectAll ", items);
+    console.log("form value data  before \n", JSON.stringify(this.form.value,null,2))
   }
   public onDeSelectAll(items: any) {
     console.log("onDeSelectAll ", items);
+    console.log("form value data  before \n", JSON.stringify(this.form.value,null,2))
   }
   //Drop down function for messages end
 
@@ -483,6 +535,7 @@ export class SmsCampaignModalComponent implements OnInit {
   }
   //Dynamic stage injection
   newDynamicCampaign(from:any,to:any,mappedMessage:any): FormGroup {
+    console.log("Am i called ...")
     return this.formBuilder.group({
       from:  [from],
       to: [to],

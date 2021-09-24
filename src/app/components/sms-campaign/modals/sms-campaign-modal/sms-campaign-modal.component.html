@@ -3,10 +3,13 @@
     <div class="col">
         
         <!--normal-create-message-start-->
-        <div *ngIf="type=='create-message'">
-            <img  class="img" src="../../../../../assets/azam-logo.png">
+        <!-- <div *ngIf="type=='create-message'"> -->
+          
+            
             <!--Render normal form start-->
-            <div class="col" *ngIf="renderFormType==='normal'">
+            <div class="col" *ngIf="renderFormType==='create-message'">
+                {{type}}
+                <img  class="img" src="../../../../../assets/azam-logo.png">
                 <p class="messageFont">
                     {{message}}
                 </p>
@@ -18,7 +21,7 @@
                 </mat-list>
                 <hr>
             </div>
-        </div>
+        <!-- </div> -->
         <!--normal-create-message-end-->
       
 
@@ -57,7 +60,7 @@
             <img  class="img" src="../../../../../assets/azam-logo.png">
             <!-- {{renderFormType}} -->
             <div style="width: 70%; height: 600px;">
-                <form [formGroup]="form" (ngSubmit)="onUpdate()">
+                <form [formGroup]="form" (ngSubmit)="onUpdate('update-message')">
                   <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
                   <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective"/>
                   <br/>
@@ -78,7 +81,7 @@
                   [placeholder]="'SELECT CAMPAIGN CHANNEL'" 
                   [data]="data" 
                   [formControl]="f.name" 
-                  [settings]="settings"
+                  [settings]="settings2"
                   [disabled]="false"
                   (onFilterChange)="onFilterChange($event)"
                   (onDropDownClose)="onDropDownClose($event)"
@@ -89,16 +92,16 @@
                   </ng-multiselect-dropdown>
                   </div>
                   <br>
-                  <label class="campaing-form-lable" for="Campaing Message">IS PERSONALIZED MESSAGE</label><br>
+                  <label class="campaing-form-lable" for="Campaing Message">Is personalized message</label><br>
                   <mat-checkbox color="primary" name="personalizeMessage" formControlName="personalizeMessage">Checked</mat-checkbox>
                   <br>
                 <span *ngIf="f?.name?.errors?.required" style="color: red;margin-top: 5px;margin-bottom: 5px;">
                    ** Please map message to specific campaign
                 </span>
-                <span *ngIf="form.controls['name'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
-                   ** Duplicate message are not allowed
+                <span *ngIf="DuplicateValueFlag == true" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                   ** {{this.errorMessageMapping}}
                 </span>
-                  <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="this.form.invalid">UPDATE</button>
+                  <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="this.form.invalid || this.DuplicateValueFlag == true">UPDATE</button>
                   <button mat-raised-button type="submit"  (click)="cancel()">CANCEL</button>
                 </form>
                </div>
@@ -111,7 +114,7 @@
             <div >
                 <!-- <mat-card class="mat-card-content"> -->
                   <!-- <mat-card-content> -->
-                    <form  style="width: 900px !important;" [formGroup]="campaignForm" (ngSubmit)="onUpdate('campaign')">
+                    <form  style="width: 900px !important;" [formGroup]="campaignForm" (ngSubmit)="onUpdate('update-campaign')">
                       <label class="campaing-form-lable" for="Campaing objective"
                         >Campaign name</label
                       ><br />
