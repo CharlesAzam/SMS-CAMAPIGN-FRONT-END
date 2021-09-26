@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import {SmsCampaignModalComponent} from '../modals/sms-campaign-modal/sms-campaign-modal.component'
-import {MatTableDataSource} from '@angular/material/table';
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { SmsCampaignModalComponent } from "../modals/sms-campaign-modal/sms-campaign-modal.component";
+import { MatTableDataSource } from "@angular/material/table";
 import {
   FormGroup,
   FormBuilder,
@@ -11,29 +11,118 @@ import {
 } from "@angular/forms";
 
 //Create Campaign
-export interface Campaings{
-  isReccuring:boolean;
-  date:any
+export interface Campaings {
+  isReccuring: boolean;
+  date: any;
   CampaignName: string;
-  ChannelType:string;
-  RunTimeType:any[];
+  ChannelType: string;
+  RunTimeType: any[];
   CampaingStartTime: any;
-  MappedMessage:string [];
-  CreatedAt:any;
-  UpdatedAt:any; 
+  MappedMessage: string[];
+  CreatedAt: any;
+  UpdatedAt: any;
 }
 
-const CAMPAIGN_LIST_DATA:Campaings[] = [
-  {CampaignName:'Customer Greetings',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["OneTime"],CampaingStartTime:'23/11/2021',MappedMessage:['MSG1'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Promotional deals and discounts',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["OneTime"],CampaingStartTime:'12/11/2021',MappedMessage:['MSG2'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Alerts & notifications',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["OneTime"],CampaingStartTime:'15/11/2021',MappedMessage:['MSG3'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Customer onBoarding',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["MultipleDates"],CampaingStartTime:'19/11/2021',MappedMessage:['MSG4'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Flash Sale',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["MultipleDates"],CampaingStartTime:'01/11/2021',MappedMessage:['MSG4'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'SMS coupons',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["MultipleDates"],CampaingStartTime:'10/11/2021',MappedMessage:['MSG4'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Loyalty programs',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["Recurring"],CampaingStartTime:'13/12/2021',MappedMessage:['MSG4'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Sports promotion',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["Recurring"],CampaingStartTime:'23/11/2021',MappedMessage:['MSG4'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-  {CampaignName:'Text to win',ChannelType:'SMS',date:'2021-09-21T21:00:00.000Z',RunTimeType:["Recurring"],CampaingStartTime:'09/11/2021',MappedMessage:['MSG4'],isReccuring:true,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'}
-
+const CAMPAIGN_LIST_DATA: Campaings[] = [
+  {
+    CampaignName: "Customer Greetings",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["OneTime"],
+    CampaingStartTime: "23/11/2021",
+    MappedMessage: ["MSG1"],
+    isReccuring: false,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Promotional deals and discounts",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["OneTime"],
+    CampaingStartTime: "12/11/2021",
+    MappedMessage: ["MSG2"],
+    isReccuring: true,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Alerts & notifications",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["OneTime"],
+    CampaingStartTime: "15/11/2021",
+    MappedMessage: ["MSG3"],
+    isReccuring: true,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Customer onBoarding",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["MultipleDates"],
+    CampaingStartTime: "19/11/2021",
+    MappedMessage: ["MSG4"],
+    isReccuring: false,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Flash Sale",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["MultipleDates"],
+    CampaingStartTime: "01/11/2021",
+    MappedMessage: ["MSG4"],
+    isReccuring: true,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "SMS coupons",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["MultipleDates"],
+    CampaingStartTime: "10/11/2021",
+    MappedMessage: ["MSG4"],
+    isReccuring: true,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Loyalty programs",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["Recurring"],
+    CampaingStartTime: "13/12/2021",
+    MappedMessage: ["MSG4"],
+    isReccuring: false,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Sports promotion",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["Recurring"],
+    CampaingStartTime: "23/11/2021",
+    MappedMessage: ["MSG4"],
+    isReccuring: false,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
+  {
+    CampaignName: "Text to win",
+    ChannelType: "SMS",
+    date: "2021-09-21T21:00:00.000Z",
+    RunTimeType: ["Recurring"],
+    CampaingStartTime: "09/11/2021",
+    MappedMessage: ["MSG4"],
+    isReccuring: true,
+    CreatedAt: "08-10-21",
+    UpdatedAt: "08-10-21",
+  },
 ];
 
 @Component({
@@ -51,24 +140,23 @@ export class CreateCampaignComponent implements OnInit {
   public data = [];
   public settings = {};
   public selectedItems = [];
-  public selectedItem:any;
+  public selectedItem: any;
   private oneTime: boolean;
-  private multipleDate:boolean;
+  private multipleDate: boolean;
   @Input() isMultipleDate: boolean;
   @Input() isReccuring: boolean;
   @Input() displayCalendar: boolean;
-  @Input() HideSMSForm:boolean;
-  @Input() DisplayOtherFrom:boolean;
-  @Input() showCompose:boolean;
-  @Input() renderCreateCampaign=true;
+  @Input() HideSMSForm: boolean;
+  @Input() DisplayOtherFrom: boolean;
+  @Input() showCompose: boolean;
+  @Input() renderCreateCampaign = true;
 
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
 
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
- 
 
-  constructor(private formBuilder: FormBuilder,private dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) {
     //console.log(this.setForm)
     //This are the type of channels available
     this.data = [
@@ -80,7 +168,6 @@ export class CreateCampaignComponent implements OnInit {
   }
   @Input() channel: string;
   ngOnInit() {
-    
     // setting and support i18n
     this.settings = {
       singleSelection: false,
@@ -101,46 +188,64 @@ export class CreateCampaignComponent implements OnInit {
       defaultOpen: false,
     };
     this.setForm(null);
-    this.selectedItems=this.data;
+    this.selectedItems = this.data;
 
     //this.addCampaignStages();
   }
 
   //Table relate functions and variable start
-    //Campinag variabels
-    //List Campaign Delivery Status
-    dataSource=new MatTableDataSource(CAMPAIGN_LIST_DATA);
-    //columns
-    //{CampaignName:'sdsd',ChannelType:'SMS',date:'23/11/2021',RunTimeType:['wert'],CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
-    displayedColumns: string[] = ['CampaignName','ChannelType','date','RunTimeType','CampaingStartTime','MappedMessage','isReccuring','CreatedAt','UpdatedAt','Delete','Update'];
+  //Campinag variabels
+  //List Campaign Delivery Status
+  dataSource = new MatTableDataSource(CAMPAIGN_LIST_DATA);
+  //columns
+  //{CampaignName:'sdsd',ChannelType:'SMS',date:'23/11/2021',RunTimeType:['wert'],CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
+  displayedColumns: string[] = [
+    "CampaignName",
+    "ChannelType",
+    "date",
+    "RunTimeType",
+    "CampaingStartTime",
+    "MappedMessage",
+    "isReccuring",
+    "CreatedAt",
+    "UpdatedAt",
+    "Delete",
+    "Update",
+  ];
 
-    //Apply Data filter to table listing composed messages
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-  
-    //All functions table relate
-    ListCampaings(){
-      this.renderCreateCampaign==true ? this.renderCreateCampaign =false : this.renderCreateCampaign =true;
-    }
+  //Apply Data filter to table listing composed messages
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
-    //Update Campaing 
-    deleteCampaign(data: any){
-      console.log(`delete campaing table data .... \n ${JSON.stringify(data,null,2)}`);
-      this.openDialog({
-        type:'delete-campaign',
-        ...data
-      });
-    }
-    //Delete Campaing
-    updateCampaign(data:any){
-     console.log(`Delete campaigntable data .... \n ${JSON.stringify(data,null,2)} `);
-     this.openDialog({
-       type:'campaign',
-       ...data
-     });
-    }
+  //All functions table relate
+  ListCampaings() {
+    this.renderCreateCampaign == true
+      ? (this.renderCreateCampaign = false)
+      : (this.renderCreateCampaign = true);
+  }
+
+  //Update Campaing
+  deleteCampaign(data: any) {
+    console.log(
+      `delete campaing table data .... \n ${JSON.stringify(data, null, 2)}`
+    );
+    this.openDialog({
+      type: "delete-campaign",
+      ...data,
+    });
+  }
+  //Delete Campaing
+  updateCampaign(data: any) {
+    console.log(
+      `Delete campaigntable data .... \n ${JSON.stringify(data, null, 2)} `
+    );
+    this.openDialog({
+      type: "campaign",
+      ...data,
+    });
+  }
   //Table relate functions and variable end
 
   //Date Range
@@ -159,25 +264,25 @@ export class CreateCampaignComponent implements OnInit {
   campaign(type: string) {
     console.log("type ", type);
     this.channel = type;
-    this.setForm(type)
-    if(type=='SMS'){
+    this.setForm(type);
+    if (type == "SMS") {
       this.HideSMSForm = true;
-      this.DisplayOtherFrom=false;
-    }else{
-      this.HideSMSForm = false
-      this.DisplayOtherFrom=true
+      this.DisplayOtherFrom = false;
+    } else {
+      this.HideSMSForm = false;
+      this.DisplayOtherFrom = true;
     }
   }
-  private setForm(x:any) {
-    console.log("Channel type ",x)
+  private setForm(x: any) {
+    console.log("Channel type ", x);
     this.loadContent = true;
     return (this.campaignForm = this.formBuilder.group({
-      campaigName: ["",Validators.required],
-      channelType: [this.channel,Validators.required],
-      RunTimeType: ["",Validators.required],
+      campaigName: ["", Validators.required],
+      channelType: [this.channel, Validators.required],
+      RunTimeType: ["", Validators.required],
       recuringCampaignDuration: [""],
-      date:[""],
-      normalMessage:[""],
+      date: [""],
+      normalMessage: [""],
       campaignStages: this.formBuilder.group({
         stage: this.formBuilder.array([]),
       }),
@@ -187,8 +292,6 @@ export class CreateCampaignComponent implements OnInit {
   get f() {
     return this.campaignForm.controls;
   }
-
-  
 
   get campaignStagez(): any {
     const control = <FormArray>(
@@ -224,8 +327,8 @@ export class CreateCampaignComponent implements OnInit {
     //Set form to initial state
     this.isReccuring = false;
     this.displayCalendar = false;
-    this.isMultipleDate=false;
-    this.displayCalendar=false;
+    this.isMultipleDate = false;
+    this.displayCalendar = false;
   }
 
   public onFilterChange(item: any) {
@@ -235,35 +338,32 @@ export class CreateCampaignComponent implements OnInit {
     console.log("onDropDown change ", item);
   }
 
-  public onItemSelect(item: any,i: any ) {
+  public onItemSelect(item: any, i: any) {
     let indx; //Local index
     console.log("onItemSelect ", item);
-    console.log("Array index ",i)
-    console.log("push item to data array")
-    this.selectedItem=item
-    this.selectedItems.forEach((objct,index)=>{
-        if(objct.item_id == item.item_id){
-          console.log(`item located ${index}`, item);
-          indx=index
-        }
+    console.log("Array index ", i);
+    console.log("push item to data array");
+    this.selectedItem = item;
+    this.selectedItems.forEach((objct, index) => {
+      if (objct.item_id == item.item_id) {
+        console.log(`item located ${index}`, item);
+        indx = index;
+      }
     });
 
     if (indx > -1) {
       this.selectedItems.splice(indx, 1);
     }
 
-    let controls=<FormArray>(
+    let controls = <FormArray>(
       (<FormGroup>this.campaignForm.get("campaignStages")).get("stage")
     );
 
-
-
     // this.selectedItem.push(item);
     // this.selectedItem;
-    console.log("i = ",i)
-    controls.controls[i].patchValue({'mappedMessages':item})
-    console.log(`selected item array ---> \n`,controls.controls[i]);
-    
+    console.log("i = ", i);
+    controls.controls[i].patchValue({ mappedMessages: item });
+    console.log(`selected item array ---> \n`, controls.controls[i]);
   }
   public onDeSelect(item: any) {
     console.log("onDeSelect ", item);
@@ -282,7 +382,7 @@ export class CreateCampaignComponent implements OnInit {
 
     switch (RuntimeType) {
       case this.RuntimeTypes[0]:
-        this.isReccuring=false;
+        this.isReccuring = false;
         this.isMultipleDate = false; //set multilple date false
         this.displayCalendar = true; //set calendar true
         console.log(
@@ -290,7 +390,7 @@ export class CreateCampaignComponent implements OnInit {
         );
         break;
       case this.RuntimeTypes[1]:
-        this.isReccuring=false;
+        this.isReccuring = false;
         this.isMultipleDate = true; //set multiple date true
         this.displayCalendar == true;
         console.log(
@@ -300,8 +400,8 @@ export class CreateCampaignComponent implements OnInit {
       case this.RuntimeTypes[2]:
         this.isReccuring = true;
         this.displayCalendar = false;
-        this.isMultipleDate=false;
-        this.displayCalendar=false;
+        this.isMultipleDate = false;
+        this.displayCalendar = false;
         console.log(
           `RunTime type ${this.RuntimeTypes[2]} isReccuring ${this.isReccuring}`
         );
@@ -313,63 +413,61 @@ export class CreateCampaignComponent implements OnInit {
 
   openDialog(message): any {
     //Assign appropritate message according to form type
-    let formModaldata ={
-        data: {
-        payload:message,
-        message:null,
-              buttonText: {
-                  ok: 'OK',
-                  cancel: 'CANCEL'
-              }
-          }
-      
-    }
-    
+    let formModaldata = {
+      data: {
+        payload: message,
+        message: null,
+        buttonText: {
+          ok: "OK",
+          cancel: "CANCEL",
+        },
+      },
+    };
+
     //ADJUST CONDITION
-    console.log("type === > ",message.type)
+    console.log("type === > ", message.type);
     switch (message.type) {
       case "campaign":
-        formModaldata.data.message=`YOUR ABOUT TO EDIT CAMPAIGN DETAIL`;
-        formModaldata.data.buttonText.ok=`UPDATE`
+        formModaldata.data.message = `YOUR ABOUT TO EDIT CAMPAIGN DETAIL`;
+        formModaldata.data.buttonText.ok = `UPDATE`;
         break;
       case "message":
-        formModaldata.data.message=`YOUR ABOUT TO EDIT MESSAGE DETAIL`;
-        formModaldata.data.buttonText.ok=`UPDATE`
+        formModaldata.data.message = `YOUR ABOUT TO EDIT MESSAGE DETAIL`;
+        formModaldata.data.buttonText.ok = `UPDATE`;
         break;
       case "create-campaign":
-        formModaldata.data.message=`YOUR ABOUT TO CREATE A NEW CAMPAIGN`;
-        formModaldata.data.buttonText.ok=`CREATE CAMPAIGN`
+        formModaldata.data.message = `YOUR ABOUT TO CREATE A NEW CAMPAIGN`;
+        formModaldata.data.buttonText.ok = `CREATE CAMPAIGN`;
         break;
       case "create-message":
-        formModaldata.data.message=`YOUR ABOUT TO CREATE A NEW CAMPAIGN MESSAGE`;
-        formModaldata.data.buttonText.ok=`CREATE MESSAGE`
+        formModaldata.data.message = `YOUR ABOUT TO CREATE A NEW CAMPAIGN MESSAGE`;
+        formModaldata.data.buttonText.ok = `CREATE MESSAGE`;
         break;
       default:
         break;
     }
 
-    const dialogRef = this.dialog.open(SmsCampaignModalComponent,formModaldata)
+    const dialogRef = this.dialog.open(
+      SmsCampaignModalComponent,
+      formModaldata
+    );
     return dialogRef;
-}
+  }
 
   //submit campaign form
   onSubmit() {
-    let user=JSON.parse(localStorage.getItem('currentUser'));
-    let payload: any={
-      type:'create-campaign',
-      isReccuring:this.isReccuring,
+    let user = JSON.parse(localStorage.getItem("currentUser"));
+    let payload: any = {
+      type: "create-campaign",
+      isReccuring: this.isReccuring,
       ...this.campaignForm.value,
-      createdBy:user.userInfo.username,
-    }
+      createdBy: user.userInfo.username,
+    };
 
-    this.openDialog(payload)
+    this.openDialog(payload);
     console.log(
       "submit form campaign form \n",
       JSON.stringify(payload, null, 2)
     );
-     
-
   }
-
-
 }

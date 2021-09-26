@@ -5,7 +5,7 @@ import { environment }from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SmsCampaignServiceService {
+export class SmsCampaignService {
   private static header = new HttpHeaders().set('Accept','application/json');
   constructor(private http: HttpClient) {
   }
@@ -13,7 +13,7 @@ export class SmsCampaignServiceService {
   //Create Campaing Channel
   createCampaingChannel(payload: any){
     console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/campaign-create';
+    let url = environment.apiUrl + '/cms/create-campaign-channel';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.post<any>(url, payload, { headers });
@@ -40,7 +40,7 @@ export class SmsCampaignServiceService {
   //Create message
   createCampaingMessage(payload: any){
     console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/create-campaign-message';
+    let url = environment.apiUrl +'/cms/create-campaign-message';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.post<any>(url, payload, { headers });

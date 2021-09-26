@@ -23,6 +23,7 @@ import { MobileSubCategoriesComponent } from "./components/mobileSubCategories/M
 import { MobileSubCategoriesFormComponent } from "./components/mobileSubCategories/mobileSubCategoriesForm/mobile-sub-categories-form.component";
 import { LanguageService } from "./services/language.service";
 import { CountryService } from "./services/coutry.service";
+import {SmsCampaignService} from "./services/sms-campaign.service";
 import { MatInputModule } from "@angular/material";
 import { LeagueService } from "./services/league.service";
 import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
@@ -98,6 +99,7 @@ import { SmsCampaignModalComponent } from './components/sms-campaign/modals/sms-
     CategoriesService,
     ContentSuggestionService,
     CanActivateViaAuthGuard,
+    SmsCampaignService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

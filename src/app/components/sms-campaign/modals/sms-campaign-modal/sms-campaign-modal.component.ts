@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
-import { SmsCampaignServiceService } from "../../sms-campaign-service.service";
+import { SmsCampaignService } from "../../../../services/sms-campaign.service";
 import {
   MatDialogRef,
   MatDialog,
@@ -64,7 +64,7 @@ export class SmsCampaignModalComponent implements OnInit {
   //end
 
   constructor(
-    private campaingServie: SmsCampaignServiceService,
+    private campaingServie: SmsCampaignService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<SmsCampaignModalComponent>
@@ -92,7 +92,8 @@ export class SmsCampaignModalComponent implements OnInit {
             }
           }
         ]
-      },"recuringCampaignDuration": "3",
+      },
+      "recuringCampaignDuration": "3",
     };
       this.isPersonalized=this.formDetails.isPersonalized == true ? 'YES' : 'NO'
 
@@ -198,36 +199,40 @@ export class SmsCampaignModalComponent implements OnInit {
 
   }
 
-  onConfirmClick(): void {
+  onConfirmClick(type:string): void {
     //Launch service to call back end in modal
-    this.campaingServie.createCampaingChannel(this.payload).subscribe((response: any) => {
-      console.log("Received payload",response);
-      // if (response.status === 200)
-      //     console.log("Response Data")
-      // // console.log(response.data)
-      // //this.getModulesAndActions2
-      // let arr = [];
-      // let moduleArr = [];
-      // //console.log(response.data)
+    if(type=='create-message'){
+      console.log(`create message ${type} `)
+    let mappedMessages = this.payload.name.map((data)=>{
+      return data.item_text;
+    })
+  
+      this.campaingServie.createCampaingMessage({mappedMessages:mappedMessages,...this.payload}).subscribe((response: any) => {
+        console.log("Received payload",response);
+        if (response.status === 200){
+          console.log("Response Data")
+          //TODO ADD SNACK BAR FOR SUCCESS
+        }else{
+          //TODO ADD SNACK BAR FOR SUCCESS
 
-      // Object.keys(response.data).forEach((key) => {
-      //     // console.log("Iterator function "+key)
-      //     arr.push({
-      //         module: key,
-      //         actions: response.data[key],
-      //     })
-      // });
+        }
+            
+    }, error => console.log(error))
+    }else if(type=='create-campaign'){
+      console.log(`create campaign ${type} `)
+      this.campaingServie.createCampaingChannel(this.payload).subscribe((response: any) => {
+        console.log("Received payload",response);
+        console.log("Received payload",response);
+        if (response.status === 200){
+          console.log("Response Data")
+          //TODO ADD SNACK BAR FOR SUCCESS
+        }else{
+          //TODO ADD SNACK BAR FOR SUCCESS
 
-      // this.modulesAndActions = arr;
-      // // console.log('Filter module list \n')
-      // this.modulesAndActions.forEach((c) => {
-      //     // console.log(c.module)
-      //     moduleArr.push(c.module)
-      // });
-
-      // //console.log('Filter module \n', moduleArr)
-      // this.getModulesAndActionsUpdate(moduleArr);
-  }, error => console.log(error))
+        }
+    }, error => console.log(error))
+    }
+   
 
     
   }
@@ -235,40 +240,33 @@ export class SmsCampaignModalComponent implements OnInit {
   onUpdate(type:string){
    if(type=='update-message'){
     console.log(`on update type  --> ${type} `,this.form.value)
+    this.campaingServie.updateCampaingMessage(this.payload).subscribe((response: any) => {
+      console.log("Received payload",response);
+      if (response.status === 200){
+       console.log("Response Data")
+       //TODO ADD SNACK BAR FOR SUCCESS
+      }else{
+       //TODO ADD SNACK BAR FOR SUCCESS
+ 
+      }
+  }, error => console.log(error))
    }else if(type == 'update-campaign'){
     console.log(`on update  type  --> ${type} `,this.campaignForm.value)
+    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
+    this.campaingServie.updateCampaingChannel(this.payload).subscribe((response: any) => {
+     console.log("Received payload",response);
+     if (response.status === 200){
+      console.log("Response Data")
+      //TODO ADD SNACK BAR FOR SUCCESS
+     }else{
+      //TODO ADD SNACK BAR FOR SUCCESS
+
+     }
+ }, error => console.log(error))
    }
    
-   return
-   console.log("update payload ",JSON.stringify(this.formDetails,null,2))
-   this.campaingServie.updateCampaingChannel(this.payload).subscribe((response: any) => {
-    console.log("Received payload",response);
-    // if (response.status === 200)
-    //     console.log("Response Data")
-    // // console.log(response.data)
-    // //this.getModulesAndActions2
-    // let arr = [];
-    // let moduleArr = [];
-    // //console.log(response.data)
+   
 
-    // Object.keys(response.data).forEach((key) => {
-    //     // console.log("Iterator function "+key)
-    //     arr.push({
-    //         module: key,
-    //         actions: response.data[key],
-    //     })
-    // });
-
-    // this.modulesAndActions = arr;
-    // // console.log('Filter module list \n')
-    // this.modulesAndActions.forEach((c) => {
-    //     // console.log(c.module)
-    //     moduleArr.push(c.module)
-    // });
-
-    // //console.log('Filter module \n', moduleArr)
-    // this.getModulesAndActionsUpdate(moduleArr);
-}, error => console.log(error))
 }
 
   delete(type){
@@ -440,7 +438,7 @@ export class SmsCampaignModalComponent implements OnInit {
   //Drop down function for campigns end
 
   /*
-    {
+  {
   "isReccuring": true,
   "campaigName": "ttoirthr",
   "channelType": "SMS",
