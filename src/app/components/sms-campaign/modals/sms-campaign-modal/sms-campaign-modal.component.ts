@@ -239,8 +239,17 @@ export class SmsCampaignModalComponent implements OnInit {
 
   onUpdate(type:string){
    if(type=='update-message'){
+   
+    console.log(`create message ${type} `)
+    let mappedMessages = []
+    if(this.payload.name!=null){
+        mappedMessages = this.payload.name.map((data)=>{
+        return data.item_text;
+      })
+    }
+    
     console.log(`on update type  --> ${type} `,this.form.value)
-    this.campaingServie.updateCampaingMessage(this.payload).subscribe((response: any) => {
+    this.campaingServie.updateCampaingMessage({mappedMessages:mappedMessages,...this.payload}).subscribe((response: any) => {
       console.log("Received payload",response);
       if (response.status === 200){
        console.log("Response Data")
@@ -273,39 +282,34 @@ export class SmsCampaignModalComponent implements OnInit {
     if(type == 'delete-message'){
       console.log(type + " delete payload ",JSON.stringify(this.formDetails,null,2))
       //Call delete delete -message service
+      this.campaingServie.deleteCampaingMessage(this.payload).subscribe((response: any) => {
+        console.log("Received payload",response);
+        if (response.status === 200){
+          console.log("Response Data")
+          //TODO ADD SNACK BAR FOR SUCCESS
+         }else{
+          //TODO ADD SNACK BAR FOR SUCCESS
+    
+         }
+        
+    }, error => console.log(error))
     }else if(type == 'delete-campaign'){
       console.log(type + " delete payload ",JSON.stringify(this.formDetails,null,2))
+      this.campaingServie.createCampaingChannel(this.payload).subscribe((response: any) => {
+        console.log("Received payload",response);
+        if (response.status === 200){
+          console.log("Response Data")
+          //TODO ADD SNACK BAR FOR SUCCESS
+         }else{
+          //TODO ADD SNACK BAR FOR SUCCESS
+    
+         }
+        
+    }, error => console.log(error))
     }
     
     return;
-    this.campaingServie.deleteCampaingChannel(this.payload).subscribe((response: any) => {
-     console.log("Received payload",response);
-     // if (response.status === 200)
-     //     console.log("Response Data")
-     // // console.log(response.data)
-     // //this.getModulesAndActions2
-     // let arr = [];
-     // let moduleArr = [];
-     // //console.log(response.data)
- 
-     // Object.keys(response.data).forEach((key) => {
-     //     // console.log("Iterator function "+key)
-     //     arr.push({
-     //         module: key,
-     //         actions: response.data[key],
-     //     })
-     // });
- 
-     // this.modulesAndActions = arr;
-     // // console.log('Filter module list \n')
-     // this.modulesAndActions.forEach((c) => {
-     //     // console.log(c.module)
-     //     moduleArr.push(c.module)
-     // });
- 
-     // //console.log('Filter module \n', moduleArr)
-     // this.getModulesAndActionsUpdate(moduleArr);
- }, error => console.log(error))
+    
    }
 
   public cancel(){

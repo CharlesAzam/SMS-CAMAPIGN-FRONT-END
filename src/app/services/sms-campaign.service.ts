@@ -21,10 +21,10 @@ export class SmsCampaignService {
   //Update Capmpaing Channel
   updateCampaingChannel(payload: any){
     console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/campaign-create';
+    let url = environment.apiUrl + '/cms/update-campaign-channel';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.patch<any>(url, payload, { headers });
+    return this.http.put<any>(url, payload, { headers });
   }
   //Delete Campaing Channel
   deleteCampaingChannel(payload: any){
@@ -51,7 +51,7 @@ export class SmsCampaignService {
     let url = environment.apiUrl + '/cms/update-campaign-message';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.patch<any>(url, payload, { headers });
+    return this.http.put<any>(url, payload, { headers });
   }
   //Delete Message
   deleteCampaingMessage(payload: any){
@@ -59,7 +59,7 @@ export class SmsCampaignService {
     let url = environment.apiUrl + '/cms/delete-campaign-message';
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.patch<any>(url, payload, { headers });
+    return this.http.delete<any>(url, payload);
   }
   //Get Message By Id
   //Map message

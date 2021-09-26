@@ -80,7 +80,7 @@
                 </div>
                 <hr>
                 <mat-dialog-actions *ngIf="renderFormType==='create-campaign' || renderFormType==='create-message' " align="center">
-                  <button mat-raised-button color="primary" (click)="onConfirmClick('create-message')" tabindex="1">{{confirmButtonText}}</button>
+                  <button mat-raised-button color="primary" (click)="onConfirmClick('create-campaign')" tabindex="1">{{confirmButtonText}}</button>
                   <button mat-raised-button mat-dialog-close tabindex="-1" color="warn" >{{cancelButtonText}}</button>
                 </mat-dialog-actions>
             </div>
