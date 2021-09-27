@@ -9,6 +9,7 @@ import {
   Validators,
   FormArray,
 } from "@angular/forms";
+import * as moment from 'moment'
 
 //Create Campaign
 export interface Campaings {
@@ -139,6 +140,7 @@ export class CreateCampaignComponent implements OnInit {
   public mappedMessages = "MappedMeesages";
   public data = [];
   public settings = {};
+  public settings2 = {};
   public selectedItems = [];
   public selectedItem: any;
   private oneTime: boolean;
@@ -171,6 +173,26 @@ export class CreateCampaignComponent implements OnInit {
     // setting and support i18n
     this.settings = {
       singleSelection: false,
+      idField: "item_id",
+      textField: "item_text",
+      enableCheckAll: true,
+      selectAllText: "ALL",
+      unSelectAllText: "UN SELECT",
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 3,
+      searchPlaceholderText: "SEARCH CAMPAIGN CHANNEL",
+      noDataAvailablePlaceholderText: "NO DATA PRESENT",
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
+
+    //Dynamically generated stage settings for drop down
+    this.settings2= {
+      singleSelection: true,
       idField: "item_id",
       textField: "item_text",
       enableCheckAll: true,
@@ -251,11 +273,15 @@ export class CreateCampaignComponent implements OnInit {
   //Date Range
   getDateRange(event: any) {
     // look at how the date is emitted from save
-    console.log(event.target.value.begin);
-    console.log(event.target.value.end);
+    console.log(moment(event.target.value.begin).toISOString());
+    console.log(moment(event.target.value.end).toISOString());
 
     // change in view
-    this.dateRange = event.target.value;
+    this.dateRange = {
+      begin:event.target.value.begin,
+      end:event.target.value.end
+    };
+    
     console.log("Date Range object ", JSON.stringify(this.dateRange, null, 2));
   }
 
@@ -326,7 +352,6 @@ export class CreateCampaignComponent implements OnInit {
     // this.multiSelect.isAllItemsSelected = true;
     //Set form to initial state
     this.isReccuring = false;
-    this.displayCalendar = false;
     this.isMultipleDate = false;
     this.displayCalendar = false;
   }
@@ -392,16 +417,15 @@ export class CreateCampaignComponent implements OnInit {
       case this.RuntimeTypes[1]:
         this.isReccuring = false;
         this.isMultipleDate = true; //set multiple date true
-        this.displayCalendar == true;
+        this.displayCalendar = true;//set display alendar true
         console.log(
-          `RunTime type ${this.RuntimeTypes[1]} isMuliselect ${this.isMultipleDate}`
+          `RunTime type ${this.RuntimeTypes[1]} isMuliselect ${this.isMultipleDate} displayCalendar ${this.displayCalendar}`
         );
         break;
       case this.RuntimeTypes[2]:
         this.isReccuring = true;
         this.displayCalendar = false;
         this.isMultipleDate = false;
-        this.displayCalendar = false;
         console.log(
           `RunTime type ${this.RuntimeTypes[2]} isReccuring ${this.isReccuring}`
         );
@@ -463,11 +487,16 @@ export class CreateCampaignComponent implements OnInit {
       ...this.campaignForm.value,
       createdBy: user.userInfo.username,
     };
-
-    this.openDialog(payload);
     console.log(
       "submit form campaign form \n",
       JSON.stringify(payload, null, 2)
     );
+    // return
+
+    this.openDialog(payload);
+    // console.log(
+    //   "submit form campaign form \n",
+    //   JSON.stringify(payload, null, 2)
+    // );
   }
 }

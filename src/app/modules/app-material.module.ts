@@ -28,6 +28,7 @@ import {
   MatCheckboxModule,
   MatSortModule,
   MatTooltipModule,
+  MatSnackBarModule,
 } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
@@ -63,6 +64,7 @@ const modules = [
   SatDatepickerModule, 
   SatNativeDateModule,
   MatTooltipModule,
+  MatSnackBarModule
 ];
 
 

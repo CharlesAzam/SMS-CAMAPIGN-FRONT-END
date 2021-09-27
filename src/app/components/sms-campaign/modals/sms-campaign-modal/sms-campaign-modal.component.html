@@ -64,7 +64,8 @@
                 <p class="messageFont">CAMPAIGN NAME: {{formDetails?.campaigName}}. </p>
                 <p class="messageFont">CHANNEL TYPE: {{formDetails?.channelType}}.</p>
                 <p class="messageFont">CREATED BY: {{formDetails?.createdBy}}.</p>
-                <p class="messageFont"> CAMPAIGN WILL START AT: {{formDetails?.date}}</p>
+                <p *ngIf="formDetails?.isReccuring == false"  class="messageFont"> CAMPAIGN WILL START AT: {{formDetails?.date.begin == null ? formDetails?.date :formDetails?.date?.begin + ' AND END AT ' + formDetails?.date?.end}}</p>
+                <p *ngIf="formDetails?.isReccuring == true"  class="messageFont"> CAMPAIGN DURATION: {{formDetails?.recuringCampaignDuration}}</p>
                 <hr>
                 <div *ngIf="isReccuring===false">
                 <p class="messageFont">MAPPED MESSAGES FOR NORMAL RUNTIME </p>

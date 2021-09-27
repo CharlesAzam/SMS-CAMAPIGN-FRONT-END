@@ -382,7 +382,7 @@ export class SmsCampaignComponent implements OnInit {
       campaigObjective: new FormControl("", Validators.required),
       campaignMessage: new FormControl("", Validators.required),
       name: new FormControl(this.data, Validators.required),
-      personalizeMessage: new FormControl("", Validators.required),
+      personalizeMessage: new FormControl(false, Validators.required),
     });
     this.loadContent = true;
   }
@@ -468,10 +468,21 @@ export class SmsCampaignComponent implements OnInit {
   //submit campaign form
   onSubmit() {
     let user = JSON.parse(localStorage.getItem("currentUser"));
+   
+  
+  
     this.payload = {
       ...this.form.value,
       createdBy: user.userInfo.username,
     };
+
+    if(this.payload['personalizedMessage'] == ""){
+      this.payload['personalizedMessage'] = false
+    }
+   // console.log("form value getPersianlized ",this.form.get('personalizedMessage').value)
+
+   
+    
     console.log(
       "submit form campaign form \n",
       JSON.stringify(this.payload, null, 2)

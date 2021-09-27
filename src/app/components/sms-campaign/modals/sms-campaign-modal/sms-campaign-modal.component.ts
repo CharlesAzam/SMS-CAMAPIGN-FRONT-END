@@ -7,7 +7,7 @@ import {
   MAT_DIALOG_DATA,
 } from "@angular/material";
 import {FormGroup,FormBuilder,FormControl,Validators,FormArray,} from "@angular/forms";
-
+import * as moment from 'moment'
 @Component({
   selector: "app-sms-campaign-modal",
   templateUrl: "./sms-campaign-modal.component.html",
@@ -50,6 +50,10 @@ export class SmsCampaignModalComponent implements OnInit {
 
   @Input() errorMessageMapping: string;
   @Input() DuplicateValueFlag: boolean;
+
+  @Input() beginDate:any;
+  @Input() endDate:any;
+
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
   public dataz:any [];
   public settings = {};
@@ -58,6 +62,7 @@ export class SmsCampaignModalComponent implements OnInit {
   public dateRange: any;
   public cleanData = []
   public currentMappedMessage = []
+  
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
 
@@ -67,7 +72,9 @@ export class SmsCampaignModalComponent implements OnInit {
     private campaingServie: SmsCampaignService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<SmsCampaignModalComponent>
+    private dialogRef: MatDialogRef<SmsCampaignModalComponent>,
+    private _snackBar: MatSnackBar,
+
   ) {
     if (data) {
       this.message = data.message || this.message;
@@ -202,7 +209,7 @@ export class SmsCampaignModalComponent implements OnInit {
   onConfirmClick(type:string): void {
     //Launch service to call back end in modal
     if(type=='create-message'){
-      console.log(`create message ${type} `)
+    console.log(`create message ${type} + \n ${JSON.stringify(this.payload.name,null,2)}`)
     let mappedMessages = this.payload.name.map((data)=>{
       return data.item_text;
     })
@@ -212,8 +219,14 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
+          this._snackBar.open(response.status,response.message,{
+            duration: 2000,
+          })
         }else{
           //TODO ADD SNACK BAR FOR SUCCESS
+          this._snackBar.open(response.status,response.message,{
+            duration: 2000,
+          })
 
         }
             
@@ -226,8 +239,14 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
+          this._snackBar.open(response.status,response.message,{
+            duration: 2000,
+          })
         }else{
           //TODO ADD SNACK BAR FOR SUCCESS
+          this._snackBar.open(response.status,response.message,{
+            duration: 2000,
+          })
 
         }
     }, error => console.log(error))
@@ -267,9 +286,10 @@ export class SmsCampaignModalComponent implements OnInit {
      if (response.status === 200){
       console.log("Response Data")
       //TODO ADD SNACK BAR FOR SUCCESS
+      this._snackBar.open(response.status,response.message)
      }else{
       //TODO ADD SNACK BAR FOR SUCCESS
-
+      //this.snackOpen.openSnackBar(response.status,response.message)
      }
  }, error => console.log(error))
    }
@@ -287,9 +307,11 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
+          //this.snackOpen.openSnackBar(response.status,response.message)
          }else{
           //TODO ADD SNACK BAR FOR SUCCESS
-    
+          console.log("Received payload",JSON.stringify(response,null,2));
+          //this.snackOpen.openSnackBar(response.status,response.message)
          }
         
     }, error => console.log(error))
@@ -573,10 +595,11 @@ export class SmsCampaignModalComponent implements OnInit {
   }
 
   //Date Range
-  getDateRange(event: any) {
+   getDateRange(event: any) {
     // look at how the date is emitted from save
     console.log(event.target.value.begin);
     console.log(event.target.value.end);
+      
 
     // change in view
     this.dateRange = event.target.value;

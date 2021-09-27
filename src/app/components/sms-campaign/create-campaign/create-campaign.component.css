@@ -86,6 +86,7 @@
 }
 .dateContainer{
 position: relative;
+margin-top: 1% !important;
 }
 
 .buttonArrangement{

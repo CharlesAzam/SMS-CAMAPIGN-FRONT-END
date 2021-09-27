@@ -178,7 +178,7 @@
                   />
                   <sat-datepicker
                     #picker
-                    [rangeMode]="isMultipleDate"
+                    [rangeMode]="true"
                   ></sat-datepicker>
                   <sat-datepicker-toggle
                     matSuffix
@@ -189,9 +189,10 @@
               <div
                 *ngIf="displayCalendar == true"
                 style="
-                  width: 55% !important;
-                  margin-top: 10px;
-                  margin-bottom: 10px;
+                  width: 25% !important;
+                  margin-top: 0.5%;
+                  margin-bottom: 0%;
+                  margin-left: 2.5%;
                 "
               >
                 <ng-multiselect-dropdown
@@ -279,7 +280,7 @@
                             [placeholder]="'Select message to map'"
                             [data]="selectedItems"
                             [formControl]="f.mappedMessages"
-                            [settings]="settings"
+                            [settings]="settings2"
                             [disabled]="false"
                             (onFilterChange)="onFilterChange($event)"
                             (onDropDownClose)="onDropDownClose($event)"
