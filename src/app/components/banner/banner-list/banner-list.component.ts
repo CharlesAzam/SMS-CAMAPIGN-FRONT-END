@@ -12,6 +12,7 @@ import { startWith, tap } from "rxjs/operators";
 import { WarningDialog } from "../../warning-dialog/dialog-warning";
 import { AuthenticationService } from "../../login/login.service";
 
+
 @Component({
   selector: "banner",
   templateUrl: "banner-list.component.html",

@@ -10,6 +10,10 @@ import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { SmsCampaignModalComponent } from "../modals/sms-campaign-modal/sms-campaign-modal.component";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { SmsCampaignService } from "../../../services/sms-campaign.service";
+import { MatPaginator, MatSort, PageEvent } from "@angular/material";
+import { startWith } from "rxjs/internal/operators/startWith";
+import { tap } from "rxjs/internal/operators/tap";
 
 //Channel
 interface Channel {
@@ -37,14 +41,15 @@ export interface CampaignDelivery {
 
 // List of campaign Messages
 export interface CampaignMessage {
+  _id:string;
   Objective: string;
   Message: string;
   MappedMessage: any[];
   MappedCampaing: any[];
   isPersonalized: boolean;
   CreatedBy: any;
-  CreatedAt: any;
-  UpdatedAt: any;
+  createdAt: any;
+  updatedAt: any;
 }
 
 //List Campaign Delivery Status
@@ -61,159 +66,7 @@ const CAMPAIGN_DELIVER_DATA: CampaignDelivery[] = [
   { position: 10, name: "08-10-21", weight: "05-10-21", symbol: "true" },
 ];
 
-//List Composed messages
-/*
- { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-      { item_id: 3, item_text: "EMAIL" },
-      { item_id: 4, item_text: "IN APP" },
-*/
 
-const LIST_COMPOSED_MESSAGES: CampaignMessage[] = [
-  {
-    Objective: "sbsidvub",
-    Message: "test message 3",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Test dvoiv",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "alex was here",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Alex Khadriyov",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 2",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Mikhial Poshinski",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 4 ",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Poliya Andrer",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 5",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Berhanus Fekadu",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 6",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: false,
-    CreatedBy: "Tariku Alemayu",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 7",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Ermias Abraminch",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 8",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Mengistu Haile Mariam",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 9",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: false,
-    CreatedBy: "Samuel Njau",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "test message 10",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Lemmah moges",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    Objective: "sbsidvub",
-    Message: "message test 12",
-    MappedMessage: ["SMS", "PUSH NOTIFICATION"],
-    MappedCampaing: [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-    ],
-    isPersonalized: true,
-    CreatedBy: "Rahel Michake",
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-];
 
 @Component({
   selector: "app-sms-campaign",
@@ -229,12 +82,17 @@ export class SmsCampaignComponent implements OnInit {
   @Input() TextAreaMessage: string;
   @Input() TextAreaMessageCount: number;
   @Input() isPersonalMessageError: boolean;
+  @Input() messageCount:number;
+  @Input() adjustCSSQuery;
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
+  @ViewChild(MatPaginator,{static:false})paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   [x: string]: any;
   list: any[];
-  @Input() adjustCSSQuery;
+  
   dateRange: any;
+  pageEvent:PageEvent;
   public loadContent: boolean = false;
   public name = "Cricketers";
   public data = [];
@@ -253,6 +111,7 @@ export class SmsCampaignComponent implements OnInit {
   }
   constructor(
     private router: Router,
+    private campaingServie: SmsCampaignService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {
@@ -285,12 +144,16 @@ export class SmsCampaignComponent implements OnInit {
     "Update",
   ];
   dataSource = CAMPAIGN_DELIVER_DATA;
-  composedMessageDataSource = new MatTableDataSource(LIST_COMPOSED_MESSAGES);
+  composedMessageDataSource= new MatTableDataSource<CampaignMessage>([]);
+  composedMessageDataSourcePaginator= new MatTableDataSource<any>([]).paginator;
+  filterCondition:any;
 
   //Apply Data filter to table listing composed messages
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    console.log("filterValue ",filterValue)
     this.composedMessageDataSource.filter = filterValue.trim().toLowerCase();
+    console.log("this.composedMessageDataSource.filter   >>>>",this.composedMessageDataSource.filteredData)
   }
 
   //Delete table function for compose message
@@ -376,7 +239,69 @@ export class SmsCampaignComponent implements OnInit {
       defaultOpen: false,
     };
     this.setForm();
+
+  
+  this.getMessageList(1,5)
+  this.composedMessageDataSource.paginator = this.paginator;
+  //console.log("composedMessageDataSourcePaginator >>>>>> ",JSON.stringify(this.composedMessageDataSource,null,2))
+  
+}
+
+  getMessageList(pageIndex:any,pageSize:any){
+    this.campaingServie.getMessages(pageIndex,pageSize).subscribe((response: any) => {
+      console.log("Received payload from get request messages",response);
+      if (response.status === 200){
+        console.log("Response Data")
+        //TODO ADD SNACK BAR FOR SUCCESS
+        //this.snackOpen.openSnackBar(response.status,response.message)
+        console.log("Response data >>>>>> \n",response.data);
+        this.composedMessageDataSource = new MatTableDataSource<CampaignMessage>(response.data);
+        this.messageCount = response.count;
+        console.log("Result Count >>>>>> ",this.messageCount)
+      
+       }else{
+        //TODO ADD SNACK BAR FOR SUCCESS
+        console.log("Received payload",JSON.stringify(response,null,2));
+        //this.snackOpen.openSnackBar(response.status,response.message)
+       }
+      
+  }, error => console.log(error))
   }
+
+  ngAfterViewInit(): void {
+    // this.composedMessageDataSource.paginator.page.pipe()
+    // .subscribe((item)=>{
+    //   console.log("pageIndex ",item)
+    //   //console.log("composedMessageDataSourcePaginator >>>>>> ",this.paginator)
+    // });
+
+    // this.paginator.page
+    // .pipe(
+    //   startWith(null),
+    //   tap(() =>{
+    //     console.log("this.paginator.pageSize >>>>> ",this.paginator.pageSize)
+    //     this.getMessageList(
+    //       this.paginator.pageIndex + 1,
+    //       this.paginator.pageSize
+    //     )
+    //   }
+       
+    //   )
+    // )
+    // .subscribe();
+    
+  }
+
+  onPaginateChangeEvent(event:PageEvent){
+    let pageIndex = event.pageIndex
+    let pageLength = event.length
+    let pageSize = event.pageSize
+    let pagePrevious = event.previousPageIndex
+    pageIndex=pageIndex+1;
+    console.log("onPaginateChangeEvent ",JSON.stringify(event,null,2))
+    this.getMessageList(pageIndex,pageSize)
+  }
+
   public setForm() {
     this.form = new FormGroup({
       campaigObjective: new FormControl("", Validators.required),

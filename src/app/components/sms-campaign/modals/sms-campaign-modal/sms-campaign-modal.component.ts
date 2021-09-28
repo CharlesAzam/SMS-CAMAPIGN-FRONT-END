@@ -6,6 +6,7 @@ import {
   MatSnackBar,
   MAT_DIALOG_DATA,
 } from "@angular/material";
+import { ActivatedRoute, Router } from '@angular/router';
 import {FormGroup,FormBuilder,FormControl,Validators,FormArray,} from "@angular/forms";
 import * as moment from 'moment'
 @Component({
@@ -55,6 +56,7 @@ export class SmsCampaignModalComponent implements OnInit {
   @Input() endDate:any;
 
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
+  public data:any [];
   public dataz:any [];
   public settings = {};
   public settings2 = {};
@@ -70,16 +72,24 @@ export class SmsCampaignModalComponent implements OnInit {
 
   constructor(
     private campaingServie: SmsCampaignService,
-    @Inject(MAT_DIALOG_DATA) private data: any,
+    @Inject(MAT_DIALOG_DATA) private data1: any,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<SmsCampaignModalComponent>,
     private _snackBar: MatSnackBar,
+    private router: Router,
 
   ) {
-    if (data) {
-      this.message = data.message || this.message;
-      this.payload = data.payload;
-      this.formDetails = {...data.payload,
+    this.router.events.subscribe((event) => {
+      //  console.log("Router events \n", event)
+      // if (event instanceof NavigationEnd) {
+      //    // Trick the Router into believing it's last link wasn't previously loaded
+      //    this.router.navigated = false;
+      // }
+  }); 
+    if (data1) {
+      this.message = data1.message || this.message;
+      this.payload = data1.payload;
+      this.formDetails = {...data1.payload,
         "campaignStages": {
         "stage": [
           {
@@ -105,16 +115,18 @@ export class SmsCampaignModalComponent implements OnInit {
       this.isPersonalized=this.formDetails.isPersonalized == true ? 'YES' : 'NO'
 
       this.RunType = this.formDetails.RunTimeType;
-      this.isReccuring = data.payload.isReccuring
-      console.log("payload \n",JSON.stringify(data.payload,null,2))
-      console.log(`modal data Objective = `,data.payload.Objective);
-      console.log(`modal data type = `,data.payload.type);
-      console.log(`modal isPersonalized = `,data.payload.isPersonalized);
-      this.currentMappedMessage =data.payload.MappedCampaing
-      this.renderFormType=data.payload.type;
-      if (data.buttonText) {
-        this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
-        this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
+      this.isReccuring = data1.payload.isReccuring
+      console.log("payload \n",JSON.stringify(data1.payload,null,2))
+      console.log(`modal data Objective = `,data1.payload.Objective);
+      console.log(`modal data type = `,data1.payload.type);
+      console.log(`modal MappedCampaing = `,data1.payload.MappedCampaing);
+      console.log(`modal MappedMessage = `,data1.payload.MappedMessage);
+      console.log(`modal isPersonalized = `,data1.payload.isPersonalized);
+      this.currentMappedMessage =data1.payload.MappedCampaing
+      this.renderFormType=data1.payload.type;
+      if (data1.buttonText) {
+        this.confirmButtonText = data1.buttonText.ok || this.confirmButtonText;
+        this.cancelButtonText = data1.buttonText.cancel || this.cancelButtonText;
       }
     }
   }
@@ -219,14 +231,18 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message,{
-            duration: 2000,
-          })
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
         }else{
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message,{
-            duration: 2000,
-          })
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
 
         }
             
@@ -239,14 +255,18 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message,{
-            duration: 2000,
-          })
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
         }else{
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message,{
-            duration: 2000,
-          })
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
 
         }
     }, error => console.log(error))
@@ -260,21 +280,34 @@ export class SmsCampaignModalComponent implements OnInit {
    if(type=='update-message'){
    
     console.log(`create message ${type} `)
+    console.log(`this.form.get('name').value >>>>> ${this.form.get('name').value}`)
     let mappedMessages = []
-    if(this.payload.name!=null){
-        mappedMessages = this.payload.name.map((data)=>{
+    if(this.form.get('name').value!=null){
+        mappedMessages = this.form.get('name').value.map((data:any)=>{
         return data.item_text;
       })
     }
-    
-    console.log(`on update type  --> ${type} `,this.form.value)
-    this.campaingServie.updateCampaingMessage({mappedMessages:mappedMessages,...this.payload}).subscribe((response: any) => {
+    let user = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(`mappedMessages >>>>> ${mappedMessages}`)
+    console.log(`on update type  --> ${type} `,{_id:this.payload._id,mappedMessages:mappedMessages,...this.form.value})
+
+    this.campaingServie.updateCampaingMessage({_id:this.payload._id,mappedMessages:mappedMessages,...this.form.value, createdBy: user.userInfo.username,}).subscribe((response: any) => {
       console.log("Received payload",response);
       if (response.status === 200){
        console.log("Response Data")
        //TODO ADD SNACK BAR FOR SUCCESS
+       this._snackBar.open(response.status,response.message),{
+         duration:2000
+       };
+       this.cancel();
+       this.router.navigate([this.router.url]);
       }else{
        //TODO ADD SNACK BAR FOR SUCCESS
+       this._snackBar.open(response.status,response.message),{
+        duration:2000
+      };
+      this.cancel();
+      this.router.navigate([this.router.url]);
  
       }
   }, error => console.log(error))
@@ -286,10 +319,19 @@ export class SmsCampaignModalComponent implements OnInit {
      if (response.status === 200){
       console.log("Response Data")
       //TODO ADD SNACK BAR FOR SUCCESS
-      this._snackBar.open(response.status,response.message)
+      this._snackBar.open(response.status,response.message),{
+        duration:2000
+      };
+      this.cancel();
+      this.router.navigate([this.router.url]);
      }else{
       //TODO ADD SNACK BAR FOR SUCCESS
-      //this.snackOpen.openSnackBar(response.status,response.message)
+      this._snackBar.open(response.status,response.message),{
+        duration:2000
+      };
+      this.cancel();
+      this.router.navigate([this.router.url]);
+ 
      }
  }, error => console.log(error))
    }
@@ -307,10 +349,20 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
-          //this.snackOpen.openSnackBar(response.status,response.message)
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
+     
          }else{
           //TODO ADD SNACK BAR FOR SUCCESS
           console.log("Received payload",JSON.stringify(response,null,2));
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
           //this.snackOpen.openSnackBar(response.status,response.message)
          }
         
@@ -321,9 +373,19 @@ export class SmsCampaignModalComponent implements OnInit {
         console.log("Received payload",response);
         if (response.status === 200){
           console.log("Response Data")
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
           //TODO ADD SNACK BAR FOR SUCCESS
          }else{
           //TODO ADD SNACK BAR FOR SUCCESS
+          this._snackBar.open(response.status,response.message),{
+            duration:2000
+          };
+          this.cancel();
+          this.router.navigate([this.router.url]);
     
          }
         

@@ -28,11 +28,22 @@ export class SmsCampaignService {
   }
   //Delete Campaing Channel
   deleteCampaingChannel(payload: any){
-    console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/campaign-delete';
+    console.log("Received paylod for POST Request \n",JSON.stringify(payload._id,null,2))
+    let url = environment.apiUrl + `/cms/campaign-delete/${payload._id}`;
+    let params = {id:payload._id}
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.delete<any>(url, payload);
+    return this.http.delete<any>(url,{headers});
+  }
+  getMessages(pageNumber:any, size:any){
+    //console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
+    let url = environment.apiUrl + '/cms/messages';
+    let headers = new HttpHeaders()
+    let params ={
+      pageNumber:pageNumber,
+      size:size
+    }
+    return this.http.get<any>(url, { params,headers },)
   }
   //Get Channel by ID
   //Get All channels
@@ -48,18 +59,18 @@ export class SmsCampaignService {
   //Update Message
   updateCampaingMessage(payload: any){
     console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/update-campaign-message';
+    let url = environment.apiUrl + `/cms/update-campaign-message/${payload._id}`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.put<any>(url, payload, { headers });
   }
   //Delete Message
   deleteCampaingMessage(payload: any){
-    console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/delete-campaign-message';
+    console.log("Received paylod for POST Request \n",JSON.stringify(payload._id,null,2))
+    let url = environment.apiUrl + `/cms/delete-campaign-message/${payload._id}`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
-    return this.http.delete<any>(url, payload);
+    return this.http.delete<any>(url,{headers});
   }
   //Get Message By Id
   //Map message
