@@ -187,8 +187,8 @@ export class CreateCampaignComponent implements OnInit {
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
         console.log("Response data >>>>>> \n",response.data);
-        this.data = response.data;
-        //this.selectedItem=response.data
+        //this.data = response.data;
+        this.selectedItems=response.data
        // console.log("Result Count >>>>>> ",this.messageCount)
       
        }else{
