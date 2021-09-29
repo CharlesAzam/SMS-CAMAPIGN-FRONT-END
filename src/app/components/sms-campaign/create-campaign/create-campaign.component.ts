@@ -66,6 +66,7 @@ export class CreateCampaignComponent implements OnInit {
 
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
+  campaignCount: any;
 
   constructor(private formBuilder: FormBuilder,private campaingServie: SmsCampaignService,private dialog: MatDialog) { 
   }
@@ -116,6 +117,7 @@ export class CreateCampaignComponent implements OnInit {
     //this.addCampaignStages();
     this.getCampignList(1,5)
     this.getMessageList(1,100)
+    this.dataSource.paginator=this.paginator
 
 
     
@@ -141,6 +143,17 @@ export class CreateCampaignComponent implements OnInit {
     "Update",
   ];
 
+
+  onPaginateChangeEvent(event:PageEvent){
+    let pageIndex = event.pageIndex
+    let pageLength = event.length
+    let pageSize = event.pageSize
+    let pagePrevious = event.previousPageIndex
+    pageIndex=pageIndex+1;
+    console.log("onPaginateChangeEvent ",JSON.stringify(event,null,2))
+    this.getCampignList(pageIndex,pageSize)
+  }
+
   //Fetch campaign data for service
   getCampignList(pageIndex:any,pageSize:any){
     this.campaingServie.getCampaign(pageIndex,pageSize).subscribe((response: any) => {
@@ -152,6 +165,7 @@ export class CreateCampaignComponent implements OnInit {
         console.log("Response data >>>>>> \n",response.data);
         //this.data = response.data
         this.dataSource = new MatTableDataSource<any>(response.data);
+        this.campaignCount = response.count;
         // this.messageCount = response.count;
         //console.log("Result Count >>>>>> ",this.messageCount)
       
@@ -173,8 +187,8 @@ export class CreateCampaignComponent implements OnInit {
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
         console.log("Response data >>>>>> \n",response.data);
-        this.selectedItems = response.data;
-        //this.messageCount = response.count;
+        this.data = response.data;
+        //this.selectedItem=response.data
        // console.log("Result Count >>>>>> ",this.messageCount)
       
        }else{
