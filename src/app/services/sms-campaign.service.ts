@@ -35,6 +35,7 @@ export class SmsCampaignService {
       .set('Accept', 'application/json');
     return this.http.delete<any>(url,{headers});
   }
+  //Get message for table
   getMessages(pageNumber:any, size:any){
     //console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
     let url = environment.apiUrl + '/cms/messages';
@@ -72,6 +73,17 @@ export class SmsCampaignService {
       .set('Accept', 'application/json');
     return this.http.delete<any>(url,{headers});
   }
+    //Get message for table
+    getCampaign(pageNumber:any, size:any){
+      //console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
+      let url = environment.apiUrl + '/cms/campaigns';
+      let headers = new HttpHeaders()
+      let params ={
+        pageNumber:pageNumber,
+        size:size
+      }
+      return this.http.get<any>(url, { params,headers },)
+    }
   //Get Message By Id
   //Map message
 

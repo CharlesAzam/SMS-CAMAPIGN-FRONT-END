@@ -9,122 +9,26 @@ import {
   Validators,
   FormArray,
 } from "@angular/forms";
+import { MatPaginator, MatSort, PageEvent } from "@angular/material";
 import * as moment from 'moment'
+import { SmsCampaignService } from "../../../services/sms-campaign.service";
 
 //Create Campaign
 export interface Campaings {
   isReccuring: boolean;
   date: any;
-  CampaignName: string;
-  ChannelType: string;
+  campaigName: string;
+  channelType: string;
   RunTimeType: any[];
-  CampaingStartTime: any;
+  recuringCampaignDuration: any,
+  campaignStages: any;
   MappedMessage: string[];
-  CreatedAt: any;
-  UpdatedAt: any;
+  CreatedBy:string;
+  createdAt: any;
+  updatedAt: any;
 }
 
-const CAMPAIGN_LIST_DATA: Campaings[] = [
-  {
-    CampaignName: "Customer Greetings",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["OneTime"],
-    CampaingStartTime: "23/11/2021",
-    MappedMessage: ["MSG1"],
-    isReccuring: false,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Promotional deals and discounts",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["OneTime"],
-    CampaingStartTime: "12/11/2021",
-    MappedMessage: ["MSG2"],
-    isReccuring: true,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Alerts & notifications",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["OneTime"],
-    CampaingStartTime: "15/11/2021",
-    MappedMessage: ["MSG3"],
-    isReccuring: true,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Customer onBoarding",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["MultipleDates"],
-    CampaingStartTime: "19/11/2021",
-    MappedMessage: ["MSG4"],
-    isReccuring: false,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Flash Sale",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["MultipleDates"],
-    CampaingStartTime: "01/11/2021",
-    MappedMessage: ["MSG4"],
-    isReccuring: true,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "SMS coupons",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["MultipleDates"],
-    CampaingStartTime: "10/11/2021",
-    MappedMessage: ["MSG4"],
-    isReccuring: true,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Loyalty programs",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["Recurring"],
-    CampaingStartTime: "13/12/2021",
-    MappedMessage: ["MSG4"],
-    isReccuring: false,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Sports promotion",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["Recurring"],
-    CampaingStartTime: "23/11/2021",
-    MappedMessage: ["MSG4"],
-    isReccuring: false,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-  {
-    CampaignName: "Text to win",
-    ChannelType: "SMS",
-    date: "2021-09-21T21:00:00.000Z",
-    RunTimeType: ["Recurring"],
-    CampaingStartTime: "09/11/2021",
-    MappedMessage: ["MSG4"],
-    isReccuring: true,
-    CreatedAt: "08-10-21",
-    UpdatedAt: "08-10-21",
-  },
-];
+
 
 @Component({
   selector: "app-create-campaign",
@@ -145,6 +49,7 @@ export class CreateCampaignComponent implements OnInit {
   public selectedItem: any;
   private oneTime: boolean;
   private multipleDate: boolean;
+  public SelectedRuntimeType: string;
   @Input() isMultipleDate: boolean;
   @Input() isReccuring: boolean;
   @Input() displayCalendar: boolean;
@@ -152,30 +57,26 @@ export class CreateCampaignComponent implements OnInit {
   @Input() DisplayOtherFrom: boolean;
   @Input() showCompose: boolean;
   @Input() renderCreateCampaign = true;
+  @ViewChild(MatPaginator,{static:false})paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  pageEvent:PageEvent; //PageEvent Var
 
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
 
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
 
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) {
-    //console.log(this.setForm)
-    //This are the type of channels available
-    this.data = [
-      { item_id: 1, item_text: "MSG1" },
-      { item_id: 2, item_text: "MSG2" },
-      { item_id: 3, item_text: "MSG3" },
-      { item_id: 4, item_text: "MSG4" },
-    ];
+  constructor(private formBuilder: FormBuilder,private campaingServie: SmsCampaignService,private dialog: MatDialog) { 
   }
   @Input() channel: string;
   ngOnInit() {
-    // setting and support i18n
+    // setting and support i18n for channel message variable
     this.settings = {
-      singleSelection: false,
-      idField: "item_id",
-      textField: "item_text",
-      enableCheckAll: true,
+      singleSelection: this.RuntimeTypes[1] == this.SelectedRuntimeType  ? false : true, //if Mulple date true set single selection to false else set true
+      idField: "_id",
+      textField: "Message",
+      enableCheckAll: this.isMultipleDate == true ? true : false,
       selectAllText: "ALL",
       unSelectAllText: "UN SELECT",
       allowSearchFilter: true,
@@ -183,7 +84,7 @@ export class CreateCampaignComponent implements OnInit {
       clearSearchFilter: true,
       maxHeight: 197,
       itemsShowLimit: 3,
-      searchPlaceholderText: "SEARCH CAMPAIGN CHANNEL",
+      searchPlaceholderText: "SEARCH MESSAGE TO MAP ... 1",
       noDataAvailablePlaceholderText: "NO DATA PRESENT",
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
@@ -192,9 +93,9 @@ export class CreateCampaignComponent implements OnInit {
 
     //Dynamically generated stage settings for drop down
     this.settings2= {
-      singleSelection: true,
-      idField: "item_id",
-      textField: "item_text",
+      singleSelection: false,
+      idField: "_id",
+      textField: "Message",
       enableCheckAll: true,
       selectAllText: "ALL",
       unSelectAllText: "UN SELECT",
@@ -203,7 +104,7 @@ export class CreateCampaignComponent implements OnInit {
       clearSearchFilter: true,
       maxHeight: 197,
       itemsShowLimit: 3,
-      searchPlaceholderText: "SEARCH CAMPAIGN CHANNEL",
+      searchPlaceholderText: "SEARCH MAPPED MESSAGE",
       noDataAvailablePlaceholderText: "NO DATA PRESENT",
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
@@ -213,20 +114,25 @@ export class CreateCampaignComponent implements OnInit {
     this.selectedItems = this.data;
 
     //this.addCampaignStages();
+    this.getCampignList(1,5)
+    this.getMessageList(1,100)
+
+
+    
   }
 
   //Table relate functions and variable start
   //Campinag variabels
   //List Campaign Delivery Status
-  dataSource = new MatTableDataSource(CAMPAIGN_LIST_DATA);
+  dataSource = new MatTableDataSource<any>([]);
   //columns
   //{CampaignName:'sdsd',ChannelType:'SMS',date:'23/11/2021',RunTimeType:['wert'],CampaingStartTime:'23/11/2021',MappedMessage:['dveveoirnv','wefwfwef'],isReccuring:false,CreatedAt:'08-10-21',UpdatedAt:'08-10-21'},
   displayedColumns: string[] = [
     "CampaignName",
     "ChannelType",
     "date",
-    "RunTimeType",
     "CampaingStartTime",
+    "RunTimeType",
     "MappedMessage",
     "isReccuring",
     "CreatedAt",
@@ -234,6 +140,53 @@ export class CreateCampaignComponent implements OnInit {
     "Delete",
     "Update",
   ];
+
+  //Fetch campaign data for service
+  getCampignList(pageIndex:any,pageSize:any){
+    this.campaingServie.getCampaign(pageIndex,pageSize).subscribe((response: any) => {
+      console.log("Received payload from get request campaigns",response);
+      if (response.status === 200){
+        console.log("Response Data")
+        //TODO ADD SNACK BAR FOR SUCCESS
+        //this.snackOpen.openSnackBar(response.status,response.message)
+        console.log("Response data >>>>>> \n",response.data);
+        //this.data = response.data
+        this.dataSource = new MatTableDataSource<any>(response.data);
+        // this.messageCount = response.count;
+        //console.log("Result Count >>>>>> ",this.messageCount)
+      
+       }else{
+        //TODO ADD SNACK BAR FOR SUCCESS
+        console.log("Received payload",JSON.stringify(response,null,2));
+        //this.snackOpen.openSnackBar(response.status,response.message)
+       }
+      
+  }, error => console.log(error))
+  }
+
+  //Fetch message list for drop down
+  getMessageList(pageIndex:any,pageSize:any){
+    this.campaingServie.getMessages(pageIndex,pageSize).subscribe((response: any) => {
+      console.log("Received payload from get request messages",response);
+      if (response.status === 200){
+        console.log("Response Data")
+        //TODO ADD SNACK BAR FOR SUCCESS
+        //this.snackOpen.openSnackBar(response.status,response.message)
+        console.log("Response data >>>>>> \n",response.data);
+        this.data = response.data;
+        //this.messageCount = response.count;
+       // console.log("Result Count >>>>>> ",this.messageCount)
+      
+       }else{
+        //TODO ADD SNACK BAR FOR SUCCESS
+        console.log("Received payload",JSON.stringify(response,null,2));
+        //this.snackOpen.openSnackBar(response.status,response.message)
+       }
+      
+  }, error => console.log(error))
+  }
+
+  
 
   //Apply Data filter to table listing composed messages
   applyFilter(event: Event) {
@@ -273,16 +226,17 @@ export class CreateCampaignComponent implements OnInit {
   //Date Range
   getDateRange(event: any) {
     // look at how the date is emitted from save
-    console.log(moment(event.target.value.begin).toISOString());
-    console.log(moment(event.target.value.end).toISOString());
+    console.log('getDate Range fired >>>>> ',moment(event.target.value.begin).toISOString());
+    console.log('getDate Range fired >>>>> ',moment(event.target.value.end).toISOString());
 
     // change in view
-    this.dateRange = {
-      begin:event.target.value.begin,
-      end:event.target.value.end
-    };
+    this.dateRange = event.target.value
     
     console.log("Date Range object ", JSON.stringify(this.dateRange, null, 2));
+  }
+
+  public DateFormatter(date:any):any{
+     return moment(date).format('DD/MM/YY-h:mm:ss a')
   }
 
   //Create Campaign for type sms,notification,in app
@@ -405,34 +359,46 @@ export class CreateCampaignComponent implements OnInit {
   onRadioChange(RuntimeType: any) {
     console.log("RuntimeType  >>>", RuntimeType);
 
+    //RuntimeType == this.SelectedRuntimeType  ? true : false
+
     switch (RuntimeType) {
       case this.RuntimeTypes[0]:
         this.isReccuring = false;
         this.isMultipleDate = false; //set multilple date false
         this.displayCalendar = true; //set calendar true
+        this.SelectedRuntimeType = this.RuntimeTypes[0] //set RunTimeType
         console.log(
           `RunTime type ${this.RuntimeTypes[0]} isMuliselect ${this.isMultipleDate}`
         );
+        this.settings['singleSelection'] = true
         break;
       case this.RuntimeTypes[1]:
         this.isReccuring = false;
         this.isMultipleDate = true; //set multiple date true
         this.displayCalendar = true;//set display alendar true
+        this.SelectedRuntimeType = this.RuntimeTypes[1] //set RunTimeType
+        this.settings['singleSelection'] = false
         console.log(
-          `RunTime type ${this.RuntimeTypes[1]} isMuliselect ${this.isMultipleDate} displayCalendar ${this.displayCalendar}`
+          `RunTime type ${this.RuntimeTypes[1]} isMuliselect ${this.isMultipleDate} displayCalendar ${this.displayCalendar} set selecte`
         );
         break;
       case this.RuntimeTypes[2]:
         this.isReccuring = true;
         this.displayCalendar = false;
         this.isMultipleDate = false;
+        this.SelectedRuntimeType = this.RuntimeTypes[2]
         console.log(
           `RunTime type ${this.RuntimeTypes[2]} isReccuring ${this.isReccuring}`
         );
+        this.settings['singleSelection'] = true
         break;
       default:
         break;
     }
+
+    console.log('SelectedRuntimType >>> ',this.SelectedRuntimeType)
+    console.log('RuntimeTypes is MultipleDates >>>  ', RuntimeType == this.SelectedRuntimeType )
+    console.log(`Settings 2 json values \n ${JSON.stringify(this.settings,null,2)}`)
   }
 
   openDialog(message): any {

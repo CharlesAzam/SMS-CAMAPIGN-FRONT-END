@@ -56,6 +56,7 @@ export class SmsCampaignModalComponent implements OnInit {
   @Input() endDate:any;
 
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
+  public SelectedRuntimeType: string;
   public data:any [];
   public dataz:any [];
   public settings = {};
@@ -564,9 +565,9 @@ export class SmsCampaignModalComponent implements OnInit {
       this.dateRange=this.formDetails.date;
       console.log("date ",this.formDetails.date)
       return (this.campaignForm = this.formBuilder.group({
-        campaigName: [this.formDetails.CampaignName,Validators.required],
-        channelType: [this.formDetails.ChannelType,Validators.required],
-        RunTimeType: [this.formDetails.RunTimeType[0],Validators.required],
+        campaigName: [this.formDetails.campaigName,Validators.required],
+        channelType: [this.formDetails.channelType,Validators.required],
+        RunTimeType: [this.formDetails.RunTimeType,Validators.required],
         recuringCampaignDuration: [this.formDetails.recuringCampaignDuration],
         date:[this.formDetails.date],
         normalMessage:[this.formDetails.MappedMessage],
@@ -589,6 +590,7 @@ export class SmsCampaignModalComponent implements OnInit {
         this.isReccuring=false;
         this.isMultipleDate = false; //set multilple date false
         this.displayCalendar = true; //set calendar true
+        this.SelectedRuntimeType = this.RuntimeTypes[0] // set RunTimeType
         console.log(
           `RunTime type ${this.RuntimeTypes[0]} isMuliselect ${this.isMultipleDate}`
         );
@@ -597,6 +599,7 @@ export class SmsCampaignModalComponent implements OnInit {
         this.isReccuring=false;
         this.isMultipleDate = true; //set multiple date true
         this.displayCalendar == true;
+        this.SelectedRuntimeType = this.RuntimeTypes[1] //set RunTimeType
         console.log(
           `RunTime type ${this.RuntimeTypes[1]} isMuliselect ${this.isMultipleDate}`
         );
@@ -606,6 +609,7 @@ export class SmsCampaignModalComponent implements OnInit {
         this.displayCalendar = false;
         this.isMultipleDate=false;
         this.displayCalendar=false;
+        this.SelectedRuntimeType = this.RuntimeTypes[2] //set RunTimeType
         console.log(
           `RunTime type ${this.RuntimeTypes[2]} isReccuring ${this.isReccuring}`
         );
