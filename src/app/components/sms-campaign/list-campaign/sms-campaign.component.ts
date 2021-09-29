@@ -213,17 +213,17 @@ export class SmsCampaignComponent implements OnInit {
 
   ngOnInit() {
     //This are the type of channels available
-    this.data = [
-      { item_id: 1, item_text: "SMS" },
-      { item_id: 2, item_text: "PUSH NOTIFICATION" },
-      { item_id: 3, item_text: "EMAIL" },
-      { item_id: 4, item_text: "IN APP" },
-    ];
+    // this.data = [
+    //   { item_id: 1, item_text: "SMS" },
+    //   { item_id: 2, item_text: "PUSH NOTIFICATION" },
+    //   { item_id: 3, item_text: "EMAIL" },
+    //   { item_id: 4, item_text: "IN APP" },
+    // ];
     // setting and support i18n
     this.settings = {
       singleSelection: false,
-      idField: "item_id",
-      textField: "item_text",
+      //idField: "_id",
+      //textField: this.data,
       enableCheckAll: true,
       selectAllText: "ALL",
       unSelectAllText: "UN SELECT",
@@ -242,6 +242,7 @@ export class SmsCampaignComponent implements OnInit {
 
   
   this.getMessageList(1,5)
+  this.getCampignList(1,100)
   this.composedMessageDataSource.paginator = this.paginator;
   //console.log("composedMessageDataSourcePaginator >>>>>> ",JSON.stringify(this.composedMessageDataSource,null,2))
   
@@ -256,6 +257,7 @@ export class SmsCampaignComponent implements OnInit {
         //this.snackOpen.openSnackBar(response.status,response.message)
         console.log("Response data >>>>>> \n",response.data);
         this.composedMessageDataSource = new MatTableDataSource<CampaignMessage>(response.data);
+        ///this.data =response.data
         this.messageCount = response.count;
         console.log("Result Count >>>>>> ",this.messageCount)
       
@@ -267,8 +269,35 @@ export class SmsCampaignComponent implements OnInit {
       
   }, error => console.log(error))
   }
-
+      //Fetch campaign data for service
+      getCampignList(pageIndex:any,pageSize:any){
+        this.campaingServie.getCampaign(pageIndex,pageSize).subscribe((response: any) => {
+          console.log("Received payload from get request campaigns",response);
+          if (response.status === 200){
+            console.log("Response Data")
+            //TODO ADD SNACK BAR FOR SUCCESS
+            //this.snackOpen.openSnackBar(response.status,response.message)
+            console.log("Response data >>>>>> request campaigns \n",JSON.stringify(response.data,null,2));
+            this.data=response.data.map((data:any,index)=>{
+                  console.log('chanelTypes data >>>>>>',data.channelType)
+                  return data.channelType
+                  
+                  
+            })
+            //this.dataSource = new MatTableDataSource<any>(response.data);
+            // this.messageCount = response.count;
+            console.log("Result Count >>>>>> ",this.data)
+          
+           }else{
+            //TODO ADD SNACK BAR FOR SUCCESS
+            console.log("Received payload",JSON.stringify(response,null,2));
+            //this.snackOpen.openSnackBar(response.status,response.message)
+           }
+          
+      }, error => console.log(error))
+      }
   ngAfterViewInit(): void {
+ 
     // this.composedMessageDataSource.paginator.page.pipe()
     // .subscribe((item)=>{
     //   console.log("pageIndex ",item)

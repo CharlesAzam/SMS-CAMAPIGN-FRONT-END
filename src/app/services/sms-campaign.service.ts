@@ -21,7 +21,7 @@ export class SmsCampaignService {
   //Update Capmpaing Channel
   updateCampaingChannel(payload: any){
     console.log("Received paylod for POST Request \n",JSON.stringify(payload,null,2))
-    let url = environment.apiUrl + '/cms/update-campaign-channel';
+    let url = environment.apiUrl + `/cms/update-campaign-channel/${payload._id}`;
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');
     return this.http.put<any>(url, payload, { headers });
@@ -29,7 +29,7 @@ export class SmsCampaignService {
   //Delete Campaing Channel
   deleteCampaingChannel(payload: any){
     console.log("Received paylod for POST Request \n",JSON.stringify(payload._id,null,2))
-    let url = environment.apiUrl + `/cms/campaign-delete/${payload._id}`;
+    let url = environment.apiUrl + `/cms/delete-campaign-channel/${payload._id}`;
     let params = {id:payload._id}
     let headers = new HttpHeaders()
       .set('Accept', 'application/json');

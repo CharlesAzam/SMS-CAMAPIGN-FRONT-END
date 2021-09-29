@@ -90,28 +90,7 @@ export class SmsCampaignModalComponent implements OnInit {
     if (data1) {
       this.message = data1.message || this.message;
       this.payload = data1.payload;
-      this.formDetails = {...data1.payload,
-        "campaignStages": {
-        "stage": [
-          {
-            "from": "1",
-            "to": "2",
-            "mappedMessages": {
-              "item_id": 1,
-              "item_text": "MSG1"
-            }
-          },
-          {
-            "from": "2",
-            "to": "3",
-            "mappedMessages": {
-              "item_id": 2,
-              "item_text": "MSG2"
-            }
-          }
-        ]
-      },
-      "recuringCampaignDuration": "3",
+      this.formDetails = {...data1.payload
     };
       this.isPersonalized=this.formDetails.isPersonalized == true ? 'YES' : 'NO'
 
@@ -120,7 +99,7 @@ export class SmsCampaignModalComponent implements OnInit {
       console.log("payload \n",JSON.stringify(data1.payload,null,2))
       console.log(`modal data Objective = `,data1.payload.Objective);
       console.log(`modal data type = `,data1.payload.type);
-      console.log(`modal MappedCampaing = `,data1.payload.MappedCampaing);
+      console.log(`modal MappedCampaing = `,data1.payload.campaignStages);
       console.log(`modal MappedMessage = `,data1.payload.MappedMessage);
       console.log(`modal isPersonalized = `,data1.payload.isPersonalized);
       this.currentMappedMessage =data1.payload.MappedCampaing
@@ -136,8 +115,8 @@ export class SmsCampaignModalComponent implements OnInit {
     //Settings for campaign form drop down
     this.settings = {
       singleSelection: true,
-      idField: "item_id",
-      textField: "item_text",
+      idField: "_id",
+      textField: "Message",
       enableCheckAll: false,
       selectAllText: "ALL",
       unSelectAllText: "UN SELECT",
@@ -146,7 +125,7 @@ export class SmsCampaignModalComponent implements OnInit {
       clearSearchFilter: true,
       maxHeight: 197,
       itemsShowLimit: 3,
-      searchPlaceholderText: "SEARCH CAMPAIGN CHANNEL",
+      searchPlaceholderText: "SEARCH MAPPED MESSAGE",
       noDataAvailablePlaceholderText: "NO DATA PRESENT",
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
@@ -155,8 +134,8 @@ export class SmsCampaignModalComponent implements OnInit {
     //Settings for message form drop down
     this.settings2 = {
       singleSelection: false,
-      idField: "item_id",
-      textField: "item_text",
+      idField: "_id",
+      textField: "Message",
       enableCheckAll: true,
       selectAllText: "ALL",
       unSelectAllText: "UN SELECT",
@@ -173,12 +152,12 @@ export class SmsCampaignModalComponent implements OnInit {
     };
 
     //This is willl be all the messages available
-    this.dataz = [
-      { item_id: 1, item_text: "MSG1" },
-      { item_id: 2, item_text: "MSG2" },
-      { item_id: 3, item_text: "MSG3" },
-      { item_id: 4, item_text: "MSG4" },
-    ];
+    // this.dataz = [
+    //   { item_id: 1, item_text: "MSG1" },
+    //   { item_id: 2, item_text: "MSG2" },
+    //   { item_id: 3, item_text: "MSG3" },
+    //   { item_id: 4, item_text: "MSG4" },
+    // ];
 
     //This is willl be all the campaign channels available
     this.data = [
@@ -188,36 +167,87 @@ export class SmsCampaignModalComponent implements OnInit {
       { item_id: 4, item_text: "IN APP" },
     ];
 
+    
 
+    this.getMessageList(1,100)
     this.setForm(this.renderFormType);
-
-    if(this.formDetails.campaignStages.stage!=null){
-    let stages:any [] = this.formDetails.campaignStages.stage;
+    //console.log("i = ",JSON.stringify(this.formDetails.campaignStages.stages,null,2))
+    if(this.formDetails.campaignStages.stages!=null){
+    let stages:any [] = this.formDetails.campaignStages.stages;
      console.log("i = ",JSON.stringify(this.formDetails.campaignStages.stage,null,2))
      
 
       stages.forEach((stageItem,index)=>{
         
-        console.log(`stage from ${stageItem.from} to ${stageItem.to} mappedMessages ${stageItem.mappedMessages.item_text} item index >>> `,index)
-        this.campaignStagez.push(this.newDynamicCampaign(stageItem.from,stageItem.to,stageItem.mappedMessages.item_text));
-        this.EDIT_MESSAGE[index]=stageItem.mappedMessages.item_text
-        this.mappedMessages.push(stageItem.mappedMessages);
+        console.log(`stage from ${stageItem.from} to ${stageItem.to} mappedMessages ${stageItem.mappedMessages.Message} item index >>> `,index)
+        this.campaignStagez.push(this.newDynamicCampaign(stageItem.from,stageItem.to,stageItem.mappedMessages.Message));
+        this.EDIT_MESSAGE[index]=stageItem.mappedMessages.Message
+        this.mappedMessages.push(stageItem.mappedMessages.Message);
      
       })
     
      
     }
-
-    if(this.formDetails.RunTimeType[0] == this.RuntimeTypes[0] && this.formDetails.RunTimeType[0] == this.RuntimeTypes[0]){
+    
+    console.log('>>>>>>> Check form value for capaign \n',this.formDetails.RunTimeType)
+    if(this.formDetails.RunTimeType == this.RuntimeTypes[0] || this.formDetails.RunTimeType == this.RuntimeTypes[1]){
       this.displayCalendar = true;
       this.isReccuring = false;
-    }else if(this.formDetails.RunTimeType[0] == this.RuntimeTypes[2]){
+    }
+    if(this.formDetails.RunTimeType[0] == this.RuntimeTypes[2]){
       this.displayCalendar = false;
       this.isReccuring = true;
     }
 
 
+
+
   }
+
+    //Fetch campaign data for service
+    getCampignList(pageIndex:any,pageSize:any){
+      this.campaingServie.getCampaign(pageIndex,pageSize).subscribe((response: any) => {
+        console.log("Received payload from get request campaigns",response);
+        if (response.status === 200){
+          console.log("Response Data")
+          //TODO ADD SNACK BAR FOR SUCCESS
+          //this.snackOpen.openSnackBar(response.status,response.message)
+          console.log("Response data >>>>>> \n",response.data);
+          //this.data = response.data
+          //this.dataSource = new MatTableDataSource<any>(response.data);
+          // this.messageCount = response.count;
+          //console.log("Result Count >>>>>> ",this.messageCount)
+        
+         }else{
+          //TODO ADD SNACK BAR FOR SUCCESS
+          console.log("Received payload",JSON.stringify(response,null,2));
+          //this.snackOpen.openSnackBar(response.status,response.message)
+         }
+        
+    }, error => console.log(error))
+    }
+  
+    //Fetch message list for drop down
+    getMessageList(pageIndex:any,pageSize:any){
+      this.campaingServie.getMessages(pageIndex,pageSize).subscribe((response: any) => {
+        console.log("Received payload from get request messages",response);
+        if (response.status === 200){
+          console.log("Response Data")
+          //TODO ADD SNACK BAR FOR SUCCESS
+          //this.snackOpen.openSnackBar(response.status,response.message)
+          console.log("Response data >>>>>> \n",response.data);
+          this.dataz = response.data;
+          //this.messageCount = response.count;
+         // console.log("Result Count >>>>>> ",this.messageCount)
+        
+         }else{
+          //TODO ADD SNACK BAR FOR SUCCESS
+          console.log("Received payload",JSON.stringify(response,null,2));
+          //this.snackOpen.openSnackBar(response.status,response.message)
+         }
+        
+    }, error => console.log(error))
+    }
 
   onConfirmClick(type:string): void {
     //Launch service to call back end in modal
@@ -232,16 +262,16 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message),{
-            duration:2000
-          };
+          this._snackBar.open(response.status,response.message,{
+            duration:1000
+          });
           this.cancel();
           this.router.navigate([this.router.url]);
         }else{
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message),{
-            duration:2000
-          };
+          this._snackBar.open(response.status,response.message,{
+            duration:1000
+          });
           this.cancel();
           this.router.navigate([this.router.url]);
 
@@ -256,16 +286,16 @@ export class SmsCampaignModalComponent implements OnInit {
         if (response.status === 200){
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message),{
-            duration:2000
-          };
+          this._snackBar.open(response.status,response.message,{
+            duration:1000
+          });
           this.cancel();
           this.router.navigate([this.router.url]);
         }else{
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message),{
-            duration:2000
-          };
+          this._snackBar.open(response.status,response.message,{
+            duration:1000
+          });
           this.cancel();
           this.router.navigate([this.router.url]);
 
@@ -297,39 +327,40 @@ export class SmsCampaignModalComponent implements OnInit {
       if (response.status === 200){
        console.log("Response Data")
        //TODO ADD SNACK BAR FOR SUCCESS
-       this._snackBar.open(response.status,response.message),{
-         duration:2000
-       };
+       this._snackBar.open(response.status,response.message,{
+        duration:1000
+      });
        this.cancel();
        this.router.navigate([this.router.url]);
       }else{
        //TODO ADD SNACK BAR FOR SUCCESS
-       this._snackBar.open(response.status,response.message),{
-        duration:2000
-      };
+       this._snackBar.open(response.status,response.message,{
+        duration:1000
+      });
       this.cancel();
       this.router.navigate([this.router.url]);
  
       }
   }, error => console.log(error))
    }else if(type == 'update-campaign'){
-    console.log(`on update  type  --> ${type} `,this.campaignForm.value)
+    console.log(`on update  type  --> ${type} \n`,JSON.stringify(this.campaignForm.value,null,2))
     console.log("update payload ",JSON.stringify(this.formDetails,null,2))
-    this.campaingServie.updateCampaingChannel(this.payload).subscribe((response: any) => {
-     console.log("Received payload",response);
+    this.campaingServie.updateCampaingChannel({_id:this.payload._id,...this.campaignForm.value,isReccuring:this.isReccuring}).subscribe((response: any) => {
+    //  console.log("Received update-campaign payload",response);
+    //  return
      if (response.status === 200){
       console.log("Response Data")
       //TODO ADD SNACK BAR FOR SUCCESS
-      this._snackBar.open(response.status,response.message),{
+      this._snackBar.open(response.status,response.message,{
         duration:2000
-      };
+      });
       this.cancel();
       this.router.navigate([this.router.url]);
      }else{
       //TODO ADD SNACK BAR FOR SUCCESS
-      this._snackBar.open(response.status,response.message),{
+      this._snackBar.open(response.status,response.message,{
         duration:2000
-      };
+      });
       this.cancel();
       this.router.navigate([this.router.url]);
  
@@ -351,7 +382,7 @@ export class SmsCampaignModalComponent implements OnInit {
           console.log("Response Data")
           //TODO ADD SNACK BAR FOR SUCCESS
           this._snackBar.open(response.status,response.message),{
-            duration:2000
+            duration:1000
           };
           this.cancel();
           this.router.navigate([this.router.url]);
@@ -360,7 +391,7 @@ export class SmsCampaignModalComponent implements OnInit {
           //TODO ADD SNACK BAR FOR SUCCESS
           console.log("Received payload",JSON.stringify(response,null,2));
           this._snackBar.open(response.status,response.message),{
-            duration:2000
+            duration:1000
           };
           this.cancel();
           this.router.navigate([this.router.url]);
@@ -369,22 +400,24 @@ export class SmsCampaignModalComponent implements OnInit {
         
     }, error => console.log(error))
     }else if(type == 'delete-campaign'){
-      console.log(type + " delete payload ",JSON.stringify(this.formDetails,null,2))
-      this.campaingServie.createCampaingChannel(this.payload).subscribe((response: any) => {
+      //console.log(type + " delete payload ",JSON.stringify(this.formDetails,null,2))
+      //console.log(type + " delete payload ",JSON.stringify(this.payload,null,2))
+      //return;
+      this.campaingServie.deleteCampaingChannel(this.payload).subscribe((response: any) => {
         console.log("Received payload",response);
         if (response.status === 200){
           console.log("Response Data")
-          this._snackBar.open(response.status,response.message),{
-            duration:2000
-          };
+          this._snackBar.open(response.status,response.message,{
+            duration:1000
+          });
           this.cancel();
           this.router.navigate([this.router.url]);
           //TODO ADD SNACK BAR FOR SUCCESS
          }else{
           //TODO ADD SNACK BAR FOR SUCCESS
-          this._snackBar.open(response.status,response.message),{
-            duration:2000
-          };
+          this._snackBar.open(response.status,response.message,{
+            duration:1000
+          });
           this.cancel();
           this.router.navigate([this.router.url]);
     
@@ -570,7 +603,7 @@ export class SmsCampaignModalComponent implements OnInit {
         RunTimeType: [this.formDetails.RunTimeType,Validators.required],
         recuringCampaignDuration: [this.formDetails.recuringCampaignDuration],
         date:[this.formDetails.date],
-        normalMessage:[this.formDetails.MappedMessage],
+        normalMessage:[this.formDetails.normalMessage],
         campaignStages: this.formBuilder.group({
           stage: this.formBuilder.array([
           ]),

@@ -20,7 +20,7 @@
             <p class="messageFont">
                 {{message}}
             </p>
-            <p class="messageFont">CAMPAIGN : {{formDetails?.CampaignName}}. </p>
+            <p class="messageFont">CAMPAIGN : {{formDetails?.campaigName}}. </p>
             <mat-dialog-actions  align="center">
               <button mat-raised-button color="primary" (click)="delete(formDetails?.type)" tabindex="1">{{confirmButtonText}}</button>
               <button mat-raised-button mat-dialog-close tabindex="-1" color="warn" >{{cancelButtonText}}</button>
@@ -39,10 +39,10 @@
                     {{message}}
                 </p>
                 <p class="messageFont">MESSAGE OBJECTIVE: {{formDetails?.campaigObjective}}. </p>
-                <p class="messageFont">MAPPED CHANNELS CHANNEL.</p>
+                <p class="messageFont">MAPPED CHANNELS.</p>
                 <hr>
                 <mat-list>
-                    <mat-list-item *ngFor="let item of formDetails?.name">* {{item.item_text}}</mat-list-item>
+                    <mat-list-item *ngFor="let item of formDetails?.name">* {{item}}</mat-list-item>
                 </mat-list>
                 <hr>
                 <mat-dialog-actions *ngIf="renderFormType==='create-campaign' || renderFormType==='create-message' " align="center">
@@ -76,7 +76,7 @@
                 <div *ngIf="isReccuring===true">
                     <p class="messageFont">MAPPED MESSAGES FOR RECCURING CAMPAIGN: </p>
                     <mat-list>
-                        <mat-list-item *ngFor="let item of formDetails?.campaignStages?.stage">* {{item.mappedMessages.item_text}}</mat-list-item>
+                        <mat-list-item *ngFor="let item of formDetails?.campaignStages?.stage">* {{item.mappedMessages.Message}}</mat-list-item>
                     </mat-list>
                 </div>
                 <hr>
@@ -158,7 +158,7 @@
             <div >
                 <!-- <mat-card class="mat-card-content"> -->
                   <!-- <mat-card-content> -->
-                    <form  style="width: 900px !important;" [formGroup]="campaignForm" (ngSubmit)="onUpdate('update-campaign')">
+                    <form  style="width: 1100px !important;" [formGroup]="campaignForm" (ngSubmit)="onUpdate('update-campaign')">
                       <label class="campaing-form-lable" for="Campaing objective"
                         >Campaign name</label
                       ><br />
@@ -250,8 +250,7 @@
                           }}</label>
                         </div>
                         <!--if true show calendar-->
-                        <div class="row" *ngIf="displayCalendar == true">
-                          <div class="dateContainer">
+                        <div class="dateContainer" *ngIf="displayCalendar == true">
                             <input
                               matInput
                               placeholder="Choose a date"
@@ -269,14 +268,14 @@
                               matSuffix
                               [for]="picker"
                             ></sat-datepicker-toggle>
-                          </div>
                         </div>
                         <div
                           *ngIf="displayCalendar == true"
                           style="
-                            width: 150px !important;
+                            width: 350px !important;
                             margin-top: 10px;
                             margin-bottom: 10px;
+                            background-color: chartreuse;
                           "
                         >
                           <ng-multiselect-dropdown

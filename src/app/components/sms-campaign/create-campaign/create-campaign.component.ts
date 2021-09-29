@@ -93,7 +93,7 @@ export class CreateCampaignComponent implements OnInit {
 
     //Dynamically generated stage settings for drop down
     this.settings2= {
-      singleSelection: false,
+      singleSelection: true,
       idField: "_id",
       textField: "Message",
       enableCheckAll: true,
@@ -104,7 +104,7 @@ export class CreateCampaignComponent implements OnInit {
       clearSearchFilter: true,
       maxHeight: 197,
       itemsShowLimit: 3,
-      searchPlaceholderText: "SEARCH MAPPED MESSAGE",
+      searchPlaceholderText: "SEARCH MAPPED MESSAGE...",
       noDataAvailablePlaceholderText: "NO DATA PRESENT",
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
@@ -173,7 +173,7 @@ export class CreateCampaignComponent implements OnInit {
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
         console.log("Response data >>>>>> \n",response.data);
-        this.data = response.data;
+        this.selectedItems = response.data;
         //this.messageCount = response.count;
        // console.log("Result Count >>>>>> ",this.messageCount)
       
@@ -184,6 +184,16 @@ export class CreateCampaignComponent implements OnInit {
        }
       
   }, error => console.log(error))
+  }
+
+  StripMessage(arr:any[]):any{
+     let x= arr.map((item)=>{
+       console.log('item.Message >>> ',item. mappedMessages)
+       return item. mappedMessages.Message;
+     })
+
+     return x
+
   }
 
   
