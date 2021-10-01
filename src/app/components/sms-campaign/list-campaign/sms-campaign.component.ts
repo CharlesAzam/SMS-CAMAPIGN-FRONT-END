@@ -240,7 +240,7 @@ export class SmsCampaignComponent implements OnInit {
     console.log(item);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     //This are the type of channels available
     // this.data = [
     //   { item_id: 1, item_text: "SMS" },
@@ -271,7 +271,7 @@ export class SmsCampaignComponent implements OnInit {
 
   
   this.getMessageList(1,5)
-  this.getCampignList(1,100)
+  await this.getCampignList(1,100)
   this.composedMessageDataSource.paginator = this.paginator;
   //console.log("composedMessageDataSourcePaginator >>>>>> ",JSON.stringify(this.composedMessageDataSource,null,2))
   
@@ -304,15 +304,26 @@ export class SmsCampaignComponent implements OnInit {
   }, error => console.log(error))
   }
       //Fetch campaign data for service
-      getCampignList(pageIndex:any,pageSize:any){
+      async getCampignList(pageIndex:any,pageSize:any){
         this.campaingServie.getCampaign(pageIndex,pageSize).subscribe((response: any) => {
           console.log("Received payload from get request campaigns",response);
           if (response.status === 200){
             console.log("Response Data")
             //TODO ADD SNACK BAR FOR SUCCESS
             //this.snackOpen.openSnackBar(response.status,response.message)
-            console.log("Response data >>>>>> request campaigns \n",JSON.stringify(response.data,null,2));
-            this.dataSource=new MatTableDataSource<Campaings>(response.data);
+            //console.log("Response data >>>>>> request campaigns \n",JSON.stringify(response.data,null,2));
+            let campaigResults:any []=response.data;
+            let finalData=campaigResults.map((campaigResult)=>{
+              console.log("campaign lenght >>> ",{
+                ...campaigResult,
+                'totalStages':campaigResult.campaignStages.stages.length,
+              })
+              return{
+                ...campaigResult,
+                'totalStages':campaigResult.campaignStages.stages.length,
+              }
+            })
+            this.dataSource=new MatTableDataSource<Campaings>(finalData);
             this.campaignCount=response.count;
             const unfilterdArr=response.data.map((data:any,index)=>{
                   console.log('chanelTypes data >>>>>>',data.channelType)

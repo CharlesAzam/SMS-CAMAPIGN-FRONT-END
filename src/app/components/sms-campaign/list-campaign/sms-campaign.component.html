@@ -389,7 +389,7 @@
         <!--TOTAL NUMBER STAGES-->
         <ng-container matColumnDef="TOTAL NUMBER STAGES">
           <th mat-header-cell *matHeaderCellDef width="3%">TOTAL STAGES</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element?.campaignStage?.stages.length()!=0 ? element?.campaignStage?.stages.length() : 0}}</td>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element?.totalStages}}</td>
         </ng-container>
         <!--NEXT SCHEDULED RUN-->
         <ng-container matColumnDef="NEXT SCHEDULED RUN">
@@ -399,7 +399,7 @@
         <!--CAMPAIGN DURATION-->
         <ng-container matColumnDef="CAMPAIGN DURATION">
           <th mat-header-cell *matHeaderCellDef width="3%">SPAN</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element.DeliveryStatus }}</td>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element.recuringCampaignDuration!=0?element.recuringCampaignDuration:null }}</td>
         </ng-container>
         <!--REMAINIG DURATION-->
         <ng-container matColumnDef="REMAINING DURATION">
