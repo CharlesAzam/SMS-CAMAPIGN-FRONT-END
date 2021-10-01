@@ -103,7 +103,7 @@
             </span>
             <br>
 
-              <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="this.form.hasError()" >SUBMIT</button>
+              <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="form.invalid" >SUBMIT</button>
               <button mat-raised-button type="submit"  (click)="resetForm()">RESET</button>
             </form>
            </div>
