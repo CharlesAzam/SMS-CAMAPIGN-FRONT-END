@@ -20,7 +20,7 @@ export class SmsCampaignModalComponent implements OnInit {
   @Input() message: string = "Are you sure you want to delete this item?";
   @Input() confirmButtonText = "Yes";
   @Input() cancelButtonText = "Cancel";
-  @Input() renderFormType:string;
+  @Input() renderFormType:any;
   @Input() formDetails:any;
   private payload: any;
 

@@ -17,11 +17,12 @@ export class AdminEditComponent implements OnInit {
   hide = true;
   isVendorRole: boolean;
 
-  showCreate = null;
-  showEdit = null;
+  @Input() showCreate:boolean;
+  @Input() showEdit:boolean;
   userId = null;
   @Input() heading: String = null;
   @Input() placeHolderValue: String = null;
+  @Input() renderTypeForm: any;
 
   userForm = new FormGroup({
     username: new FormControl(""),
@@ -39,12 +40,19 @@ export class AdminEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService
   ) {
+    
+  }
+
+  ngOnInit() {
     //Add form Routing Logic and processing
+
     this.activatedRoute.url.subscribe((url) => {
+       //Conditionaly render form depending on weather to edit or create a new user
       if (url[1].path != "new") {
         this.showCreate = false;
         this.showEdit = true;
         this.heading = "Edit";
+        
         const params = url[1].parameters;
         //this.placeHolderValue = "Edting role name"
         // console.log("This is the URL \n"+JSON.stringify(url,null,2))
@@ -54,11 +62,13 @@ export class AdminEditComponent implements OnInit {
         let userId = id.slice(1, l - 1);
 
         this.userId = userId;
-        console.log(url[1].parameters);
-
-        this.userForm.removeControl("password");
-
+        
+        console.log(`url path for edit user  --->  ${url[1]}`)
+        console.log(`type param --->  ${params.type}`)
+       
+        //treat vendor type diffrent
         if (params.roles == "VENDOR_ROLE") {
+          this.userForm.removeControl("password");
           this.isVendorRole = true;
           this.userForm.setValue({
             vendorName: params.vendorName ? params.vendorName : "",
@@ -83,7 +93,8 @@ export class AdminEditComponent implements OnInit {
           url[1].parameters.roles;
           let n = url[1].parameters.roles.length;
           let userRole = url[1].parameters.roles.slice(0, n);
-          this.userForm.setValue({ username: userName, roles: userRole });
+          this.userForm.setValue({ username: userName, roles: userRole ,password:null});
+          console.log("This user form ",this.userForm.controls)
         }
 
         // console.log("userId "+userId)
@@ -93,20 +104,31 @@ export class AdminEditComponent implements OnInit {
 
         // console.log("userName :"+userName)
         // console.log("userRoles :"+userRole)
-      } else {
+      } else if(url[1].path == "new") {
         this.showCreate = true;
         this.showEdit = false;
         this.heading = "Add";
+
+        //Url details 
+        console.log('url path for new users ',url[1]);
+
+        //Remove vendor form details
+        this.userForm.removeControl("vendorName");
+        this.userForm.removeControl("vendorEmail");
+        this.userForm.removeControl("vendorCompanyName");
+        this.userForm.removeControl("vendorPhone");
+        this.userForm.removeControl("vendorWebsite");
         //this.placeHolderValue = "Enter name"
 
-        // console.log("This is the current route \n" +JSON.stringify(url[1].path));
+        this.userForm.setValue({ username: null, roles: null ,password:null});
+
+       console.log("This is the current route \n" +JSON.stringify(this.userForm.value));
         // console.log("Calling service to populate and create new role")
       }
     });
-  }
-
-  ngOnInit() {
+    
     this.getRoles();
+
   }
 
   getRoles() {
@@ -142,7 +164,7 @@ export class AdminEditComponent implements OnInit {
     }
     roleArray.push(this.userForm.value["roles"]);
     this.userForm.value["roles"] = roleArray;
-
+    console.log('This On create user \n',JSON.stringify(this.userForm.value,null,2))  
     this.adminService.createUser(this.userForm.value).subscribe(
       (response: any) => {
         if (response.status === 200) {
@@ -155,15 +177,15 @@ export class AdminEditComponent implements OnInit {
 
   onUpdate() {
     console.log(
-      "This is the user form data tobe updated \n" + this.userForm.value
+      "This is the user form data tobe updated \n" + JSON.stringify(this.userForm.value,null,2)
     );
     this.adminService
       .UpdateUserDetail(this.userId, this.userForm.value)
       .subscribe(
         (response: any) => {
           if (response.status === 200) {
-            //console.log("Response server side \n"+JSON.stringify(response,null,2))
-            this.router.navigate(["home/admin/users"]);
+          console.log("Response server side \n"+JSON.stringify(response,null,2))
+           // this.router.navigate(["home/admin/users"]);
           }
         },
         (error) => console.log("error", error)

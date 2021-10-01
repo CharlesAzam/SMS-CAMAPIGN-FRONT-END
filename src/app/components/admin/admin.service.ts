@@ -149,7 +149,7 @@ export class AdminService {
     console.log(data)
     let url = environment.apiUrl + `/cms/edit-user/${userId}`;
 
-    return this.http.post(url, data);
+    return this.http.put(url, data);
   }
 
   getCount() {

@@ -57,6 +57,11 @@ export class AdminUsersListComponent implements OnInit {
         }, error => console.log(error));
     }
 
+    createUser(){
+        console.log("Create new user redirection ...")
+        this.router.navigate(['../users','new'])
+    }
+
     removeUser(row) {
 
         this.dialog
@@ -86,7 +91,8 @@ export class AdminUsersListComponent implements OnInit {
         let userId=id.slice(1,l-1)
         console.log("JSON user ID \n"+id)
         console.log("Trimed User ID \n"+userId)
-        this.router.navigate([`../users/${userId}`,row])
+        console.log('row data ---> \n',JSON.stringify({type:'editUser',...row},null,2))
+        this.router.navigate([`../users/${userId}`,{type:'editUser',...row}])
         
     }
 
