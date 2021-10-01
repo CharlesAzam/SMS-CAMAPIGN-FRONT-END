@@ -12,8 +12,7 @@ import { SmsCampaignModalComponent } from "../modals/sms-campaign-modal/sms-camp
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { SmsCampaignService } from "../../../services/sms-campaign.service";
 import { MatPaginator, MatSort, PageEvent } from "@angular/material";
-import { startWith } from "rxjs/internal/operators/startWith";
-import { tap } from "rxjs/internal/operators/tap";
+import Utility from "../../../../utility/helper"
 
 //Channel
 interface Channel {
@@ -50,6 +49,24 @@ export interface CampaignMessage {
   CreatedBy: any;
   createdAt: any;
   updatedAt: any;
+  DeliveryStatus:any;
+  Status:any;
+}
+
+// List Campaign
+export interface Campaings {
+  isReccuring: boolean;
+  date: any;
+  campaigName: string;
+  channelType: string;
+  RunTimeType: any[];
+  recuringCampaignDuration: any,
+  campaignStages: any;
+  MappedMessage: string[];
+  CreatedBy:string;
+  createdAt: any;
+  updatedAt: any;
+  Status
 }
 
 //List Campaign Delivery Status
@@ -75,7 +92,7 @@ const CAMPAIGN_DELIVER_DATA: CampaignDelivery[] = [
 })
 export class SmsCampaignComponent implements OnInit {
   //Render var
-  @Input() renderCreateCampaign = true;
+  @Input() renderCreateCampaign = false;
   @Input() showComposeForm = true;
   //isPesonalized
   @Input() isPersonalized: string;
@@ -83,6 +100,7 @@ export class SmsCampaignComponent implements OnInit {
   @Input() TextAreaMessageCount: number;
   @Input() isPersonalMessageError: boolean;
   @Input() messageCount:number;
+  @Input() campaignCount:number=0;
   @Input() adjustCSSQuery;
   // Create DaiDH
   @ViewChild("multiSelect", null) multiSelect: { toggleSelectAll: () => void };
@@ -127,10 +145,20 @@ export class SmsCampaignComponent implements OnInit {
   //start table vars declartion
   //columns
   displayedColumns: string[] = [
-    "Channel",
-    "Start time",
-    "Created time",
-    "Sent",
+    "CAMPAIGN NAME",
+    "CAMPAIGN TYPE",
+    "CHANNEL TYPE",
+    "START TIME",
+    "CREATED TIME",
+    // "CURRENT SMS",
+    // "TOTAL SMS",
+    "CURRENT STAGE",
+    "TOTAL NUMBER STAGES",
+    "NEXT SCHEDULED RUN",
+    "CAMPAIGN DURATION",
+    "REMAINING DURATION",
+    "IS-SENT",
+    "STATUS"
   ];
   composedMessageDislayedColumns: string[] = [
     "Objective",
@@ -143,7 +171,8 @@ export class SmsCampaignComponent implements OnInit {
     "Delete",
     "Update",
   ];
-  dataSource = CAMPAIGN_DELIVER_DATA;
+
+  dataSource = new MatTableDataSource<Campaings>([]);
   composedMessageDataSource= new MatTableDataSource<CampaignMessage>([]);
   composedMessageDataSourcePaginator= new MatTableDataSource<any>([]).paginator;
   filterCondition:any;
@@ -246,7 +275,12 @@ export class SmsCampaignComponent implements OnInit {
   this.composedMessageDataSource.paginator = this.paginator;
   //console.log("composedMessageDataSourcePaginator >>>>>> ",JSON.stringify(this.composedMessageDataSource,null,2))
   
+  
 }
+
+  Date=(date:any,formatt:any)=>{
+    return Utility.DateFormatter(date,formatt);
+  }
 
   getMessageList(pageIndex:any,pageSize:any){
     this.campaingServie.getMessages(pageIndex,pageSize).subscribe((response: any) => {
@@ -278,10 +312,11 @@ export class SmsCampaignComponent implements OnInit {
             //TODO ADD SNACK BAR FOR SUCCESS
             //this.snackOpen.openSnackBar(response.status,response.message)
             console.log("Response data >>>>>> request campaigns \n",JSON.stringify(response.data,null,2));
+            this.dataSource=new MatTableDataSource<Campaings>(response.data);
+            this.campaignCount=response.count;
             const unfilterdArr=response.data.map((data:any,index)=>{
                   console.log('chanelTypes data >>>>>>',data.channelType)
                   return data.channelType
-                  
                   
             })
 

@@ -56,22 +56,42 @@
 }
 
 .main-content-style{
- display: flex;
+ /* display: flex; */
  /* flex: 1; */
- flex-direction: column;
- align-content: flex-start;
+ /* flex-direction: column; */
+ /* align-content: flex-start; */
  /* background-color: yellow; */
- /* width:1%; */
- position:absolute;
+ width:100% !important;
+ /* position:absolute; */
  /* right: 300px; */
 }
 
 
 .table-content{
     /* width: 1000px; */
-    font-size: 10px;
+    font-size: 15px;
     font-weight: bold;
 
+}
+
+.table-campaign-detail{
+ width: 99%;
+ /* background-color: red; */
+ margin: 0.5%;
+}
+
+.NoData{
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(241, 104, 104);
+    margin-top: 7.5%;
+    margin-bottom: 15%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.mat-elevation-z8{
+    width: 100% !important;
 }
 
 .mat-elevation-z8{
@@ -147,8 +167,12 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-f
     width: 100% !important;
     /* height: 100%; */
     /* background-color: chartreuse; */
-    padding-left: 2% !important;
-    padding-right: 2% !important;
+    /* padding-left: 2% !important; */
+    /* padding-right: 2% !important; */
+}
+
+th{
+    width: 300px !important;
 }
 
 

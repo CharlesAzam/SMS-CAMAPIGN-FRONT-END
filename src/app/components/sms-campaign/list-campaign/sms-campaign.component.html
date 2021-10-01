@@ -212,6 +212,7 @@
      </div>
     <!--Display table list to show messages end-->
   </div>
+
   <!--Render main component to list all campaing -->
   <div
     *ngIf="renderCreateCampaign == false"
@@ -337,33 +338,84 @@
         </div>
       </div>
     </div>
-    <div class="mat-elevation-z8">
+
+    <p class="NoData" *ngIf="campaignCount == 0"> No data available for campaigns! </p>
+    <div *ngIf="campaignCount > 0" class="mat-elevation-z6 table-campaign-detail">
       <table mat-table [dataSource]="dataSource">
         <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="Channel">
-          <th mat-header-cell *matHeaderCellDef width="3%">CAMPAIGN</th>
-          <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+        <!-- CAMPAIGN NAME -->
+        <ng-container matColumnDef="CAMPAIGN NAME">
+          <th mat-header-cell *matHeaderCellDef width="5%">CAMPAIGN NAME</th>
+          <td mat-cell *matCellDef="let element" width="7%">{{ element.campaigName }}</td>
+        </ng-container>
+        <!--CAMPAIGN TYPE-->
+        <ng-container matColumnDef="CAMPAIGN TYPE">
+          <th mat-header-cell *matHeaderCellDef width="3%">CAMPAIGN TYPE</th>
+          <td mat-cell *matCellDef="let element"width="3%">{{ element.RunTimeType }}</td>
+        </ng-container>
+        <!--CHANNEL TYPE-->
+        <ng-container matColumnDef="CHANNEL TYPE">
+          <th mat-header-cell *matHeaderCellDef width="3%">CHANNEL TYPE</th>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element.channelType }}</td>
+        </ng-container>
+        <!-- START TIME -->
+        <ng-container matColumnDef="START TIME">
+          <th mat-header-cell *matHeaderCellDef width="6%">START TIME</th>
+          <td mat-cell *matCellDef="let element" width="6%">{{Date(element.date.begin,'normal')}}</td>
         </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="Start time">
-          <th mat-header-cell *matHeaderCellDef width="3%">START TIME</th>
-          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        <!-- CREATED TIME -->
+        <ng-container matColumnDef="CREATED TIME">
+          <th mat-header-cell *matHeaderCellDef width="6%">CREATED TIME</th>
+          <td mat-cell *matCellDef="let element" width="6%">{{ Date(element.createdAt,'normal') }}</td>
+        </ng-container>
+        <!--CURRENT SMS-->
+        <!-- <ng-container matColumnDef="CURRENT SMS">
+          <th mat-header-cell *matHeaderCellDef width="6%">CURRENT SMS</th>
+          <td mat-cell *matCellDef="let element" width="6%">{{ element.DeliveryStatus }}</td>
+        </ng-container> -->
+        <!--TOTAL SMS-->
+        <!-- <ng-container matColumnDef="TOTAL SMS">
+          <th mat-header-cell *matHeaderCellDef width="3%">TOTAL SMS</th>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element.DeliveryStatus }}</td>
+        </ng-container> -->
+        <!--CURRENT STAGE-->
+        <ng-container matColumnDef="CURRENT STAGE">
+          <th mat-header-cell *matHeaderCellDef width="5%">CURRENT STAGE</th>
+          <td mat-cell *matCellDef="let element" width="5%">{{ element.DeliveryStatus }}</td>
+        </ng-container>
+        <!--TOTAL NUMBER STAGES-->
+        <ng-container matColumnDef="TOTAL NUMBER STAGES">
+          <th mat-header-cell *matHeaderCellDef width="3%">TOTAL STAGES</th>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element?.campaignStage?.stages.length()!=0 ? element?.campaignStage?.stages.length() : 0}}</td>
+        </ng-container>
+        <!--NEXT SCHEDULED RUN-->
+        <ng-container matColumnDef="NEXT SCHEDULED RUN">
+          <th mat-header-cell *matHeaderCellDef width="3%">NEXT RUN</th>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element.DeliveryStatus }}</td>
+        </ng-container>
+        <!--CAMPAIGN DURATION-->
+        <ng-container matColumnDef="CAMPAIGN DURATION">
+          <th mat-header-cell *matHeaderCellDef width="3%">SPAN</th>
+          <td mat-cell *matCellDef="let element" width="3%">{{ element.DeliveryStatus }}</td>
+        </ng-container>
+        <!--REMAINIG DURATION-->
+        <ng-container matColumnDef="REMAINING DURATION">
+          <th mat-header-cell *matHeaderCellDef width="3%">SPAN LEFT</th>
+          <td mat-cell *matCellDef="let element" width="3%">{{ 'DDDD' }}</td>
+        </ng-container>
+        <!-- IS-SENT -->
+        <ng-container matColumnDef="IS-SENT">
+          <th mat-header-cell *matHeaderCellDef width="5%">IS-SENT</th>
+          <td mat-cell *matCellDef="let element" width="5%">{{ element.DeliveryStatus }}</td>
         </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="Created time">
-          <th mat-header-cell *matHeaderCellDef width="3%">CREATED TIME</th>
-          <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="Sent">
-          <th mat-header-cell *matHeaderCellDef width="3%">STATUS</th>
-          <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+         <!-- STATUS -->
+         <ng-container matColumnDef="STATUS">
+          <th mat-header-cell *matHeaderCellDef width="5%">STATUS</th>
+          <td mat-cell *matCellDef="let element" width="5%">{{ element.Status }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
