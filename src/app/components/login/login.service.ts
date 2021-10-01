@@ -22,6 +22,7 @@ export class AuthenticationService {
     login(username, password) {
         return this.http.post<any>(`${environment.apiUrl}/cms/login`, { username, password })
             .pipe(map(user => {
+                console.log('user detail \n',JSON.stringify(user,null,2))
                 // user.userInfo
                 user.accessList.length > 0 ? user.accessList = this.orderAccessList(user.accessList) : user.accessList = {};
                 localStorage.setItem('currentUser', JSON.stringify(user));

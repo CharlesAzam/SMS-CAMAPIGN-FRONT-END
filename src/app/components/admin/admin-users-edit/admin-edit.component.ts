@@ -184,8 +184,8 @@ export class AdminEditComponent implements OnInit {
       .subscribe(
         (response: any) => {
           if (response.status === 200) {
-          console.log("Response server side \n"+JSON.stringify(response,null,2))
-           // this.router.navigate(["home/admin/users"]);
+          //console.log("Response server side \n"+JSON.stringify(response,null,2))
+          this.router.navigate(["home/admin/users"]);
           }
         },
         (error) => console.log("error", error)
