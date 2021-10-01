@@ -341,10 +341,10 @@ export class CreateCampaignComponent implements OnInit {
     console.log("onDropDown change ", item);
   }
 
-  public onItemSelect(item: any, i: any) {
+  public onItemSelect(item: any) {
     let indx; //Local index
     console.log("onItemSelect ", item);
-    console.log("Array index ", i);
+    //console.log("Array index ", i);
     console.log("push item to data array");
     this.selectedItem = item;
     this.selectedItems.forEach((objct, index) => {
@@ -364,9 +364,9 @@ export class CreateCampaignComponent implements OnInit {
 
     // this.selectedItem.push(item);
     // this.selectedItem;
-    console.log("i = ", i);
-    controls.controls[i].patchValue({ mappedMessages: item });
-    console.log(`selected item array ---> \n`, controls.controls[i]);
+    //console.log("i = ", i);
+    //controls.controls[i].patchValue({ mappedMessages: item });
+    //console.log(`selected item array ---> \n`, controls.controls[i]);
   }
   public onDeSelect(item: any) {
     console.log("onDeSelect ", item);

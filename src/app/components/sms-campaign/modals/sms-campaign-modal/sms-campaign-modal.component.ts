@@ -443,7 +443,7 @@ export class SmsCampaignModalComponent implements OnInit {
     console.log("onDropDown change ", item);
   }
 
-  public onItemSelect(item: any,i:number) {
+  public onItemSelect(item: any) {
     console.log("onItemSelect ", item);
     console.log("form control value this.formDetails.MappedCampaing ",this.formDetails.MappedCampaing)
     console.log(`currentMappedMessage ---> \n`,this.currentMappedMessage);

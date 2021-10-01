@@ -278,15 +278,21 @@ export class SmsCampaignComponent implements OnInit {
             //TODO ADD SNACK BAR FOR SUCCESS
             //this.snackOpen.openSnackBar(response.status,response.message)
             console.log("Response data >>>>>> request campaigns \n",JSON.stringify(response.data,null,2));
-            this.data=response.data.map((data:any,index)=>{
+            const unfilterdArr=response.data.map((data:any,index)=>{
                   console.log('chanelTypes data >>>>>>',data.channelType)
                   return data.channelType
                   
                   
             })
+
+            this.data= unfilterdArr.filter(function(item, index) {
+              if (unfilterdArr.indexOf(item) == index)
+                return item;
+            });
+
             //this.dataSource = new MatTableDataSource<any>(response.data);
             // this.messageCount = response.count;
-            console.log("Result Count >>>>>> ",this.data)
+            console.log("filleterd channel no duplicates>>>>>> ",this.data)
           
            }else{
             //TODO ADD SNACK BAR FOR SUCCESS
