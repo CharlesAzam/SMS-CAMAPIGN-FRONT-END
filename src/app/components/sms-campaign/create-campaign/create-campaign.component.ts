@@ -187,7 +187,7 @@ export class CreateCampaignComponent implements OnInit {
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
         console.log("Response data >>>>>> \n",response.data);
-        //this.data = response.data;
+        this.data = response.data;
         this.selectedItems=response.data
        // console.log("Result Count >>>>>> ",this.messageCount)
       
@@ -341,7 +341,7 @@ export class CreateCampaignComponent implements OnInit {
     console.log("onDropDown change ", item);
   }
 
-  public onItemSelect(item: any) {
+  public onItemSelect(item: any,i:number) {
     let indx; //Local index
     console.log("onItemSelect ", item);
     //console.log("Array index ", i);
@@ -362,11 +362,11 @@ export class CreateCampaignComponent implements OnInit {
       (<FormGroup>this.campaignForm.get("campaignStages")).get("stage")
     );
 
-    // this.selectedItem.push(item);
-    // this.selectedItem;
-    //console.log("i = ", i);
-    //controls.controls[i].patchValue({ mappedMessages: item });
-    //console.log(`selected item array ---> \n`, controls.controls[i]);
+    this.selectedItems.push(item);
+    this.selectedItems;
+    console.log("i = ", i);
+    controls.controls[i].patchValue({ mappedMessages: item });
+    console.log(`selected item array ---> \n`, controls.controls[i]);
   }
   public onDeSelect(item: any) {
     console.log("onDeSelect ", item);
