@@ -12,7 +12,13 @@ import { SmsCampaignModalComponent } from "../modals/sms-campaign-modal/sms-camp
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { SmsCampaignService } from "../../../services/sms-campaign.service";
 import { MatPaginator, MatSort, PageEvent } from "@angular/material";
-import Utility from "../../../../utility/helper"
+import Utility from "../../../../utility/helper";
+import * as FileSaver from "file-saver";
+import { ExportToCsv } from 'export-to-csv-file';
+import * as XLSX from "xlsx";
+const EXCEL_TYPE =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+const EXCEL_EXTENSION = ".xlsx";
 
 //Channel
 interface Channel {
@@ -150,16 +156,43 @@ export class SmsCampaignComponent implements OnInit {
     "CHANNEL TYPE",
     "START TIME",
     "CREATED TIME",
-    // "CURRENT SMS",
-    // "TOTAL SMS",
     "CURRENT STAGE",
     "TOTAL NUMBER STAGES",
     "NEXT SCHEDULED RUN",
     "CAMPAIGN DURATION",
     "REMAINING DURATION",
     "IS-SENT",
-    "STATUS"
+    "STATUS",
+    "ACTIONS"
   ];
+
+  header=[
+    'CAMPAIGN NAME',
+    'CAMPAIGN TYPE',
+    'CHANNEL',
+    'START TIME',
+    'CREATED TIME',
+    'CURRENT STAGE',
+    'TOTAL STAGE',
+    'NEXT RUN',
+    'SPAN',
+    'IS SENT',
+    'STATUS',
+  ]
+
+  options = { 
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true, 
+    showTitle: true,
+    title: 'CampaignList',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+   // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+  };
+
   composedMessageDislayedColumns: string[] = [
     "Objective",
     "Message",
@@ -271,7 +304,7 @@ export class SmsCampaignComponent implements OnInit {
 
   
   this.getMessageList(1,5)
-  await this.getCampignList(1,100)
+  this.getCampignList(1,100)
   this.composedMessageDataSource.paginator = this.paginator;
   //console.log("composedMessageDataSourcePaginator >>>>>> ",JSON.stringify(this.composedMessageDataSource,null,2))
   
@@ -284,16 +317,16 @@ export class SmsCampaignComponent implements OnInit {
 
   getMessageList(pageIndex:any,pageSize:any){
     this.campaingServie.getMessages(pageIndex,pageSize).subscribe((response: any) => {
-      console.log("Received payload from get request messages",response);
+      //console.log("Received payload from get request messages",response);
       if (response.status === 200){
-        console.log("Response Data")
+       // console.log("Response Data")
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
-        console.log("Response data >>>>>> \n",response.data);
+       // console.log("Response data >>>>>> \n",response.data);
         this.composedMessageDataSource = new MatTableDataSource<CampaignMessage>(response.data);
         ///this.data =response.data
         this.messageCount = response.count;
-        console.log("Result Count >>>>>> ",this.messageCount)
+       // console.log("Result Count >>>>>> ",this.messageCount)
       
        }else{
         //TODO ADD SNACK BAR FOR SUCCESS
@@ -304,18 +337,17 @@ export class SmsCampaignComponent implements OnInit {
   }, error => console.log(error))
   }
       //Fetch campaign data for service
-      async getCampignList(pageIndex:any,pageSize:any){
+     getCampignList(pageIndex:any,pageSize:any){
         this.campaingServie.getCampaign(pageIndex,pageSize).subscribe((response: any) => {
-          console.log("Received payload from get request campaigns",response);
+         console.log("Received payload from get request campaigns",response);
           if (response.status === 200){
             console.log("Response Data")
             //TODO ADD SNACK BAR FOR SUCCESS
-            //this.snackOpen.openSnackBar(response.status,response.message)
-            //console.log("Response data >>>>>> request campaigns \n",JSON.stringify(response.data,null,2));
             let campaigResults:any []=response.data;
             let finalData=campaigResults.map((campaigResult)=>{
-              console.log("campaign lenght >>> ",{
+              console.log(`campaign lenght >>> `,{
                 ...campaigResult,
+              //  'currentStage':campaigResult.campaignStages.stages,
                 'totalStages':campaigResult.campaignStages.stages.length,
               })
               return{
@@ -326,7 +358,7 @@ export class SmsCampaignComponent implements OnInit {
             this.dataSource=new MatTableDataSource<Campaings>(finalData);
             this.campaignCount=response.count;
             const unfilterdArr=response.data.map((data:any,index)=>{
-                  console.log('chanelTypes data >>>>>>',data.channelType)
+                  //console.log('chanelTypes data >>>>>>',data.channelType)
                   return data.channelType
                   
             })
@@ -338,7 +370,7 @@ export class SmsCampaignComponent implements OnInit {
 
             //this.dataSource = new MatTableDataSource<any>(response.data);
             // this.messageCount = response.count;
-            console.log("filleterd channel no duplicates>>>>>> ",this.data)
+            //console.log("filleterd channel no duplicates>>>>>> ",this.data)
           
            }else{
             //TODO ADD SNACK BAR FOR SUCCESS
@@ -381,6 +413,7 @@ export class SmsCampaignComponent implements OnInit {
     pageIndex=pageIndex+1;
     console.log("onPaginateChangeEvent ",JSON.stringify(event,null,2))
     this.getMessageList(pageIndex,pageSize)
+    this.getCampignList(pageIndex,pageSize)
   }
 
   public setForm() {
@@ -579,4 +612,24 @@ export class SmsCampaignComponent implements OnInit {
 
     return dialogRef;
   }
+
+  exportFileToCsv() {
+    this.dataSource.data;
+    //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+   // this.saveAsExcelFile(excelBuffer, filename);
+   const csvExporter = new ExportToCsv(this.options);
+   csvExporter.generateCsv(this.dataSource.data)
+  
+  }
+
+
+  // private saveAsExcelFile(buffer: any, fileName: string): void {
+  //   const data: Blob = new Blob([buffer], {
+  //     type: 'CSV',
+  //   });
+  //   FileSaver.saveAs(
+  //     data,
+  //     fileName + "_export_" + new Date().getTime() + '.csv'
+  //   );
+  // }
 }

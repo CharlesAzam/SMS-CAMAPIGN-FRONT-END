@@ -140,7 +140,7 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-f
 }
 
 .sms-campaing{
-    width:97% !important;
+    width:100% !important;
     /* margin-right: 50% !important; */
     font-size: 12px;
     font-weight: 600;
@@ -167,8 +167,8 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-f
     width: 100% !important;
     /* height: 100%; */
     /* background-color: chartreuse; */
-    /* padding-left: 2% !important; */
-    /* padding-right: 2% !important; */
+    padding-left: 1.5% !important;
+    padding-right: 1.5% !important;
 }
 
 th{
