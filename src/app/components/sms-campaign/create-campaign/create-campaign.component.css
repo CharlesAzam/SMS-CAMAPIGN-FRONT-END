@@ -141,6 +141,16 @@ justify-content: space-evenly;
     color: black;   
 }
 
+.NoData{
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(241, 104, 104);
+    margin-top: 7.5%;
+    margin-bottom: 15%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
 /* .main-content-1{
     
 } */

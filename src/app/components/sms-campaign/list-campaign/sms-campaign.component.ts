@@ -215,6 +215,7 @@ export class SmsCampaignComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     console.log("filterValue ",filterValue)
     this.composedMessageDataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
     console.log("this.composedMessageDataSource.filter   >>>>",this.composedMessageDataSource.filteredData)
   }
 

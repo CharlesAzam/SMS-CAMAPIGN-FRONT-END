@@ -489,4 +489,9 @@ export class CreateCampaignComponent implements OnInit {
     //   JSON.stringify(payload, null, 2)
     // );
   }
+
+  onRowClick(data: any){
+    console.log(`data from row --> ${JSON.stringify(data,null,2)}`)
+    this.openDialog({type:'table-detail',...data});
+  }
 }

@@ -173,20 +173,18 @@ export class SmsCampaignModalComponent implements OnInit {
     this.setForm(this.renderFormType);
     //console.log("i = ",JSON.stringify(this.formDetails.campaignStages.stages,null,2))
     if(this.formDetails.campaignStages.stages!=null){
-    let stages:any [] = this.formDetails.campaignStages.stages;
-     console.log("i = ",JSON.stringify(this.formDetails.campaignStages.stage,null,2))
+    console.log(`initializing table to form data tranfer for stages.... `)
+      let stages:any [] = this.formDetails.campaignStages.stages;
+      console.log("i = ",JSON.stringify(this.formDetails.campaignStages,null,2))
      
 
       stages.forEach((stageItem,index)=>{
-        
-        console.log(`stage from ${stageItem.from} to ${stageItem.to} mappedMessages ${stageItem.mappedMessages.Message} item index >>> `,index)
-        this.campaignStagez.push(this.newDynamicCampaign(stageItem.from,stageItem.to,stageItem.mappedMessages.Message));
-        this.EDIT_MESSAGE[index]=stageItem.mappedMessages.Message
-        this.mappedMessages.push(stageItem.mappedMessages.Message);
+        console.log(`stage from ${stageItem.from} to ${stageItem.to} mappedMessages ${stageItem.mappedMessages.Message!=undefined?stageItem.mappedMessages.Message:stageItem.mappedMessages} item index >>> `,index)
+        this.campaignStagez.push(this.newDynamicCampaign(stageItem.from,stageItem.to,stageItem.mappedMessages.Message!=undefined?stageItem.mappedMessages.Message:stageItem.mappedMessages));
+        this.EDIT_MESSAGE[index]=stageItem.mappedMessages.Message!=undefined?stageItem.mappedMessages.Message:stageItem.mappedMessages
+        this.mappedMessages.push(stageItem.mappedMessages.Message!=undefined?stageItem.mappedMessages.Message:stageItem.mappedMessages);
      
-      })
-    
-     
+      }) 
     }
     
     console.log('>>>>>>> Check form value for capaign \n',this.formDetails.RunTimeType)
@@ -315,14 +313,15 @@ export class SmsCampaignModalComponent implements OnInit {
     let mappedMessages = []
     if(this.form.get('name').value!=null){
         mappedMessages = this.form.get('name').value.map((data:any)=>{
-        return data.item_text;
+        console.log(`${data} + Message ${data.Message}`)
+        return {Message:data.Message};
       })
     }
     let user = JSON.parse(localStorage.getItem("currentUser"));
-    console.log(`mappedMessages >>>>> ${mappedMessages}`)
-    console.log(`on update type  --> ${type} `,{_id:this.payload._id,mappedMessages:mappedMessages,...this.form.value})
-
-    this.campaingServie.updateCampaingMessage({_id:this.payload._id,mappedMessages:mappedMessages,...this.form.value, createdBy: user.userInfo.username,}).subscribe((response: any) => {
+    // console.log(`mappedMessages >>>>> ${mappedMessages}`)
+    // console.log(`on update type  --> ${type} `,{_id:this.payload._id,normalMessage:mappedMessages,...this.form.value})
+    // return
+    this.campaingServie.updateCampaingMessage({_id:this.payload._id,normalMessage:mappedMessages,...this.form.value, createdBy: user.userInfo.username,}).subscribe((response: any) => {
       console.log("Received payload",response);
       if (response.status === 200){
        console.log("Response Data")
@@ -343,8 +342,23 @@ export class SmsCampaignModalComponent implements OnInit {
       }
   }, error => console.log(error))
    }else if(type == 'update-campaign'){
-    console.log(`on update  type  --> ${type} \n`,JSON.stringify(this.campaignForm.value,null,2))
-    console.log("update payload ",JSON.stringify(this.formDetails,null,2))
+    console.log(`create message ${type} `)
+    //console.log(`on update  type Before Values --> ${type} \n`,JSON.stringify(this.campaignForm.value,null,2))
+    //console.log("update payload ",JSON.stringify(this.formDetails,null,2))
+    
+   
+    // let mappedMessages = []
+    // if(this.campaignForm.get('campaignStages').get('stage').value!=null){
+    //     mappedMessages = this.campaignForm.get('campaignStages').get('stages').value.map((data:any,index)=>{
+    //     console.log(`loop map Message ${JSON.stringify(data,null,2)}`)
+    //     return {_id:index++,Message:data.mappedMessages};
+    //   })
+    // }
+    //this.campaignForm.get("normalMessage").setValue(mappedMessages);
+    // let user = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(`this.campaignForm.get('mappedMessages').value >>>>> ${JSON.stringify(this.campaignForm.value,null,2)}`)
+    // console.log(`mappedMessages >>>>> ${mappedMessages}`)
+    // console.log(`on update type  --> ${type} `,{_id:this.payload._id,normalMessage:mappedMessages,...this.campaignForm.value,isReccuring:this.isReccuring})
     this.campaingServie.updateCampaingChannel({_id:this.payload._id,...this.campaignForm.value,isReccuring:this.isReccuring}).subscribe((response: any) => {
     //  console.log("Received update-campaign payload",response);
     //  return
@@ -525,9 +539,17 @@ export class SmsCampaignModalComponent implements OnInit {
       (<FormGroup>this.campaignForm.get("campaignStages")).get("stage")
     );
 
+    
+
     console.log("i = ",i)
-    controls.controls[i].get('mappedMessages').setValue(item.item_text)
+    //this.campaignForm.get("campaignStages").get('normal').setValue(item)
+    // controls2.controls[i].get('norma').setValue(item.Message)
+    // console.log(`selected item array ---> \n`,controls.controls[i]);
+    
+    console.log("i = ",i)
+    controls.controls[i].get('mappedMessages').setValue(item.Message)
     console.log(`selected item array ---> \n`,controls.controls[i]);
+    console.log(`this.campaignForm.value ----> ${JSON.stringify(this.campaignForm.value,null,2)}`)
     
   }
   public onDeSelect2(item: any) {
@@ -727,7 +749,7 @@ export class SmsCampaignModalComponent implements OnInit {
      }
    }
  
-   setPersonalized(m) {
+   setPersonalized(m: any) {
      //Get personalized message
      //Validate data
      console.log(
