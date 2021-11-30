@@ -342,7 +342,7 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   public onItemSelect(item: any,i:number) {
-    let indx; //Local index
+    let indx: number; //Local index
     console.log("onItemSelect ", item);
     //console.log("Array index ", i);
     console.log("push item to data array");
@@ -355,7 +355,7 @@ export class CreateCampaignComponent implements OnInit {
     });
 
     if (indx > -1) {
-      this.selectedItems.splice(indx, 1);
+      //this.selectedItems.splice(indx, 1);
     }
 
     let controls = <FormArray>(

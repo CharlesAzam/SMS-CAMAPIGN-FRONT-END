@@ -4,15 +4,16 @@
         <!--table row detail form start-->
         <div class="col" *ngIf="renderFormType=='table-detail'">
           <img  class="img" src="../../../../../assets/azam-logo.png">
-          <p class="messageFont"> Campaign name: {{this.formDetails.campaigName}}</p>
-          <p *ngIf="this.formDetails.recuringCampaignDuration!=null"  class="messageFont"> Duration {{this.formDetails.recuringCampaignDuration}}</p>
-          <p class="messageFont">Next run time {{this.formDetails.date|json}}</p>
+          <p class="stageFont"> Campaign name: {{this.formDetails.campaigName}}</p>
+          <p *ngIf="this.formDetails.recuringCampaignDuration!=null"  class="stageFont"> Duration {{this.formDetails.recuringCampaignDuration}}</p>
+          <p *ngIf="this.formDetails.campaignStages.stages.length>0"  class="stageFont"> Total Number of stages {{this.formDetails.campaignStages.stages.length}}</p>
+          <p class="stageFont">Next run time: {{this.formDetails.date|json}}</p>
           <div class="stages-container"  *ngFor="let stage of this.formDetails.campaignStages.stages; let i=index;">
             <div class="stage-campaign-nomral">
               <p>Stage: {{i+1}}</p>
               <p>From: {{stage.from}}</p> <p>To: {{stage.to}}</p>
               <!-- <p>Channel Type: {{stage.channelType}}</p> -->
-              <p>Message to be sent:{{stage.mappedMessages!=undefined?stage.mappedMessages:stage.mappedMessages.Message}}</p>
+              <p>Message to be sent:{{stage.mappedMessages!=undefined||stage.mappedMessages!=null?(stage.mappedMessages.Message|json):stage.mappedMessages.Message}}</p>
             </div>
           </div>
         </div>
@@ -295,7 +296,6 @@
                             width: 350px !important;
                             margin-top: 10px;
                             margin-bottom: 10px;
-                            background-color: chartreuse;
                           "
                         >
                           <ng-multiselect-dropdown
