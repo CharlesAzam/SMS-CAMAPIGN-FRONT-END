@@ -100,6 +100,7 @@ export class SmsCampaignComponent implements OnInit {
   //Render var
   @Input() renderCreateCampaign = false;
   @Input() showComposeForm = true;
+  @Input() showMessageTable = true; 
   //isPesonalized
   @Input() isPersonalized: string;
   @Input() TextAreaMessage: string;
@@ -323,7 +324,7 @@ export class SmsCampaignComponent implements OnInit {
        // console.log("Response Data")
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
-       // console.log("Response data >>>>>> \n",response.data);
+        //console.log("Response data >>>>>> \n",JSON.stringify(response.data,null,2));
         this.composedMessageDataSource = new MatTableDataSource<CampaignMessage>(response.data);
         ///this.data =response.data
         this.messageCount = response.count;
@@ -494,11 +495,11 @@ export class SmsCampaignComponent implements OnInit {
   }
 
   //View Messages
-  ListMessages() {
-    this.showComposeForm == true
-      ? (this.showComposeForm = false)
-      : (this.showComposeForm = true);
-    console.log("List messsages ", this.showComposeForm);
+  RenderTable() {
+    this.showMessageTable == true
+      ? (this.showMessageTable = false)
+      : (this.showMessageTable = true);
+    console.log("List messsages ", this.showMessageTable);
   }
   //Create campaign type
   Redirect() {

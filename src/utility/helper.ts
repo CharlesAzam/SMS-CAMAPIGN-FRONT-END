@@ -3,7 +3,7 @@ function DateFormatter(date:any,type:any):any{
   let ReturnDate:any=null
   switch (type) {
     case 'normal':
-        ReturnDate=moment(date).format('LLL')       
+        ReturnDate=moment(date).format('L')       
     break;
     case 'medium':
         ReturnDate=moment(date).format('DD-MM-YY h:mm:ss a')     

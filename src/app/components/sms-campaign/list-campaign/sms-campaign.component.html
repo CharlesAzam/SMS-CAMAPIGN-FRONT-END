@@ -5,17 +5,9 @@
       <div class="create-sms-campaign" (click)="CreateCampaignMessage()">
         <mat-icon>arrow_back</mat-icon>GO BACK
       </div>
-      <div class="create-sms-campaign" (click)="ListMessages()">
-        <div *ngIf="showComposeForm==true; else ComposeMessage">
-           <mat-icon>table_view</mat-icon> VIEW MESSAGES
-        </div>
-        <ng-template #ComposeMessage>
-          <mat-icon>add</mat-icon> COMPOSE MESSAGES
-        </ng-template>
-      </div>
     </div>
     <!--Conditionaly render compose message form-->
-     <div *ngIf="showComposeForm == true">
+    <div *ngIf="showComposeForm == true">
       <div style="margin-top: 20px">
         <mat-card class="mat-card-content">
           <mat-card-title class="mat-content-header"
@@ -24,193 +16,158 @@
           <hr />
           <mat-card-content>
             <p>
-              Create various sms campaign messages and save them as template to be
-              mapped to different channels accordingly.You can also update and
-              delete exeting message template and apply them to multiple
+              Create various sms campaign messages and save them as template to
+              be mapped to different channels accordingly.You can also update
+              and delete exeting message template and apply them to multiple
               channels.mat-card-header A message can have one to one or one to
               many relation with channel i.e message can be mapped to either one
               or multiple channels depending on the current need.
             </p>
           </mat-card-content>
         </mat-card>
-  
+
         <mat-card class="mat-card-content">
           <mat-card-title class="mat-content-header"
             >COMPOSE CAMPAIGN MESSAGE</mat-card-title
           >
           <hr />
           <mat-card-content>
-           <div style="width: 60%;">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <label class="campaing-form-lable" for="Campaing objective">Campaing objective</label><br>
-              <input style="width: 400px !important; height: 40px !important;" name="campaigObjective"  formControlName="campaigObjective" [class.valid]="this.form.get('campaigObjective').valid &&(this.form.get('campaigObjective').dirty ||this.form.get('campaigObjective').touched)"/>
-              <br>
-              <!-- <div *ngIf="this.form.get('campaigObjective').valid &&(this.form.get('campaigObjective').dirty ||this.form.get('campaigObjective').touched)"> -->
-                <span *ngIf="form.controls['campaigObjective'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+            <div style="width: 60%">
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <label class="campaing-form-lable" for="Campaing objective"
+                  >Campaing objective</label
+                ><br />
+                <input
+                  style="width: 400px !important; height: 40px !important"
+                  name="campaigObjective"
+                  formControlName="campaigObjective"
+                  [class.valid]="
+                    this.form.get('campaigObjective').valid &&
+                    (this.form.get('campaigObjective').dirty ||
+                      this.form.get('campaigObjective').touched)
+                  "
+                />
+                <br />
+                <!-- <div *ngIf="this.form.get('campaigObjective').valid &&(this.form.get('campaigObjective').dirty ||this.form.get('campaigObjective').touched)"> -->
+                <span
+                  *ngIf="form.controls['campaigObjective'].invalid"
+                  style="color: red; margin-top: 5px; margin-bottom: 5px"
+                >
                   ** Campaign objective field can't be empty!
-                 </span>
-              <!-- </div> -->
-              <br>
-              <!--Add multiple select item here-->
-              <!-- <mat-form-field appearance="fill">
+                </span>
+                <!-- </div> -->
+                <br />
+                <!--Add multiple select item here-->
+                <!-- <mat-form-field appearance="fill">
                 <mat-label>Select</mat-label>
                 <mat-select>
                   <mat-option value="one">First option</mat-option>
                   <mat-option value="two">Second option</mat-option>
                 </mat-select>
               </mat-form-field> -->
-              <label class="campaing-form-lable" for="Campaing Message">Campaing Message</label><br>
-              <textarea style="width: 400px !important; height: 200px !important;" #textMessageInput name="campaignMessage" formControlName="campaignMessage" (blur)="setPersonalized(textMessageInput.value)"></textarea>
-              <br/>
-              <!-- <div *ngIf="this.form.get('campaignMessage').valid &&(this.form.get('campaignMessage').dirty ||this.form.get('campaignMessage').touched)"> -->
-                <span *ngIf="form.controls['campaignMessage'].invalid" style="color: red;margin-top: 5px;margin-bottom: 5px;">
+                <label class="campaing-form-lable" for="Campaing Message"
+                  >Campaing Message</label
+                ><br />
+                <textarea
+                  style="width: 400px !important; height: 200px !important"
+                  #textMessageInput
+                  name="campaignMessage"
+                  formControlName="campaignMessage"
+                  (blur)="setPersonalized(textMessageInput.value)"
+                ></textarea>
+                <br />
+                <!-- <div *ngIf="this.form.get('campaignMessage').valid &&(this.form.get('campaignMessage').dirty ||this.form.get('campaignMessage').touched)"> -->
+                <span
+                  *ngIf="form.controls['campaignMessage'].invalid"
+                  style="color: red; margin-top: 5px; margin-bottom: 5px"
+                >
                   ** Campaign must have a message!
-                 </span>
-              <!-- </div> -->
-              <br>
-              <div  *ngIf="isPersonalized == 'YES' " style="margin-top: 10px;margin-bottom: 10px;" >
-               <p style="width: 400px !important;font-weight: 800; font-size: 15px;">
-                   {{TextAreaMessage}}
-               </p><br>
-              </div>
+                </span>
+                <!-- </div> -->
+                <br />
+                <div
+                  *ngIf="isPersonalized == 'YES'"
+                  style="margin-top: 10px; margin-bottom: 10px"
+                >
+                  <p
+                    style="
+                      width: 400px !important;
+                      font-weight: 800;
+                      font-size: 15px;
+                    "
+                  >
+                    {{ TextAreaMessage }}
+                  </p>
+                  <br />
+                </div>
 
-              <label class="campaing-form-lable" for="Campaing Message">Map message to channel</label><br>
-              <div style="width: 400px !important; margin-top: 10px;margin-bottom: 10px;">
-              <ng-multiselect-dropdown #multiSelect
-              [placeholder]="'Select Channel'" 
-              [data]="data" 
-              [formControl]="f.name" 
-              [settings]="settings"
-              [disabled]="false"
-              (onFilterChange)="onFilterChange($event)"
-              (onDropDownClose)="onDropDownClose($event)"
-              (onSelect)="onItemSelect($event)" 
-              (onDeSelect)="onDeSelect($event)"
-              (onSelectAll)="onSelectAll($event)"
-              (onDeSelectAll)="onDeSelectAll($event)">
-              </ng-multiselect-dropdown>
-              </div>
-              <br>
-              <label class="campaing-form-lable" for="Campaing Message">IS PERSONALIZED MESSAGE</label><br>
-              <mat-checkbox color="primary" name="personalizeMessage" #ch (change)= 'onChange($event)'  formControlName="personalizeMessage" > IS PERSONALIZED  {{isPersonalized}} </mat-checkbox>
-              <br>
-        
-            <span *ngIf="f?.name?.errors?.required" style="color: red;">
-              Channel is required
-            </span>
-            <span *ngIf="isPersonalMessageError == true" style="color: red;">
-              Please add #### to place username for personal message
-            </span>
-            <br>
+                <label class="campaing-form-lable" for="Campaing Message"
+                  >Map message to channel</label
+                ><br />
+                <div
+                  style="
+                    width: 400px !important;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <ng-multiselect-dropdown
+                    #multiSelect
+                    [placeholder]="'Select Channel'"
+                    [data]="data"
+                    [formControl]="f.name"
+                    [settings]="settings"
+                    [disabled]="false"
+                    (onFilterChange)="onFilterChange($event)"
+                    (onDropDownClose)="onDropDownClose($event)"
+                    (onSelect)="onItemSelect($event)"
+                    (onDeSelect)="onDeSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    (onDeSelectAll)="onDeSelectAll($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+                <br />
+                <label class="campaing-form-lable" for="Campaing Message"
+                  >IS PERSONALIZED MESSAGE</label
+                ><br />
+                <mat-checkbox
+                  color="primary"
+                  name="personalizeMessage"
+                  #ch
+                  (change)="onChange($event)"
+                  formControlName="personalizeMessage"
+                >
+                  IS PERSONALIZED {{ isPersonalized }}
+                </mat-checkbox>
+                <br />
 
-              <button style="margin-right: 20%" mat-raised-button type="submit" color="primary" [disabled]="form.invalid" >SUBMIT</button>
-              <button mat-raised-button type="submit"  (click)="resetForm()">RESET</button>
-            </form>
-           </div>
+                <span *ngIf="f?.name?.errors?.required" style="color: red">
+                  Channel is required
+                </span>
+                <span *ngIf="isPersonalMessageError == true" style="color: red">
+                  Please add #### to place username for personal message
+                </span>
+                <br />
+
+                <button
+                  style="margin-right: 20%"
+                  mat-raised-button
+                  type="submit"
+                  color="primary"
+                  [disabled]="form.invalid"
+                >
+                  SUBMIT
+                </button>
+                <button mat-raised-button type="submit" (click)="resetForm()">
+                  RESET
+                </button>
+              </form>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>
-     </div>
-
-     <!--Display table list to show messages start-->
-     <p class="NoData" *ngIf="messageCount == 0 && renderCreateCampaign == true"> No data available for messages! </p>
-     <div style="width: 100% !important;" *ngIf="showComposeForm == false && messageCount > 0">
-       <label class="campaing-form-lable">LIST OF CAMPAIGN MESSAGE</label>
-       <div style="margin-left: 0%;">
-        <mat-form-field appearance="outline">
-          <mat-label>Filter</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-        </mat-form-field>
-       </div>
-       <table mat-table [dataSource]="composedMessageDataSource" class="mat-elevation-z6 sms-campaing" *ngIf="messageCount > 0">
-        <!-- Position Column -->
-        <!-- <ng-container matColumnDef="No">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header><p class="Theader">No.</p></th>
-          <td mat-cell *matCellDef="let element; let i = index">
-            <p>{{ i+1 }}.</p>
-          </td>
-        </ng-container> -->
-          <!-- Campaign Objective Column -->
-          <ng-container matColumnDef="Objective">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">CAMPAIGN OBEJCTIVE</p></th>
-            <td mat-cell *matCellDef="let element"> {{element.Objective.substring(0,10)}}... </td>
-          </ng-container>
-        
-          <!-- Message Column -->
-          <ng-container matColumnDef="Message">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">MESSAGE</p></th>
-            <td mat-cell *matCellDef="let element"> {{element.Message.substring(0,10)}}... </td>
-          </ng-container>
-        
-          <!-- Mapped Channel(Campaing) Column -->
-          <ng-container matColumnDef="MappedCampaing">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">MAPPED CHANNEL</p></th>
-            <td mat-cell *matCellDef="let element"> {{element.MappedMessage}} </td>
-          </ng-container>
-
-          <!-- isPersoanlized Column -->
-          <ng-container matColumnDef="isPersoanlized">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">IS PERSONALIZED</p></th>
-            <td class="Theader" mat-cell *matCellDef="let element"> {{element.isPersonalized}} </td>
-          </ng-container>
-        
-          <!-- Create By Column -->
-          <ng-container matColumnDef="CreatedBy">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">CREATED BY</p></th>
-            <td class="Theader2" mat-cell *matCellDef="let element"> {{element.CreatedBy}} </td>
-          </ng-container>
-
-          <!-- Created At Column -->
-          <ng-container matColumnDef="CreatedAt">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">CREATED AT</p></th>
-            <td mat-cell *matCellDef="let element"> {{Date(element.createdAt,'normal')}} </td>
-          </ng-container>
-
-          <!-- Updated At Column -->
-          <ng-container matColumnDef="UpdatedAt">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">UPDATED AT</p></th>
-            <td mat-cell *matCellDef="let element"> {{Date(element.updatedAt,'normal')}} </td>
-          </ng-container>
-
-          <!-- Delete Action Column -->
-          <ng-container matColumnDef="Delete">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">DELETE</p></th>
-            <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" (click)="deleteComposeMessage(element)">
-              <mat-icon >delete</mat-icon> DELETE
-            </button> </td>
-          </ng-container>
-
-          <!-- Update Action Column -->
-          <ng-container matColumnDef="Update">
-            <th mat-header-cell *matHeaderCellDef><p class="Theader">UPDATE</p></th>
-            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="updateComposeMessge(element)">
-              <mat-icon>update</mat-icon> UPDATE
-            </button> </td>
-          </ng-container>
-        
-          <tr mat-header-row *matHeaderRowDef="composedMessageDislayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: composedMessageDislayedColumns;"></tr>
-        
-          <!-- Row shown when there is no matching data. -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-          </tr>
-        </table>
-      <!--paginator start-->
-      <!-- <div style="width:98%;background-color: red; margin-left: 2.5%; "> -->
-      <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      [length]="messageCount"
-      showFirstLastButtons
-      aria-label="Select page of message list"
-      (page)="pageEvent=$event; onPaginateChangeEvent($event)"
-    >
-    </mat-paginator>
-      <!-- </div> -->
-      <!--paginator end-->
-      
-     </div>
-    <!--Display table list to show messages end-->
+    </div>
   </div>
 
   <!--Render main component to list all campaing -->
@@ -220,7 +177,9 @@
     (window:resize)="onResize($event)"
   >
     <div class="col">
-      <h4 style="margin-left: 15px; margin-top: 15px">LIST OF RUNNING CAMPAIGNS</h4>
+      <h4 style="margin-left: 0px; margin-top: 15px">
+        LIST OF RUNNING CAMPAIGNS
+      </h4>
     </div>
 
     <div class="row">
@@ -244,16 +203,32 @@
         </mat-form-field>
 
         <div class="mid-left">
+          <!--View messages button -->
+          <div class="create-sms-campaign" (click)="RenderTable()">
+            <div  *ngIf="showMessageTable == true; else ListMessage">
+              <mat-icon>table_view</mat-icon> CHECK CAMPAIGN STATUS
+            </div>
+            <ng-template #ListMessage>
+              <div><mat-icon>table_view</mat-icon> VIEW MESSAGES</div>
+            </ng-template>
+          </div>
+
+          <!--Create Campaign message button-->
           <div class="create-sms-campaign">
             <mat-icon color="primary">add_circle</mat-icon>
-            <span style=" 
-            font-weight: 600;margin-top: 2%;margin-right: 0%;" (click)="CreateCampaignMessage()"
-              > CREATE CAMPAIGN MESSAGE</span
+            <span
+              style="font-weight: 600; margin-top: 2%; margin-right: 0%"
+              (click)="CreateCampaignMessage()"
+            >
+              CREATE CAMPAIGN MESSAGE</span
             >
           </div>
+          <!--Create Campaign button-->
           <div class="create-sms-campaign" (click)="Redirect()">
-            <mat-icon color="primary">add_circle</mat-icon><span style=" 
-            font-weight: 600; margin-top: 4%;margin-right: 0%;"> CAMPAIGN </span>
+            <mat-icon color="primary">add_circle</mat-icon
+            ><span style="font-weight: 600; margin-top: 4%; margin-right: 0%">
+              CAMPAIGN
+            </span>
           </div>
         </div>
       </mat-card>
@@ -265,7 +240,11 @@
           <div style="margin-right: 5px">
             <mat-form-field appearance="outline">
               <mat-icon matSuffix>search</mat-icon>
-              <input matInput placeholder="Search" (keyup)="applyFilter($event)"/>
+              <input
+                matInput
+                placeholder="Search"
+                (keyup)="applyFilter($event)"
+              />
             </mat-form-field>
           </div>
           <div style="margin-right: 5px">
@@ -338,115 +317,318 @@
         </div>
       </div>
     </div>
-    
-   
-    <div style="margin-left: 2%;">
+
+    <div style="margin-left: 0%">
       <button mat-raised-button color="primary" (click)="exportFileToCsv()">
-        <mat-icon >get_app</mat-icon> Export as Execel
+        <mat-icon>get_app</mat-icon> Export as Execel
       </button>
-      </div>
-
-
-    
-    <div  class="mat-elevation-z6 table-campaign-detail">
-      <table mat-table [dataSource]="dataSource">
-        <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-
-        <!-- CAMPAIGN NAME -->
-        <ng-container matColumnDef="CAMPAIGN NAME">
-          <th mat-header-cell *matHeaderCellDef width="5%">CAMPAIGN NAME</th>
-          <td mat-cell *matCellDef="let element" width="7%">{{ element?.campaigName }}</td>
-        </ng-container>
-        <!--CAMPAIGN TYPE-->
-        <ng-container matColumnDef="CAMPAIGN TYPE">
-          <th mat-header-cell *matHeaderCellDef width="3%">CAMPAIGN TYPE</th>
-          <td mat-cell *matCellDef="let element"width="3%">{{ element?.RunTimeType }}</td>
-        </ng-container>
-        <!--CHANNEL TYPE-->
-        <ng-container matColumnDef="CHANNEL TYPE">
-          <th mat-header-cell *matHeaderCellDef width="3%">CHANNEL TYPE</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element?.channelType }}</td>
-        </ng-container>
-        <!-- START TIME -->
-        <ng-container matColumnDef="START TIME">
-          <th mat-header-cell *matHeaderCellDef width="6%">START TIME</th>
-          <td mat-cell *matCellDef="let element" width="6%">{{Date(element.date.begin,'normal')}}</td>
-        </ng-container>
-
-        <!-- CREATED TIME -->
-        <ng-container matColumnDef="CREATED TIME">
-          <th mat-header-cell *matHeaderCellDef width="6%">CREATED TIME</th>
-          <td mat-cell *matCellDef="let element" width="6%">{{ Date(element.createdAt,'normal') }}</td>
-        </ng-container>
-        <!--CURRENT SMS-->
-        <!-- <ng-container matColumnDef="CURRENT SMS">
-          <th mat-header-cell *matHeaderCellDef width="6%">CURRENT SMS</th>
-          <td mat-cell *matCellDef="let element" width="6%">{{ element.DeliveryStatus }}</td>
-        </ng-container> -->
-        <!--TOTAL SMS-->
-        <!-- <ng-container matColumnDef="TOTAL SMS">
-          <th mat-header-cell *matHeaderCellDef width="3%">TOTAL SMS</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element.DeliveryStatus }}</td>
-        </ng-container> -->
-        <!--CURRENT STAGE-->
-        <ng-container matColumnDef="CURRENT STAGE">
-          <th mat-header-cell *matHeaderCellDef width="5%">CURRENT STAGE</th>
-          <td mat-cell *matCellDef="let element" width="5%">{{ element?.DeliveryStatus }}</td>
-        </ng-container>
-        <!--TOTAL NUMBER STAGES-->
-        <ng-container matColumnDef="TOTAL NUMBER STAGES">
-          <th mat-header-cell *matHeaderCellDef width="3%">TOTAL STAGES</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element?.totalStages}}</td>
-        </ng-container>
-        <!--NEXT SCHEDULED RUN-->
-        <ng-container matColumnDef="NEXT SCHEDULED RUN">
-          <th mat-header-cell *matHeaderCellDef width="3%">NEXT RUN</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element?.DeliveryStatus }}</td>
-        </ng-container>
-        <!--CAMPAIGN DURATION-->
-        <ng-container matColumnDef="CAMPAIGN DURATION">
-          <th mat-header-cell *matHeaderCellDef width="3%">SPAN</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ element.recuringCampaignDuration!=0?element.recuringCampaignDuration:null }}</td>
-        </ng-container>
-        <!--REMAINIG DURATION-->
-        <ng-container matColumnDef="REMAINING DURATION">
-          <th mat-header-cell *matHeaderCellDef width="3%">SPAN LEFT</th>
-          <td mat-cell *matCellDef="let element" width="3%">{{ 'DDDD' }}</td>
-        </ng-container>
-        <!-- IS-SENT -->
-        <ng-container matColumnDef="IS-SENT">
-          <th mat-header-cell *matHeaderCellDef width="5%">IS-SENT</th>
-          <td mat-cell *matCellDef="let element" width="5%">{{ element?.DeliveryStatus }}</td>
-        </ng-container>
-
-         <!-- STATUS -->
-         <ng-container matColumnDef="STATUS">
-          <th mat-header-cell *matHeaderCellDef width="5%">STATUS</th>
-          <td mat-cell *matCellDef="let element" width="5%">{{ element?.Status }}</td>
-        </ng-container>
-
-         <!-- ACTION -->
-         <ng-container matColumnDef="ACTIONS">
-          <th mat-header-cell *matHeaderCellDef width="5%">ACTIONS</th>
-          <td mat-cell *matCellDef="let element" width="5%"><button mat-raised-button color="warn" >
-            <mat-icon >pan_tool</mat-icon> STOP
-          </button></td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-
-      <mat-paginator
-        [pageSizeOptions]="[3,5,10,20]"
-        [length]="campaignCount"
-        showFirstLastButtons
-        aria-label="Select page of periodic elements"
-        (page)="pageEvent=$event; onPaginateChangeEvent($event)"
-      >
-      </mat-paginator>
     </div>
-    <!-- <p class="NoData" #NoData> No data available for campaigns! </p> -->
+
+    <!--parent if bloc start for rendering tables Message and current campaign start-->
+    <div *ngIf="showMessageTable == true; else CurrentCamapignStatus">
+      <!--Message List table start-->
+      <!--Message List Table end-->
+      <!--Display table list to show messages start-->
+      <p
+        class="NoData"
+        *ngIf="messageCount == 0"
+      >
+        No data available for messages!
+      </p>
+      <div
+        style="width: 100% !important"
+        *ngIf="showMessageTable == true && messageCount > 0"
+      >
+        <label class="campaing-form-lable">LIST OF CAMPAIGN MESSAGE</label>
+        <div style="margin-left: 0%">
+          <mat-form-field appearance="outline">
+            <mat-label>Filter</mat-label>
+            <input
+              matInput
+              (keyup)="applyFilter($event)"
+              placeholder="Ex. ium"
+              #input
+            />
+          </mat-form-field>
+        </div>
+        <table
+          mat-table
+          [dataSource]="composedMessageDataSource"
+          class="mat-elevation-z6 sms-campaing"
+          *ngIf="messageCount > 0"
+        >
+          <!-- Position Column -->
+          <!-- <ng-container matColumnDef="No">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><p class="Theader">No.</p></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <p>{{ i+1 }}.</p>
+          </td>
+        </ng-container> -->
+          <!-- Campaign Objective Column -->
+          <ng-container matColumnDef="Objective">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">CAMPAIGN OBEJCTIVE</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.Objective.substring(0, 10) }}...
+            </td>
+          </ng-container>
+
+          <!-- Message Column -->
+          <ng-container matColumnDef="Message">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">MESSAGE</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.Message.substring(0, 10) }}...
+            </td>
+          </ng-container>
+
+          <!-- Mapped Channel(Campaing) Column -->
+          <ng-container matColumnDef="MappedCampaing">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">MAPPED CHANNEL</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.MappedMessage }}
+            </td>
+          </ng-container>
+
+          <!-- isPersoanlized Column -->
+          <ng-container matColumnDef="isPersoanlized">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">IS PERSONALIZED</p>
+            </th>
+            <td class="Theader" mat-cell *matCellDef="let element">
+              {{ element.isPersonalized }}
+            </td>
+          </ng-container>
+
+          <!-- Create By Column -->
+          <ng-container matColumnDef="CreatedBy">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">CREATED BY</p>
+            </th>
+            <td class="Theader2" mat-cell *matCellDef="let element">
+              {{ element.CreatedBy }}
+            </td>
+          </ng-container>
+
+          <!-- Created At Column -->
+          <ng-container matColumnDef="CreatedAt">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">CREATED AT</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ Date(element.createdAt, "normal") }}
+            </td>
+          </ng-container>
+
+          <!-- Updated At Column -->
+          <ng-container matColumnDef="UpdatedAt">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">UPDATED AT</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ Date(element.updatedAt, "normal") }}
+            </td>
+          </ng-container>
+
+          <!-- Delete Action Column -->
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">DELETE</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="deleteComposeMessage(element)"
+              >
+                <mat-icon>delete</mat-icon> DELETE
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Update Action Column -->
+          <ng-container matColumnDef="Update">
+            <th mat-header-cell *matHeaderCellDef>
+              <p class="Theader">UPDATE</p>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="updateComposeMessge(element)"
+              >
+                <mat-icon>update</mat-icon> UPDATE
+              </button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="composedMessageDislayedColumns"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: composedMessageDislayedColumns"
+          ></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+              No data matching the filter "{{ input.value }}"
+            </td>
+          </tr>
+        </table>
+        <!--paginator start-->
+        <!-- <div style="width:98%;background-color: red; margin-left: 2.5%; "> -->
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          [length]="messageCount"
+          showFirstLastButtons
+          aria-label="Select page of message list"
+          (page)="pageEvent = $event; onPaginateChangeEvent($event)"
+        >
+        </mat-paginator>
+        <!-- </div> -->
+        <!--paginator end-->
+      </div>
+      <!--Display table list to show messages end-->
+    </div>
+    <ng-template #CurrentCamapignStatus>
+      <!--Current campaign table start-->
+      <!--Current campaign table end-->
+      <div class="mat-elevation-z6 table-campaign-detail">
+        <table mat-table [dataSource]="dataSource">
+          <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- CAMPAIGN NAME -->
+          <ng-container matColumnDef="CAMPAIGN NAME">
+            <th mat-header-cell *matHeaderCellDef width="5%">CAMPAIGN NAME</th>
+            <td mat-cell *matCellDef="let element" width="7%">
+              {{ element?.campaigName }}
+            </td>
+          </ng-container>
+          <!--CAMPAIGN TYPE-->
+          <ng-container matColumnDef="CAMPAIGN TYPE">
+            <th mat-header-cell *matHeaderCellDef width="3%">CAMPAIGN TYPE</th>
+            <td mat-cell *matCellDef="let element" width="3%">
+              {{ element?.RunTimeType }}
+            </td>
+          </ng-container>
+          <!--CHANNEL TYPE-->
+          <ng-container matColumnDef="CHANNEL TYPE">
+            <th mat-header-cell *matHeaderCellDef width="3%">CHANNEL TYPE</th>
+            <td mat-cell *matCellDef="let element" width="3%">
+              {{ element?.channelType }}
+            </td>
+          </ng-container>
+          <!-- START TIME -->
+          <ng-container matColumnDef="START TIME">
+            <th mat-header-cell *matHeaderCellDef width="6%">START TIME</th>
+            <td mat-cell *matCellDef="let element" width="6%">
+              {{ Date(element.date.begin, "normal") }}
+            </td>
+          </ng-container>
+
+          <!-- CREATED TIME -->
+          <ng-container matColumnDef="CREATED TIME">
+            <th mat-header-cell *matHeaderCellDef width="6%">CREATED TIME</th>
+            <td mat-cell *matCellDef="let element" width="6%">
+              {{ Date(element.createdAt, "normal") }}
+            </td>
+          </ng-container>
+          <!--CURRENT SMS-->
+          <!-- <ng-container matColumnDef="CURRENT SMS">
+            <th mat-header-cell *matHeaderCellDef width="6%">CURRENT SMS</th>
+            <td mat-cell *matCellDef="let element" width="6%">{{ element.DeliveryStatus }}</td>
+          </ng-container> -->
+          <!--TOTAL SMS-->
+          <!-- <ng-container matColumnDef="TOTAL SMS">
+            <th mat-header-cell *matHeaderCellDef width="3%">TOTAL SMS</th>
+            <td mat-cell *matCellDef="let element" width="3%">{{ element.DeliveryStatus }}</td>
+          </ng-container> -->
+          <!--CURRENT STAGE-->
+          <ng-container matColumnDef="CURRENT STAGE">
+            <th mat-header-cell *matHeaderCellDef width="5%">CURRENT STAGE</th>
+            <td mat-cell *matCellDef="let element" width="5%">
+              {{ element?.DeliveryStatus }}
+            </td>
+          </ng-container>
+          <!--TOTAL NUMBER STAGES-->
+          <ng-container matColumnDef="TOTAL NUMBER STAGES">
+            <th mat-header-cell *matHeaderCellDef width="3%">TOTAL STAGES</th>
+            <td mat-cell *matCellDef="let element" width="3%">
+              {{ element?.totalStages }}
+            </td>
+          </ng-container>
+          <!--NEXT SCHEDULED RUN-->
+          <ng-container matColumnDef="NEXT SCHEDULED RUN">
+            <th mat-header-cell *matHeaderCellDef width="3%">NEXT RUN</th>
+            <td mat-cell *matCellDef="let element" width="3%">
+              {{ element?.DeliveryStatus }}
+            </td>
+          </ng-container>
+          <!--CAMPAIGN DURATION-->
+          <ng-container matColumnDef="CAMPAIGN DURATION">
+            <th mat-header-cell *matHeaderCellDef width="3%">SPAN</th>
+            <td mat-cell *matCellDef="let element" width="3%">
+              {{
+                element.recuringCampaignDuration != 0
+                  ? element.recuringCampaignDuration
+                  : null
+              }}
+            </td>
+          </ng-container>
+          <!--REMAINIG DURATION-->
+          <ng-container matColumnDef="REMAINING DURATION">
+            <th mat-header-cell *matHeaderCellDef width="3%">SPAN LEFT</th>
+            <td mat-cell *matCellDef="let element" width="3%">{{ "DDDD" }}</td>
+          </ng-container>
+          <!-- IS-SENT -->
+          <ng-container matColumnDef="IS-SENT">
+            <th mat-header-cell *matHeaderCellDef width="5%">IS-SENT</th>
+            <td mat-cell *matCellDef="let element" width="5%">
+              {{ element?.DeliveryStatus }}
+            </td>
+          </ng-container>
+
+          <!-- STATUS -->
+          <ng-container matColumnDef="STATUS">
+            <th mat-header-cell *matHeaderCellDef width="5%">STATUS</th>
+            <td mat-cell *matCellDef="let element" width="5%">
+              {{ element?.Status }}
+            </td>
+          </ng-container>
+
+          <!-- ACTION -->
+          <ng-container matColumnDef="ACTIONS">
+            <th mat-header-cell *matHeaderCellDef width="5%">ACTIONS</th>
+            <td mat-cell *matCellDef="let element" width="5%">
+              <button mat-raised-button color="warn">
+                <mat-icon>pan_tool</mat-icon> STOP
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator
+          [pageSizeOptions]="[3, 5, 10, 20]"
+          [length]="campaignCount"
+          showFirstLastButtons
+          aria-label="Select page of periodic elements"
+          (page)="pageEvent = $event; onPaginateChangeEvent($event)"
+        >
+        </mat-paginator>
+      </div>
+      <!-- <p class="NoData" #NoData> No data available for campaigns! </p> -->
+    </ng-template>
+    <!--parent if bloc start for rendering tables Message and current campaign end-->
   </div>
 </div>
