@@ -87,6 +87,7 @@ export class SmsCampaignModalComponent implements OnInit {
   public cleanData = [];
   public currentMappedMessage = [];
   private campaignId:string;
+  private TableData:any;
 
   //CamapaigDetails Table Variables global declaration
   campaignUserDataSource = new MatTableDataSource<campaignUser>([]);
@@ -142,16 +143,20 @@ displayedColumnsCampaignOperation: string[] =[
       this.payload = data1!.payload;
       this.formDetails = { ...data1.payload };
       this.isPersonalized = this.formDetails!.isPersonalized == true ? "YES" : "NO";
-      this.campaignId = data1!.payload!.camnpaignId
+      this.campaignId = data1!.payload!.camnpaignId;
+      this.campaignUserDataSource = new MatTableDataSource<campaignUser>(data1!.payload!.tableData!.userTableData)
+      this.campaignOperationDataSource = new MatTableDataSource<campaignOperations>(data1!.payload!.tableData!.campaignTableData)
+ 
       this.RunType = this.formDetails!.RunTimeType;
       this.isReccuring = data1!.payload!.isReccuring;
-      console.log("payload \n", JSON.stringify(data1!.payload, null, 2));
+      //console.log("payload \n", JSON.stringify(data1!.payload, null, 2));
       console.log(" this.campaignId ===  ",this.campaignId)
-      console.log(`modal data Objective = `, data1!.payload!.Objective);
-      console.log(`modal data type = `, data1!.payload!.type);
-      console.log(`modal MappedCampaing = `, data1!.payload!.campaignStages);
-      console.log(`modal MappedMessage = `, data1!.payload!.MappedMessage);
-      console.log(`modal isPersonalized = `, data1!.payload!.isPersonalized);
+      console.log("table.data.user == ", this.campaignUserDataSource)
+      // console.log(`modal data Objective = `, data1!.payload!.Objective);
+      // console.log(`modal data type = `, data1!.payload!.type);
+      // console.log(`modal MappedCampaing = `, data1!.payload!.campaignStages);
+      // console.log(`modal MappedMessage = `, data1!.payload!.MappedMessage);
+      // console.log(`modal isPersonalized = `, data1!.payload!.isPersonalized);
       this.currentMappedMessage = data1!.payload!.MappedCampaing;
       this.renderFormType = data1!.payload!.type;
       if (data1.buttonText) {

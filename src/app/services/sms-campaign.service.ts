@@ -106,7 +106,7 @@ export class SmsCampaignService {
         size:size,
         campaignId:campaignId
       }
-      return this.http.get<any>(url, { params,headers },)
+      return this.http.get<any>(url, { params,headers },).pipe()
     }
   //Get Message By Id
   //Map message

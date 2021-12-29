@@ -7,6 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Subject } from "rxjs";
 import { MatTableDataSource } from "@angular/material/table";
 import { SmsCampaignModalComponent } from "../modals/sms-campaign-modal/sms-campaign-modal.component";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
@@ -16,6 +17,7 @@ import Utility from "../../../../utility/helper";
 import * as FileSaver from "file-saver";
 import { ExportToCsv } from 'export-to-csv-file';
 import * as XLSX from "xlsx";
+import { take } from "rxjs/operators";
 const EXCEL_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const EXCEL_EXTENSION = ".xlsx";
@@ -124,6 +126,8 @@ export class SmsCampaignComponent implements OnInit {
   public settings = {};
   public selectedItems = [];
   private payload: any;
+  public t1:any;
+  public t2:any;
 
   //Campaign form
   form: FormGroup;
@@ -511,25 +515,55 @@ export class SmsCampaignComponent implements OnInit {
   CampaignDetail(data:any){
     
     const campaignID = data!._id;
-    let  SchedulerDetails:any
-    console.log(`id ${campaignID} show cmapign details \n ${JSON.stringify(0,null,2)}`)
+    const tableValue = new Subject<any>();
+
+    //console.log(`id ${campaignID} show cmapign details \n ${JSON.stringify(0,null,2)}`)
+    let CampaignSchedulerDetail:any 
     this.campaingServie.CampaignSchedulerDetail(campaignID,1,100).subscribe((response: any) => {
-       console.log("Received payload from get request campaigns CampaignDetail() >>>",JSON.stringify(response,null,2));
+       //console.log("Received payload from get request campaigns CampaignDetail() >>>",JSON.stringify(response,null,2));
        if (response.success){
          
-         //TODO ADD MODEL WITH TABLE DATA
-        SchedulerDetails=response;
-         //console.log(`Response Data CampaignDetail ${JSON.stringify(SchedulerDetails,null,2)}`)
+         //TODO CREATE AN OBSERVABLE TO OBSERVER CAMPAIGNSCHEDULE
+         this.t1=response.data;
+         //console.log(`Response Data CampaignDetail ${JSON.stringify(this.t1,null,2)}`)
+         tableValue.next({campaignTableData:this.t1})
        
         }else{
          //TODO ADD SNACK BAR FOR SUCCESS
-         console.log("Received payload",JSON.stringify(response,null,2));
+         //console.log("Received payload",JSON.stringify(response,null,2));
          //this.snackOpen.openSnackBar(response.status,response.message)
+         return 0
         }
        
    }, error => console.log(error))
-    this.openDialog({message:"CAMPAIGN DETAILS",type:'campaign-detail',camnpaignId:campaignID})
+
+   let CampaignUserDetail:any 
+   this.campaingServie.CampaignUserDetail(campaignID,1,100).subscribe((response: any) => {
+    //console.log("Received payload from get request campaigns CampaignDetail() >>>",JSON.stringify(response,null,2));
+    if (response.success){
+      
+      //TODO CREATE AN OBSERVABLE TO OBSERVER USER DATA
+      this.t2=response.data;
+      tableValue.next({userTableData:this.t2})
+     
+      //console.log(`Response Data CampaignUserDetail ${JSON.stringify(this.t2,null,2)}`)
+    
+     }else{
+      return 0;
+      //TODO ADD SNACK BAR FOR SUCCESS
+      //console.log("Received payload",JSON.stringify(response,null,2));
+      //this.snackOpen.openSnackBar(response.status,response.message)
+     }
+    
+}, error => console.log(error))
+    
     //Display modal containing campaign details
+   
+    tableValue.pipe(take(1)).subscribe((tableData)=>{
+    //console.log(`this.t2 data ${JSON.stringify(data,null,2)}`)
+    this.openDialog({message:"CAMPAIGN DETAILS",type:'campaign-detail',camnpaignId:campaignID,tableData:tableData})
+
+    })
     
   }
   //Create campaign type

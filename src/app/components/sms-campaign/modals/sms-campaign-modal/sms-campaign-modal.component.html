@@ -450,11 +450,43 @@
         </div>
 
         <!--Render Campaign Details start-->
-        <div *ngIf="renderFormType=='campaign-detail'">
-          <mat-tab-group>
+        <div  *ngIf="renderFormType=='campaign-detail'">
+          <mat-tab-group dynamicHeight>
             <!--Campaign users table start --->
             <mat-tab label="USERS">
-              USERS
+             <div style="height: 900px; width: 900px;">
+                <table mat-table [dataSource]="campaignUserDataSource"  class="table-campaign-detail">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <!-- username Column -->
+                <ng-container matColumnDef="USER NAME">
+                  <th mat-header-cell *matHeaderCellDef >USER NAME</th>
+                  <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                </ng-container>
+              
+                <!-- currentStage Column -->
+                <ng-container matColumnDef="CURRENT STAGE">
+                  <th mat-header-cell *matHeaderCellDef> CURRENT STAGE </th>
+                  <td mat-cell *matCellDef="let element"> {{element.campaignDetails[0].currentCampaignStage}} </td>
+                </ng-container>
+              
+                <!-- customerJoinedAt Column -->
+                <ng-container matColumnDef="CUSTOMER JOINED AT">
+                  <th mat-header-cell *matHeaderCellDef> CUSTOMER JOINED AT </th>
+                  <td mat-cell *matCellDef="let element">{{element.customerJoinedAt}}</td>
+                </ng-container>
+              
+                <!-- mobileNumber Column -->
+                <ng-container matColumnDef="MOBILE NUMBER">
+                  <th mat-header-cell *matHeaderCellDef> MOBILE NUMBER </th>
+                  <td mat-cell *matCellDef="let element">{{element.mobileNumber}}</td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCampaign"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCampaign"></tr>
+              </table>
+             </div>
             </mat-tab>
             <!--Campaign users table end-->
 
