@@ -84,6 +84,30 @@ export class SmsCampaignService {
       }
       return this.http.get<any>(url, { params,headers },)
     }
+
+    CampaignSchedulerDetail(campaignId:any,pageNumber:any, size:any){
+      console.log(`camapaignId ${campaignId}`);
+      let url = environment.apiUrl + '/cms/campaigns-shceduler';
+      let headers = new HttpHeaders()
+      let params ={
+        pageNumber:pageNumber,
+        size:size,
+        campaignId:campaignId
+      }
+      return this.http.get<any>(url, { params,headers },)
+    }
+
+    CampaignUserDetail(campaignId:any,pageNumber:any, size:any){
+      console.log(`camapaignId ${campaignId}`);
+      let url = environment.apiUrl + '/cms/campaignUsers';
+      let headers = new HttpHeaders()
+      let params ={
+        pageNumber:pageNumber,
+        size:size,
+        campaignId:campaignId
+      }
+      return this.http.get<any>(url, { params,headers },)
+    }
   //Get Message By Id
   //Map message
 

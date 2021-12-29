@@ -448,6 +448,24 @@
                 <!-- </mat-card> -->
             </div>
         </div>
+
+        <!--Render Campaign Details start-->
+        <div *ngIf="renderFormType=='campaign-detail'">
+          <mat-tab-group>
+            <!--Campaign users table start --->
+            <mat-tab label="USERS">
+              USERS
+            </mat-tab>
+            <!--Campaign users table end-->
+
+            <!--Campaig operation table start-->
+            <mat-tab label="OPERATION DETAILS">
+              CAMPAIGN RUNNING DETAILS
+            </mat-tab>
+            <!--Campaign operation table end-->
+          </mat-tab-group>
+        </div>
+        <!--REnder Camapaign details form end-->
         <!--Render Campaign forom end-->
 
 

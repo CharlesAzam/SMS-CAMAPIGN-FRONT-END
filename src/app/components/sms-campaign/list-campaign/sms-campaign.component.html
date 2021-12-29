@@ -530,7 +530,7 @@
           <ng-container matColumnDef="START TIME">
             <th mat-header-cell *matHeaderCellDef width="6%">START TIME</th>
             <td mat-cell *matCellDef="let element" width="6%">
-              {{ Date(element.date.begin, "normal") }}
+              {{ element.date.begin===null ? '8:45 AM EVERY DAY':Date(element.date.begin, "normal") }}
             </td>
           </ng-container>
 
@@ -600,16 +600,19 @@
           <ng-container matColumnDef="STATUS">
             <th mat-header-cell *matHeaderCellDef width="5%">STATUS</th>
             <td mat-cell *matCellDef="let element" width="5%">
-              {{ element?.Status }}
+              {{ element?.Status == true ? 'RUNNING' : 'COMPLETE' }}
             </td>
           </ng-container>
 
           <!-- ACTION -->
           <ng-container matColumnDef="ACTIONS">
-            <th mat-header-cell *matHeaderCellDef width="5%">ACTIONS</th>
-            <td mat-cell *matCellDef="let element" width="5%">
-              <button mat-raised-button color="warn">
+            <th mat-header-cell *matHeaderCellDef width="12%">ACTIONS</th>
+            <td mat-cell *matCellDef="let element" width="11%">
+              <button mat-raised-button color="warn" style="margin-right: 2%;" (click)="HaltCampaign()">
                 <mat-icon>pan_tool</mat-icon> STOP
+              </button>
+              <button mat-raised-button color="primary" (click)="CampaignDetail(element)">
+                <mat-icon>list</mat-icon> DETAIL
               </button>
             </td>
           </ng-container>

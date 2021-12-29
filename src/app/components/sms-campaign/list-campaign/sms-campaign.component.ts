@@ -501,6 +501,37 @@ export class SmsCampaignComponent implements OnInit {
       : (this.showMessageTable = true);
     console.log("List messsages ", this.showMessageTable);
   }
+
+  //Halt Capaign
+  HaltCampaign(){
+    console.log(`Halt campaign`)
+  }
+
+  //Show Campaign Statu detail
+  CampaignDetail(data:any){
+    
+    const campaignID = data!._id;
+    let  SchedulerDetails:any
+    console.log(`id ${campaignID} show cmapign details \n ${JSON.stringify(0,null,2)}`)
+    this.campaingServie.CampaignSchedulerDetail(campaignID,1,100).subscribe((response: any) => {
+       console.log("Received payload from get request campaigns CampaignDetail() >>>",JSON.stringify(response,null,2));
+       if (response.success){
+         
+         //TODO ADD MODEL WITH TABLE DATA
+        SchedulerDetails=response;
+         //console.log(`Response Data CampaignDetail ${JSON.stringify(SchedulerDetails,null,2)}`)
+       
+        }else{
+         //TODO ADD SNACK BAR FOR SUCCESS
+         console.log("Received payload",JSON.stringify(response,null,2));
+         //this.snackOpen.openSnackBar(response.status,response.message)
+        }
+       
+   }, error => console.log(error))
+    this.openDialog({message:"CAMPAIGN DETAILS",type:'campaign-detail',camnpaignId:campaignID})
+    //Display modal containing campaign details
+    
+  }
   //Create campaign type
   Redirect() {
     console.log("Button working ...");
