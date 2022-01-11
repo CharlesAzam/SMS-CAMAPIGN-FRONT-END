@@ -18,6 +18,7 @@ import * as FileSaver from "file-saver";
 import { ExportToCsv } from 'export-to-csv-file';
 import * as XLSX from "xlsx";
 import { take } from "rxjs/operators";
+import { ReplaySubject } from 'rxjs';
 const EXCEL_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const EXCEL_EXTENSION = ".xlsx";
@@ -323,20 +324,24 @@ export class SmsCampaignComponent implements OnInit {
 
   getMessageList(pageIndex:any,pageSize:any){
     this.campaingServie.getMessages(pageIndex,pageSize).subscribe((response: any) => {
-      //console.log("Received payload from get request messages",response);
+      //console.log("Received payload from get request messages",JSON.stringify(response,null,2));
       if (response.status === 200){
        // console.log("Response Data")
         //TODO ADD SNACK BAR FOR SUCCESS
         //this.snackOpen.openSnackBar(response.status,response.message)
-        //console.log("Response data >>>>>> \n",JSON.stringify(response.data,null,2));
+        
         this.composedMessageDataSource = new MatTableDataSource<CampaignMessage>(response.data);
+
+        //console.log("Response data >>>>>> \n",JSON.stringify( this.composedMessageDataSource.data,null,2));
+
+
         ///this.data =response.data
         this.messageCount = response.count;
        // console.log("Result Count >>>>>> ",this.messageCount)
       
        }else{
         //TODO ADD SNACK BAR FOR SUCCESS
-        console.log("Received payload",JSON.stringify(response,null,2));
+        console.log("error Received payload",JSON.stringify(response,null,2));
         //this.snackOpen.openSnackBar(response.status,response.message)
        }
       
@@ -515,7 +520,7 @@ export class SmsCampaignComponent implements OnInit {
   CampaignDetail(data:any){
     
     const campaignID = data!._id;
-    const tableValue = new Subject<any>();
+    const tableValue = new ReplaySubject(5);
 
     //console.log(`id ${campaignID} show cmapign details \n ${JSON.stringify(0,null,2)}`)
     let CampaignSchedulerDetail:any 
@@ -527,6 +532,7 @@ export class SmsCampaignComponent implements OnInit {
          this.t1=response.data;
          //console.log(`Response Data CampaignDetail ${JSON.stringify(this.t1,null,2)}`)
          tableValue.next({campaignTableData:this.t1})
+         
        
         }else{
          //TODO ADD SNACK BAR FOR SUCCESS
@@ -563,7 +569,8 @@ export class SmsCampaignComponent implements OnInit {
     //console.log(`this.t2 data ${JSON.stringify(data,null,2)}`)
     this.openDialog({message:"CAMPAIGN DETAILS",type:'campaign-detail',camnpaignId:campaignID,tableData:tableData})
 
-    })
+    });
+  
     
   }
   //Create campaign type

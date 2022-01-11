@@ -102,7 +102,7 @@
   }
 
   .table-campaign-detail{
-    width: 100%;
+    width: 100% !important;
     /* background-color: red; */
     margin-top: 2%;
    }

@@ -491,9 +491,96 @@
             <!--Campaign users table end-->
 
             <!--Campaig operation table start-->
-            <mat-tab label="OPERATION DETAILS">
-              CAMPAIGN RUNNING DETAILS
-            </mat-tab>
+            <!-- <mat-tab label="OPERATION DETAILS">
+              <div style="height: 900px; width: 900px; background-color: null;"> -->
+                <!-- <mat-accordion> -->
+                  <!-- #docregion basic-panel -->
+                  <!-- #docregion hide-toggle -->
+                    <!-- <mat-expansion-panel hideToggle> -->
+                  <!-- #enddocregion hide-toggle -->
+                      <!-- <mat-expansion-panel-header> -->
+                        <!-- <mat-panel-title> -->
+                          <!-- PENDING MESSAGE -->
+                        <!-- </mat-panel-title> -->
+                        <!-- <mat-panel-description> -->
+                          <!-- COUNT {{pendingMessageCount}} -->
+                        <!-- </mat-panel-description>
+                      </mat-expansion-panel-header> -->
+                      <!-- <p>LIST OF PENDING MESSAGE FOR CURRENT CAMPAIGN.</p> -->
+                      <!-- {{campaignOperationDataSource}} -->
+                    <!-- </mat-expansion-panel> -->
+                  <!-- #enddocregion basic-panel -->
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = true"
+                                         (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          SENT MESSAGE
+                        </mat-panel-title>
+                        <mat-panel-description> -->
+                          <!-- COUNT {{sentMessageCount}} -->
+                        <!-- </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <p>LIST OF SENT MESSAGE</p>
+                    </mat-expansion-panel>
+                  </mat-accordion> -->
+                  
+                  
+                  <!-- Copyright 2022 Google LLC. All Rights Reserved.
+                      Use of this source code is governed by an MIT-style license that
+                      can be found in the LICENSE file at https://angular.io/license -->
+                <!--Tried to add a table but some reason the data wasn't displaying properly-->
+                <!--Using expansong over view instead-->
+                <!-- <table mat-table [dataSource]="campaignOperationDataSource"  class="table-campaign-detail"> -->
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+                  <!-- currentStage Column -->
+                  <!-- <ng-container matColumnDef="SENT MESSAGE">
+                    <th mat-header-cell *matHeaderCellDef >SENT MESSAGE</th>
+                    <td mat-cell *matCellDef="let element">{{element.sentMessages|json}}</td>
+                  </ng-container> -->
+                
+                  <!-- nextStage Column -->
+                  <!-- <ng-container matColumnDef="PENDING MESSAGE">
+                    <th mat-header-cell *matHeaderCellDef>PENDING MESSAGE</th>
+                    <td mat-cell *matCellDef="let element"> {{element.pendingMessages}} </td>
+                  </ng-container> -->
+                
+                  <!-- successRate Column -->
+                  <!-- <ng-container matColumnDef="SUCCESS RATE">
+                    <th mat-header-cell *matHeaderCellDef> SUCCESS RATE </th>
+                    <td mat-cell *matCellDef="let element">{{element.isFullySent}}</td>
+                  </ng-container> -->
+                
+                  <!-- isFullysent Column -->
+                  <!-- <ng-container matColumnDef="IS FULLY SENT">
+                    <th mat-header-cell *matHeaderCellDef> IS FULLY SENT </th>
+                    <td mat-cell *matCellDef="let element">{{element.isFullySent}}</td>
+                  </ng-container> -->
+                
+
+                   <!-- campaignDurationCount Column -->
+                   <!-- <ng-container matColumnDef="CAMPAIGN DURATION">
+                    <th mat-header-cell *matHeaderCellDef>CAMPAIGN DURATION</th>
+                    <td mat-cell *matCellDef="let element">{{element.campaignDurationCount}}</td>
+                  </ng-container> -->
+
+                   <!-- remainingDurationCount Column -->
+                   <!-- <ng-container matColumnDef="REMAINING DURAITON">
+                    <th mat-header-cell *matHeaderCellDef>REMAINING DURAITON</th>
+                    <td mat-cell *matCellDef="let element">{{element.remainingDurationCount}}</td>
+                  </ng-container> -->
+
+                   <!-- totalCampaignStages Column -->
+                   <!-- <ng-container matColumnDef="TOTAL STAGES">
+                    <th mat-header-cell *matHeaderCellDef>TOTAL STAGES</th>
+                    <td mat-cell *matCellDef="let element">{{element.totalCampaignStages}}</td>
+                  </ng-container> -->
+                  <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsCampaignOperation"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsCampaignOperation"></tr>
+                </table> -->
+               <!-- </div>
+            </mat-tab> -->
             <!--Campaign operation table end-->
           </mat-tab-group>
         </div>

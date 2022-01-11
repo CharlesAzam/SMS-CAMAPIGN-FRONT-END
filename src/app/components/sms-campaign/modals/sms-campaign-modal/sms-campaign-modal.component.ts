@@ -26,13 +26,13 @@ export interface campaignUser {
 }
 
 export interface campaignOperations {
-  currentStage: string;
-  nextStage: string;
-  successRate: string;
-  isFullysent: Boolean;
-  campaignDurationCount: string;
-  remainingDurationCount: string;
-  totalCampaignStages: string;
+  sentMessages: any;
+  pendingMessages: any;
+  // successRate: string;
+  // isFullysent: Boolean;
+  // campaignDurationCount: string;
+  // remainingDurationCount: string;
+  // totalCampaignStages: string;
 }
 @Component({
   selector: "app-sms-campaign-modal",
@@ -75,6 +75,7 @@ export class SmsCampaignModalComponent implements OnInit {
 
   @Input() beginDate: any;
   @Input() endDate: any;
+  @Input() panelOpenState = false;
 
   public RuntimeTypes = ["OneTime", "MultipleDates", "Recurring"];
   public SelectedRuntimeType: string;
@@ -91,7 +92,7 @@ export class SmsCampaignModalComponent implements OnInit {
 
   //CamapaigDetails Table Variables global declaration
   campaignUserDataSource = new MatTableDataSource<campaignUser>([]);
-  campaignOperationDataSource=new MatTableDataSource<campaignOperations>([]);
+  campaignOperationDataSource:any;
 
 
 /*
@@ -109,13 +110,13 @@ displayedColumnsCampaign: string[] =[
 
 //Campaign operation table header
 displayedColumnsCampaignOperation: string[] =[
-  'CURRENT STAGE',
-  'NEXT STAGE',
-  'SUCCESS RATE',
-  'IS FULLY SENT',
-  'CAMPAIGN DURATION',
-  'REMAINING DURAITON',
-  'TOTAL STAGES',
+  'SENT MESSAGE',
+  'PENDING MESSAGE',
+  // 'SUCCESS RATE',
+  // 'IS FULLY SENT',
+  // 'CAMPAIGN DURATION',
+  // 'REMAINING DURAITON',
+  // 'TOTAL STAGES',
 ]
 
   // Create DaiDH
@@ -145,13 +146,14 @@ displayedColumnsCampaignOperation: string[] =[
       this.isPersonalized = this.formDetails!.isPersonalized == true ? "YES" : "NO";
       this.campaignId = data1!.payload!.camnpaignId;
       this.campaignUserDataSource = new MatTableDataSource<campaignUser>(data1!.payload!.tableData!.userTableData)
-      this.campaignOperationDataSource = new MatTableDataSource<campaignOperations>(data1!.payload!.tableData!.campaignTableData)
+      this.campaignOperationDataSource = data1!.payload!.tableData!.campaignTableData//new MatTableDataSource<campaignOperations>(data1!.payload!.tableData!.campaignTableData)
  
       this.RunType = this.formDetails!.RunTimeType;
       this.isReccuring = data1!.payload!.isReccuring;
       //console.log("payload \n", JSON.stringify(data1!.payload, null, 2));
-      console.log(" this.campaignId ===  ",this.campaignId)
-      console.log("table.data.user == ", this.campaignUserDataSource)
+      //console.log(" this.campaignId ===  ",this.campaignId)
+      console.log("campaign operational data == ",this.campaignOperationDataSource)
+      //console.log("table.data.user == ", this.campaignUserDataSource)
       // console.log(`modal data Objective = `, data1!.payload!.Objective);
       // console.log(`modal data type = `, data1!.payload!.type);
       // console.log(`modal MappedCampaing = `, data1!.payload!.campaignStages);

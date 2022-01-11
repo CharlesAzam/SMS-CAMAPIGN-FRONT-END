@@ -320,7 +320,7 @@
 
     <div style="margin-left: 0%">
       <button mat-raised-button color="primary" (click)="exportFileToCsv()">
-        <mat-icon>get_app</mat-icon> Export as Execel
+        <mat-icon>get_app</mat-icon> Export as Execel 
       </button>
     </div>
 
@@ -337,7 +337,7 @@
       </p>
       <div
         style="width: 100% !important"
-        *ngIf="showMessageTable == true && messageCount > 0"
+        *ngIf="showMessageTable == true "
       >
         <label class="campaing-form-lable">LIST OF CAMPAIGN MESSAGE</label>
         <div style="margin-left: 0%">
@@ -355,7 +355,6 @@
           mat-table
           [dataSource]="composedMessageDataSource"
           class="mat-elevation-z6 sms-campaing"
-          *ngIf="messageCount > 0"
         >
           <!-- Position Column -->
           <!-- <ng-container matColumnDef="No">
